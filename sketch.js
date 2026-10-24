@@ -1,7 +1,7 @@
 // Draws a run of base cabinets in front elevation on graph paper.
 // All units are inches; one grid square = 6".
-const SQ = 6, PX = 5;                 // inches per square, screen px per inch
-const TOE = 4.5, BOX = 34.5, TOP = 1.5; // toe kick, cabinet height, countertop
+const SQ = 6, BOLD = 30, PX = 5;      // inches per square, per bold line (from the run's left end and the floor), screen px per inch
+const TOE = 4.5, BOX = 34.5, TOP = 1.25; // toe kick, cabinet height, 3 cm countertop
 const MARGIN = 12, FLOOR = 54, H = 78;  // drawing area, floor line from top
 
 function sketch(title, run) {
@@ -82,14 +82,14 @@ function sketch(title, run) {
       .gaplabel { font-size: 3px; fill: #667; }
     </style>
     <h1>${title}</h1>
-    <p>Front elevation · 1 square = 6" · bold line = 12"</p>
+    <p>Front elevation · 1 square = 6" · bold line = ${BOLD}"</p>
     <svg viewBox="0 0 ${W} ${H}" width="${W * PX}" height="${H * PX}">
       <defs>
         <pattern id="sq" width="${SQ}" height="${SQ}" patternUnits="userSpaceOnUse">
           <path d="M ${SQ} 0 L 0 0 0 ${SQ}" class="grid"/></pattern>
-        <pattern id="ft" width="12" height="12" patternUnits="userSpaceOnUse">
-          <rect width="12" height="12" fill="url(#sq)"/>
-          <path d="M 12 0 L 0 0 0 12" class="grid ft"/></pattern>
+        <pattern id="ft" x="${MARGIN}" y="${FLOOR}" width="${BOLD}" height="${BOLD}" patternUnits="userSpaceOnUse">
+          <rect width="${BOLD}" height="${BOLD}" fill="url(#sq)"/>
+          <path d="M ${BOLD} 0 L 0 0 0 ${BOLD}" class="grid ft"/></pattern>
       </defs>
       <rect width="${W}" height="${H}" fill="url(#ft)"/>
       ${out.join('\n')}

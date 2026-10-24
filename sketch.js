@@ -2,14 +2,14 @@
 // All units are inches; one grid square = 6".
 const SQ = 6, BOLD = 30, PX = 5;      // inches per square, per bold line (from the run's left end and the floor), screen px per inch
 const TOE = 4.5, BOX = 34.5, TOP = 1.25; // toe kick, cabinet height, 3 cm countertop
-const MARGIN = 12;
+const MARGIN = 12, CEILING = 96;
 
 // Items with `h` are tall (panels, pantry, fridge space) and get no countertop.
 function sketch(title, run) {
   const total = run.reduce((s, c) => s + c.w, 0);
-  const tallest = Math.max(BOX + TOP + 1, ...run.map(c => c.h || 0));
+  const tallest = Math.max(CEILING, ...run.map(c => c.h || 0), ...run.flatMap(c => (c.upper || []).map(u => u.at + (u.h || 0))));
   const FLOOR = Math.ceil((tallest + 12) / SQ) * SQ, H = FLOOR + 24;
-  const W = MARGIN * 2 + Math.max(total, 96);
+  const W = MARGIN * 2 + Math.max(total, 96) + 24; // + room for the elevation ruler
   const out = [];
   const rect = (x, y, w, h, cls = '') => out.push(`<rect x="${x}" y="${y}" width="${w}" height="${h}" class="${cls}"/>`);
   const line = (x1, y1, x2, y2, cls = '') => out.push(`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" class="${cls}"/>`);
@@ -63,6 +63,41 @@ function sketch(title, run) {
         line(ox + 3, FLOOR - 31.5, ox + ow - 3, FLOOR - 31.5, 'pull');
       }
     }
+    // Things hung above this item. Cabinet: { code, h, at: bottom off the floor, glass }; shelf: { shelf: true, at: top off the floor }; plain strip: { filler: true, h, at }; microwave: { microwave: true, w, h, at }; coffee maker: { coffee: true, w, h, at }; other appliance: { appliance, w, h, at, dx }.
+    for (const u of c.upper || []) {
+      if (u.microwave) { // countertop microwave, centered: { microwave: true, w, h, at: bottom off the floor }
+        const mx = x + (c.w - u.w) / 2, top = FLOOR - u.at - u.h;
+        rect(mx, top, u.w, u.h, 'oven');
+        rect(mx + 1.5, top + 1.5, u.w - 8, u.h - 5, 'window');
+        for (let i = 0; i < 4; i++) rect(mx + u.w - 5, top + 1.5 + i * 2, 3.5, 1.2, 'front'); // keypad
+        text(mx + u.w / 2, top + u.h - 1.2, 'microwave', 'code');
+        continue;
+      }
+      if (u.coffee) { // drip coffee maker, centered: { coffee: true, w, h, at: bottom off the floor }
+        const cx = x + (c.w - u.w) / 2, top = FLOOR - u.at - u.h;
+        rect(cx, top, u.w, u.h, 'oven');
+        rect(cx + 1.5, top + u.h - 7, u.w - 3, 6, 'glass'); // carafe
+        text(cx + u.w / 2, top + 3, 'coffee', 'code');
+        continue;
+      }
+      if (u.appliance) { // plain appliance box: { appliance: label, w, h, at: bottom off the floor, dx: offset from the left (default centered) }
+        const ax = x + (u.dx ?? (c.w - u.w) / 2), top = FLOOR - u.at - u.h;
+        rect(ax, top, u.w, u.h, 'oven');
+        text(ax + u.w / 2, top + u.h / 2 + 0.8, u.appliance, 'code');
+        continue;
+      }
+      if (u.filler) { rect(x, FLOOR - u.at - u.h, c.w, u.h, 'box'); continue; }
+      if (u.shelf) {
+        rect(x, FLOOR - u.at, c.w, 0.75, 'shelf');
+        text(x + c.w / 2, FLOOR - u.at - 1, `shelf ${u.at}"`, 'dim');
+        continue;
+      }
+      const top = FLOOR - u.at - u.h;
+      rect(x, top, c.w, u.h, 'box');
+      fronts(x, c.w, top, [{ h: u.h, pair: true, pull: 'bottom' }]);
+      if (u.glass) for (const gx of [x + 2, x + c.w / 2 + 1.875]) rect(gx, top + 2, c.w / 2 - 3.875, u.h - 4.5, 'glass');
+      text(x + c.w / 2, top + u.h / 2, u.code, 'code');
+    }
     if (c.cooktop) rect(x + (c.w - 30) / 2, FLOOR - BOX - TOP - 0.75, 30, 0.75, 'cooktop');
     if (c.name) text(x + c.w / 2, FLOOR + 5, c.name, 'name');
     text(x + c.w / 2, FLOOR + 8.5, c.code, 'code');
@@ -80,6 +115,23 @@ function sketch(title, run) {
     const l = c.x - (i === 0 ? 1 : 0), r = run[j].x + run[j].w + (j === run.length - 1 ? 1 : 0);
     rect(l, FLOOR - BOX - TOP, r - l, TOP, 'counter');
   });
+
+  // Elevation ruler on the right, off the floor; marks at the same height share a label.
+  const rx = MARGIN + Math.max(total, 96) + 4;
+  const marks = new Map();
+  const mark = (at, label) => marks.set(at, [...new Set([...(marks.get(at) || []), label])]);
+  mark(TOE, 'toe kick');
+  mark(BOX + TOP, 'counter');
+  for (const u of run.flatMap(c => c.upper || [])) {
+    if (u.shelf) mark(u.at, 'shelf');
+    else if (u.code) mark(u.at + u.h, 'uppers');
+  }
+  mark(CEILING, 'ceiling');
+  line(rx, FLOOR, rx, FLOOR - CEILING, 'dimline');
+  for (const [m, labels] of marks) {
+    line(rx - 1, FLOOR - m, rx + 1, FLOOR - m, 'tick');
+    text(rx + 1.5, FLOOR - m + 0.7, `${m}" ${labels.join(', ')}`, 'dim ruler');
+  }
 
   if (total) {
     line(x, FLOOR + 1, x, FLOOR + 12, 'tick');
@@ -102,11 +154,12 @@ function sketch(title, run) {
       .toe { fill: #556; } .counter { fill: #8a8f99; stroke: #223; stroke-width: 0.2; }
       .cooktop { fill: #111; } .pull { stroke: #223; stroke-width: 0.4; stroke-linecap: round; }
       .oven { fill: #c9ccd2; stroke: #223; stroke-width: 0.25; } .window { fill: #3a3f4a; }
+      .glass { fill: #dbe9f2; stroke: #223; stroke-width: 0.15; } .shelf { fill: #f3ead9; stroke: #223; stroke-width: 0.2; }
       .gap { fill: none; stroke: #223; stroke-width: 0.25; stroke-dasharray: 1.5 1; }
       .floor { stroke: #223; stroke-width: 0.4; } .tick, .dimline { stroke: #667; stroke-width: 0.15; }
       text { text-anchor: middle; font-size: 2.4px; fill: #223; }
       .name { font-weight: 700; } .code { font-size: 2.2px; } .dim { font-size: 2px; fill: #667; }
-      .gaplabel { font-size: 3px; fill: #667; }
+      .gaplabel { font-size: 3px; fill: #667; } .ruler { text-anchor: start; }
     </style>
     <h1>${title}</h1>
     <p><a href="index.html">index</a></p>

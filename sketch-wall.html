@@ -3,6 +3,15 @@
 <script src="sketch.js"></script>
 <body>
 <script>
-// Left to right, widths in inches.
-sketch('Wall', []);
+// Left to right, widths in inches. `h` marks a tall item (no countertop).
+sketch('Wall', [
+  {                    code: 'TEP',     w: 1.5, kind: 'panel', h: 84 },
+  { name: 'fridge',    code: '36" gap', w: 36,  kind: 'gap', h: 70, tag: 'REF' },
+  {                    code: 'TEP',     w: 1.5, kind: 'panel', h: 84 },
+  { name: 'pantry',    code: 'PC30',    w: 30,  kind: 'pantry', h: 84 },
+  { name: 'oven',      code: 'B33',     w: 33,  kind: 'oven' },
+  { name: 'Toaster',   code: 'DB27-3',  w: 27,  kind: 'drawers', n: 3 },
+  { name: 'Air Fryer', code: 'DB27-3',  w: 27,  kind: 'drawers', n: 3 },
+  { name: 'Coffee',    code: 'DB27-3',  w: 27,  kind: 'drawers', n: 3 },
+]);
 </script>

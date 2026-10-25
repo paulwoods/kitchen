@@ -28,7 +28,7 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 const island = [
   { code: 'DB24-3',  w: 24, kind: 'drawers', n: 3, receptacle: true },
   { code: 'DB36-3',  w: 36, kind: 'drawers', n: 3, cooktop: true,
-    upper: [ { hood: true, w: 42.0625, h: 2.375, at: 66.1875, chimney: 12.125 } ] }, // Bosch HIB82651UC
+    upper: [ { hood: true, w: 41.5, h: 2, at: 66.1875, chimney: 13.375, chimneyD: 10.625 } ] }, // Proline PLFI 544-42
   { code: 'DB24-3',  w: 24, kind: 'drawers', n: 3, receptacle: true },
   { code: 'TRB18FH', w: 18, kind: 'door' },
   { code: 'SB42',    w: 42, kind: 'sink', switch: { dx: 6, label: 'disposal' },
@@ -56,7 +56,7 @@ const wall = [
 ];
 
 const TOE = 4.5, BOX = 34.5, TOP = 1.25, CEILING = 96, OUTLET = 44; // OUTLET: center of a wall receptacle (assumed)
-const BAR = 42, DEPTH = 24, COUNTER = 25, RISER = 4.5, AISLE = 48, UPPER = 12, APPLIANCE = 14, HOOD = 27; // appliance and hood depths assumed
+const BAR = 42, DEPTH = 24, COUNTER = 25, RISER = 4.5, AISLE = 48, UPPER = 12, APPLIANCE = 14, HOOD = 23.625; // appliance depth assumed; hood depth per the Proline sheet
 const total = 192;
 const ZWALL = RISER + 2 * DEPTH + AISLE; // the island riser's back is at z = 0, the room wall at ZWALL
 
@@ -189,7 +189,7 @@ function side(run, flip, zBack) {
       if (x.hood) { // canopy centered over the counter, chimney to the ceiling
         const top = x.at + x.h;
         B(u + (w - x.w) / 2, COUNTER / 2 - HOOD / 2, x.at, x.w, HOOD, x.h, M.steel);
-        B(u + (w - x.chimney) / 2, COUNTER / 2 - x.chimney / 2, top, x.chimney, x.chimney, CEILING - top, M.steel);
+        B(u + (w - x.chimney) / 2, COUNTER / 2 - x.chimneyD / 2, top, x.chimney, x.chimneyD, CEILING - top, M.steel);
       } else if (x.microwave) {
         const mu = u + (w - x.w) / 2;
         B(mu, 2, x.at, x.w, 15, x.h, M.steel);

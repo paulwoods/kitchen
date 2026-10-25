@@ -15,9 +15,14 @@ function sketch(title, run, opts = {}) {
   const FLOOR = Math.ceil((tallest + 12) / SQ) * SQ, H = FLOOR + 24;
   const W = MARGIN * 2 + Math.max(total, 96) + 24; // + room for the elevation ruler
   const out = [];
-  const rect = (x, y, w, h, cls = '') => out.push(`<rect x="${x}" y="${y}" width="${w}" height="${h}" class="${cls}"/>`);
-  const line = (x1, y1, x2, y2, cls = '') => out.push(`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" class="${cls}"/>`);
-  const text = (x, y, s, cls = '') => out.push(`<text x="${x}" y="${y}" class="${cls}">${s}</text>`);
+  const rect = (x, y, w, h, cls = '') => out.push(`<rect x="${x}" y="${y}" width="${w}" height="${h}" class="${cls}${ap}"/>`);
+  const line = (x1, y1, x2, y2, cls = '') => out.push(`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" class="${cls}${ap}"/>`);
+  const text = (x, y, s, cls = '') => out.push(`<text x="${x}" y="${y}" class="${cls}${ap}">${s}</text>`);
+  // opts.toggles: each appliance's shapes get the class ap-N, and a checkbox per appliance hides them (`off: true` starts hidden).
+  // Shapes classed apoff-N show only while appliance N is hidden.
+  const apps = [];
+  let ap = '';
+  const tag = (label, off) => { if (opts.toggles) { ap = ` ap-${apps.length}`; apps.push({ label, off }); } };
 
   // Stack of fronts from `top` down: each row is { h, pair, pull: 'mid' | 'top' | 'bottom' }.
   const fronts = (x, w, top, rows) => {
@@ -47,8 +52,27 @@ function sketch(title, run, opts = {}) {
   for (const c of run) {
     if (c.kind === 'gap') {
       const h = c.h || BOX;
-      rect(x, FLOOR - h, c.w, h, 'gap');
-      text(x + c.w / 2, FLOOR - h / 2, c.tag, 'gaplabel');
+      tag(c.name || c.tag, c.off);
+      c.ap = ap;
+      if (c.fridge) { // Frigidaire PRFC2383AF: French doors over a freezer drawer, 68.3" body + hinge caps to c.h; split, handles and dispenser assumed
+        const fx = x + 0.125, fw = c.w - 0.25, mid = x + c.w / 2, body = 68.3;
+        rect(fx, FLOOR - body, fw, body, 'oven');
+        for (const hx of [fx, fx + fw - 4]) rect(hx, FLOOR - h, 4, h - body, 'oven'); // hinge caps
+        rect(fx, FLOOR - 3.5, fw, 3.5, 'toe'); // grille
+        rect(fx + 0.25, FLOOR - 29.75, fw - 0.5, 26, 'oven'); // freezer drawer, 3.75"–29.75"
+        rect(fx + 0.25, FLOOR - body + 0.25, fw / 2 - 0.375, body - 30.25, 'oven'); // doors, 30"–68.05"
+        rect(mid + 0.125, FLOOR - body + 0.25, fw / 2 - 0.375, body - 30.25, 'oven');
+        rect(x + 7, FLOOR - 52, 7, 11, 'window'); // ice and water dispenser on the left door, 41"–52"
+        for (const px of [mid - 2.75, mid + 2]) rect(px, FLOOR - 64, 0.75, 24, 'faucet'); // door handles, 40"–64"
+        rect(x + 4, FLOOR - 26.25, c.w - 8, 0.75, 'faucet'); // drawer handle
+      } else if (c.dishwasher) { // Bosch SHV78CM3N, panel-ready: custom cabinet panel and pull over its toe kick; controls hide in the door's top edge
+        rect(x, FLOOR - TOE, c.w, TOE, 'toe');
+        fronts(x, c.w, FLOOR - BOX, [{ h: face, pull: 'top' }]);
+      } else {
+        rect(x, FLOOR - h, c.w, h, 'gap');
+        text(x + c.w / 2, FLOOR - h / 2, c.tag, 'gaplabel');
+      }
+      ap = '';
     } else if (c.kind === 'panel') {
       rect(x, FLOOR - c.h, c.w, c.h, 'box');
     } else if (c.kind === 'pantry') {
@@ -65,13 +89,18 @@ function sketch(title, run, opts = {}) {
       else if (c.kind === 'base') fronts(x, c.w, FLOOR - BOX, [{ h: 6 }, { h: face - 6, pull: 'top' }]); // drawer over one door
       else if (c.kind === 'oven') { // 29" oven face from 5" to 34" off the floor
         const ow = Math.min(29.75, c.w - 0.25), ox = x + (c.w - ow) / 2;
+        tag(c.name || 'oven', c.off);
         rect(ox, FLOOR - 34, ow, 29, 'oven');
         rect(ox + 3, FLOOR - 28, ow - 6, 18, 'window');
         line(ox + 3, FLOOR - 31.5, ox + ow - 3, FLOOR - 31.5, 'pull');
+        ap = '';
       }
     }
     // Things hung above this item. Cabinet: { code, h, at: bottom off the floor, glass }; hood: { hood: true, w, h, at, chimney }; shelf: { shelf: true, at: top off the floor }; plain strip: { filler: true, h, at }; microwave: { microwave: true, w, h, at }; coffee maker: { coffee: true, w, h, at }; other appliance: { appliance, w, h, at, dx }.
     for (const u of c.upper || []) {
+      ap = '';
+      if (u.microwave || u.coffee || u.appliance) tag(u.microwave ? 'microwave' : u.coffee ? 'coffee maker' : u.appliance, u.off);
+      u.ap = ap;
       if (u.microwave) { // countertop microwave, centered: { microwave: true, w, h, at: bottom off the floor }
         const mx = x + (c.w - u.w) / 2, top = FLOOR - u.at - u.h;
         rect(mx, top, u.w, u.h, 'oven');
@@ -112,6 +141,7 @@ function sketch(title, run, opts = {}) {
       if (u.glass) for (const gx of [x + 2, x + c.w / 2 + 1.875]) rect(gx, top + 2, c.w / 2 - 3.875, u.h - 4.5, 'glass');
       text(x + c.w / 2, top + u.h / 2, u.code, 'code');
     }
+    ap = '';
     if (c.cooktop) rect(x + (c.w - 30) / 2, FLOOR - BOX - TOP - 0.75, 30, 0.75, 'cooktop');
     if (c.faucet) { // { h, reach, back }, centered on the cabinet: column on the counter, pull-down sprayer hanging in front
       const fx = x + c.w / 2, top = FLOOR - BOX - TOP - c.faucet.h;
@@ -121,12 +151,26 @@ function sketch(title, run, opts = {}) {
     }
     if (c.receptacle) { // duplex receptacle centered on the cabinet (assumed): on a riser, a horizontal 4.5" x 2.75" plate halfway up it above the counter; on the wall, a vertical 2.75" x 4.5" plate centered at OUTLET
       const r = receptacle(opts.riser), px = x + (c.w - r.w) / 2, top = FLOOR - r.at - r.h / 2;
-      const behind = (c.upper || []).some(u => { // a countertop appliance stands in front of it: dashed
+      const behind = (c.upper || []).find(u => { // a countertop appliance stands in front of it: dashed
         const ax = x + (u.dx ?? (c.w - u.w) / 2);
         return (u.appliance || u.coffee || u.microwave) && ax <= px && ax + u.w >= px + r.w && u.at <= r.at - r.h / 2 && u.at + u.h >= r.at + r.h / 2;
-      });
-      rect(px, top, r.w, r.h, behind ? 'hidden' : 'plate');
-      if (!behind) for (const d of [0.6, 2.4]) opts.riser ? rect(px + d, top + 0.6, 1.5, 1.55, 'outlet') : rect(px + 0.6, top + d, 1.55, 1.5, 'outlet');
+      }) || (c.kind === 'gap' && c.h >= r.at + r.h / 2 && c); // or behind the fridge
+      const plate = () => {
+        rect(px, top, r.w, r.h, 'plate');
+        for (const d of [0.6, 2.4]) opts.riser ? rect(px + d, top + 0.6, 1.5, 1.55, 'outlet') : rect(px + 0.6, top + d, 1.55, 1.5, 'outlet');
+      };
+      if (!behind) plate();
+      else {
+        ap = behind.ap || '';
+        rect(px, top, r.w, r.h, 'hidden');
+        if (ap) { ap = ap.replace('ap-', 'apoff-'); plate(); } // in plain view while the appliance is hidden
+        ap = '';
+      }
+      text(px + r.w / 2, top - 0.4, '120v', 'dim volts');
+    }
+    if (c.jbox) { // junction box on the back wall, inside the cabinet: { at: center off the floor, dx: center from the item's left end }
+      rect(x + c.jbox.dx - 2, FLOOR - c.jbox.at - 2, 4, 4, 'hidden');
+      text(x + c.jbox.dx + 2, FLOOR - c.jbox.at - 3, 'oven j box', 'dim end'); // ends at the box's right edge
     }
     if (c.name) text(x + c.w / 2, FLOOR + 5, c.name, 'name');
     text(x + c.w / 2, FLOOR + 8.5, c.code, 'code');
@@ -176,6 +220,23 @@ function sketch(title, run, opts = {}) {
   line(0, FLOOR, W, FLOOR, 'floor');
 
   page(title, 'Front elevation', W, H, FLOOR, out, ['from the left end', 'off the floor']);
+  if (!apps.length) return;
+  const svg = document.querySelector('svg'), p = document.createElement('p');
+  p.innerHTML = `<label><input type="checkbox" checked> <b>all appliances</b></label>` +
+    apps.map((a, i) => ` <label><input type="checkbox"${a.off ? '' : ' checked'} data-i="${i}"> ${a.label}</label>`).join('');
+  svg.before(p);
+  const all = p.querySelector('input'), boxes = [...p.querySelectorAll('[data-i]')];
+  const show = () => {
+    for (const b of boxes) {
+      for (const el of svg.querySelectorAll(`.ap-${b.dataset.i}`)) el.style.display = b.checked ? '' : 'none';
+      for (const el of svg.querySelectorAll(`.apoff-${b.dataset.i}`)) el.style.display = b.checked ? 'none' : '';
+    }
+    all.checked = boxes.every(b => b.checked);
+    all.indeterminate = !all.checked && boxes.some(b => b.checked);
+  };
+  for (const b of boxes) b.onchange = show;
+  all.onchange = () => { for (const b of boxes) b.checked = all.checked; show(); };
+  show();
 }
 
 // Draws the galley in plan (top view): the island at the top, facing down across the aisle,
@@ -293,7 +354,8 @@ function page(title, view, W, H, oy, out, axes) {
       .gap { fill: none; stroke: #223; stroke-width: 0.25; stroke-dasharray: 1.5 1; }
       .floor { stroke: #223; stroke-width: 0.4; } .tick, .dimline { stroke: #667; stroke-width: 0.15; }
       text { text-anchor: middle; font-size: 2.4px; fill: #223; }
-      .name { font-weight: 700; } .code { font-size: 2.2px; } .dim { font-size: 2px; fill: #667; }
+      .volts { font-size: 1.6px; paint-order: stroke; stroke: #fff; stroke-width: 0.5; } /* halo: readable over appliances */
+      .end { text-anchor: end; } .name { font-weight: 700; } .code { font-size: 2.2px; } .dim { font-size: 2px; fill: #667; }
       .gaplabel { font-size: 3px; fill: #667; } .ruler { text-anchor: start; }
       .tapes { pointer-events: none; } .tape .blade { pointer-events: visiblePainted; cursor: pointer; }
       .blade { fill: #f5c400; fill-opacity: 0.85; } .tick-mark { stroke: #223; stroke-width: 1px; vector-effect: non-scaling-stroke; }
@@ -332,12 +394,12 @@ function tape(svg, oy, [xLabel, yLabel]) {
     const v = n => el[n].baseVal.value;
     if (el.tagName === 'rect') {
       const [x, y, w, h] = ['x', 'y', 'width', 'height'].map(v);
-      vs.push({ at: x, from: y, to: y + h }, { at: x + w, from: y, to: y + h });
-      hs.push({ at: y, from: x, to: x + w }, { at: y + h, from: x, to: x + w });
+      vs.push({ at: x, from: y, to: y + h, el }, { at: x + w, from: y, to: y + h, el });
+      hs.push({ at: y, from: x, to: x + w, el }, { at: y + h, from: x, to: x + w, el });
     } else {
       const [x1, y1, x2, y2] = ['x1', 'y1', 'x2', 'y2'].map(v);
-      if (x1 === x2) vs.push({ at: x1, from: Math.min(y1, y2), to: Math.max(y1, y2) });
-      if (y1 === y2) hs.push({ at: y1, from: Math.min(x1, x2), to: Math.max(x1, x2) });
+      if (x1 === x2) vs.push({ at: x1, from: Math.min(y1, y2), to: Math.max(y1, y2), el });
+      if (y1 === y2) hs.push({ at: y1, from: Math.min(x1, x2), to: Math.max(x1, x2), el });
     }
   }
   const scale = () => 1 / svg.getScreenCTM().a; // drawing inches per screen px
@@ -346,7 +408,7 @@ function tape(svg, oy, [xLabel, yLabel]) {
     const t = 8 * scale();
     const near = (list, a, b) => list.reduce((best, e) => {
       const d = Math.abs(e.at - a);
-      return d < t && d < (best ? Math.abs(best.at - a) : t) && b > e.from - t && b < e.to + t ? e : best;
+      return e.el.style.display !== 'none' && d < t && d < (best ? Math.abs(best.at - a) : t) && b > e.from - t && b < e.to + t ? e : best;
     }, null);
     const ex = near(vs, p.x, p.y), ey = near(hs, p.y, p.x), r = v => Math.round(v * 8) / 8;
     return { x: ex ? ex.at : r(p.x), y: ey ? ey.at : r(p.y), ex, ey };

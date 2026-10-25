@@ -162,7 +162,7 @@ function sketch(title, run, opts = {}) {
   }
   line(0, FLOOR, W, FLOOR, 'floor');
 
-  page(title, 'Front elevation', W, H, FLOOR, out);
+  page(title, 'Front elevation', W, H, FLOOR, out, ['from the left end', 'off the floor']);
 }
 
 // Draws the galley in plan (top view): the island at the top, facing down across the aisle,
@@ -249,17 +249,20 @@ function plan(title, island, wall, opts = {}) {
     text(rx + 1.5, WALLY - m + 0.7, `${m}" ${label}`, 'dim ruler');
   }
   text(rx + 1.5, WALLY - DEPTH - AISLE / 2 + 0.7, `${AISLE}" aisle`, 'dim ruler');
-  page(title, 'Plan of both runs', W, H, WALLY, out);
+  page(title, 'Plan of both runs', W, H, WALLY, out, ["from the island's left end", 'from the wall']);
 }
 
 // Wraps a drawing in the page: graph paper with bold lines every BOLD" from (MARGIN, oy).
-function page(title, view, W, H, oy, out) {
+// axes: how to say x (from MARGIN) and y (up from oy) in the tape measure's readout.
+function page(title, view, W, H, oy, out, axes) {
   document.title = `${title} · Galley Kitchen`;
   document.body.innerHTML = `
     <style>
       body { margin: 24px; background: #fbfaf5; color: #223; font-family: system-ui, sans-serif; }
       h1 { margin: 0; } p { margin: 4px 0 16px; color: #667; } a { color: #2a5d9f; }
-      svg { max-width: 100%; height: auto; background: #fff; box-shadow: 0 1px 4px #0002; }
+      svg { max-width: 100%; height: auto; background: #fff; box-shadow: 0 1px 4px #0002; cursor: crosshair; touch-action: pinch-zoom; user-select: none; -webkit-user-select: none; }
+      .readout { min-height: 1.5em; font-variant-numeric: tabular-nums; } .readout b { color: #223; }
+      button { font: inherit; margin-left: 8px; padding: 0 8px; }
       .grid { fill: none; stroke: #bcd3ea; stroke-width: 0.1; } .ft { stroke: #8fb2d6; stroke-width: 0.2; }
       .box { fill: #f3ead9; stroke: #223; stroke-width: 0.3; }
       .front { fill: #fffdf7; stroke: #223; stroke-width: 0.2; }
@@ -277,10 +280,17 @@ function page(title, view, W, H, oy, out) {
       text { text-anchor: middle; font-size: 2.4px; fill: #223; }
       .name { font-weight: 700; } .code { font-size: 2.2px; } .dim { font-size: 2px; fill: #667; }
       .gaplabel { font-size: 3px; fill: #667; } .ruler { text-anchor: start; }
+      .tapes { pointer-events: none; } .tape .blade { pointer-events: visiblePainted; cursor: pointer; }
+      .blade { fill: #f5c400; fill-opacity: 0.85; } .tick-mark { stroke: #223; stroke-width: 1px; vector-effect: non-scaling-stroke; }
+      .hook { fill: #223; } .chip { fill: #223; } .chip-text { fill: #fffdf7; font-weight: 700; font-variant-numeric: tabular-nums; }
+      .chip-text.sub { font-weight: 400; }
+      .snapped { stroke: #223; stroke-width: 2.5px; vector-effect: non-scaling-stroke; }
+      .snap-pt { fill: none; stroke: #223; stroke-width: 1.5px; vector-effect: non-scaling-stroke; }
     </style>
     <h1>${title}</h1>
     <p><a href="index.html">index</a></p>
     <p>${view} · 1 square = 6" · bold line = ${BOLD}"</p>
+    <p class="readout"><span id="readout">Drag on the drawing to measure. It snaps to edges; Shift keeps it level or plumb.</span><button id="clear" hidden>Clear tapes</button></p>
     <svg viewBox="0 0 ${W} ${H}" width="${W * PX}" height="${H * PX}">
       <defs>
         <pattern id="sq" width="${SQ}" height="${SQ}" patternUnits="userSpaceOnUse">
@@ -291,5 +301,119 @@ function page(title, view, W, H, oy, out) {
       </defs>
       <rect width="${W}" height="${H}" fill="url(#ft)"/>
       ${out.join('\n')}
+      <g class="tapes"></g>
     </svg>`;
+  tape(document.querySelector('svg'), oy, axes);
+}
+
+// Tape measure: drag on the drawing to measure. Ends snap to the nearest rect or line edge within 8 screen px,
+// else to 1/8"; a drag within ~8° of level or plumb locks to it (Shift always locks). Tap a tape to remove it, Esc clears.
+function tape(svg, oy, [xLabel, yLabel]) {
+  const g = svg.querySelector('.tapes'), readout = document.getElementById('readout'), clear = document.getElementById('clear');
+  const hint = readout.textContent;
+  // Edges: vertical { at: x, from: y1, to: y2 } and horizontal { at: y, from: x1, to: x2 }.
+  const vs = [], hs = [];
+  for (const el of svg.querySelectorAll(':scope > rect[class], :scope > line')) {
+    const v = n => el[n].baseVal.value;
+    if (el.tagName === 'rect') {
+      const [x, y, w, h] = ['x', 'y', 'width', 'height'].map(v);
+      vs.push({ at: x, from: y, to: y + h }, { at: x + w, from: y, to: y + h });
+      hs.push({ at: y, from: x, to: x + w }, { at: y + h, from: x, to: x + w });
+    } else {
+      const [x1, y1, x2, y2] = ['x1', 'y1', 'x2', 'y2'].map(v);
+      if (x1 === x2) vs.push({ at: x1, from: Math.min(y1, y2), to: Math.max(y1, y2) });
+      if (y1 === y2) hs.push({ at: y1, from: Math.min(x1, x2), to: Math.max(x1, x2) });
+    }
+  }
+  const scale = () => 1 / svg.getScreenCTM().a; // drawing inches per screen px
+  const at = e => new DOMPoint(e.clientX, e.clientY).matrixTransform(svg.getScreenCTM().inverse());
+  const snap = p => {
+    const t = 8 * scale();
+    const near = (list, a, b) => list.reduce((best, e) => {
+      const d = Math.abs(e.at - a);
+      return d < t && d < (best ? Math.abs(best.at - a) : t) && b > e.from - t && b < e.to + t ? e : best;
+    }, null);
+    const ex = near(vs, p.x, p.y), ey = near(hs, p.y, p.x), r = v => Math.round(v * 8) / 8;
+    return { x: ex ? ex.at : r(p.x), y: ey ? ey.at : r(p.y), ex, ey };
+  };
+  const lock = (a, p, shift) => {
+    const dx = Math.abs(p.x - a.x), dy = Math.abs(p.y - a.y);
+    if (!shift && dy > dx * 0.15 && dx > dy * 0.15) return p;
+    return dy < dx ? { ...p, y: a.y, ey: null } : { ...p, x: a.x, ex: null };
+  };
+  // Inches to the nearest 1/16, the way a tape reads; ≈ when the true value is off the 1/16 marks.
+  const fmt = v => {
+    const s = Math.round(Math.abs(v) * 16), whole = Math.floor(s / 16);
+    let n = s % 16, d = 16;
+    while (n && n % 2 === 0) { n /= 2; d /= 2; }
+    const exact = Math.abs(Math.abs(v) - s / 16) < 0.001;
+    return `${exact ? '' : '≈ '}${v < 0 && s ? '−' : ''}${whole || !n ? whole : ''}${n ? `${whole ? ' ' : ''}${n}/${d}` : ''}"`;
+  };
+  const where = p => `${fmt(p.x - MARGIN)} ${xLabel} · ${fmt(oy - p.y)} ${yLabel}`;
+  const size = ({ a, b }) => {
+    const dx = Math.abs(b.x - a.x), dy = Math.abs(b.y - a.y);
+    return [fmt(Math.hypot(dx, dy)), dx && dy ? `${fmt(dx)} across · ${fmt(dy)} ${yLabel === 'from the wall' ? 'deep' : 'up'}` : ''];
+  };
+
+  const tapes = [];
+  let drag = null, hover = null;
+  const draw = () => {
+    const k = scale(), bw = 14 * k, out = [];
+    const mark = p => {
+      if (p.ex) out.push(`<line x1="${p.ex.at}" y1="${p.ex.from}" x2="${p.ex.at}" y2="${p.ex.to}" class="snapped"/>`);
+      if (p.ey) out.push(`<line x1="${p.ey.from}" y1="${p.ey.at}" x2="${p.ey.to}" y2="${p.ey.at}" class="snapped"/>`);
+      out.push(`<rect x="${p.x - 4 * k}" y="${p.y - 4 * k}" width="${8 * k}" height="${8 * k}" class="snap-pt"/>`);
+    };
+    const blade = (t, i) => {
+      const { a, b } = t, L = Math.hypot(b.x - a.x, b.y - a.y);
+      if (L < 0.01) return;
+      const deg = Math.atan2(b.y - a.y, b.x - a.x) * 180 / Math.PI;
+      const step = k <= 0.25 ? 1 : 6; // a tick every inch when an inch is at least 4 px on screen
+      const ticks = [];
+      for (let s = step; s < L - 0.01; s += step) ticks.push(`M ${s} ${-bw / 2} v ${bw * (s % 12 ? s % 6 ? 0.25 : 0.4 : 0.6)}`);
+      out.push(`<g class="tape" data-i="${i}" transform="translate(${a.x} ${a.y}) rotate(${deg})">
+        <rect x="0" y="${-bw / 2}" width="${L}" height="${bw}" class="blade"/>
+        <path d="${ticks.join(' ')}" class="tick-mark"/>
+        <rect x="${-2.5 * k}" y="${-bw / 2 - 3 * k}" width="${2.5 * k}" height="${bw + 6 * k}" class="hook"/>
+        <rect x="${L}" y="${-bw / 2 - 3 * k}" width="${1.5 * k}" height="${bw + 6 * k}" class="hook"/></g>`);
+      const [main, sub] = size(t), fs = 11 * k, w = Math.max(main.length, sub.length * 0.85) * fs * 0.6 + 12 * k;
+      const h = (sub ? 2.4 : 1.4) * fs, cx = (a.x + b.x) / 2, cy = (a.y + b.y) / 2;
+      out.push(`<rect x="${cx - w / 2}" y="${cy - h / 2}" width="${w}" height="${h}" class="chip"/>
+        <text x="${cx}" y="${cy - h / 2 + fs * 1.05}" class="chip-text" style="font-size:${fs}px">${main}</text>`);
+      if (sub) out.push(`<text x="${cx}" y="${cy - h / 2 + fs * 2.1}" class="chip-text sub" style="font-size:${fs * 0.85}px">${sub}</text>`);
+    };
+    tapes.forEach(blade);
+    if (drag) { blade(drag, -1); mark(drag.a); mark(drag.b); } else if (hover) mark(hover);
+    g.innerHTML = out.join('');
+    clear.hidden = !tapes.length;
+    if (drag) readout.innerHTML = `Tape <b>${size(drag).filter(Boolean).join(' · ')}</b>`;
+    else if (hover) readout.textContent = where(hover);
+    else readout.textContent = tapes.length ? `${tapes.length} tape${tapes.length > 1 ? 's' : ''} on the drawing. Tap a tape to remove it.` : hint;
+  };
+
+  svg.addEventListener('pointerdown', e => {
+    if (e.button) return;
+    svg.setPointerCapture(e.pointerId);
+    const p = snap(at(e));
+    drag = { a: p, b: p, hit: e.target.closest('.tape'), x0: e.clientX, y0: e.clientY };
+    draw();
+  });
+  svg.addEventListener('pointermove', e => {
+    const p = snap(at(e));
+    if (drag) drag.b = lock(drag.a, p, e.shiftKey); else if (e.pointerType === 'mouse') hover = p;
+    draw();
+  });
+  svg.addEventListener('pointerup', e => {
+    if (!drag) return;
+    if (Math.hypot(e.clientX - drag.x0, e.clientY - drag.y0) > 4) tapes.push({ a: drag.a, b: drag.b });
+    else if (drag.hit) tapes.splice(+drag.hit.dataset.i, 1); // a tap on a tape removes it
+    drag = null;
+    hover = e.pointerType === 'mouse' ? snap(at(e)) : null;
+    draw();
+  });
+  svg.addEventListener('pointercancel', () => { drag = null; draw(); });
+  svg.addEventListener('pointerleave', () => { if (!drag) { hover = null; draw(); } });
+  clear.addEventListener('click', () => { tapes.length = 0; draw(); });
+  addEventListener('keydown', e => { if (e.key === 'Escape') { tapes.length = 0; drag = null; draw(); } });
+  addEventListener('resize', draw);
 }

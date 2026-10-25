@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-25T03:41:56+00:00",
+  "generatedAt": "2026-10-25T04:24:14+00:00",
   "title": "Design System: Galley Kitchen",
   "extensions": {
     "colorMeta": {
@@ -273,6 +273,21 @@
           "oklch(83% 0.083 77)",
           "oklch(95% 0.083 77)"
         ]
+      },
+      "tape-yellow": {
+        "role": "material",
+        "displayName": "Tape Yellow",
+        "canonical": "oklch(84.0% 0.172 90)",
+        "tonalRamp": [
+          "oklch(15% 0.172 90)",
+          "oklch(25% 0.172 90)",
+          "oklch(35% 0.172 90)",
+          "oklch(47% 0.172 90)",
+          "oklch(59% 0.172 90)",
+          "oklch(71% 0.172 90)",
+          "oklch(83% 0.172 90)",
+          "oklch(95% 0.172 90)"
+        ]
       }
     },
     "typographyMeta": {
@@ -301,7 +316,13 @@
       }
     ],
     "motion": [],
-    "breakpoints": []
+    "breakpoints": [
+      {
+        "name": "phone",
+        "value": "600px",
+        "purpose": "Under 600px, cabinet and appliance tables stack each row: short fields on one line, notes below."
+      }
+    ]
   },
   "components": [
     {
@@ -335,6 +356,22 @@
       "description": "Graph-paper drawing: 6\" squares, bold line every 30\", sheet lift.",
       "html": "<svg class=\"ds-sheet\" viewBox=\"0 0 96 48\" width=\"384\" height=\"192\"><defs><pattern id=\"ds-sq\" width=\"6\" height=\"6\" patternUnits=\"userSpaceOnUse\"><path d=\"M 6 0 L 0 0 0 6\" fill=\"none\" stroke=\"#bcd3ea\" stroke-width=\"0.1\"/></pattern><pattern id=\"ds-ft\" width=\"30\" height=\"30\" patternUnits=\"userSpaceOnUse\"><rect width=\"30\" height=\"30\" fill=\"url(#ds-sq)\"/><path d=\"M 30 0 L 0 0 0 30\" fill=\"none\" stroke=\"#8fb2d6\" stroke-width=\"0.2\"/></pattern></defs><rect width=\"96\" height=\"48\" fill=\"url(#ds-ft)\"/><rect x=\"12\" y=\"8\" width=\"24\" height=\"30\" fill=\"#f3ead9\" stroke=\"#223\" stroke-width=\"0.3\"/><rect x=\"12.25\" y=\"8.25\" width=\"23.5\" height=\"5.5\" fill=\"#fffdf7\" stroke=\"#223\" stroke-width=\"0.2\"/><rect x=\"12\" y=\"38\" width=\"24\" height=\"4\" fill=\"#556\"/><text x=\"24\" y=\"46\" font-size=\"2.2\" text-anchor=\"middle\" fill=\"#223\">DB24-3</text></svg>",
       "css": ".ds-sheet { background: #fff; box-shadow: 0 1px 4px #0002; max-width: 100%; height: auto; }"
+    },
+    {
+      "name": "Status Box",
+      "kind": "card",
+      "refersTo": "body",
+      "description": "Index panel with the open-issue count (bold, linked) and the resolved count.",
+      "html": "<p class=\"ds-status\"><a href=\"#\"><b>0 open issues</b></a> · <span>24</span> resolved</p>",
+      "css": ".ds-status { margin: 0; padding: 8px 12px; background: #fff; border: 1px solid #ccd; color: #223; font-family: system-ui, sans-serif; line-height: 1.5; } .ds-status a { color: #2a5d9f; } .ds-status a:focus-visible { outline: 2px solid #2a5d9f; outline-offset: 2px; } .ds-status span { color: #667; }"
+    },
+    {
+      "name": "Tape Measure",
+      "kind": "custom",
+      "refersTo": "sketch-sheet",
+      "description": "Drag-to-measure tape on the sketches: Tape Yellow blade, Ink hook and ticks, Ink chip with the length to 1/16\".",
+      "html": "<svg class=\"ds-tape\" viewBox=\"0 0 96 30\" width=\"384\" height=\"120\"><rect width=\"96\" height=\"30\" fill=\"#fff\"/><rect x=\"8\" y=\"6\" width=\"24\" height=\"22\" fill=\"#f3ead9\" stroke=\"#223\" stroke-width=\"0.3\"/><rect x=\"62\" y=\"6\" width=\"24\" height=\"22\" fill=\"#f3ead9\" stroke=\"#223\" stroke-width=\"0.3\"/><line x1=\"32\" y1=\"6\" x2=\"32\" y2=\"28\" stroke=\"#223\" stroke-width=\"0.6\"/><line x1=\"62\" y1=\"6\" x2=\"62\" y2=\"28\" stroke=\"#223\" stroke-width=\"0.6\"/><g class=\"ds-tape-g\"><rect class=\"ds-blade\" x=\"32\" y=\"15.6\" width=\"30\" height=\"2.8\"/><path d=\"M33 15.6v.7M34 15.6v.7M35 15.6v.7M36 15.6v.7M37 15.6v.7M38 15.6v1.1M39 15.6v.7M40 15.6v.7M41 15.6v.7M42 15.6v.7M43 15.6v.7M44 15.6v1.7M45 15.6v.7M46 15.6v.7M47 15.6v.7M48 15.6v.7M49 15.6v.7M50 15.6v1.1M51 15.6v.7M52 15.6v.7M53 15.6v.7M54 15.6v.7M55 15.6v.7M56 15.6v1.7M57 15.6v.7M58 15.6v.7M59 15.6v.7M60 15.6v.7M61 15.6v.7\" stroke=\"#223\" stroke-width=\"0.15\"/><rect x=\"31.5\" y=\"15\" width=\"0.5\" height=\"4\" fill=\"#223\"/><rect x=\"62\" y=\"15\" width=\"0.3\" height=\"4\" fill=\"#223\"/></g><rect x=\"42\" y=\"12.8\" width=\"10\" height=\"3\" fill=\"#223\"/><text x=\"47\" y=\"14.9\" font-size=\"2.2\" font-weight=\"700\" text-anchor=\"middle\" fill=\"#fffdf7\" font-family=\"system-ui, sans-serif\">30\"</text></svg>",
+      "css": ".ds-tape { max-width: 100%; height: auto; box-shadow: 0 1px 4px #0002; cursor: crosshair; } .ds-blade { fill: #f5c400; fill-opacity: 0.85; } .ds-tape:hover .ds-blade { fill-opacity: 1; }"
     },
     {
       "name": "View Button",

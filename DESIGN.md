@@ -20,6 +20,7 @@ colors:
   glass: "#dbe9f2"
   faucet-black: "#2b2b2b"
   brass: "#b08d57"
+  tape-yellow: "#f5c400"
 typography:
   headline:
     fontFamily: "system-ui, sans-serif"
@@ -102,6 +103,7 @@ A near-monochrome paper-and-ink palette with one functional blue, plus a small s
 - **Steel** (steel): appliances, hood, sink.
 - **Glass** (glass): glass cabinet doors.
 - **Faucet Black** (faucet-black) with **Brass** (brass): the Kohler matte black and brushed brass faucet.
+- **Tape Yellow** (tape-yellow): the blade of the tape measure, at 85% opacity so the drawing shows through.
 
 ### Named Rules
 **The One Blue Rule.** Drafting Blue is for links only. Never use it for emphasis, headings or decoration.
@@ -153,6 +155,9 @@ Square corners everywhere. Tables use 1px Hairline borders with collapsed edges.
 
 ### Sketch Sheet (signature)
 - **Style:** a Clean Sheet SVG on graph paper (Grid Blue squares every 6", Bold Grid every 30"), with Sheet lift. Cabinets are labeled below the run: bold name, code, width in Pencil Gray. A ruler on the right marks the toe kick, counter, riser, hood, uppers and ceiling (elevations) or the wall, cabinet fronts and riser (plan).
+
+### Tape measure (sketches)
+- **Style:** drag on any sketch to pull a Tape Yellow blade with an Ink hook, ink ticks every inch (every 6" when an inch is under 4px on screen) and an Ink chip with the length in Front Cream, to the nearest 1/16" (≈ when the true value is off the 1/16 marks). Ends snap to drawing edges within 8 screen px, which are drawn bolder while snapped. A near-level or near-plumb drag locks; Shift always locks. The line under the subtitle reads the pointer's position in inches. Tap a tape to remove it; Esc or Clear tapes removes all.
 
 ### Status box (index)
 - **Style:** a Clean Sheet panel with a 1px Hairline border, 8px × 12px padding, square corners and no shadow. Holds the open-issue count (bold, linked) and the resolved count.

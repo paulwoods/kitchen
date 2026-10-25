@@ -66,7 +66,8 @@ const mat = (color, extra = {}) => new THREE.MeshStandardMaterial({ color, rough
 const M = {
   box: mat('#f3ead9'), front: mat('#fffdf7'), toe: mat('#556'), counter: mat('#ecebe6', { roughness: 0.3 }),
   riser: mat('#e4dccb'), steel: mat('#c9ccd2', { metalness: 0.5, roughness: 0.4 }), black: mat('#1b1b1b', { roughness: 0.3 }),
-  glass: mat('#bcd7e8', { transparent: true, opacity: 0.5 }), ring: mat('#8a8f99', { roughness: 0.4 }), drain: mat('#4a4d52', { metalness: 0.5, roughness: 0.4 }), pull: mat('#2b2b2b'), plate: mat('#ffffff'), wall: mat('#e9e4d8'), floor: mat('#c8b48f'),
+  glass: mat('#bcd7e8', { transparent: true, opacity: 0.5 }), ring: mat('#8a8f99', { roughness: 0.4 }), drain: mat('#4a4d52', { metalness: 0.5, roughness: 0.4 }), pull: mat('#2b2b2b'), plate: mat('#ffffff'),
+  hoodGlass: mat('#bcd7e8', { transparent: true, opacity: 0.4, side: THREE.DoubleSide, roughness: 0.1 }), light: mat('#fff6d8', { emissive: '#fff1c0' }), wall: mat('#e9e4d8'), floor: mat('#c8b48f'),
 };
 const edges = new THREE.LineBasicMaterial({ color: '#223', transparent: true, opacity: 0.35 });
 const geo = new THREE.BoxGeometry(1, 1, 1), edgeGeo = new THREE.EdgesGeometry(geo);
@@ -186,9 +187,19 @@ function side(run, flip, zBack) {
       rod(P(cu, f.back + f.reach, y0 + f.h - 1), P(cu, f.back + f.reach, y0 + f.h - 8), 0.875, M.black);
     }
     for (const x of c.upper || []) {
-      if (x.hood) { // canopy centered over the counter, chimney to the ceiling
-        const top = x.at + x.h;
-        B(u + (w - x.w) / 2, COUNTER / 2 - HOOD / 2, x.at, x.w, HOOD, x.h, M.steel);
+      if (x.hood) { // curved glass canopy over a steel body (filter, 4 lights, touch panel in front), chimney to the ceiling
+        const top = x.at + x.h, bw = 21, bd = 17, bu = u + (w - bw) / 2, bv = COUNTER / 2 - bd / 2; // body size assumed
+        B(bu, bv, x.at, bw, bd, x.h, M.steel);
+        B(bu + 3, bv + 3, x.at - 0.05, bw - 6, bd - 6, 0.05, M.drain); // mesh filter
+        for (const [lu, lv] of [[1.5, 1.5], [bw - 1.5, 1.5], [1.5, bd - 1.5], [bw - 1.5, bd - 1.5]]) rod(P(bu + lu, bv + lv, x.at - 0.1), P(bu + lu, bv + lv, x.at), 0.75, M.light);
+        B(bu + bw / 2 - 3, bv + bd, x.at + 0.5, 6, 0.05, 1, M.black); // touch panel
+        const glass = new THREE.PlaneGeometry(x.w, HOOD, 32, 1), pos = glass.attributes.position;
+        for (let i = 0; i < pos.count; i++) pos.setZ(i, -x.h * (2 * pos.getX(i) / x.w) ** 2); // ends droop to the canopy bottom
+        const pane = new THREE.Mesh(glass, M.hoodGlass);
+        pane.add(new THREE.LineSegments(new THREE.EdgesGeometry(glass), edges));
+        pane.rotation.x = -Math.PI / 2;
+        pane.position.set(...P(u + w / 2, COUNTER / 2, top));
+        group.add(pane);
         B(u + (w - x.chimney) / 2, COUNTER / 2 - x.chimneyD / 2, top, x.chimney, x.chimneyD, CEILING - top, M.steel);
       } else if (x.microwave) {
         const mu = u + (w - x.w) / 2;

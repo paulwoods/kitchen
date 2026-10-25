@@ -180,8 +180,8 @@ function side(run, flip, zBack) {
       for (const lv of [sv, sv + s.d - s.ledge]) B(su, lv, y - 1, s.w, s.ledge, 0.1, M.steel); // ledges the accessories ride on
       rod(P(u + s.drain, sv + s.d / 2, y - s.depth + 0.1), P(u + s.drain, sv + s.d / 2, y - s.depth + 0.2), 1.75, M.drain);
     }
-    if (c.faucet) { // Kohler spec sheet: a 13" column (from the drawing), the exposed spring arching up to h and over to the brass sprayhead
-      // (9 1/2" clear under it) on a dock arm, brass side lever at rest pointing up
+    if (c.faucet) { // Kohler spec sheet: a 13" column (from the drawing), the exposed spring arching up to h and over to the sprayhead
+      // (9 1/2" clear under it) on a brass dock arm; side lever on a hub off the right side. Brass trim per the product photo
       const f = c.faucet, y0 = BOX + TOP, cu = u + w / 2, fv = f.back + f.reach, R = f.reach / 2, cy = y0 + f.h - 0.6 - R;
       rod(P(cu, f.back, y0), P(cu, f.back, y0 + 0.5), 1.25, M.black); // base
       rod(P(cu, f.back, y0), P(cu, f.back, y0 + 13), 0.65, M.black);
@@ -197,9 +197,13 @@ function side(run, flip, zBack) {
         coil.push(p.clone().addScaledVector(n, 0.55 * Math.cos(a)).addScaledVector(side, 0.55 * Math.sin(a)));
       }
       group.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(coil), coil.length, 0.09, 5), M.black));
-      rod(P(cu, f.back, y0 + 12.25), P(cu, fv, y0 + 12.25), 0.3, M.black); // dock arm
-      rod(P(cu, fv, y0 + 14), P(cu, fv, y0 + 9.5), 0.65, M.brass); // sprayhead
-      rod(P(cu + 0.85, f.back, y0 + 5), P(cu + 0.85, f.back, y0 + 5 + 3.3125), 0.2, M.brass); // side lever, at rest
+      rod(P(cu, f.back, y0 + 11.75), P(cu, f.back, y0 + 13), 0.72, M.brass); // collar
+      rod(P(cu, f.back, y0 + 12.25), P(cu, fv, y0 + 12.25), 0.3, M.brass); // dock arm
+      rod(P(cu, fv, y0 + 14), P(cu, fv, y0 + 9.5), 0.65, M.black); // sprayhead
+      rod(P(cu, fv, y0 + 14), P(cu, fv, y0 + 13.4), 0.7, M.brass);
+      B(cu - 0.2, fv + 0.6, y0 + 11, 0.4, 0.15, 2, M.brass); // buttons, facing the aisle
+      rod(P(cu + 0.6, f.back, y0 + 5), P(cu + 2.9, f.back, y0 + 5), 0.6, M.black); // lever hub
+      rod(P(cu + 2.6, f.back, y0 + 5), P(cu + 2.6, f.back, y0 + 5 + 3.3125), 0.2, M.brass); // lever, at rest
     }
     for (const x of c.upper || []) {
       if (x.hood) { // curved glass canopy over a steel body (filter, 4 lights, touch panel in front), chimney to the ceiling

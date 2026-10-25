@@ -144,15 +144,20 @@ function sketch(title, run, opts = {}) {
     ap = '';
     if (c.cooktop) rect(x + (c.w - 30) / 2, FLOOR - BOX - TOP - 0.75, 30, 0.75, 'cooktop');
     if (c.faucet) { // { h, reach, back }, centered (Kohler spec sheet): a column 13" tall (from the sheet's drawing), then the exposed spring
-      // arching up to h and over to the brass sprayhead, docked in front with 9 1/2" clear under it; seen end-on, the arch is one band.
-      // Brass side lever (3 5/16") at rest pointing up. Which parts are brass is from the product photo.
+      // arching up to h and over to the sprayhead, docked in front with 9 1/2" clear under it; seen end-on, the arch is one band.
+      // Side lever: a black hub off the right side, a 3 5/16" brass lever up from its end at rest. Brass trim per the product photo:
+      // the collar at the column top (the dock arm there is hidden behind the sprayhead), the sprayhead's top ring and button strip.
       const fx = x + c.w / 2, deck = FLOOR - BOX - TOP, top = deck - c.faucet.h;
       rect(fx - 1.25, deck - 0.5, 2.5, 0.5, 'faucet');
       rect(fx - 0.65, deck - 13, 1.3, 12.5, 'faucet');
       rect(fx - 0.5, top, 1, c.faucet.h - 13, 'faucet'); // hose inside the spring
       for (let y = deck - 13; y > top + 0.3; y -= 0.5) line(fx - 0.7, y, fx + 0.7, y - 0.25, 'coil');
-      rect(fx + 0.65, deck - 5 - 3.3125, 0.375, 3.3125, 'brass'); // lever
-      rect(fx - 0.65, deck - 14, 1.3, 4.5, 'brass'); // sprayhead
+      rect(fx - 0.72, deck - 13, 1.44, 1.25, 'brass'); // collar
+      rect(fx + 0.65, deck - 5.6, 2.25, 1.2, 'faucet'); // lever hub
+      rect(fx + 2.4, deck - 5 - 3.3125, 0.375, 3.3125, 'brass'); // lever
+      rect(fx - 0.65, deck - 14, 1.3, 4.5, 'faucet'); // sprayhead
+      rect(fx - 0.7, deck - 14, 1.4, 0.6, 'brass');
+      rect(fx - 0.2, deck - 13, 0.4, 2, 'brass'); // buttons
     }
     if (c.bowl) { // undermount sink bowl, centered, dashed: { w, left, right: depth below the counter at each end (sloped bottom) }
       const l = x + (c.w - c.bowl.w) / 2, r = l + c.bowl.w, t = FLOOR - BOX;

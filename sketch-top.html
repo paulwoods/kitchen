@@ -11,7 +11,7 @@ plan('Top view', [
   { name: 'cooktop',   code: 'DB36-3',  w: 36, kind: 'drawers', n: 3, cooktop: true },
   { name: 'plates',    code: 'DB24-3',  w: 24, kind: 'drawers', n: 3, receptacle: true },
   { name: 'trash',     code: 'TRB18FH', w: 18, kind: 'door' },
-  { name: 'sink',      code: 'SB42',    w: 42, kind: 'sink',
+  { name: 'sink',      code: 'SB42',    w: 42, kind: 'sink', switch: { dx: 6, label: 'disposal' },
     faucet: { h: 22.4375, reach: 9.5, back: 3 } }, // Kohler K-R30937-BMB, 3" from the riser face
   { name: 'dishwasher', code: '24" gap', w: 24, kind: 'gap', tag: 'DW' },
   { name: 'cabinet a', code: 'B24-2',   w: 24, kind: 'base', receptacle: true },

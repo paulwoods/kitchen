@@ -5,7 +5,8 @@ const TOE = 4.5, BOX = 34.5, TOP = 1.25; // toe kick, cabinet height, 3 cm count
 const MARGIN = 12, CEILING = 96;
 
 // Items with `h` are tall (panels, pantry, fridge space) and get no countertop.
-function sketch(title, run) {
+// opts.riser: top of a wall behind the counter, off the floor, spanning the cabinet run.
+function sketch(title, run, opts = {}) {
   const total = run.reduce((s, c) => s + c.w, 0);
   const tallest = Math.max(CEILING, ...run.map(c => c.h || 0), ...run.flatMap(c => (c.upper || []).map(u => u.at + (u.h || 0))));
   const FLOOR = Math.ceil((tallest + 12) / SQ) * SQ, H = FLOOR + 24;
@@ -35,6 +36,8 @@ function sketch(title, run) {
     }
   };
   const cabinet = (x, w, h) => { rect(x, FLOOR - h, w, h - TOE, 'box'); rect(x, FLOOR - TOE, w, TOE, 'toe'); };
+
+  if (opts.riser) rect(MARGIN, FLOOR - opts.riser, total, opts.riser - BOX - TOP, 'riser'); // behind everything else
 
   let x = MARGIN;
   const face = BOX - TOE;
@@ -122,6 +125,7 @@ function sketch(title, run) {
   const mark = (at, label) => marks.set(at, [...new Set([...(marks.get(at) || []), label])]);
   mark(TOE, 'toe kick');
   mark(BOX + TOP, 'counter');
+  if (opts.riser) mark(opts.riser, 'riser');
   for (const u of run.flatMap(c => c.upper || [])) {
     if (u.shelf) mark(u.at, 'shelf');
     else if (u.code) mark(u.at + u.h, 'uppers');
@@ -152,6 +156,7 @@ function sketch(title, run) {
       .box { fill: #f3ead9; stroke: #223; stroke-width: 0.3; }
       .front { fill: #fffdf7; stroke: #223; stroke-width: 0.2; }
       .toe { fill: #556; } .counter { fill: #8a8f99; stroke: #223; stroke-width: 0.2; }
+      .riser { fill: #e4dccb; stroke: #223; stroke-width: 0.25; }
       .cooktop { fill: #111; } .pull { stroke: #223; stroke-width: 0.4; stroke-linecap: round; }
       .oven { fill: #c9ccd2; stroke: #223; stroke-width: 0.25; } .window { fill: #3a3f4a; }
       .glass { fill: #dbe9f2; stroke: #223; stroke-width: 0.15; } .shelf { fill: #f3ead9; stroke: #223; stroke-width: 0.2; }

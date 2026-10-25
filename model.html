@@ -26,14 +26,14 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
 // Same runs as sketch-island-front.html and sketch-wall-front.html, left to right as seen from the aisle. Inches.
 const island = [
-  { code: 'DB24-3',  w: 24, kind: 'drawers', n: 3 },
+  { code: 'DB24-3',  w: 24, kind: 'drawers', n: 3, receptacle: true },
   { code: 'DB36-3',  w: 36, kind: 'drawers', n: 3, cooktop: true,
     upper: [ { hood: true, w: 42.0625, h: 2.375, at: 66.1875, chimney: 12.125 } ] }, // Bosch HIB82651UC
-  { code: 'DB24-3',  w: 24, kind: 'drawers', n: 3 },
+  { code: 'DB24-3',  w: 24, kind: 'drawers', n: 3, receptacle: true },
   { code: 'TRB18FH', w: 18, kind: 'door' },
   { code: 'SB42',    w: 42, kind: 'sink', faucet: { h: 22.4375, reach: 9.5, back: 3 } }, // Kohler K-R30937-BMB
   { code: '24" gap', w: 24, kind: 'gap', tag: 'DW' },
-  { code: 'B24-2',   w: 24, kind: 'base' },
+  { code: 'B24-2',   w: 24, kind: 'base', receptacle: true },
 ];
 const wall = [
   { code: 'TEP',     w: 1.5, kind: 'panel', h: 96 },
@@ -45,16 +45,16 @@ const wall = [
   { code: 'B33',     w: 33,  kind: 'oven',
     upper: [{ microwave: true, w: 22, h: 13, at: 35.75 }, { shelf: true, at: 51 }, { shelf: true, at: 66 }, { code: 'W3315', h: 15, at: 81, glass: true }] },
   { code: 'filler',  w: 1.5, kind: 'filler', upper: [{ filler: true, at: 35.75, h: 60.25 }] },
-  { code: 'DB27-3',  w: 27,  kind: 'drawers', n: 3,
+  { code: 'DB27-3',  w: 27,  kind: 'drawers', n: 3, receptacle: true,
     upper: [{ appliance: 'toaster oven', w: 21.5, h: 12.7, at: 35.75 }, { code: 'W2727', h: 27, at: 54 }, { code: 'W2715', h: 15, at: 81, glass: true }] },
-  { code: 'DB27-3',  w: 27,  kind: 'drawers', n: 3,
+  { code: 'DB27-3',  w: 27,  kind: 'drawers', n: 3, receptacle: true,
     upper: [{ appliance: 'air fryer', w: 11, h: 14.75, at: 35.75 }, { code: 'W2727', h: 27, at: 54 }, { code: 'W2715', h: 15, at: 81, glass: true }] },
-  { code: 'DB27-3',  w: 27,  kind: 'drawers', n: 3,
+  { code: 'DB27-3',  w: 27,  kind: 'drawers', n: 3, receptacle: true,
     upper: [{ coffee: true, w: 8.5, h: 16.3, at: 35.75 }, { code: 'W2727', h: 27, at: 54 }, { code: 'W2715', h: 15, at: 81, glass: true }] },
 ];
 
-const TOE = 4.5, BOX = 34.5, TOP = 1.25, CEILING = 96;
-const DEPTH = 24, COUNTER = 25, RISER = 4.5, AISLE = 48, UPPER = 12, APPLIANCE = 14, HOOD = 27; // appliance and hood depths assumed
+const TOE = 4.5, BOX = 34.5, TOP = 1.25, CEILING = 96, OUTLET = 44; // OUTLET: center of a wall receptacle (assumed)
+const BAR = 42, DEPTH = 24, COUNTER = 25, RISER = 4.5, AISLE = 48, UPPER = 12, APPLIANCE = 14, HOOD = 27; // appliance and hood depths assumed
 const total = 192;
 const ZWALL = RISER + 2 * DEPTH + AISLE; // the island riser's back is at z = 0, the room wall at ZWALL
 
@@ -64,7 +64,7 @@ const mat = (color, extra = {}) => new THREE.MeshStandardMaterial({ color, rough
 const M = {
   box: mat('#f3ead9'), front: mat('#fffdf7'), toe: mat('#556'), counter: mat('#ecebe6', { roughness: 0.3 }),
   riser: mat('#e4dccb'), steel: mat('#c9ccd2', { metalness: 0.5, roughness: 0.4 }), black: mat('#1b1b1b', { roughness: 0.3 }),
-  glass: mat('#bcd7e8', { transparent: true, opacity: 0.5 }), pull: mat('#2b2b2b'), wall: mat('#e9e4d8'), floor: mat('#c8b48f'),
+  glass: mat('#bcd7e8', { transparent: true, opacity: 0.5 }), pull: mat('#2b2b2b'), plate: mat('#ffffff'), wall: mat('#e9e4d8'), floor: mat('#c8b48f'),
 };
 const edges = new THREE.LineBasicMaterial({ color: '#223', transparent: true, opacity: 0.35 });
 const geo = new THREE.BoxGeometry(1, 1, 1), edgeGeo = new THREE.EdgesGeometry(geo);
@@ -145,6 +145,10 @@ function side(run, flip, zBack) {
         B(ou + 3, DEPTH + 1, 31, ow - 6, 1, 0.75, M.steel);
       }
     }
+    if (c.receptacle) { // duplex plate (assumed): horizontal on the island riser, vertical on the wall
+      const [pw, ph, at] = flip ? [2.75, 4.5, OUTLET] : [4.5, 2.75, (BOX + TOP + BAR) / 2];
+      B(u + (w - pw) / 2, 0, at - ph / 2, pw, 0.25, ph, M.plate);
+    }
     if (c.cooktop) B(u + (w - 31) / 2, (COUNTER - 21.25) / 2, BOX + TOP, 31, 21.25, 0.25, M.black); // Bosch NIT8061UC
     if (c.kind === 'sink') B(u + (w - 33.5) / 2, COUNTER - 21, BOX + TOP, 33.5, 19, 0.05, M.steel); // Ruvati RVH6222ST, 2" from the counter front
     if (c.faucet) { // column, spout reaching toward the front, pull-down sprayer
@@ -186,7 +190,7 @@ function side(run, flip, zBack) {
 const runs = { island: new THREE.Group(), wall: new THREE.Group() };
 scene.add(runs.island, runs.wall);
 group = runs.island;
-side(island, false, RISER)(0, -RISER, 0, total, RISER, 42, M.riser); // riser behind the island, 42" bar height
+side(island, false, RISER)(0, -RISER, 0, total, RISER, BAR, M.riser); // riser behind the island, 42" bar height
 group = runs.wall;
 side(wall, true, ZWALL);
 group = scene;

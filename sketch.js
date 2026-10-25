@@ -2,7 +2,10 @@
 // All units are inches; one grid square = 6".
 const SQ = 6, BOLD = 30, PX = 5;      // inches per square, per bold line (from the run's left end and the floor), screen px per inch
 const TOE = 4.5, BOX = 34.5, TOP = 1.25; // toe kick, cabinet height, 3 cm countertop
-const MARGIN = 12, CEILING = 96;
+const MARGIN = 12, CEILING = 96, OUTLET = 44; // OUTLET: center of a wall receptacle off the floor (assumed)
+
+// Duplex receptacle plate size and center height: horizontal on a riser (halfway between the counter and its top), vertical on the wall.
+const receptacle = riser => riser ? { w: 4.5, h: 2.75, at: (BOX + TOP + riser) / 2 } : { w: 2.75, h: 4.5, at: OUTLET };
 
 // Items with `h` are tall (panels, pantry, fridge space) and get no countertop.
 // opts.riser: top of a wall behind the counter, off the floor, spanning the cabinet run.
@@ -116,6 +119,15 @@ function sketch(title, run, opts = {}) {
       rect(fx - 0.6875, top, 1.375, c.faucet.h - 0.5, 'faucet');
       rect(fx - 0.875, top + 1, 1.75, 7, 'faucet');
     }
+    if (c.receptacle) { // duplex receptacle centered on the cabinet (assumed): on a riser, a horizontal 4.5" x 2.75" plate halfway up it above the counter; on the wall, a vertical 2.75" x 4.5" plate centered at OUTLET
+      const r = receptacle(opts.riser), px = x + (c.w - r.w) / 2, top = FLOOR - r.at - r.h / 2;
+      const behind = (c.upper || []).some(u => { // a countertop appliance stands in front of it: dashed
+        const ax = x + (u.dx ?? (c.w - u.w) / 2);
+        return (u.appliance || u.coffee || u.microwave) && ax <= px && ax + u.w >= px + r.w && u.at <= r.at - r.h / 2 && u.at + u.h >= r.at + r.h / 2;
+      });
+      rect(px, top, r.w, r.h, behind ? 'hidden' : 'plate');
+      if (!behind) for (const d of [0.6, 2.4]) opts.riser ? rect(px + d, top + 0.6, 1.5, 1.55, 'outlet') : rect(px + 0.6, top + d, 1.55, 1.5, 'outlet');
+    }
     if (c.name) text(x + c.w / 2, FLOOR + 5, c.name, 'name');
     text(x + c.w / 2, FLOOR + 8.5, c.code, 'code');
     text(x + c.w / 2, FLOOR + 11.5, `${c.w}"`, 'dim');
@@ -140,6 +152,7 @@ function sketch(title, run, opts = {}) {
   mark(TOE, 'toe kick');
   mark(BOX + TOP, 'counter');
   if (opts.riser) mark(opts.riser, 'riser');
+  if (run.some(c => c.receptacle)) mark(receptacle(opts.riser).at, 'receptacles');
   for (const c of run) if (c.faucet) mark(BOX + TOP + c.faucet.h, 'faucet');
   for (const u of run.flatMap(c => c.upper || [])) {
     if (u.shelf) mark(u.at, 'shelf');
@@ -213,6 +226,7 @@ function plan(title, island, wall, opts = {}) {
         box(cu, cv, 31, 21.25, 'cooktop');
         for (const [du, dv] of [[8, 6], [23, 6], [8, 15.25], [23, 15.25]]) circle(P(cu + du, cv + dv), 4, 'burner');
       }
+      if (c.receptacle) { const w = flip ? 2.75 : 4.5; box(c.u + (c.w - w) / 2, 0, w, 0.25, 'plate'); } // on the riser or wall face, over the counter
       if (c.kind === 'sink') box(c.u + (c.w - 33.5) / 2, COUNTER - 21, 33.5, 19, 'sinkbowl'); // Ruvati RVH6222ST: 33.5" x 19" outer, 2" from the counter front
       if (c.faucet) { // hole c.faucet.back in front of the riser, spout reaching c.faucet.reach toward the front
         const [x1, y1] = mid(c.faucet.back), [x2, y2] = mid(c.faucet.back + c.faucet.reach);
@@ -275,6 +289,7 @@ function page(title, view, W, H, oy, out, axes) {
       .upper { fill: none; stroke: #223; stroke-width: 0.3; stroke-dasharray: 0.01 0.8; stroke-linecap: round; } .pull { stroke: #223; stroke-width: 0.4; stroke-linecap: round; }
       .oven { fill: #c9ccd2; stroke: #223; stroke-width: 0.25; } .window { fill: #3a3f4a; }
       .glass { fill: #dbe9f2; stroke: #223; stroke-width: 0.15; } .shelf { fill: #f3ead9; stroke: #223; stroke-width: 0.2; }
+      .plate { fill: #fff; stroke: #223; stroke-width: 0.15; } .outlet { fill: #fffdf7; stroke: #223; stroke-width: 0.1; }
       .gap { fill: none; stroke: #223; stroke-width: 0.25; stroke-dasharray: 1.5 1; }
       .floor { stroke: #223; stroke-width: 0.4; } .tick, .dimline { stroke: #667; stroke-width: 0.15; }
       text { text-anchor: middle; font-size: 2.4px; fill: #223; }

@@ -7,14 +7,14 @@
 <script>
 // Left to right, widths in inches.
 sketch('Island front', [
-  { name: 'spices',    code: 'DB24-3',  w: 24, kind: 'drawers', n: 3 },
+  { name: 'spices',    code: 'DB24-3',  w: 24, kind: 'drawers', n: 3, receptacle: true },
   { name: 'cooktop',   code: 'DB36-3',  w: 36, kind: 'drawers', n: 3, cooktop: true,
     upper: [ { hood: true, w: 42.0625, h: 2.375, at: 66.1875, chimney: 12.125 } ] }, // Bosch HIB82651UC
-  { name: 'plates',    code: 'DB24-3',  w: 24, kind: 'drawers', n: 3 },
+  { name: 'plates',    code: 'DB24-3',  w: 24, kind: 'drawers', n: 3, receptacle: true },
   { name: 'trash',     code: 'TRB18FH', w: 18, kind: 'door' },
   { name: 'sink',      code: 'SB42',    w: 42, kind: 'sink',
     faucet: { h: 22.4375, reach: 9.5, back: 3 } }, // Kohler K-R30937-BMB, 3" from the riser face
   { name: 'dishwasher', code: '24" gap', w: 24, kind: 'gap', tag: 'DW' },
-  { name: 'cabinet a', code: 'B24-2',   w: 24, kind: 'base' },
+  { name: 'cabinet a', code: 'B24-2',   w: 24, kind: 'base', receptacle: true },
 ], { riser: 42 }); // riser behind the counter, 42" bar height, the length of the cabinets
 </script>

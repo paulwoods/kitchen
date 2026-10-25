@@ -66,7 +66,7 @@ function sketch(title, run, opts = {}) {
         line(ox + 3, FLOOR - 31.5, ox + ow - 3, FLOOR - 31.5, 'pull');
       }
     }
-    // Things hung above this item. Cabinet: { code, h, at: bottom off the floor, glass }; shelf: { shelf: true, at: top off the floor }; plain strip: { filler: true, h, at }; microwave: { microwave: true, w, h, at }; coffee maker: { coffee: true, w, h, at }; other appliance: { appliance, w, h, at, dx }.
+    // Things hung above this item. Cabinet: { code, h, at: bottom off the floor, glass }; hood: { hood: true, w, h, at, chimney }; shelf: { shelf: true, at: top off the floor }; plain strip: { filler: true, h, at }; microwave: { microwave: true, w, h, at }; coffee maker: { coffee: true, w, h, at }; other appliance: { appliance, w, h, at, dx }.
     for (const u of c.upper || []) {
       if (u.microwave) { // countertop microwave, centered: { microwave: true, w, h, at: bottom off the floor }
         const mx = x + (c.w - u.w) / 2, top = FLOOR - u.at - u.h;
@@ -87,6 +87,13 @@ function sketch(title, run, opts = {}) {
         const ax = x + (u.dx ?? (c.w - u.w) / 2), top = FLOOR - u.at - u.h;
         rect(ax, top, u.w, u.h, 'oven');
         text(ax + u.w / 2, top + u.h / 2 + 0.8, u.appliance, 'code');
+        continue;
+      }
+      if (u.hood) { // island hood, centered: { hood: true, w, h: canopy height, at: canopy bottom off the floor, chimney: width }; chimney runs to the ceiling
+        const top = FLOOR - u.at - u.h;
+        rect(x + (c.w - u.chimney) / 2, FLOOR - CEILING, u.chimney, CEILING - u.at - u.h, 'oven');
+        rect(x + (c.w - u.w) / 2, top, u.w, u.h, 'oven');
+        text(x + c.w / 2, top - 2, 'hood', 'code');
         continue;
       }
       if (u.filler) { rect(x, FLOOR - u.at - u.h, c.w, u.h, 'box'); continue; }
@@ -128,6 +135,7 @@ function sketch(title, run, opts = {}) {
   if (opts.riser) mark(opts.riser, 'riser');
   for (const u of run.flatMap(c => c.upper || [])) {
     if (u.shelf) mark(u.at, 'shelf');
+    else if (u.hood) mark(u.at, 'hood');
     else if (u.code) mark(u.at + u.h, 'uppers');
   }
   mark(CEILING, 'ceiling');

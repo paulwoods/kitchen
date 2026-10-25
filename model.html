@@ -32,7 +32,7 @@ const island = [
     upper: [ { hood: true, w: 41.5, h: 2, at: 66.1875, chimney: 13.375, chimneyD: 10.625 } ] }, // Proline PLFI 544-42
   { code: 'DB24-3',  w: 24, kind: 'drawers', n: 3, receptacle: true },
   { code: 'TRB18FH', w: 18, kind: 'door', receptacle: true },
-  { code: 'SB42',    w: 42, kind: 'sink', switch: { dx: 6, label: 'disposal' },
+  { code: 'SB42',    w: 42, kind: 'sink', airSwitch: { dx: 17, back: 3 },
     sink: { w: 31.875, d: 17.375, v: 4.8125, depth: 9.875, ledge: 0.6875, drain: 11.3125 }, // Ruvati RVH6222ST bowl opening (centered in its 33.5" x 19" outline, 2" from the counter front), drain 6 1/4" in from the left wall
     faucet: { h: 22.4375, reach: 9.5, back: 3 } }, // Kohler K-R30937-BMB
   { code: '24" gap', w: 24, kind: 'gap', tag: 'DW', receptacle: true },
@@ -169,7 +169,11 @@ function side(run, flip, zBack) {
       const at = flip ? OUTLET : (BOX + TOP + BAR) / 2;
       B(u + (w - 2.75) / 2, 0, at - 2.25, 2.75, 0.25, 4.5, M.plate);
     }
-    if (c.switch) B(u + c.switch.dx - 1.375, 0, (BOX + TOP + BAR) / 2 - 2.25, 2.75, 0.25, 4.5, M.plate); // disposal switch on the riser face
+    if (c.airSwitch) { // InSinkErator STS-OO disposal air button: chrome collar and white button (size assumed)
+      const p = (y) => P(u + c.airSwitch.dx, c.airSwitch.back, y);
+      rod(p(BOX + TOP), p(BOX + TOP + 0.25), 0.875, M.steel);
+      rod(p(BOX + TOP + 0.25), p(BOX + TOP + 0.75), 0.6, M.plate);
+    }
     if (c.cooktop) { // Bosch NIT8061UC: black glass, four zones, touch-control strip at the front (layout as in the top view)
       const cu = u + (w - 31) / 2, cv = (COUNTER - 21.25) / 2, y = BOX + TOP + 0.25;
       B(cu, cv, BOX + TOP, 31, 21.25, 0.25, M.black);

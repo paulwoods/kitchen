@@ -192,11 +192,12 @@ function sketch(title, run, opts = {}) {
       if (opts.riser) text(px + r.w + 0.5, top + r.h / 2 + 0.7, '120v', 'dim volts start'); // beside it, clear of the riser top
       else text(px + r.w / 2, top - 0.4, '120v', 'dim volts');
     }
-    if (c.switch) { // toggle switch on the riser (or wall) face at the receptacles' height, vertical 2.75" x 4.5" plate: { dx: center from the item's left end, label }
-      const sx = x + c.switch.dx, top = FLOOR - receptacle(opts.riser).at - 2.25;
-      rect(sx - 1.375, top, 2.75, 4.5, 'plate');
-      rect(sx - 0.25, top + 1.4, 0.5, 1.7, 'toggle');
-      text(sx + 1.875, top + 2.8, c.switch.label, 'dim volts start');
+    if (c.airSwitch) { // InSinkErator STS-OO disposal air button on the counter: { dx: center from the item's left end, back: from the riser face }
+      // chrome collar and white button, 1 3/4" across and 3/4" tall (assumed; it needs a 1 1/4" hole)
+      const bx = x + c.airSwitch.dx, deck = FLOOR - BOX - TOP;
+      rect(bx - 0.875, deck - 0.25, 1.75, 0.25, 'chrome');
+      rect(bx - 0.6, deck - 0.75, 1.2, 0.5, 'button');
+      text(bx - 1.2, deck - 0.4, 'disposal', 'dim volts end');
     }
     for (const b of c.inside || []) { // hidden inside the cabinet, dashed: { label, w, h, at: center off the floor, dx: center from the item's left end, within: label inside the box }
       const side = Math.sign(c.w / 2 - b.dx), top = FLOOR - b.at - b.h / 2; // the label runs from the box's outer edge toward the cabinet's middle (centered when it's in the middle)
@@ -320,7 +321,7 @@ function plan(title, island, wall, opts = {}) {
         for (const [du, dv] of [[8, 6], [23, 6], [8, 15.25], [23, 15.25]]) circle(P(cu + du, cv + dv), 4, 'burner');
       }
       if (c.receptacle) box(c.u + (c.w - 2.75) / 2, 0, 2.75, 0.25, 'plate'); // on the riser or wall face, over the counter
-      if (c.switch) box(c.u + c.switch.dx - 1.375, 0, 2.75, 0.25, 'plate');
+      if (c.airSwitch) circle(P(c.u + c.airSwitch.dx, c.airSwitch.back), 0.875, 'button'); // STS-OO disposal button
       if (c.kind === 'sink') box(c.u + (c.w - 33.5) / 2, COUNTER - 21, 33.5, 19, 'sinkbowl'); // Ruvati RVH6222ST: 33.5" x 19" outer, 2" from the counter front
       if (c.faucet) { // hole c.faucet.back in front of the riser, spout reaching c.faucet.reach toward the front
         const [x1, y1] = mid(c.faucet.back), [x2, y2] = mid(c.faucet.back + c.faucet.reach);
@@ -384,7 +385,7 @@ function page(title, view, W, H, oy, out, axes) {
       .upper { fill: none; stroke: #223; stroke-width: 0.3; stroke-dasharray: 0.01 0.8; stroke-linecap: round; } .pull { stroke: #223; stroke-width: 0.4; stroke-linecap: round; }
       .oven { fill: #c9ccd2; stroke: #223; stroke-width: 0.25; } .window { fill: #3a3f4a; }
       .glass { fill: #dbe9f2; stroke: #223; stroke-width: 0.15; } .shelf { fill: #f3ead9; stroke: #223; stroke-width: 0.2; }
-      .toggle { fill: #223; } .plate { fill: #fff; stroke: #223; stroke-width: 0.15; } .outlet { fill: #fffdf7; stroke: #223; stroke-width: 0.1; }
+      .chrome { fill: #c9ccd2; stroke: #223; stroke-width: 0.1; } .button { fill: #fff; stroke: #223; stroke-width: 0.15; } .plate { fill: #fff; stroke: #223; stroke-width: 0.15; } .outlet { fill: #fffdf7; stroke: #223; stroke-width: 0.1; }
       .gap { fill: none; stroke: #223; stroke-width: 0.25; stroke-dasharray: 1.5 1; }
       .floor { stroke: #223; stroke-width: 0.4; } .tick, .dimline { stroke: #667; stroke-width: 0.15; }
       text { text-anchor: middle; font-size: 2.4px; fill: #223; }

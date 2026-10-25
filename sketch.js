@@ -143,11 +143,17 @@ function sketch(title, run, opts = {}) {
     }
     ap = '';
     if (c.cooktop) rect(x + (c.w - 30) / 2, FLOOR - BOX - TOP - 0.75, 30, 0.75, 'cooktop');
-    if (c.faucet) { // { h, reach, back }, centered on the cabinet: column on the counter, pull-down sprayer hanging in front
-      const fx = x + c.w / 2, top = FLOOR - BOX - TOP - c.faucet.h;
-      rect(fx - 1.25, FLOOR - BOX - TOP - 0.5, 2.5, 0.5, 'faucet');
-      rect(fx - 0.6875, top, 1.375, c.faucet.h - 0.5, 'faucet');
-      rect(fx - 0.875, top + 1, 1.75, 7, 'faucet');
+    if (c.faucet) { // { h, reach, back }, centered: Kohler semi-pro column wrapped in a spring coil, the hose looping over the top
+      // to a brass sprayhead docked in front (9 1/2" clear under it), brass side lever at rest pointing up (coil and dock sizes assumed)
+      const fx = x + c.w / 2, deck = FLOOR - BOX - TOP, top = deck - c.faucet.h;
+      rect(fx - 1.25, deck - 0.5, 2.5, 0.5, 'faucet');
+      rect(fx - 0.6875, top + 1.5, 1.375, c.faucet.h - 2, 'faucet');
+      rect(fx - 0.375, top, 0.75, 1.5, 'faucet'); // hose loop
+      for (let y = deck - 8; y > top + 2; y -= 0.75) line(fx - 1.25, y, fx + 1.25, y - 0.375, 'coil');
+      rect(fx + 0.6875, deck - 4 - 3.3125, 0.375, 3.3125, 'brass'); // lever
+      rect(fx - 0.375, top + 1.5, 0.75, c.faucet.h - 17, 'faucet'); // hose down to the sprayhead
+      rect(fx - 1.125, deck - 14, 2.25, 0.75, 'faucet'); // dock
+      rect(fx - 0.875, deck - 15.5, 1.75, 6, 'brass'); // sprayhead
     }
     if (c.bowl) { // undermount sink bowl, centered, dashed: { w, left, right: depth below the counter at each end (sloped bottom) }
       const l = x + (c.w - c.bowl.w) / 2, r = l + c.bowl.w, t = FLOOR - BOX;
@@ -307,7 +313,7 @@ function plan(title, island, wall, opts = {}) {
         const [x1, y1] = mid(c.faucet.back), [x2, y2] = mid(c.faucet.back + c.faucet.reach);
         line(x1, y1, x2, y2, 'spout');
         circle([x1, y1], 1.25, 'faucet');
-        circle([x2, y2], 0.875, 'faucet');
+        circle([x2, y2], 0.875, 'brass');
       }
       // Upper cabinets, dotted: depth from the code (W362424 is 24" deep), else 12".
       const ud = Math.max(0, ...(c.upper || []).map(x => +(x.code.match(/^W\d{4}(\d\d)/) || [])[1] || 12));
@@ -360,6 +366,7 @@ function page(title, view, W, H, oy, out, axes) {
       .cooktop { fill: #111; } .burner { fill: none; stroke: #667; stroke-width: 0.3; }
       .top { fill: #e9eaed; } .hidden { fill: none; stroke: #223; stroke-width: 0.2; stroke-dasharray: 1 0.6; }
       .faucet { fill: #2b2b2b; stroke: #b08d57; stroke-width: 0.2; } .spout { stroke: #2b2b2b; stroke-width: 1.375; }
+      .brass { fill: #b08d57; stroke: #223; stroke-width: 0.1; } .coil { stroke: #2b2b2b; stroke-width: 0.25; }
       .sinkbowl { fill: #c9ccd2; stroke: #223; stroke-width: 0.3; }
       .upper { fill: none; stroke: #223; stroke-width: 0.3; stroke-dasharray: 0.01 0.8; stroke-linecap: round; } .pull { stroke: #223; stroke-width: 0.4; stroke-linecap: round; }
       .oven { fill: #c9ccd2; stroke: #223; stroke-width: 0.25; } .window { fill: #3a3f4a; }

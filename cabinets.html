@@ -1,19 +1,27 @@
 <!doctype html>
+<html lang="en">
 <meta charset="utf-8">
-<title>Cabinets</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cabinets · Galley Kitchen</title>
 <style>
   body { margin: 24px; max-width: 1100px; background: #fbfaf5; color: #223; font-family: system-ui, sans-serif; line-height: 1.5; }
-  h1 { margin: 0 0 4px; } h2 { margin: 28px 0 0; font-size: 1.2em; } a { color: #2a5d9f; }
+  h1 { margin: 0 0 4px; } h2 { margin: 28px 0 0; font-size: 1.25em; } a { color: #2a5d9f; }
   table { border-collapse: collapse; margin-top: 12px; background: #fff; }
   th, td { border: 1px solid #ccd; padding: 8px 10px; text-align: left; vertical-align: top; }
   th { background: #eef2f7; white-space: nowrap; } td:nth-child(-n+4) { white-space: nowrap; }
+  @media (max-width: 600px) { /* phones: each row stacks, short fields on one line, notes below */
+    table, tbody, tr, td { display: block; } tr:first-child { display: none; }
+    tr { border: 1px solid #ccd; border-top: 0; padding: 8px 10px; } tr:nth-child(2) { border-top: 1px solid #ccd; }
+    td { border: 0; padding: 0; white-space: normal !important; min-width: 0 !important; } td:empty { display: none; }
+    td:not(:last-child) { display: inline; font-weight: 600; } td:not(:last-child):not(:nth-last-child(2))::after { content: " · "; font-weight: 400; color: #667; }
+  }
 </style>
 <h1>Cabinets</h1>
 <p><a href="index.html">index</a></p>
 <p>Every cabinet, panel and filler in the two runs, left to right as drawn in the sketches. Sizes are width × height × depth in inches; elevations are measured from the floor. Base cabinets are 34.5" tall with a 4.5" toe kick, under a 3 cm (1.25") quartzite counter at 35.75". Ceiling is 96".</p>
 <p>Depths not given by the cabinet code are the usual stock depths (24" base, 12" wall) and are not confirmed.</p>
 
-<h2>Island (192")</h2>
+<h2 id="island">Island (192")</h2>
 <table>
 <tr><th>#</th><th>name</th><th>code</th><th>size W × H × D</th><th>notes</th></tr>
 <tr><td>1</td><td>spices</td><td>DB24-3</td><td>24 × 34.5 × 24</td><td>Three-drawer base: 6" top drawer over two equal deep drawers. 1" counter overhang at the left end of the island.</td></tr>
@@ -25,7 +33,7 @@
 <tr><td>7</td><td>cabinet a</td><td>B24-2</td><td>24 × 34.5 × 24</td><td>Base cabinet at the right end of the island; the only Cabinet A (decided 2026-10-24). One drawer over one door (confirmed 2026-10-24). 1" counter overhang at the right end.</td></tr>
 </table>
 
-<h2>Wall (192")</h2>
+<h2 id="wall">Wall (192")</h2>
 <table>
 <tr><th>#</th><th>name</th><th>code</th><th>size W × H × D</th><th>notes</th></tr>
 <tr><td>1</td><td></td><td>TEP</td><td>1.5 × 96</td><td>Tall end panel, floor to ceiling, left of the fridge.</td></tr>
@@ -51,7 +59,7 @@
 <tr><td>10b</td><td></td><td>W2715</td><td>27 × 15 × 12</td><td>Glass-door wall cabinet, 81"–96".</td></tr>
 </table>
 
-<h2>Order summary</h2>
+<h2 id="order-summary">Order summary</h2>
 <table>
 <tr><th>code</th><th>qty</th><th>where</th></tr>
 <tr><td>DB24-3</td><td>2</td><td>island: spices, plates</td></tr>

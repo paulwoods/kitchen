@@ -249,16 +249,16 @@ function plan(title, island, wall, opts = {}) {
     text(rx + 1.5, WALLY - m + 0.7, `${m}" ${label}`, 'dim ruler');
   }
   text(rx + 1.5, WALLY - DEPTH - AISLE / 2 + 0.7, `${AISLE}" aisle`, 'dim ruler');
-  page(title, 'Top view (plan)', W, H, WALLY, out);
+  page(title, 'Plan of both runs', W, H, WALLY, out);
 }
 
 // Wraps a drawing in the page: graph paper with bold lines every BOLD" from (MARGIN, oy).
 function page(title, view, W, H, oy, out) {
-  document.title = `Sketch — ${title}`;
+  document.title = `${title} · Galley Kitchen`;
   document.body.innerHTML = `
     <style>
       body { margin: 24px; background: #fbfaf5; color: #223; font-family: system-ui, sans-serif; }
-      h1 { margin: 0; text-transform: capitalize; } p { margin: 4px 0 16px; color: #667; } a { color: #2a5d9f; }
+      h1 { margin: 0; } p { margin: 4px 0 16px; color: #667; } a { color: #2a5d9f; }
       svg { max-width: 100%; height: auto; background: #fff; box-shadow: 0 1px 4px #0002; }
       .grid { fill: none; stroke: #bcd3ea; stroke-width: 0.1; } .ft { stroke: #8fb2d6; stroke-width: 0.2; }
       .box { fill: #f3ead9; stroke: #223; stroke-width: 0.3; }

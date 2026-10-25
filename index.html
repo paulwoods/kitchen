@@ -1,22 +1,56 @@
 <!doctype html>
+<html lang="en">
 <meta charset="utf-8">
-<title>Kitchen</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Galley Kitchen</title>
 <style>
-  body { margin: 24px; background: #fbfaf5; color: #223; font-family: system-ui, sans-serif; }
-  h1 { margin: 0 0 16px; } h2 { margin: 20px 0 4px; font-size: 1.1em; } li { margin: 6px 0; } a { color: #2a5d9f; }
+  body { margin: 24px; max-width: 760px; background: #fbfaf5; color: #223; font-family: system-ui, sans-serif; line-height: 1.5; }
+  h1 { margin: 0 0 4px; } h2 { margin: 28px 0 4px; font-size: 1.25em; } p { margin: 0; }
+  ul { margin: 8px 0 0; } li { margin: 6px 0; } a { color: #2a5d9f; } li a { padding: 3px 0; }
+  .sub, .note, li span { color: #667; }
+  li span::before { content: "· "; content: "· " / ""; }
+  .status { margin-top: 16px; padding: 8px 12px; background: #fff; border: 1px solid #ccd; }
 </style>
+<main>
 <h1>Galley Kitchen</h1>
-<h2>Sketches</h2>
+<p class="sub">Plan as of <span data-date>2026-10-24</span></p>
+<p class="status"><a href="anomalies.html#open"><b data-open>0 open issues</b></a> · <span data-resolved>24</span> resolved</p>
+
+<h2>Drawings and model</h2>
+<p class="note">On graph paper: 1 square = 6", bold line every 30".</p>
 <ul>
-  <li><a href="sketch-island-front.html">Island</a></li>
-  <li><a href="sketch-top.html">Top view</a></li>
-  <li><a href="model.html">3D model</a></li>
-  <li><a href="sketch-wall-front.html">Wall</a></li>
+  <li><a href="sketch-top.html">Top view</a> <span>plan of both runs, depths from the wall, 48" aisle</span></li>
+  <li><a href="sketch-island-front.html">Island front</a> <span>cabinets, cooktop, sink, hood, riser</span></li>
+  <li><a href="sketch-wall-front.html">Wall front</a> <span>fridge, pantry, oven, hutch, wall cabinets</span></li>
+  <li><a href="model.html">3D model</a> <span>orbit the whole galley (needs internet)</span></li>
 </ul>
+
 <h2>Documentation</h2>
 <ul>
-  <li><a href="anomalies.html">Anomalies</a></li>
-  <li><a href="appliances.html">Appliances</a></li>
-  <li><a href="cabinets.html">Cabinets</a></li>
-  <li><a href="electrical.html">Electrical</a></li>
+  <li><a href="anomalies.html">Issues</a> <span>what is still open, and every resolved decision</span></li>
+  <li><a href="cabinets.html">Cabinets</a> <span>every cabinet, panel and filler per run, and the order summary</span></li>
+  <li><a href="appliances.html">Appliances</a> <span>model numbers, spec-sheet sizes and install gotchas</span></li>
+  <li><a href="electrical.html">Electrical</a> <span>circuit, voltage and connection for each appliance</span></li>
 </ul>
+
+<h2>For the trades</h2>
+<ul>
+  <li>Cabinet maker <span><a href="cabinets.html#order-summary">order summary</a>, the <a href="cabinets.html#island">island</a> and <a href="cabinets.html#wall">wall</a> tables, both front elevations</span></li>
+  <li>Electrician <span><a href="electrical.html">Electrical</a>, then <a href="appliances.html">Appliances</a> for the oven junction box, GFCI outlets and disposal switch</span></li>
+  <li>Plumber <span><a href="appliances.html">Appliances</a>: sink, faucet, disposal, dishwasher drain loop, fridge water line</span></li>
+  <li>Countertop <span><a href="sketch-top.html">Top view</a> for depths and positions, <a href="appliances.html">Appliances</a> for the sink and cooktop cutouts</span></li>
+</ul>
+</main>
+<script>
+  // Counts come from anomalies.html: open items in a <ul> right after h2#open, resolved items after h2#resolved.
+  // Opened straight from the folder (file:), fetch fails and the typed text above stays.
+  fetch('anomalies.html').then(r => r.text()).then(html => {
+    const doc = new DOMParser().parseFromString(html, 'text/html');
+    const items = id => { const ul = doc.getElementById(id)?.nextElementSibling; return ul?.tagName === 'UL' ? ul.children.length : null; };
+    const open = doc.getElementById('open') ? items('open') ?? 0 : null, resolved = items('resolved');
+    if (open === null || resolved === null) return;
+    document.querySelector('[data-open]').textContent = `${open} open issue${open === 1 ? '' : 's'}`;
+    document.querySelector('[data-resolved]').textContent = resolved;
+    document.querySelector('[data-date]').textContent = html.match(/\d{4}-\d{2}-\d{2}/g).sort().pop();
+  }).catch(() => {});
+</script>

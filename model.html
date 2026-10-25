@@ -1,15 +1,17 @@
 <!doctype html>
+<html lang="en">
 <meta charset="utf-8">
-<title>Model — Kitchen</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3D model · Galley Kitchen</title>
 <style>
   body { margin: 0; overflow: hidden; background: #fbfaf5; color: #223; font-family: system-ui, sans-serif; }
   header { padding: 16px 24px 8px; } h1 { margin: 0; } p { margin: 4px 0; color: #667; } a { color: #2a5d9f; }
   button { font: inherit; margin-right: 6px; padding: 2px 10px; }
-  canvas { display: block; }
+  canvas { display: block; width: 100%; }
 </style>
 <header>
-  <h1>Kitchen</h1>
-  <p><a href="index.html">index</a> · 3D model · drag to orbit, right-drag to pan, scroll to zoom</p>
+  <h1>3D model</h1>
+  <p><a href="index.html">index</a> · drag to orbit, right-drag to pan, scroll to zoom</p>
   <p><button data-view="end">End</button><button data-view="island">Island</button><button data-view="wall">Wall</button><button data-view="top">Top</button></p>
 </header>
 <script type="importmap">
@@ -230,8 +232,9 @@ document.querySelectorAll('[data-view]').forEach(b => b.onclick = () => show(b.d
 show('end');
 
 const resize = () => {
-  const w = innerWidth, h = innerHeight - document.querySelector('header').offsetHeight;
-  renderer.setSize(w, h);
+  const w = document.documentElement.clientWidth, h = document.documentElement.clientHeight - document.querySelector('header').offsetHeight;
+  renderer.setSize(w, h, false); // CSS sets the width, so a phone's layout viewport can't grow with the canvas
+  renderer.domElement.style.height = h + 'px';
   camera.aspect = w / h;
   camera.updateProjectionMatrix();
 };

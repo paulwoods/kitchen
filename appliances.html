@@ -1,12 +1,20 @@
 <!doctype html>
+<html lang="en">
 <meta charset="utf-8">
-<title>Appliances</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Appliances · Galley Kitchen</title>
 <style>
   body { margin: 24px; max-width: 1100px; background: #fbfaf5; color: #223; font-family: system-ui, sans-serif; line-height: 1.5; }
   h1 { margin: 0 0 4px; } a { color: #2a5d9f; }
   table { border-collapse: collapse; margin-top: 16px; background: #fff; }
   th, td { border: 1px solid #ccd; padding: 8px 10px; text-align: left; vertical-align: top; }
   th { background: #eef2f7; } td:nth-child(-n+3) { white-space: nowrap; } td:nth-child(3) { white-space: normal; min-width: 160px; }
+  @media (max-width: 600px) { /* phones: each row stacks, short fields on one line, notes below */
+    table, tbody, tr, td { display: block; } tr:first-child { display: none; }
+    tr { border: 1px solid #ccd; border-top: 0; padding: 8px 10px; } tr:nth-child(2) { border-top: 1px solid #ccd; }
+    td { border: 0; padding: 0; white-space: normal !important; min-width: 0 !important; } td:empty { display: none; }
+    td:not(:last-child) { display: inline; font-weight: 600; } td:not(:last-child):not(:nth-last-child(2))::after { content: " · "; font-weight: 400; color: #667; }
+  }
 </style>
 <h1>Appliances</h1>
 <p><a href="index.html">index</a></p>

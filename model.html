@@ -46,9 +46,9 @@ const wall = [
   { code: 'PC36',    w: 36,  kind: 'pantry', h: 96 },
   { code: 'filler',  w: 1.5, kind: 'panel', h: 96 },
   { code: 'B33',     w: 33,  kind: 'oven', receptacle: true,
-    upper: [{ microwave: true, w: 22, h: 13, at: 35.75 }, { code: 'W3327', h: 27, at: 54 }, { code: 'W3315', h: 15, at: 81, glass: true }] },
+    upper: [{ code: 'W3327', h: 27, at: 54 }, { code: 'W3315', h: 15, at: 81, glass: true }] },
   { code: 'filler',  w: 1.5, kind: 'filler', upper: [{ filler: true, at: 54, h: 42 }] },
-  { code: 'DB27-3',  w: 27,  kind: 'drawers', n: 3, receptacle: true,
+  { code: 'MWB27',   w: 27,  kind: 'microwave', receptacle: true,
     upper: [{ appliance: 'toaster oven', w: 21.5, h: 12.7, at: 35.75 }, { code: 'W2727', h: 27, at: 54 }, { code: 'W2715', h: 15, at: 81, glass: true }] },
   { code: 'DB27-3',  w: 27,  kind: 'drawers', n: 3, receptacle: true,
     upper: [{ appliance: 'air fryer', w: 11, h: 14.75, at: 35.75 }, { code: 'W2727', h: 27, at: 54 }, { code: 'W2715', h: 15, at: 81, glass: true }] },
@@ -158,6 +158,11 @@ function side(run, flip, zBack) {
         B(ou, DEPTH, 5, ow, 0.75, 29, M.steel);
         B(ou + 3, DEPTH + 0.75, 10, ow - 6, 0.1, 18, M.black);
         B(ou + 3, DEPTH + 1, 31, ow - 6, 1, 0.75, M.steel);
+      } else if (c.kind === 'microwave') { // Bosch HMD8454UC microwave drawer: 23 7/8" x 16 5/16" face from 17.75" to 34 1/16", two drawers below
+        fronts(u, w, 17.75, [{ h: 6.625 }, { h: 6.625 }]);
+        const mw = 23.875, mu = u + (w - mw) / 2;
+        B(mu, DEPTH, 17.75, mw, 0.75, 16.3125, M.steel);
+        B(mu + 0.5, DEPTH + 0.75, 31.875, mw - 1, 0.1, 1.6875, M.black); // control strip
       }
     }
     if (c.receptacle) { // duplex plate (assumed): horizontal on the island riser, vertical on the wall

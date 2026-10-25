@@ -94,6 +94,13 @@ function sketch(title, run, opts = {}) {
         rect(ox + 3, FLOOR - 28, ow - 6, 18, 'window');
         line(ox + 3, FLOOR - 31.5, ox + ow - 3, FLOOR - 31.5, 'pull');
         ap = '';
+      } else if (c.kind === 'microwave') { // Bosch HMD8454UC microwave drawer: 23 7/8" x 16 5/16" face from 17.75" to 7/16" under the counter (34 1/16"), two drawers below
+        fronts(x, c.w, FLOOR - 17.75, [{ h: 6.625 }, { h: 6.625 }]);
+        const mw = 23.875, mx = x + (c.w - mw) / 2, top = FLOOR - 34.0625;
+        tag('microwave', c.off);
+        rect(mx, top, mw, 16.3125, 'oven');
+        rect(mx + 0.5, top + 0.5, mw - 1, 1.6875, 'window'); // tilt-out control strip; the drawer opens itself, no handle
+        ap = '';
       }
     }
     // Things hung above this item. Cabinet: { code, h, at: bottom off the floor, glass }; hood: { hood: true, w, h, at, chimney }; shelf: { shelf: true, at: top off the floor }; plain strip: { filler: true, h, at }; microwave: { microwave: true, w, h, at }; coffee maker: { coffee: true, w, h, at }; other appliance: { appliance, w, h, at, dx }.

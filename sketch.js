@@ -149,6 +149,11 @@ function sketch(title, run, opts = {}) {
       rect(fx - 0.6875, top, 1.375, c.faucet.h - 0.5, 'faucet');
       rect(fx - 0.875, top + 1, 1.75, 7, 'faucet');
     }
+    if (c.bowl) { // undermount sink bowl, centered, dashed: { w, left, right: depth below the counter at each end (sloped bottom) }
+      const l = x + (c.w - c.bowl.w) / 2, r = l + c.bowl.w, t = FLOOR - BOX;
+      line(l, t, r, t, 'hidden'); line(r, t, r, t + c.bowl.right, 'hidden');
+      line(r, t + c.bowl.right, l, t + c.bowl.left, 'hidden'); line(l, t + c.bowl.left, l, t, 'hidden');
+    }
     if (c.receptacle) { // duplex receptacle centered on the cabinet (assumed): on a riser, a horizontal 4.5" x 2.75" plate halfway up it above the counter; on the wall, a vertical 2.75" x 4.5" plate centered at OUTLET
       const r = receptacle(opts.riser), px = x + (c.w - r.w) / 2, top = FLOOR - r.at - r.h / 2;
       const behind = (c.upper || []).find(u => { // a countertop appliance stands in front of it: dashed
@@ -174,10 +179,11 @@ function sketch(title, run, opts = {}) {
       rect(sx - 0.25, top + 1.4, 0.5, 1.7, 'toggle');
       text(sx + 1.875, top + 2.8, c.switch.label, 'dim volts start');
     }
-    for (const b of c.inside || []) { // hidden inside the cabinet, dashed: { label, w, h, at: center off the floor, dx: center from the item's left end }
+    for (const b of c.inside || []) { // hidden inside the cabinet, dashed: { label, w, h, at: center off the floor, dx: center from the item's left end, within: label inside the box }
       const side = Math.sign(c.w / 2 - b.dx), top = FLOOR - b.at - b.h / 2; // the label runs from the box's outer edge toward the cabinet's middle (centered when it's in the middle)
       rect(x + b.dx - b.w / 2, top, b.w, b.h, 'hidden');
-      text(x + b.dx - side * b.w / 2, top - 1, b.label, `dim ${['end', '', 'start'][side + 1]}`);
+      if (b.within) text(x + b.dx, top + b.h / 2 + 0.5, b.label, 'dim'); // label inside the box
+      else text(x + b.dx - side * b.w / 2, top - 1, b.label, `dim ${['end', '', 'start'][side + 1]}`);
     }
     if (c.name) text(x + c.w / 2, FLOOR + 5, c.name, 'name');
     text(x + c.w / 2, FLOOR + 8.5, c.code, 'code');

@@ -9,13 +9,16 @@
 sketch('Island front', [
   { name: 'spices',    code: 'DB24-3',  w: 24, kind: 'drawers', n: 3, receptacle: true },
   { name: 'cooktop',   code: 'DB36-3',  w: 36, kind: 'drawers', n: 3, cooktop: true,
-    inside: [{ label: '240v 30a', w: 2.75, h: 4.5, at: 25.75, dx: 3 }],
+    inside: [{ label: '240v 30a', w: 2.75, h: 4.5, at: 25.75, dx: 3 },
+              { label: '', w: 28.875, h: 4.125, at: 32.4375, dx: 18 }], // NIT8061UC body: cutout width, 4 1/8" below the counter
     upper: [ { hood: true, w: 42.0625, h: 2.375, at: 66.1875, chimney: 12.125 } ] }, // Bosch HIB82651UC
   { name: 'plates',    code: 'DB24-3',  w: 24, kind: 'drawers', n: 3, receptacle: true },
   { name: 'trash',     code: 'TRB18FH', w: 18, kind: 'door',
     inside: [{ label: '120v', w: 2.75, h: 4.5, at: 26, dx: 9 }] },
   { name: 'sink',      code: 'SB42',    w: 42, kind: 'sink', switch: { dx: 6, label: 'disposal' },
-    inside: [{ label: '120v', w: 2.75, h: 4.5, at: 9, dx: 3 }],
+    inside: [{ label: '120v', w: 2.75, h: 4.5, at: 9, dx: 3 },
+              { label: 'disposal', w: 8.5, h: 12.25, at: 18.5, dx: 11.3125, within: true }], // InSinkErator 81138K: 12 1/4" tall under the drain (width assumed)
+    bowl: { w: 31.875, left: 9.875, right: 9.25 }, // Ruvati RVH6222ST bowl, drain on the left, 6 1/4" in from the bowl's left wall
     faucet: { h: 22.4375, reach: 9.5, back: 3 } }, // Kohler K-R30937-BMB, 3" from the riser face
   { name: 'dishwasher', code: '24" gap', w: 24, kind: 'gap', tag: 'DW', dishwasher: true },
   { name: 'cabinet a', code: 'B24-2',   w: 24, kind: 'base', receptacle: true },

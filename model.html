@@ -31,7 +31,9 @@ const island = [
     upper: [ { hood: true, w: 42.0625, h: 2.375, at: 66.1875, chimney: 12.125 } ] }, // Bosch HIB82651UC
   { code: 'DB24-3',  w: 24, kind: 'drawers', n: 3, receptacle: true },
   { code: 'TRB18FH', w: 18, kind: 'door' },
-  { code: 'SB42',    w: 42, kind: 'sink', switch: { dx: 6, label: 'disposal' }, faucet: { h: 22.4375, reach: 9.5, back: 3 } }, // Kohler K-R30937-BMB
+  { code: 'SB42',    w: 42, kind: 'sink', switch: { dx: 6, label: 'disposal' },
+    sink: { w: 31.875, d: 17.375, v: 4.8125, depth: 9.875, ledge: 0.6875, drain: 11.3125 }, // Ruvati RVH6222ST bowl opening (centered in its 33.5" x 19" outline, 2" from the counter front), drain 6 1/4" in from the left wall
+    faucet: { h: 22.4375, reach: 9.5, back: 3 } }, // Kohler K-R30937-BMB
   { code: '24" gap', w: 24, kind: 'gap', tag: 'DW' },
   { code: 'B24-2',   w: 24, kind: 'base', receptacle: true },
 ];
@@ -64,7 +66,7 @@ const mat = (color, extra = {}) => new THREE.MeshStandardMaterial({ color, rough
 const M = {
   box: mat('#f3ead9'), front: mat('#fffdf7'), toe: mat('#556'), counter: mat('#ecebe6', { roughness: 0.3 }),
   riser: mat('#e4dccb'), steel: mat('#c9ccd2', { metalness: 0.5, roughness: 0.4 }), black: mat('#1b1b1b', { roughness: 0.3 }),
-  glass: mat('#bcd7e8', { transparent: true, opacity: 0.5 }), pull: mat('#2b2b2b'), plate: mat('#ffffff'), wall: mat('#e9e4d8'), floor: mat('#c8b48f'),
+  glass: mat('#bcd7e8', { transparent: true, opacity: 0.5 }), ring: mat('#8a8f99', { roughness: 0.4 }), drain: mat('#4a4d52', { metalness: 0.5, roughness: 0.4 }), pull: mat('#2b2b2b'), plate: mat('#ffffff'), wall: mat('#e9e4d8'), floor: mat('#c8b48f'),
 };
 const edges = new THREE.LineBasicMaterial({ color: '#223', transparent: true, opacity: 0.35 });
 const geo = new THREE.BoxGeometry(1, 1, 1), edgeGeo = new THREE.EdgesGeometry(geo);
@@ -81,6 +83,12 @@ const rod = (a, b, r, m) => { // cylinder from point a to point b
   const mesh = new THREE.Mesh(new THREE.CylinderGeometry(r, r, A.distanceTo(B), 16), m);
   mesh.position.copy(A).add(B).multiplyScalar(0.5);
   mesh.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), B.clone().sub(A).normalize());
+  group.add(mesh);
+};
+const ring = (p, r, m) => { // flat ring centered at p
+  const mesh = new THREE.Mesh(new THREE.TorusGeometry(r, 0.08, 6, 48), m);
+  mesh.position.set(...p);
+  mesh.rotation.x = Math.PI / 2;
   group.add(mesh);
 };
 
@@ -129,13 +137,18 @@ function side(run, flip, zBack) {
     } else if (c.kind === 'pantry') {
       cabinet(u, w, c.h);
       fronts(u, w, c.h, [{ h: c.h - TOE - face, pair: true, pull: 'bottom' }, { h: face, pair: true, pull: 'top' }]);
+    } else if (c.sink) { // open above the bowl's bottom: sides and back only, so the bowl shows
+      const y = BOX - c.sink.depth - 0.5;
+      cabinet(u, w, y);
+      for (const x of [u, u + w - 0.75]) B(x, 0, y, 0.75, DEPTH, BOX - y, M.box);
+      B(u, 0, y, w, 0.75, BOX - y, M.box);
+      fronts(u, w, BOX, [{ h: 6 }, { h: face - 6, pair: true }]);
     } else {
       cabinet(u, w, BOX);
       if (c.kind === 'drawers') {
         const rest = (face - 6) / (c.n - 1);
         fronts(u, w, BOX, [{ h: 6 }, ...Array(c.n - 2).fill({ h: rest }), { h: rest, pull: 'top' }]);
       } else if (c.kind === 'door') fronts(u, w, BOX, [{ h: face, pull: 'top' }]);
-      else if (c.kind === 'sink') fronts(u, w, BOX, [{ h: 6 }, { h: face - 6, pair: true }]);
       else if (c.kind === 'base') fronts(u, w, BOX, [{ h: 6 }, { h: face - 6, pull: 'top' }]);
       else if (c.kind === 'filler') B(u, DEPTH, TOE, w, 0.75, face, M.front);
       else if (c.kind === 'oven') { // 29" oven face from 5" to 34" off the floor
@@ -150,8 +163,22 @@ function side(run, flip, zBack) {
       B(u + (w - pw) / 2, 0, at - ph / 2, pw, 0.25, ph, M.plate);
     }
     if (c.switch) B(u + c.switch.dx - 1.375, 0, (BOX + TOP + BAR) / 2 - 2.25, 2.75, 0.25, 4.5, M.plate); // disposal switch on the riser face
-    if (c.cooktop) B(u + (w - 31) / 2, (COUNTER - 21.25) / 2, BOX + TOP, 31, 21.25, 0.25, M.black); // Bosch NIT8061UC
-    if (c.kind === 'sink') B(u + (w - 33.5) / 2, COUNTER - 21, BOX + TOP, 33.5, 19, 0.05, M.steel); // Ruvati RVH6222ST, 2" from the counter front
+    if (c.cooktop) { // Bosch NIT8061UC: black glass, four zones, touch-control strip at the front (layout as in the top view)
+      const cu = u + (w - 31) / 2, cv = (COUNTER - 21.25) / 2, y = BOX + TOP + 0.25;
+      B(cu, cv, BOX + TOP, 31, 21.25, 0.25, M.black);
+      for (const [du, dv] of [[8, 6], [23, 6], [8, 15.25], [23, 15.25]]) ring(P(cu + du, cv + dv, y + 0.02), 4, M.ring);
+      B(cu + 8, cv + 19.25, y, 15, 1, 0.02, M.ring);
+    }
+    if (c.sink) { // Ruvati RVH6222ST undermount, under a cutout in the counter (see below): open steel bowl, workstation ledges front and back, drain on the left
+      const s = c.sink, su = u + (w - s.w) / 2, sv = s.v, y = BOX;
+      B(su, sv, y - s.depth, s.w, s.d, 0.1, M.steel); // bottom (flat; really slopes 9 7/8" to 9 1/4")
+      B(su, sv, y - s.depth, 0.1, s.d, s.depth, M.steel);
+      B(su + s.w - 0.1, sv, y - s.depth, 0.1, s.d, s.depth, M.steel);
+      B(su, sv, y - s.depth, s.w, 0.1, s.depth, M.steel);
+      B(su, sv + s.d - 0.1, y - s.depth, s.w, 0.1, s.depth, M.steel);
+      for (const lv of [sv, sv + s.d - s.ledge]) B(su, lv, y - 1, s.w, s.ledge, 0.1, M.steel); // ledges the accessories ride on
+      rod(P(u + s.drain, sv + s.d / 2, y - s.depth + 0.1), P(u + s.drain, sv + s.d / 2, y - s.depth + 0.2), 1.75, M.drain);
+    }
     if (c.faucet) { // column, spout reaching toward the front, pull-down sprayer
       const f = c.faucet, y0 = BOX + TOP, cu = u + w / 2;
       rod(P(cu, f.back, y0), P(cu, f.back, y0 + f.h - 1), 0.6875, M.black);
@@ -183,7 +210,13 @@ function side(run, flip, zBack) {
     let j = i;
     while (j + 1 < run.length && !run[j + 1].h) j++;
     const l = c.u - (i === 0 ? 1 : 0), r = run[j].u + run[j].w + (j === run.length - 1 ? 1 : 0);
-    B(l, 0, BOX, r - l, COUNTER, TOP, M.counter);
+    const h = run.slice(i, j + 1).find(c => c.sink); // counter in four pieces around the sink cutout
+    if (!h) return B(l, 0, BOX, r - l, COUNTER, TOP, M.counter);
+    const s = h.sink, a = h.u + (h.w - s.w) / 2, b = a + s.w;
+    B(l, 0, BOX, a - l, COUNTER, TOP, M.counter);
+    B(b, 0, BOX, r - b, COUNTER, TOP, M.counter);
+    B(a, 0, BOX, s.w, s.v, TOP, M.counter);
+    B(a, s.v + s.d, BOX, s.w, COUNTER - s.v - s.d, TOP, M.counter);
   });
   return B;
 }

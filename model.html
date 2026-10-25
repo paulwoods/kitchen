@@ -1,0 +1,241 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Model — Kitchen</title>
+<style>
+  body { margin: 0; overflow: hidden; background: #fbfaf5; color: #223; font-family: system-ui, sans-serif; }
+  header { padding: 16px 24px 8px; } h1 { margin: 0; } p { margin: 4px 0; color: #667; } a { color: #2a5d9f; }
+  button { font: inherit; margin-right: 6px; padding: 2px 10px; }
+  canvas { display: block; }
+</style>
+<header>
+  <h1>Kitchen</h1>
+  <p><a href="index.html">index</a> · 3D model · drag to orbit, right-drag to pan, scroll to zoom</p>
+  <p><button data-view="end">End</button><button data-view="island">Island</button><button data-view="wall">Wall</button><button data-view="top">Top</button></p>
+</header>
+<script type="importmap">
+  { "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  } }
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+// Same runs as sketch-island-front.html and sketch-wall-front.html, left to right as seen from the aisle. Inches.
+const island = [
+  { code: 'DB24-3',  w: 24, kind: 'drawers', n: 3 },
+  { code: 'DB36-3',  w: 36, kind: 'drawers', n: 3, cooktop: true,
+    upper: [ { hood: true, w: 42.0625, h: 2.375, at: 66.1875, chimney: 12.125 } ] }, // Bosch HIB82651UC
+  { code: 'DB24-3',  w: 24, kind: 'drawers', n: 3 },
+  { code: 'TRB18FH', w: 18, kind: 'door' },
+  { code: 'SB42',    w: 42, kind: 'sink', faucet: { h: 22.4375, reach: 9.5, back: 3 } }, // Kohler K-R30937-BMB
+  { code: '24" gap', w: 24, kind: 'gap', tag: 'DW' },
+  { code: 'B24-2',   w: 24, kind: 'base' },
+];
+const wall = [
+  { code: 'TEP',     w: 1.5, kind: 'panel', h: 96 },
+  { code: '36" gap', w: 36,  kind: 'gap', h: 70, tag: 'REF', d: 28.5,
+    upper: [{ code: 'W362424', h: 24, at: 72 }] },
+  { code: 'TEP',     w: 1.5, kind: 'panel', h: 96 },
+  { code: 'PC36',    w: 36,  kind: 'pantry', h: 96 },
+  { code: 'filler',  w: 1.5, kind: 'panel', h: 96 },
+  { code: 'B33',     w: 33,  kind: 'oven',
+    upper: [{ microwave: true, w: 22, h: 13, at: 35.75 }, { shelf: true, at: 51 }, { shelf: true, at: 66 }, { code: 'W3315', h: 15, at: 81, glass: true }] },
+  { code: 'filler',  w: 1.5, kind: 'filler', upper: [{ filler: true, at: 35.75, h: 60.25 }] },
+  { code: 'DB27-3',  w: 27,  kind: 'drawers', n: 3,
+    upper: [{ appliance: 'toaster oven', w: 21.5, h: 12.7, at: 35.75 }, { code: 'W2727', h: 27, at: 54 }, { code: 'W2715', h: 15, at: 81, glass: true }] },
+  { code: 'DB27-3',  w: 27,  kind: 'drawers', n: 3,
+    upper: [{ appliance: 'air fryer', w: 11, h: 14.75, at: 35.75 }, { code: 'W2727', h: 27, at: 54 }, { code: 'W2715', h: 15, at: 81, glass: true }] },
+  { code: 'DB27-3',  w: 27,  kind: 'drawers', n: 3,
+    upper: [{ coffee: true, w: 8.5, h: 16.3, at: 35.75 }, { code: 'W2727', h: 27, at: 54 }, { code: 'W2715', h: 15, at: 81, glass: true }] },
+];
+
+const TOE = 4.5, BOX = 34.5, TOP = 1.25, CEILING = 96;
+const DEPTH = 24, COUNTER = 25, RISER = 4.5, AISLE = 48, UPPER = 12, APPLIANCE = 14, HOOD = 27; // appliance and hood depths assumed
+const total = 192;
+const ZWALL = RISER + 2 * DEPTH + AISLE; // the island riser's back is at z = 0, the room wall at ZWALL
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color('#fbfaf5');
+const mat = (color, extra = {}) => new THREE.MeshStandardMaterial({ color, roughness: 0.8, ...extra });
+const M = {
+  box: mat('#f3ead9'), front: mat('#fffdf7'), toe: mat('#556'), counter: mat('#ecebe6', { roughness: 0.3 }),
+  riser: mat('#e4dccb'), steel: mat('#c9ccd2', { metalness: 0.5, roughness: 0.4 }), black: mat('#1b1b1b', { roughness: 0.3 }),
+  glass: mat('#bcd7e8', { transparent: true, opacity: 0.5 }), pull: mat('#2b2b2b'), wall: mat('#e9e4d8'), floor: mat('#c8b48f'),
+};
+const edges = new THREE.LineBasicMaterial({ color: '#223', transparent: true, opacity: 0.35 });
+const geo = new THREE.BoxGeometry(1, 1, 1), edgeGeo = new THREE.EdgesGeometry(geo);
+let group = scene; // where cube() and rod() put things
+const cube = (x, y, z, w, h, d, m) => { // min corner, size
+  const mesh = new THREE.Mesh(geo, m);
+  mesh.scale.set(w, h, d);
+  mesh.position.set(x + w / 2, y + h / 2, z + d / 2);
+  mesh.add(new THREE.LineSegments(edgeGeo, edges));
+  group.add(mesh);
+};
+const rod = (a, b, r, m) => { // cylinder from point a to point b
+  const A = new THREE.Vector3(...a), B = new THREE.Vector3(...b);
+  const mesh = new THREE.Mesh(new THREE.CylinderGeometry(r, r, A.distanceTo(B), 16), m);
+  mesh.position.copy(A).add(B).multiplyScalar(0.5);
+  mesh.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), B.clone().sub(A).normalize());
+  group.add(mesh);
+};
+
+// One run in its own coordinates: u along the run from its left end, v from the cabinet backs toward the aisle, y up from the floor.
+// The island faces +z from its back at zBack; the wall run faces -z from the wall and reads right to left.
+function side(run, flip, zBack) {
+  const B = (u, v, y, w, d, h, m) => cube(flip ? total - u - w : u, y, flip ? zBack - v - d : zBack + v, w, h, d, m);
+  const P = (u, v, y) => [flip ? total - u : u, y, flip ? zBack - v : zBack + v];
+
+  // Stack of fronts from `top` down, on the face at v; each row is { h, pair, pull: 'mid' | 'top' | 'bottom', glass }.
+  const fronts = (u, w, top, rows, v = DEPTH) => {
+    let y = top;
+    for (const r of rows) {
+      const m = r.glass ? M.glass : M.front, y0 = y - r.h + 0.125, h = r.h - 0.25;
+      if (r.pair) {
+        B(u + 0.125, v, y0, w / 2 - 0.1875, 0.75, h, m);
+        B(u + w / 2 + 0.0625, v, y0, w / 2 - 0.1875, 0.75, h, m);
+        const py = r.pull === 'bottom' ? y - r.h + 2 : y - 6;
+        for (const px of [u + w / 2 - 1.75, u + w / 2 + 1.25]) B(px, v + 0.75, py, 0.5, 0.75, 4, M.pull);
+      } else {
+        B(u + 0.125, v, y0, w - 0.25, 0.75, h, m);
+        B(u + w / 2 - 2, v + 0.75, r.pull === 'top' ? y - 3 : y - r.h / 2, 4, 0.75, 0.5, M.pull);
+      }
+      y -= r.h;
+    }
+  };
+  const cabinet = (u, w, h) => { B(u, 0, TOE, w, DEPTH, h - TOE, M.box); B(u, 0, 0, w, DEPTH - 3, TOE, M.toe); };
+
+  let u = 0;
+  for (const c of run) { c.u = u; u += c.w; }
+  const face = BOX - TOE;
+  for (const c of run) {
+    const { u, w } = c;
+    if (c.kind === 'gap' && c.h) { // fridge: stainless box c.d deep, French doors over a freezer drawer
+      const d = c.d || DEPTH;
+      B(u + 0.25, 0, 0, w - 0.5, d, c.h, M.steel);
+      B(u + w / 2 - 0.1, d, 30, 0.2, 0.1, c.h - 30, M.black);
+      B(u + 0.25, d, 30, w - 0.5, 0.1, 0.2, M.black);
+      for (const px of [u + w / 2 - 2.5, u + w / 2 + 2]) B(px, d + 0.5, 40, 0.5, 1, 24, M.steel);
+      B(u + 4, d + 0.5, 25, w - 8, 1, 0.5, M.steel);
+    } else if (c.kind === 'gap') { // dishwasher: panel-ready front over a toe kick
+      B(u, 0, 0, w, DEPTH - 3, TOE, M.toe);
+      fronts(u, w, BOX, [{ h: face, pull: 'top' }]);
+    } else if (c.kind === 'panel') {
+      B(u, 0, 0, w, DEPTH + 0.75, c.h, M.box);
+    } else if (c.kind === 'pantry') {
+      cabinet(u, w, c.h);
+      fronts(u, w, c.h, [{ h: c.h - TOE - face, pair: true, pull: 'bottom' }, { h: face, pair: true, pull: 'top' }]);
+    } else {
+      cabinet(u, w, BOX);
+      if (c.kind === 'drawers') {
+        const rest = (face - 6) / (c.n - 1);
+        fronts(u, w, BOX, [{ h: 6 }, ...Array(c.n - 2).fill({ h: rest }), { h: rest, pull: 'top' }]);
+      } else if (c.kind === 'door') fronts(u, w, BOX, [{ h: face, pull: 'top' }]);
+      else if (c.kind === 'sink') fronts(u, w, BOX, [{ h: 6 }, { h: face - 6, pair: true }]);
+      else if (c.kind === 'base') fronts(u, w, BOX, [{ h: 6 }, { h: face - 6, pull: 'top' }]);
+      else if (c.kind === 'filler') B(u, DEPTH, TOE, w, 0.75, face, M.front);
+      else if (c.kind === 'oven') { // 29" oven face from 5" to 34" off the floor
+        const ow = Math.min(29.75, w - 0.25), ou = u + (w - ow) / 2;
+        B(ou, DEPTH, 5, ow, 0.75, 29, M.steel);
+        B(ou + 3, DEPTH + 0.75, 10, ow - 6, 0.1, 18, M.black);
+        B(ou + 3, DEPTH + 1, 31, ow - 6, 1, 0.75, M.steel);
+      }
+    }
+    if (c.cooktop) B(u + (w - 31) / 2, (COUNTER - 21.25) / 2, BOX + TOP, 31, 21.25, 0.25, M.black); // Bosch NIT8061UC
+    if (c.kind === 'sink') B(u + (w - 33.5) / 2, COUNTER - 21, BOX + TOP, 33.5, 19, 0.05, M.steel); // Ruvati RVH6222ST, 2" from the counter front
+    if (c.faucet) { // column, spout reaching toward the front, pull-down sprayer
+      const f = c.faucet, y0 = BOX + TOP, cu = u + w / 2;
+      rod(P(cu, f.back, y0), P(cu, f.back, y0 + f.h - 1), 0.6875, M.black);
+      rod(P(cu, f.back, y0 + f.h - 1), P(cu, f.back + f.reach, y0 + f.h - 1), 0.5, M.black);
+      rod(P(cu, f.back + f.reach, y0 + f.h - 1), P(cu, f.back + f.reach, y0 + f.h - 8), 0.875, M.black);
+    }
+    for (const x of c.upper || []) {
+      if (x.hood) { // canopy centered over the counter, chimney to the ceiling
+        const top = x.at + x.h;
+        B(u + (w - x.w) / 2, COUNTER / 2 - HOOD / 2, x.at, x.w, HOOD, x.h, M.steel);
+        B(u + (w - x.chimney) / 2, COUNTER / 2 - x.chimney / 2, top, x.chimney, x.chimney, CEILING - top, M.steel);
+      } else if (x.microwave) {
+        const mu = u + (w - x.w) / 2;
+        B(mu, 2, x.at, x.w, 15, x.h, M.steel);
+        B(mu + 1.5, 17, x.at + 1.5, x.w - 8, 0.1, x.h - 5, M.black);
+      } else if (x.coffee || x.appliance) B(u + (w - x.w) / 2, 2, x.at, x.w, APPLIANCE, x.h, M.black);
+      else if (x.shelf) B(u, 0, x.at - 0.75, w, UPPER, 0.75, M.box);
+      else if (x.filler) B(u, 0, x.at, w, UPPER, x.h, M.box);
+      else { // wall cabinet: depth from the code (W362424 is 24" deep), else 12"
+        const d = +(x.code.match(/^W\d{4}(\d\d)/) || [])[1] || UPPER;
+        B(u, 0, x.at, w, d, x.h, M.box);
+        fronts(u, w, x.at + x.h, [{ h: x.h, pair: true, pull: 'bottom', glass: x.glass }], d);
+      }
+    }
+  }
+  // Countertop over each stretch of base-height items; 1" overhang only at the ends of the run.
+  run.forEach((c, i) => {
+    if (c.h || (i > 0 && !run[i - 1].h)) return;
+    let j = i;
+    while (j + 1 < run.length && !run[j + 1].h) j++;
+    const l = c.u - (i === 0 ? 1 : 0), r = run[j].u + run[j].w + (j === run.length - 1 ? 1 : 0);
+    B(l, 0, BOX, r - l, COUNTER, TOP, M.counter);
+  });
+  return B;
+}
+
+const runs = { island: new THREE.Group(), wall: new THREE.Group() };
+scene.add(runs.island, runs.wall);
+group = runs.island;
+side(island, false, RISER)(0, -RISER, 0, total, RISER, 42, M.riser); // riser behind the island, 42" bar height
+group = runs.wall;
+side(wall, true, ZWALL);
+group = scene;
+
+// Room: floor, and the wall behind the wall run (one-sided, so it hides itself when viewed from behind).
+const floor = new THREE.Mesh(new THREE.PlaneGeometry(total + 96, ZWALL + 48), M.floor);
+floor.rotation.x = -Math.PI / 2;
+floor.position.set(total / 2, 0, ZWALL / 2 - 24);
+scene.add(floor);
+const back = new THREE.Mesh(new THREE.PlaneGeometry(total + 96, CEILING), M.wall);
+back.rotation.y = Math.PI;
+back.position.set(total / 2, CEILING / 2, ZWALL);
+scene.add(back);
+
+scene.add(new THREE.HemisphereLight('#ffffff', '#b0a080', 2.2));
+for (const [x, y, z] of [[-100, 300, 200], [300, 250, -100]]) { // one light toward each run's fronts
+  const sun = new THREE.DirectionalLight('#ffffff', 1);
+  sun.position.set(x, y, z);
+  scene.add(sun);
+}
+
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setPixelRatio(devicePixelRatio);
+document.body.append(renderer.domElement);
+const camera = new THREE.PerspectiveCamera(45, 1, 1, 5000);
+const controls = new OrbitControls(camera, renderer.domElement);
+const mid = ZWALL / 2;
+const views = { // camera position, target, run to hide (it would block the view)
+  end: [[total + 150, 160, mid], [total / 2, 36, mid]],
+  island: [[total / 2, 80, ZWALL + 150], [total / 2, 40, 20], 'wall'],
+  wall: [[total / 2, 60, -150], [total / 2, 48, ZWALL - 12], 'island'],
+  top: [[total / 2, 420, mid + 0.01], [total / 2, 0, mid]],
+};
+const show = (name) => {
+  const [pos, target, hide] = views[name];
+  camera.position.set(...pos);
+  controls.target.set(...target);
+  controls.update();
+  for (const r in runs) runs[r].visible = r !== hide;
+  back.visible = hide !== 'wall';
+};
+document.querySelectorAll('[data-view]').forEach(b => b.onclick = () => show(b.dataset.view));
+show('end');
+
+const resize = () => {
+  const w = innerWidth, h = innerHeight - document.querySelector('header').offsetHeight;
+  renderer.setSize(w, h);
+  camera.aspect = w / h;
+  camera.updateProjectionMatrix();
+};
+addEventListener('resize', resize);
+resize();
+renderer.setAnimationLoop(() => renderer.render(scene, camera));
+</script>

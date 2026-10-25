@@ -165,59 +165,91 @@ function sketch(title, run, opts = {}) {
   page(title, 'Front elevation', W, H, FLOOR, out);
 }
 
-// Draws a run of cabinets in plan (top view): the counter front is at the bottom, the riser at the top.
-// Depths are measured from the counter front; grid lines from the run's left end and the counter front.
-const DEPTH = 24, COUNTER = 25, RISER = 4.5; // cabinet box, countertop (1" over the fronts), riser thickness (assumed)
-function plan(title, run, opts = {}) {
-  const total = run.reduce((s, c) => s + c.w, 0);
-  const back = COUNTER + (opts.riser ? RISER : 0);
-  const FRONT = MARGIN + Math.ceil(back / SQ) * SQ, H = FRONT + 24;
-  const W = MARGIN * 2 + total + 30;
+// Draws the galley in plan (top view): the island at the top, facing down across the aisle,
+// and the wall run at the bottom, facing up (so it reads right to left). The wall run's right end lines up with the island's left end.
+// Depths are measured from the wall; grid lines from the island's left end and the wall.
+const DEPTH = 24, COUNTER = 25, RISER = 4.5, AISLE = 48, WALL = 4.5; // cabinet box, countertop (1" over the fronts), riser thickness (assumed), aisle between cabinet fronts, room wall
+function plan(title, island, wall, opts = {}) {
+  const len = run => run.reduce((s, c) => s + c.w, 0);
+  const total = Math.max(len(island), len(wall));
+  const across = 2 * DEPTH + AISLE + (opts.riser ? RISER : 0); // wall to the back of the riser
+  const WALLY = MARGIN + 20 + across, H = WALLY + WALL + 24;
+  const W = MARGIN * 2 + total + 34;
   const out = [];
   const rect = (x, y, w, h, cls = '') => out.push(`<rect x="${x}" y="${y}" width="${w}" height="${h}" class="${cls}"/>`);
   const line = (x1, y1, x2, y2, cls = '') => out.push(`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" class="${cls}"/>`);
   const text = (x, y, s, cls = '') => out.push(`<text x="${x}" y="${y}" class="${cls}">${s}</text>`);
+  const circle = ([cx, cy], r, cls) => out.push(`<circle cx="${cx}" cy="${cy}" r="${r}" class="${cls}"/>`);
 
-  if (opts.riser) rect(MARGIN, FRONT - back, total, RISER, 'riser');
-  rect(MARGIN - 1, FRONT - COUNTER, total + 2, COUNTER, 'counter top'); // 1" overhang at each end
-  let x = MARGIN;
-  for (const c of run) {
-    rect(x, FRONT - COUNTER, c.w, DEPTH, c.kind === 'gap' ? 'gap' : 'hidden'); // under the counter
-    if (c.kind === 'gap') text(x + c.w / 2, FRONT - COUNTER / 2, c.tag, 'gaplabel');
-    if (c.cooktop) { // Bosch NIT8061UC: 31" x 21 1/4", centered on the counter
-      const cx = x + (c.w - 31) / 2, cy = FRONT - (COUNTER + 21.25) / 2;
-      rect(cx, cy, 31, 21.25, 'cooktop');
-      for (const [dx, dy, r] of [[8, 6, 4], [23, 6, 4], [8, 15.25, 4], [23, 15.25, 4]]) out.push(`<circle cx="${cx + dx}" cy="${cy + dy}" r="${r}" class="burner"/>`);
-    }
-    if (c.kind === 'sink') { // Ruvati RVH6222ST: 33.5" x 19" outer, centered on the cabinet, 2" from the counter front
-      const sx = x + (c.w - 33.5) / 2, sy = FRONT - 2 - 19;
-      rect(sx, sy, 33.5, 19, 'sinkbowl');
-    }
-    if (c.faucet) { // hole c.faucet.back in front of the riser, spout reaching c.faucet.reach toward the front
-      const fx = x + c.w / 2, fy = FRONT - COUNTER + c.faucet.back;
-      line(fx, fy, fx, fy + c.faucet.reach, 'spout');
-      out.push(`<circle cx="${fx}" cy="${fy}" r="1.25" class="faucet"/>`, `<circle cx="${fx}" cy="${fy + c.faucet.reach}" r="0.875" class="faucet"/>`);
-    }
-    if (c.name) text(x + c.w / 2, FRONT + 5, c.name, 'name');
-    text(x + c.w / 2, FRONT + 8.5, c.code, 'code');
-    text(x + c.w / 2, FRONT + 11.5, `${c.w}"`, 'dim');
-    line(x, FRONT + 1, x, FRONT + 12, 'tick');
-    x += c.w;
-  }
-  line(x, FRONT + 1, x, FRONT + 12, 'tick');
-  line(MARGIN, FRONT + 15, x, FRONT + 15, 'dimline');
-  text(MARGIN + total / 2, FRONT + 18.5, `${total}"`, 'dim');
+  // One run in its own coordinates: u along the run from its left end, v from the cabinet backs toward the aisle.
+  // labelY: where the labels go, on the page.
+  const side = (run, flip, labelY) => {
+    const P = (u, v) => flip ? [MARGIN + total - u, WALLY - v] : [MARGIN + u, WALLY - 2 * DEPTH - AISLE + v];
+    const box = (u, v, w, h, cls) => {
+      const [x1, y1] = P(u, v), [x2, y2] = P(u + w, v + h);
+      rect(Math.min(x1, x2), Math.min(y1, y2), Math.abs(x2 - x1), Math.abs(y2 - y1), cls);
+    };
+    let u = 0;
+    for (const c of run) { c.u = u; u += c.w; }
 
-  // Depth ruler on the right, from the counter front.
+    if (!flip && opts.riser) box(0, -RISER, len(run), RISER, 'riser');
+    // Countertop over each stretch of base-height items; 1" overhang only at the ends of the run.
+    run.forEach((c, i) => {
+      if (c.h || (i > 0 && !run[i - 1].h)) return;
+      let j = i;
+      while (j + 1 < run.length && !run[j + 1].h) j++;
+      const l = c.u - (i === 0 ? 1 : 0), r = run[j].u + run[j].w + (j === run.length - 1 ? 1 : 0);
+      box(l, 0, r - l, COUNTER, 'counter top');
+    });
+    for (const c of run) {
+      const mid = (v) => P(c.u + c.w / 2, v);
+      if (c.kind === 'gap') { // c.d: how far the appliance stands from the wall (default flush with the cabinets)
+        box(c.u, 0, c.w, c.d || DEPTH, c.h ? 'oven' : 'gap');
+        const [tx, ty] = mid((c.d || DEPTH) / 2);
+        text(tx, ty + 1, c.tag, 'gaplabel');
+      } else box(c.u, 0, c.w, DEPTH, c.h ? 'box' : 'hidden'); // base cabinets sit under the counter
+      if (c.cooktop) { // Bosch NIT8061UC: 31" x 21 1/4", centered on the counter
+        const cu = c.u + (c.w - 31) / 2, cv = (COUNTER - 21.25) / 2;
+        box(cu, cv, 31, 21.25, 'cooktop');
+        for (const [du, dv] of [[8, 6], [23, 6], [8, 15.25], [23, 15.25]]) circle(P(cu + du, cv + dv), 4, 'burner');
+      }
+      if (c.kind === 'sink') box(c.u + (c.w - 33.5) / 2, COUNTER - 21, 33.5, 19, 'sinkbowl'); // Ruvati RVH6222ST: 33.5" x 19" outer, 2" from the counter front
+      if (c.faucet) { // hole c.faucet.back in front of the riser, spout reaching c.faucet.reach toward the front
+        const [x1, y1] = mid(c.faucet.back), [x2, y2] = mid(c.faucet.back + c.faucet.reach);
+        line(x1, y1, x2, y2, 'spout');
+        circle([x1, y1], 1.25, 'faucet');
+        circle([x2, y2], 0.875, 'faucet');
+      }
+      // Upper cabinets, dotted: depth from the code (W362424 is 24" deep), else 12".
+      const ud = Math.max(0, ...(c.upper || []).map(x => +(x.code.match(/^W\d{4}(\d\d)/) || [])[1] || 12));
+      if (ud) box(c.u, 0, c.w, ud, 'upper');
+      const [tx] = mid(0);
+      if (c.name) text(tx, labelY + 5, c.name, 'name');
+      text(tx, labelY + 8.5, c.code, 'code');
+      text(tx, labelY + 11.5, `${c.w}"`, 'dim');
+      line(P(c.u, 0)[0], labelY + 1, P(c.u, 0)[0], labelY + 12, 'tick');
+    }
+    const [x0] = P(0, 0), [x1] = P(len(run), 0);
+    line(x1, labelY + 1, x1, labelY + 12, 'tick');
+    line(x0, labelY + 15, x1, labelY + 15, 'dimline');
+    text((x0 + x1) / 2, labelY + 18.5, `${len(run)}"`, 'dim');
+  };
+
+  rect(MARGIN, WALLY, total, WALL, 'riser'); // the room wall behind the wall run
+  side(island, false, MARGIN - 2); // labels above the riser, clear of the aisle
+  side(wall, true, WALLY + WALL);
+
+  // Depth ruler on the right, from the wall.
   const rx = MARGIN + total + 4;
-  const marks = [[0, `counter front (${COUNTER - DEPTH}" over the cabinets)`], [COUNTER, opts.riser ? 'counter back, riser' : 'counter back']];
-  if (opts.riser) marks.push([back, 'riser back']);
-  line(rx, FRONT, rx, FRONT - back, 'dimline');
+  const marks = [[0, 'wall'], [DEPTH, 'wall cabinet fronts'], [DEPTH + AISLE, 'island cabinet fronts'], [2 * DEPTH + AISLE, opts.riser ? 'island back, riser' : 'island back']];
+  if (opts.riser) marks.push([across, 'riser back']);
+  line(rx, WALLY, rx, WALLY - across, 'dimline');
   for (const [m, label] of marks) {
-    line(rx - 1, FRONT - m, rx + 1, FRONT - m, 'tick');
-    text(rx + 1.5, FRONT - m + 0.7, `${m}" ${label}`, 'dim ruler');
+    line(rx - 1, WALLY - m, rx + 1, WALLY - m, 'tick');
+    text(rx + 1.5, WALLY - m + 0.7, `${m}" ${label}`, 'dim ruler');
   }
-  page(title, 'Top view (plan)', W, H, FRONT, out);
+  text(rx + 1.5, WALLY - DEPTH - AISLE / 2 + 0.7, `${AISLE}" aisle`, 'dim ruler');
+  page(title, 'Top view (plan)', W, H, WALLY, out);
 }
 
 // Wraps a drawing in the page: graph paper with bold lines every BOLD" from (MARGIN, oy).
@@ -236,7 +268,8 @@ function page(title, view, W, H, oy, out) {
       .cooktop { fill: #111; } .burner { fill: none; stroke: #667; stroke-width: 0.3; }
       .top { fill: #e9eaed; } .hidden { fill: none; stroke: #223; stroke-width: 0.2; stroke-dasharray: 1 0.6; }
       .faucet { fill: #2b2b2b; stroke: #b08d57; stroke-width: 0.2; } .spout { stroke: #2b2b2b; stroke-width: 1.375; }
-      .sinkbowl { fill: #c9ccd2; stroke: #223; stroke-width: 0.3; } .pull { stroke: #223; stroke-width: 0.4; stroke-linecap: round; }
+      .sinkbowl { fill: #c9ccd2; stroke: #223; stroke-width: 0.3; }
+      .upper { fill: none; stroke: #223; stroke-width: 0.3; stroke-dasharray: 0.01 0.8; stroke-linecap: round; } .pull { stroke: #223; stroke-width: 0.4; stroke-linecap: round; }
       .oven { fill: #c9ccd2; stroke: #223; stroke-width: 0.25; } .window { fill: #3a3f4a; }
       .glass { fill: #dbe9f2; stroke: #223; stroke-width: 0.15; } .shelf { fill: #f3ead9; stroke: #223; stroke-width: 0.2; }
       .gap { fill: none; stroke: #223; stroke-width: 0.25; stroke-dasharray: 1.5 1; }

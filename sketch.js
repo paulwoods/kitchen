@@ -110,6 +110,12 @@ function sketch(title, run, opts = {}) {
       text(x + c.w / 2, top + u.h / 2, u.code, 'code');
     }
     if (c.cooktop) rect(x + (c.w - 30) / 2, FLOOR - BOX - TOP - 0.75, 30, 0.75, 'cooktop');
+    if (c.faucet) { // { h, reach, back }, centered on the cabinet: column on the counter, pull-down sprayer hanging in front
+      const fx = x + c.w / 2, top = FLOOR - BOX - TOP - c.faucet.h;
+      rect(fx - 1.25, FLOOR - BOX - TOP - 0.5, 2.5, 0.5, 'faucet');
+      rect(fx - 0.6875, top, 1.375, c.faucet.h - 0.5, 'faucet');
+      rect(fx - 0.875, top + 1, 1.75, 7, 'faucet');
+    }
     if (c.name) text(x + c.w / 2, FLOOR + 5, c.name, 'name');
     text(x + c.w / 2, FLOOR + 8.5, c.code, 'code');
     text(x + c.w / 2, FLOOR + 11.5, `${c.w}"`, 'dim');
@@ -134,6 +140,7 @@ function sketch(title, run, opts = {}) {
   mark(TOE, 'toe kick');
   mark(BOX + TOP, 'counter');
   if (opts.riser) mark(opts.riser, 'riser');
+  for (const c of run) if (c.faucet) mark(BOX + TOP + c.faucet.h, 'faucet');
   for (const u of run.flatMap(c => c.upper || [])) {
     if (u.shelf) mark(u.at, 'shelf');
     else if (u.hood) mark(u.at, 'hood');
@@ -155,6 +162,66 @@ function sketch(title, run, opts = {}) {
   }
   line(0, FLOOR, W, FLOOR, 'floor');
 
+  page(title, 'Front elevation', W, H, FLOOR, out);
+}
+
+// Draws a run of cabinets in plan (top view): the counter front is at the bottom, the riser at the top.
+// Depths are measured from the counter front; grid lines from the run's left end and the counter front.
+const DEPTH = 24, COUNTER = 25, RISER = 4.5; // cabinet box, countertop (1" over the fronts), riser thickness (assumed)
+function plan(title, run, opts = {}) {
+  const total = run.reduce((s, c) => s + c.w, 0);
+  const back = COUNTER + (opts.riser ? RISER : 0);
+  const FRONT = MARGIN + Math.ceil(back / SQ) * SQ, H = FRONT + 24;
+  const W = MARGIN * 2 + total + 30;
+  const out = [];
+  const rect = (x, y, w, h, cls = '') => out.push(`<rect x="${x}" y="${y}" width="${w}" height="${h}" class="${cls}"/>`);
+  const line = (x1, y1, x2, y2, cls = '') => out.push(`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" class="${cls}"/>`);
+  const text = (x, y, s, cls = '') => out.push(`<text x="${x}" y="${y}" class="${cls}">${s}</text>`);
+
+  if (opts.riser) rect(MARGIN, FRONT - back, total, RISER, 'riser');
+  rect(MARGIN - 1, FRONT - COUNTER, total + 2, COUNTER, 'counter top'); // 1" overhang at each end
+  let x = MARGIN;
+  for (const c of run) {
+    rect(x, FRONT - COUNTER, c.w, DEPTH, c.kind === 'gap' ? 'gap' : 'hidden'); // under the counter
+    if (c.kind === 'gap') text(x + c.w / 2, FRONT - COUNTER / 2, c.tag, 'gaplabel');
+    if (c.cooktop) { // Bosch NIT8061UC: 31" x 21 1/4", centered on the counter
+      const cx = x + (c.w - 31) / 2, cy = FRONT - (COUNTER + 21.25) / 2;
+      rect(cx, cy, 31, 21.25, 'cooktop');
+      for (const [dx, dy, r] of [[8, 6, 4], [23, 6, 4], [8, 15.25, 4], [23, 15.25, 4]]) out.push(`<circle cx="${cx + dx}" cy="${cy + dy}" r="${r}" class="burner"/>`);
+    }
+    if (c.kind === 'sink') { // Ruvati RVH6222ST: 33.5" x 19" outer, centered on the cabinet, 2" from the counter front
+      const sx = x + (c.w - 33.5) / 2, sy = FRONT - 2 - 19;
+      rect(sx, sy, 33.5, 19, 'sinkbowl');
+    }
+    if (c.faucet) { // hole c.faucet.back in front of the riser, spout reaching c.faucet.reach toward the front
+      const fx = x + c.w / 2, fy = FRONT - COUNTER + c.faucet.back;
+      line(fx, fy, fx, fy + c.faucet.reach, 'spout');
+      out.push(`<circle cx="${fx}" cy="${fy}" r="1.25" class="faucet"/>`, `<circle cx="${fx}" cy="${fy + c.faucet.reach}" r="0.875" class="faucet"/>`);
+    }
+    if (c.name) text(x + c.w / 2, FRONT + 5, c.name, 'name');
+    text(x + c.w / 2, FRONT + 8.5, c.code, 'code');
+    text(x + c.w / 2, FRONT + 11.5, `${c.w}"`, 'dim');
+    line(x, FRONT + 1, x, FRONT + 12, 'tick');
+    x += c.w;
+  }
+  line(x, FRONT + 1, x, FRONT + 12, 'tick');
+  line(MARGIN, FRONT + 15, x, FRONT + 15, 'dimline');
+  text(MARGIN + total / 2, FRONT + 18.5, `${total}"`, 'dim');
+
+  // Depth ruler on the right, from the counter front.
+  const rx = MARGIN + total + 4;
+  const marks = [[0, `counter front (${COUNTER - DEPTH}" over the cabinets)`], [COUNTER, opts.riser ? 'counter back, riser' : 'counter back']];
+  if (opts.riser) marks.push([back, 'riser back']);
+  line(rx, FRONT, rx, FRONT - back, 'dimline');
+  for (const [m, label] of marks) {
+    line(rx - 1, FRONT - m, rx + 1, FRONT - m, 'tick');
+    text(rx + 1.5, FRONT - m + 0.7, `${m}" ${label}`, 'dim ruler');
+  }
+  page(title, 'Top view (plan)', W, H, FRONT, out);
+}
+
+// Wraps a drawing in the page: graph paper with bold lines every BOLD" from (MARGIN, oy).
+function page(title, view, W, H, oy, out) {
   document.title = `Sketch — ${title}`;
   document.body.innerHTML = `
     <style>
@@ -166,7 +233,10 @@ function sketch(title, run, opts = {}) {
       .front { fill: #fffdf7; stroke: #223; stroke-width: 0.2; }
       .toe { fill: #556; } .counter { fill: #8a8f99; stroke: #223; stroke-width: 0.2; }
       .riser { fill: #e4dccb; stroke: #223; stroke-width: 0.25; }
-      .cooktop { fill: #111; } .pull { stroke: #223; stroke-width: 0.4; stroke-linecap: round; }
+      .cooktop { fill: #111; } .burner { fill: none; stroke: #667; stroke-width: 0.3; }
+      .top { fill: #e9eaed; } .hidden { fill: none; stroke: #223; stroke-width: 0.2; stroke-dasharray: 1 0.6; }
+      .faucet { fill: #2b2b2b; stroke: #b08d57; stroke-width: 0.2; } .spout { stroke: #2b2b2b; stroke-width: 1.375; }
+      .sinkbowl { fill: #c9ccd2; stroke: #223; stroke-width: 0.3; } .pull { stroke: #223; stroke-width: 0.4; stroke-linecap: round; }
       .oven { fill: #c9ccd2; stroke: #223; stroke-width: 0.25; } .window { fill: #3a3f4a; }
       .glass { fill: #dbe9f2; stroke: #223; stroke-width: 0.15; } .shelf { fill: #f3ead9; stroke: #223; stroke-width: 0.2; }
       .gap { fill: none; stroke: #223; stroke-width: 0.25; stroke-dasharray: 1.5 1; }
@@ -177,12 +247,12 @@ function sketch(title, run, opts = {}) {
     </style>
     <h1>${title}</h1>
     <p><a href="index.html">index</a></p>
-    <p>Front elevation · 1 square = 6" · bold line = ${BOLD}"</p>
+    <p>${view} · 1 square = 6" · bold line = ${BOLD}"</p>
     <svg viewBox="0 0 ${W} ${H}" width="${W * PX}" height="${H * PX}">
       <defs>
         <pattern id="sq" width="${SQ}" height="${SQ}" patternUnits="userSpaceOnUse">
           <path d="M ${SQ} 0 L 0 0 0 ${SQ}" class="grid"/></pattern>
-        <pattern id="ft" x="${MARGIN}" y="${FLOOR}" width="${BOLD}" height="${BOLD}" patternUnits="userSpaceOnUse">
+        <pattern id="ft" x="${MARGIN}" y="${oy}" width="${BOLD}" height="${BOLD}" patternUnits="userSpaceOnUse">
           <rect width="${BOLD}" height="${BOLD}" fill="url(#sq)"/>
           <path d="M ${BOLD} 0 L 0 0 0 ${BOLD}" class="grid ft"/></pattern>
       </defs>

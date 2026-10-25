@@ -1,0 +1,17 @@
+<!doctype html>
+<meta charset="utf-8">
+<script src="sketch.js"></script>
+<body>
+<script>
+// Left to right, widths in inches (same run as sketch-island-front.html).
+plan('Island', [
+  { name: 'spices',    code: 'DB24-3',  w: 24, kind: 'drawers', n: 3 },
+  { name: 'cooktop',   code: 'DB36-3',  w: 36, kind: 'drawers', n: 3, cooktop: true },
+  { name: 'plates',    code: 'DB24-3',  w: 24, kind: 'drawers', n: 3 },
+  { name: 'trash',     code: 'TRB18FH', w: 18, kind: 'door' },
+  { name: 'sink',      code: 'SB42',    w: 42, kind: 'sink',
+    faucet: { h: 22.4375, reach: 9.5, back: 3 } }, // Kohler K-R30937-BMB, 3" from the riser face
+  { name: 'dishwasher', code: '24" gap', w: 24, kind: 'gap', tag: 'DW' },
+  { name: 'cabinet a', code: 'B24-2',   w: 24, kind: 'base' },
+], { riser: true }); // riser behind the counter, the length of the cabinets
+</script>

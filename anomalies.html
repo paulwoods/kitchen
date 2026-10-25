@@ -9,21 +9,13 @@
 <h1>Anomalies</h1>
 <p class="sub">Inconsistencies between <code>appliances.md</code>, <code>electrical.md</code> and the sketches · 2026-10-24 · <a href="index.html">index</a></p>
 
-<h2>Caused by recent decisions</h2>
-<ol>
-  <li><b>Appliances under the wall cabinets.</b> The Ninja Air Fryer XL (14.75" tall) leaves 3.5" under the W2727 (bottom at 54"), and the BOV900BSS toaster oven (12.7") leaves 5.55". Air fryers and toaster ovens vent heat upward, and air fryer manuals typically ask for about 5" all round with no cabinet above. Check both manuals, or plan to pull them forward to use them.</li>
-  <li><b>Counter height is now 35.75", not 36".</b> Two figures in <code>appliances.md</code> assume a 36" counter: the hood is 30 3/16" above the counter (now about 30 7/16"), and the clear space under the hutch shelf is about 14.25" (now about 14.5"). Both changes give more room, but the file is out of date.</li>
-</ol>
-
 <h2>Within appliances.md</h2>
-<ol start="3">
-  <li><b>Dishwasher drain loop.</b> The file says the hose loops "33"–43" above the cabinet floor". The sink cabinet floor is about 5" up, which puts the loop at about 38", above the 35.75" counter. The range is probably measured from the room floor; check the Bosch install guide.</li>
-  <li><b>Aisle measurement.</b> The fridge note (28.5" left) measures the 48" aisle from the 24" cabinet faces. The dishwasher note (23" left) and the 25" island counter suggest it's measured from the counter edges. The 1" difference doesn't change anything, but the file should use one reference.</li>
+<ol>
   <li><b>Faucet clearance.</b> The faucet needs 4.5" behind its base and sits about 4" from the island riser. The file already calls this tight; it's still open.</li>
 </ol>
 
 <h2>About the sketches</h2>
-<ol start="6">
+<ol start="2">
   <li><b>Wall side.</b> The wall sketch is assumed to be the "south run". Its contents (fridge, pantry, oven) match, but it isn't confirmed.</li>
   <li><b>Assumptions in the drawing</b>, not from the files: a 1" counter overhang at each end of the island; B24-2 drawn as a drawer over two doors; the riser behind the island is not drawn, because the sketch shows the cabinet fronts.</li>
   <li><b>Wall assumptions</b>: PC36 pantry with a 45" lower door pair; the wall counter butts the pantry with no overhang and has a 1" overhang at the right end.</li>
@@ -31,6 +23,10 @@
 
 <h2>Resolved</h2>
 <ul>
+  <li>Aisle measurement: the 48" aisle is measured between cabinet faces (2026-10-24). Both notes fit: the fridge doors leave 48 − (43.5 − 24) = 28.5", the dishwasher door leaves 48 − 25 = 23". <code>appliances.md</code> now states the reference.</li>
+  <li>Dishwasher drain loop: the Bosch install guide puts it at least 33" off the room floor, not the cabinet floor, so it fits in the sink base under the 35.75" counter (2026-10-24). <code>appliances.md</code> updated.</li>
+  <li>Counter height: 35.75" (decided 2026-10-24). <code>appliances.md</code> updated: the hood is 30 7/16" above the counter and the microwave has ~14.5" clear under the 51" shelf.</li>
+  <li>Appliances under the wall cabinets: the air fryer (3.5" under the W2727) and toaster oven (5.55") get pulled forward, out from under the cabinets, to use them (decided 2026-10-24).</li>
   <li>Oven junction box: in the Toaster cabinet (DB27-3) right of the oven, within reach of the 60" cord (decided 2026-10-24). <code>appliances.md</code> and <code>electrical.md</code> updated.</li>
   <li>Toaster oven and air fryer: on the counter over their own DB27-3 cabinets, not on the hutch shelves (decided 2026-10-24). <code>appliances.md</code> updated.</li>
   <li>Coffee maker height: the wall cabinets over the DB27-3s changed from W2730 to W2727 (54"–81", decided 2026-10-24), leaving 18.25" over the counter for the 16.3" Breville BDC650BSS.</li>

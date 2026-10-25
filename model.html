@@ -31,11 +31,11 @@ const island = [
   { code: 'DB36-3',  w: 36, kind: 'drawers', n: 3, cooktop: true,
     upper: [ { hood: true, w: 41.5, h: 2, at: 66.1875, chimney: 13.375, chimneyD: 10.625 } ] }, // Proline PLFI 544-42
   { code: 'DB24-3',  w: 24, kind: 'drawers', n: 3, receptacle: true },
-  { code: 'TRB18FH', w: 18, kind: 'door' },
+  { code: 'TRB18FH', w: 18, kind: 'door', receptacle: true },
   { code: 'SB42',    w: 42, kind: 'sink', switch: { dx: 6, label: 'disposal' },
     sink: { w: 31.875, d: 17.375, v: 4.8125, depth: 9.875, ledge: 0.6875, drain: 11.3125 }, // Ruvati RVH6222ST bowl opening (centered in its 33.5" x 19" outline, 2" from the counter front), drain 6 1/4" in from the left wall
     faucet: { h: 22.4375, reach: 9.5, back: 3 } }, // Kohler K-R30937-BMB
-  { code: '24" gap', w: 24, kind: 'gap', tag: 'DW' },
+  { code: '24" gap', w: 24, kind: 'gap', tag: 'DW', receptacle: true },
   { code: 'B24-2',   w: 24, kind: 'base', receptacle: true },
 ];
 const wall = [
@@ -165,9 +165,9 @@ function side(run, flip, zBack) {
         B(mu + 0.5, DEPTH + 0.75, 31.875, mw - 1, 0.1, 1.6875, M.black); // control strip
       }
     }
-    if (c.receptacle) { // duplex plate (assumed): horizontal on the island riser, vertical on the wall
-      const [pw, ph, at] = flip ? [2.75, 4.5, OUTLET] : [4.5, 2.75, (BOX + TOP + BAR) / 2];
-      B(u + (w - pw) / 2, 0, at - ph / 2, pw, 0.25, ph, M.plate);
+    if (c.receptacle) { // vertical duplex plate (assumed), halfway up the island riser or at OUTLET on the wall
+      const at = flip ? OUTLET : (BOX + TOP + BAR) / 2;
+      B(u + (w - 2.75) / 2, 0, at - 2.25, 2.75, 0.25, 4.5, M.plate);
     }
     if (c.switch) B(u + c.switch.dx - 1.375, 0, (BOX + TOP + BAR) / 2 - 2.25, 2.75, 0.25, 4.5, M.plate); // disposal switch on the riser face
     if (c.cooktop) { // Bosch NIT8061UC: black glass, four zones, touch-control strip at the front (layout as in the top view)

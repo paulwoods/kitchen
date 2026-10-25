@@ -4,8 +4,8 @@ const SQ = 6, BOLD = 30, PX = 5;      // inches per square, per bold line (from 
 const TOE = 4.5, BOX = 34.5, TOP = 1.25; // toe kick, cabinet height, 3 cm countertop
 const MARGIN = 12, CEILING = 96, OUTLET = 44; // OUTLET: center of a wall receptacle off the floor (assumed)
 
-// Duplex receptacle plate size and center height: horizontal on a riser (halfway between the counter and its top), vertical on the wall.
-const receptacle = riser => riser ? { w: 4.5, h: 2.75, at: (BOX + TOP + riser) / 2 } : { w: 2.75, h: 4.5, at: OUTLET };
+// Duplex receptacle plate, vertical, and its center height: halfway between the counter and the top of a riser, or OUTLET on the wall.
+const receptacle = riser => ({ w: 2.75, h: 4.5, at: riser ? (BOX + TOP + riser) / 2 : OUTLET });
 
 // Items with `h` are tall (panels, pantry, fridge space) and get no countertop.
 // opts.riser: top of a wall behind the counter, off the floor, spanning the cabinet run.
@@ -102,6 +102,7 @@ function sketch(title, run, opts = {}) {
         rect(mx + 0.5, top + 0.5, mw - 1, 1.6875, 'window'); // tilt-out control strip; the drawer opens itself, no handle
         ap = '';
       }
+      if (c.falseTop) text(x + c.w / 2 + 3, FLOOR - BOX + 3.3, 'false front', 'code start'); // top row is a fixed front, labeled right of its pull
     }
     // Things hung above this item. Cabinet: { code, h, at: bottom off the floor, glass }; hood: { hood: true, w, h, at, chimney }; shelf: { shelf: true, at: top off the floor }; plain strip: { filler: true, h, at }; microwave: { microwave: true, w, h, at }; coffee maker: { coffee: true, w, h, at }; other appliance: { appliance, w, h, at, dx }.
     for (const u of c.upper || []) {
@@ -171,7 +172,7 @@ function sketch(title, run, opts = {}) {
       line(l, t, r, t, 'hidden'); line(r, t, r, t + c.bowl.right, 'hidden');
       line(r, t + c.bowl.right, l, t + c.bowl.left, 'hidden'); line(l, t + c.bowl.left, l, t, 'hidden');
     }
-    if (c.receptacle) { // duplex receptacle centered on the cabinet (assumed): on a riser, a horizontal 4.5" x 2.75" plate halfway up it above the counter; on the wall, a vertical 2.75" x 4.5" plate centered at OUTLET
+    if (c.receptacle) { // duplex receptacle centered on the cabinet (assumed): a vertical 2.75" x 4.5" plate, halfway up a riser above the counter or centered at OUTLET on the wall
       const r = receptacle(opts.riser), px = x + (c.w - r.w) / 2, top = FLOOR - r.at - r.h / 2;
       const behind = (c.upper || []).find(u => { // a countertop appliance stands in front of it: dashed
         const ax = x + (u.dx ?? (c.w - u.w) / 2);
@@ -179,7 +180,7 @@ function sketch(title, run, opts = {}) {
       }) || (c.kind === 'gap' && c.h >= r.at + r.h / 2 && c); // or behind the fridge
       const plate = () => {
         rect(px, top, r.w, r.h, 'plate');
-        for (const d of [0.6, 2.4]) opts.riser ? rect(px + d, top + 0.6, 1.5, 1.55, 'outlet') : rect(px + 0.6, top + d, 1.55, 1.5, 'outlet');
+        for (const d of [0.6, 2.4]) rect(px + 0.6, top + d, 1.55, 1.5, 'outlet');
       };
       if (!behind) plate();
       else {
@@ -188,7 +189,8 @@ function sketch(title, run, opts = {}) {
         if (ap) { ap = ap.replace('ap-', 'apoff-'); plate(); } // in plain view while the appliance is hidden
         ap = '';
       }
-      text(px + r.w / 2, top - 0.4, '120v', 'dim volts');
+      if (opts.riser) text(px + r.w + 0.5, top + r.h / 2 + 0.7, '120v', 'dim volts start'); // beside it, clear of the riser top
+      else text(px + r.w / 2, top - 0.4, '120v', 'dim volts');
     }
     if (c.switch) { // toggle switch on the riser (or wall) face at the receptacles' height, vertical 2.75" x 4.5" plate: { dx: center from the item's left end, label }
       const sx = x + c.switch.dx, top = FLOOR - receptacle(opts.riser).at - 2.25;
@@ -317,7 +319,7 @@ function plan(title, island, wall, opts = {}) {
         box(cu, cv, 31, 21.25, 'cooktop');
         for (const [du, dv] of [[8, 6], [23, 6], [8, 15.25], [23, 15.25]]) circle(P(cu + du, cv + dv), 4, 'burner');
       }
-      if (c.receptacle) { const w = flip ? 2.75 : 4.5; box(c.u + (c.w - w) / 2, 0, w, 0.25, 'plate'); } // on the riser or wall face, over the counter
+      if (c.receptacle) box(c.u + (c.w - 2.75) / 2, 0, 2.75, 0.25, 'plate'); // on the riser or wall face, over the counter
       if (c.switch) box(c.u + c.switch.dx - 1.375, 0, 2.75, 0.25, 'plate');
       if (c.kind === 'sink') box(c.u + (c.w - 33.5) / 2, COUNTER - 21, 33.5, 19, 'sinkbowl'); // Ruvati RVH6222ST: 33.5" x 19" outer, 2" from the counter front
       if (c.faucet) { // hole c.faucet.back in front of the riser, spout reaching c.faucet.reach toward the front

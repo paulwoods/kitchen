@@ -180,18 +180,26 @@ function side(run, flip, zBack) {
       for (const lv of [sv, sv + s.d - s.ledge]) B(su, lv, y - 1, s.w, s.ledge, 0.1, M.steel); // ledges the accessories ride on
       rod(P(u + s.drain, sv + s.d / 2, y - s.depth + 0.1), P(u + s.drain, sv + s.d / 2, y - s.depth + 0.2), 1.75, M.drain);
     }
-    if (c.faucet) { // Kohler semi-pro: column in a spring coil, hose arching over to a brass sprayhead in a front dock (coil and dock sizes assumed)
-      const f = c.faucet, y0 = BOX + TOP, cu = u + w / 2, arc = y0 + f.h - 3, fv = f.back + f.reach;
+    if (c.faucet) { // Kohler spec sheet: a 13" column (from the drawing), the exposed spring arching up to h and over to the brass sprayhead
+      // (9 1/2" clear under it) on a dock arm, brass side lever at rest pointing up
+      const f = c.faucet, y0 = BOX + TOP, cu = u + w / 2, fv = f.back + f.reach, R = f.reach / 2, cy = y0 + f.h - 0.6 - R;
       rod(P(cu, f.back, y0), P(cu, f.back, y0 + 0.5), 1.25, M.black); // base
-      rod(P(cu, f.back, y0), P(cu, f.back, arc), 0.6875, M.black);
-      for (let y = y0 + 8; y < arc; y += 0.6) ring(P(cu, f.back, y), 1.2, M.black); // spring coil
-      const pts = Array.from({ length: 13 }, (_, i) => { const t = Math.PI * (1 - i / 12); // hose: half an ellipse, 3" high
-        return P(cu, f.back + f.reach / 2 * (1 + Math.cos(t)), arc + 3 * Math.sin(t)); });
-      for (let i = 0; i < 12; i++) rod(pts[i], pts[i + 1], 0.375, M.black);
-      rod(P(cu, fv, arc), P(cu, fv, y0 + 15.5), 0.375, M.black);
-      rod(P(cu, f.back, y0 + 13.5), P(cu, fv, y0 + 13.5), 0.375, M.black); // dock arm
-      rod(P(cu, fv, y0 + 15.5), P(cu, fv, y0 + 9.5), 0.875, M.brass); // sprayhead
-      rod(P(cu + 0.9, f.back, y0 + 4), P(cu + 0.9, f.back, y0 + 4 + 3.3125), 0.2, M.brass); // side lever, at rest
+      rod(P(cu, f.back, y0), P(cu, f.back, y0 + 13), 0.65, M.black);
+      const path = new THREE.CurvePath(); // spring centerline: up from the column, a half circle over, down to the sprayhead
+      path.add(new THREE.LineCurve3(new THREE.Vector3(...P(cu, f.back, y0 + 13)), new THREE.Vector3(...P(cu, f.back, cy))));
+      path.add(new THREE.CatmullRomCurve3(Array.from({ length: 17 }, (_, i) => { const t = Math.PI * (1 - i / 16);
+        return new THREE.Vector3(...P(cu, f.back + R * (1 + Math.cos(t)), cy + R * Math.sin(t))); })));
+      path.add(new THREE.LineCurve3(new THREE.Vector3(...P(cu, fv, cy)), new THREE.Vector3(...P(cu, fv, y0 + 14))));
+      group.add(new THREE.Mesh(new THREE.TubeGeometry(path, 200, 0.3, 8), M.black)); // hose
+      const len = path.getLength(), turns = Math.round(len / 0.5), side = new THREE.Vector3(1, 0, 0), coil = [];
+      for (let i = 0; i <= turns * 16; i++) { // helix around the centerline (the run is along x, so x is always square to the arch)
+        const s = i / (turns * 16), p = path.getPointAt(s), n = path.getTangentAt(s).cross(side), a = i / 16 * 2 * Math.PI;
+        coil.push(p.clone().addScaledVector(n, 0.55 * Math.cos(a)).addScaledVector(side, 0.55 * Math.sin(a)));
+      }
+      group.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(coil), coil.length, 0.09, 5), M.black));
+      rod(P(cu, f.back, y0 + 12.25), P(cu, fv, y0 + 12.25), 0.3, M.black); // dock arm
+      rod(P(cu, fv, y0 + 14), P(cu, fv, y0 + 9.5), 0.65, M.brass); // sprayhead
+      rod(P(cu + 0.85, f.back, y0 + 5), P(cu + 0.85, f.back, y0 + 5 + 3.3125), 0.2, M.brass); // side lever, at rest
     }
     for (const x of c.upper || []) {
       if (x.hood) { // curved glass canopy over a steel body (filter, 4 lights, touch panel in front), chimney to the ceiling

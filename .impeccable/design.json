@@ -1,0 +1,388 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-25T03:41:56+00:00",
+  "title": "Design System: Galley Kitchen",
+  "extensions": {
+    "colorMeta": {
+      "link-blue": {
+        "role": "primary",
+        "displayName": "Drafting Blue",
+        "canonical": "oklch(47.8% 0.120 256)",
+        "tonalRamp": [
+          "oklch(15% 0.120 256)",
+          "oklch(25% 0.120 256)",
+          "oklch(35% 0.120 256)",
+          "oklch(47% 0.120 256)",
+          "oklch(59% 0.120 256)",
+          "oklch(71% 0.120 256)",
+          "oklch(83% 0.120 256)",
+          "oklch(95% 0.120 256)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "oklch(26.0% 0.032 284)",
+        "tonalRamp": [
+          "oklch(15% 0.032 284)",
+          "oklch(25% 0.032 284)",
+          "oklch(35% 0.032 284)",
+          "oklch(47% 0.032 284)",
+          "oklch(59% 0.032 284)",
+          "oklch(71% 0.032 284)",
+          "oklch(83% 0.032 284)",
+          "oklch(95% 0.032 284)"
+        ]
+      },
+      "slate": {
+        "role": "neutral",
+        "displayName": "Pencil Gray",
+        "canonical": "oklch(51.6% 0.027 285)",
+        "tonalRamp": [
+          "oklch(15% 0.027 285)",
+          "oklch(25% 0.027 285)",
+          "oklch(35% 0.027 285)",
+          "oklch(47% 0.027 285)",
+          "oklch(59% 0.027 285)",
+          "oklch(71% 0.027 285)",
+          "oklch(83% 0.027 285)",
+          "oklch(95% 0.027 285)"
+        ]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Plan Paper",
+        "canonical": "oklch(98.4% 0.007 97)",
+        "tonalRamp": [
+          "oklch(15% 0.007 97)",
+          "oklch(25% 0.007 97)",
+          "oklch(35% 0.007 97)",
+          "oklch(47% 0.007 97)",
+          "oklch(59% 0.007 97)",
+          "oklch(71% 0.007 97)",
+          "oklch(83% 0.007 97)",
+          "oklch(95% 0.007 97)"
+        ]
+      },
+      "sheet": {
+        "role": "neutral",
+        "displayName": "Clean Sheet",
+        "canonical": "oklch(100.0% 0.000 90)",
+        "tonalRamp": [
+          "oklch(15% 0.000 90)",
+          "oklch(25% 0.000 90)",
+          "oklch(35% 0.000 90)",
+          "oklch(47% 0.000 90)",
+          "oklch(59% 0.000 90)",
+          "oklch(71% 0.000 90)",
+          "oklch(83% 0.000 90)",
+          "oklch(95% 0.000 90)"
+        ]
+      },
+      "rule": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "canonical": "oklch(85.0% 0.023 286)",
+        "tonalRamp": [
+          "oklch(15% 0.023 286)",
+          "oklch(25% 0.023 286)",
+          "oklch(35% 0.023 286)",
+          "oklch(47% 0.023 286)",
+          "oklch(59% 0.023 286)",
+          "oklch(71% 0.023 286)",
+          "oklch(83% 0.023 286)",
+          "oklch(95% 0.023 286)"
+        ]
+      },
+      "header-mist": {
+        "role": "neutral",
+        "displayName": "Header Mist",
+        "canonical": "oklch(96.0% 0.008 254)",
+        "tonalRamp": [
+          "oklch(15% 0.008 254)",
+          "oklch(25% 0.008 254)",
+          "oklch(35% 0.008 254)",
+          "oklch(47% 0.008 254)",
+          "oklch(59% 0.008 254)",
+          "oklch(71% 0.008 254)",
+          "oklch(83% 0.008 254)",
+          "oklch(95% 0.008 254)"
+        ]
+      },
+      "grid-blue": {
+        "role": "material",
+        "displayName": "Grid Blue",
+        "canonical": "oklch(85.7% 0.041 248)",
+        "tonalRamp": [
+          "oklch(15% 0.041 248)",
+          "oklch(25% 0.041 248)",
+          "oklch(35% 0.041 248)",
+          "oklch(47% 0.041 248)",
+          "oklch(59% 0.041 248)",
+          "oklch(71% 0.041 248)",
+          "oklch(83% 0.041 248)",
+          "oklch(95% 0.041 248)"
+        ]
+      },
+      "grid-bold": {
+        "role": "material",
+        "displayName": "Bold Grid",
+        "canonical": "oklch(75.1% 0.065 249)",
+        "tonalRamp": [
+          "oklch(15% 0.065 249)",
+          "oklch(25% 0.065 249)",
+          "oklch(35% 0.065 249)",
+          "oklch(47% 0.065 249)",
+          "oklch(59% 0.065 249)",
+          "oklch(71% 0.065 249)",
+          "oklch(83% 0.065 249)",
+          "oklch(95% 0.065 249)"
+        ]
+      },
+      "maple": {
+        "role": "material",
+        "displayName": "Maple",
+        "canonical": "oklch(94.0% 0.025 83)",
+        "tonalRamp": [
+          "oklch(15% 0.025 83)",
+          "oklch(25% 0.025 83)",
+          "oklch(35% 0.025 83)",
+          "oklch(47% 0.025 83)",
+          "oklch(59% 0.025 83)",
+          "oklch(71% 0.025 83)",
+          "oklch(83% 0.025 83)",
+          "oklch(95% 0.025 83)"
+        ]
+      },
+      "front-cream": {
+        "role": "material",
+        "displayName": "Front Cream",
+        "canonical": "oklch(99.4% 0.008 91)",
+        "tonalRamp": [
+          "oklch(15% 0.008 91)",
+          "oklch(25% 0.008 91)",
+          "oklch(35% 0.008 91)",
+          "oklch(47% 0.008 91)",
+          "oklch(59% 0.008 91)",
+          "oklch(71% 0.008 91)",
+          "oklch(83% 0.008 91)",
+          "oklch(95% 0.008 91)"
+        ]
+      },
+      "riser-sand": {
+        "role": "material",
+        "displayName": "Riser Sand",
+        "canonical": "oklch(89.6% 0.024 86)",
+        "tonalRamp": [
+          "oklch(15% 0.024 86)",
+          "oklch(25% 0.024 86)",
+          "oklch(35% 0.024 86)",
+          "oklch(47% 0.024 86)",
+          "oklch(59% 0.024 86)",
+          "oklch(71% 0.024 86)",
+          "oklch(83% 0.024 86)",
+          "oklch(95% 0.024 86)"
+        ]
+      },
+      "toe-slate": {
+        "role": "material",
+        "displayName": "Toe Slate",
+        "canonical": "oklch(45.6% 0.027 285)",
+        "tonalRamp": [
+          "oklch(15% 0.027 285)",
+          "oklch(25% 0.027 285)",
+          "oklch(35% 0.027 285)",
+          "oklch(47% 0.027 285)",
+          "oklch(59% 0.027 285)",
+          "oklch(71% 0.027 285)",
+          "oklch(83% 0.027 285)",
+          "oklch(95% 0.027 285)"
+        ]
+      },
+      "counter-stone": {
+        "role": "material",
+        "displayName": "Counter Stone",
+        "canonical": "oklch(64.9% 0.016 264)",
+        "tonalRamp": [
+          "oklch(15% 0.016 264)",
+          "oklch(25% 0.016 264)",
+          "oklch(35% 0.016 264)",
+          "oklch(47% 0.016 264)",
+          "oklch(59% 0.016 264)",
+          "oklch(71% 0.016 264)",
+          "oklch(83% 0.016 264)",
+          "oklch(95% 0.016 264)"
+        ]
+      },
+      "steel": {
+        "role": "material",
+        "displayName": "Steel",
+        "canonical": "oklch(84.5% 0.009 265)",
+        "tonalRamp": [
+          "oklch(15% 0.009 265)",
+          "oklch(25% 0.009 265)",
+          "oklch(35% 0.009 265)",
+          "oklch(47% 0.009 265)",
+          "oklch(59% 0.009 265)",
+          "oklch(71% 0.009 265)",
+          "oklch(83% 0.009 265)",
+          "oklch(95% 0.009 265)"
+        ]
+      },
+      "glass": {
+        "role": "material",
+        "displayName": "Glass",
+        "canonical": "oklch(92.6% 0.019 236)",
+        "tonalRamp": [
+          "oklch(15% 0.019 236)",
+          "oklch(25% 0.019 236)",
+          "oklch(35% 0.019 236)",
+          "oklch(47% 0.019 236)",
+          "oklch(59% 0.019 236)",
+          "oklch(71% 0.019 236)",
+          "oklch(83% 0.019 236)",
+          "oklch(95% 0.019 236)"
+        ]
+      },
+      "faucet-black": {
+        "role": "material",
+        "displayName": "Faucet Black",
+        "canonical": "oklch(28.9% 0.000 90)",
+        "tonalRamp": [
+          "oklch(15% 0.000 90)",
+          "oklch(25% 0.000 90)",
+          "oklch(35% 0.000 90)",
+          "oklch(47% 0.000 90)",
+          "oklch(59% 0.000 90)",
+          "oklch(71% 0.000 90)",
+          "oklch(83% 0.000 90)",
+          "oklch(95% 0.000 90)"
+        ]
+      },
+      "brass": {
+        "role": "material",
+        "displayName": "Brass",
+        "canonical": "oklch(66.4% 0.083 77)",
+        "tonalRamp": [
+          "oklch(15% 0.083 77)",
+          "oklch(25% 0.083 77)",
+          "oklch(35% 0.083 77)",
+          "oklch(47% 0.083 77)",
+          "oklch(59% 0.083 77)",
+          "oklch(71% 0.083 77)",
+          "oklch(83% 0.083 77)",
+          "oklch(95% 0.083 77)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Page title, one per page."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Section headings."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Text, list items and table cells."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Cabinet codes and dimensions inside sketches (drawing units are inches)."
+      }
+    },
+    "shadows": [
+      {
+        "name": "sheet-lift",
+        "value": "0 1px 4px #0002",
+        "purpose": "The sketch SVG only."
+      }
+    ],
+    "motion": [],
+    "breakpoints": []
+  },
+  "components": [
+    {
+      "name": "Link",
+      "kind": "nav",
+      "refersTo": "link",
+      "description": "Drafting Blue, default underline; links only.",
+      "html": "<a class=\"ds-link\" href=\"#\">index</a>",
+      "css": ".ds-link { color: #2a5d9f; font-family: system-ui, sans-serif; } .ds-link:focus-visible { outline: 2px solid #2a5d9f; outline-offset: 2px; }"
+    },
+    {
+      "name": "Spec Table",
+      "kind": "card",
+      "refersTo": "table-header",
+      "description": "Hairline-bordered table with a Header Mist header row.",
+      "html": "<table class=\"ds-table\"><tr><th>Item</th><th>Code</th><th>Width</th></tr><tr><td>spices</td><td>DB24-3</td><td>24\"</td></tr><tr><td>sink</td><td>SB42</td><td>42\"</td></tr></table>",
+      "css": ".ds-table { border-collapse: collapse; background: #fff; font-family: system-ui, sans-serif; color: #223; line-height: 1.5; } .ds-table th, .ds-table td { border: 1px solid #ccd; padding: 8px 10px; text-align: left; vertical-align: top; white-space: nowrap; } .ds-table th { background: #eef2f7; }"
+    },
+    {
+      "name": "Log List",
+      "kind": "custom",
+      "refersTo": "body",
+      "description": "Plain bullet list used for the index and the anomalies log.",
+      "html": "<div class=\"ds-log\"><h2>Resolved</h2><ul><li>Counter height: 35.75\" (decided 2026-10-24).</li><li>Cabinet A: one drawer over one door.</li></ul></div>",
+      "css": ".ds-log { font-family: system-ui, sans-serif; color: #223; line-height: 1.5; max-width: 760px; } .ds-log h2 { font-size: 1.1em; margin: 0 0 8px; } .ds-log li { margin: 8px 0; }"
+    },
+    {
+      "name": "Sketch Sheet",
+      "kind": "custom",
+      "refersTo": "sketch-sheet",
+      "description": "Graph-paper drawing: 6\" squares, bold line every 30\", sheet lift.",
+      "html": "<svg class=\"ds-sheet\" viewBox=\"0 0 96 48\" width=\"384\" height=\"192\"><defs><pattern id=\"ds-sq\" width=\"6\" height=\"6\" patternUnits=\"userSpaceOnUse\"><path d=\"M 6 0 L 0 0 0 6\" fill=\"none\" stroke=\"#bcd3ea\" stroke-width=\"0.1\"/></pattern><pattern id=\"ds-ft\" width=\"30\" height=\"30\" patternUnits=\"userSpaceOnUse\"><rect width=\"30\" height=\"30\" fill=\"url(#ds-sq)\"/><path d=\"M 30 0 L 0 0 0 30\" fill=\"none\" stroke=\"#8fb2d6\" stroke-width=\"0.2\"/></pattern></defs><rect width=\"96\" height=\"48\" fill=\"url(#ds-ft)\"/><rect x=\"12\" y=\"8\" width=\"24\" height=\"30\" fill=\"#f3ead9\" stroke=\"#223\" stroke-width=\"0.3\"/><rect x=\"12.25\" y=\"8.25\" width=\"23.5\" height=\"5.5\" fill=\"#fffdf7\" stroke=\"#223\" stroke-width=\"0.2\"/><rect x=\"12\" y=\"38\" width=\"24\" height=\"4\" fill=\"#556\"/><text x=\"24\" y=\"46\" font-size=\"2.2\" text-anchor=\"middle\" fill=\"#223\">DB24-3</text></svg>",
+      "css": ".ds-sheet { background: #fff; box-shadow: 0 1px 4px #0002; max-width: 100%; height: auto; }"
+    },
+    {
+      "name": "View Button",
+      "kind": "button",
+      "refersTo": "body",
+      "description": "Native browser button used for the 3D model views.",
+      "html": "<button class=\"ds-view\">Island</button>",
+      "css": ".ds-view { font: 16px system-ui, sans-serif; padding: 2px 10px; margin-right: 6px; } .ds-view:focus-visible { outline: 2px solid #2a5d9f; outline-offset: 2px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Graph-Paper Plan",
+    "overview": "A homeowner's careful plan, drawn on graph paper and made exact. Every page reads like a sheet pulled from the same folder: warm off-white paper, dark ink, one blue for links, and drawings ruled in pale blue squares. The site is quiet and technical. The numbers do the talking; color, type and space stay out of their way.\n\nDensity is moderate. Documentation pages are plain text, lists and bordered tables at a comfortable reading width. Sketches are scaled drawings where one SVG unit is one inch, so every shape is a real measurement. Nothing is decorative: if a color appears, it stands for a material, a state or a link.",
+    "keyCharacteristics": [
+      "Warm paper background, dark blue-black ink, one link blue.",
+      "System font only, default browser hierarchy, no web fonts.",
+      "Flat surfaces with square corners and thin 1px rules.",
+      "Drawings on a 6\" grid with a bolder line every 30\", measured in inches.",
+      "Material colors in drawings (maple boxes, cream fronts, stone counter, steel appliances) are muted and literal."
+    ],
+    "rules": [
+      {
+        "name": "The One Blue Rule",
+        "body": "Drafting Blue is for links only. Never use it for emphasis, headings or decoration.",
+        "section": "colors"
+      },
+      {
+        "name": "The Literal Material Rule",
+        "body": "In drawings, a color names a material. A new element gets the color of what it is made of, not a color that makes it stand out.",
+        "section": "colors"
+      },
+      {
+        "name": "The Inches Rule",
+        "body": "Every dimension is written in inches with the inch mark (36\", 66.1875\"), never in feet.",
+        "section": "typography"
+      }
+    ],
+    "dos": [
+      "Do keep every page on Plan Paper with Ink text and the system font.",
+      "Do give every drawing element its material color and every measurement in inches.",
+      "Do mark hidden items with dashed lines and upper cabinets in plan with dotted lines.",
+      "Do put new documentation in plain lists or Hairline tables at 760px / 1100px width."
+    ],
+    "donts": [
+      "Don't use Drafting Blue for anything but links.",
+      "Don't add shadows except the sheet lift under drawings.",
+      "Don't round corners.",
+      "Don't write dimensions in feet."
+    ]
+  }
+}

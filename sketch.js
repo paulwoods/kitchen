@@ -50,7 +50,7 @@ function sketch(title, run, opts = {}) {
       rect(x, FLOOR - c.h, c.w, c.h, 'box');
     } else if (c.kind === 'pantry') {
       cabinet(x, c.w, c.h);
-      const lower = 45, upper = c.h - TOE - lower;
+      const lower = BOX - TOE, upper = c.h - TOE - lower; // lower doors line up with the base cabinets
       fronts(x, c.w, FLOOR - c.h, [{ h: upper, pair: true, pull: 'bottom' }, { h: lower, pair: true }]);
     } else {
       cabinet(x, c.w, BOX);
@@ -58,7 +58,8 @@ function sketch(title, run, opts = {}) {
         const rest = (face - 6) / (c.n - 1);
         fronts(x, c.w, FLOOR - BOX, [{ h: 6 }, ...Array(c.n - 2).fill({ h: rest }), { h: rest, pull: 'top' }]);
       } else if (c.kind === 'door') fronts(x, c.w, FLOOR - BOX, [{ h: face, pull: 'top' }]);
-      else if (c.kind === 'sink' || c.kind === 'base') fronts(x, c.w, FLOOR - BOX, [{ h: 6 }, { h: face - 6, pair: true }]); // false front / drawer over doors
+      else if (c.kind === 'sink') fronts(x, c.w, FLOOR - BOX, [{ h: 6 }, { h: face - 6, pair: true }]); // false front over doors
+      else if (c.kind === 'base') fronts(x, c.w, FLOOR - BOX, [{ h: 6 }, { h: face - 6, pull: 'top' }]); // drawer over one door
       else if (c.kind === 'oven') { // 29" oven face from 5" to 34" off the floor
         const ow = Math.min(29.75, c.w - 0.25), ox = x + (c.w - ow) / 2;
         rect(ox, FLOOR - 34, ow, 29, 'oven');

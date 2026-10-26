@@ -104,7 +104,7 @@ function sketch(title, run, opts = {}) {
       }
       if (c.falseTop) text(x + c.w / 2 + 3, FLOOR - BOX + 3.3, 'false front', 'code start'); // top row is a fixed front, labeled right of its pull
     }
-    // Things hung above this item. Cabinet: { code, h, at: bottom off the floor, glass }; hood: { hood: true, w, h, at, chimney }; shelf: { shelf: true, at: top off the floor }; plain strip: { filler: true, h, at }; microwave: { microwave: true, w, h, at }; coffee maker: { coffee: true, w, h, at }; other appliance: { appliance, w, h, at, dx }.
+    // Things hung above this item. Cabinet: { code, h, at: bottom off the floor, glass }; hood: { hood: true, w, h, at, chimney }; shelf: { shelf: true, at: top off the floor }; plain strip: { filler: true, h, at }; microwave: { microwave: true, w, h, at }; coffee maker: { coffee: true, w, h, at }; other appliance: { appliance, w, h, at, dx }; under-cabinet light: { light, w, h, at }.
     for (const u of c.upper || []) {
       ap = '';
       if (u.microwave || u.coffee || u.appliance) tag(u.microwave ? 'microwave' : u.coffee ? 'coffee maker' : u.appliance, u.off);
@@ -138,6 +138,7 @@ function sketch(title, run, opts = {}) {
         continue;
       }
       if (u.filler) { rect(x, FLOOR - u.at - u.h, c.w, u.h, 'box'); continue; }
+      if (u.light) { rect(x + (c.w - u.w) / 2, FLOOR - u.at - u.h, u.w, u.h, 'light'); continue; } // under-cabinet light bar, centered: { light: model, w, h, at: bottom off the floor }
       if (u.shelf) {
         rect(x, FLOOR - u.at, c.w, 0.75, 'shelf');
         text(x + c.w / 2, FLOOR - u.at - 1, `shelf ${u.at}"`, 'dim');
@@ -385,7 +386,7 @@ function page(title, view, W, H, oy, out, axes) {
       .upper { fill: none; stroke: #223; stroke-width: 0.3; stroke-dasharray: 0.01 0.8; stroke-linecap: round; } .pull { stroke: #223; stroke-width: 0.4; stroke-linecap: round; }
       .oven { fill: #c9ccd2; stroke: #223; stroke-width: 0.25; } .window { fill: #3a3f4a; }
       .glass { fill: #dbe9f2; stroke: #223; stroke-width: 0.15; } .shelf { fill: #f3ead9; stroke: #223; stroke-width: 0.2; }
-      .chrome { fill: #c9ccd2; stroke: #223; stroke-width: 0.1; } .button { fill: #fff; stroke: #223; stroke-width: 0.15; } .plate { fill: #fff; stroke: #223; stroke-width: 0.15; } .outlet { fill: #fffdf7; stroke: #223; stroke-width: 0.1; }
+      .light { fill: #fff6d8; stroke: #223; stroke-width: 0.15; } .chrome { fill: #c9ccd2; stroke: #223; stroke-width: 0.1; } .button { fill: #fff; stroke: #223; stroke-width: 0.15; } .plate { fill: #fff; stroke: #223; stroke-width: 0.15; } .outlet { fill: #fffdf7; stroke: #223; stroke-width: 0.1; }
       .gap { fill: none; stroke: #223; stroke-width: 0.25; stroke-dasharray: 1.5 1; }
       .floor { stroke: #223; stroke-width: 0.4; } .tick, .dimline { stroke: #667; stroke-width: 0.15; }
       text { text-anchor: middle; font-size: 2.4px; fill: #223; }

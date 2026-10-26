@@ -15,7 +15,7 @@
 <main>
 <h1>Galley Kitchen</h1>
 <p class="sub">Plan as of <span data-date>2026-10-25</span></p>
-<p class="status"><a href="anomalies.html#open"><b data-open>1 open issue</b></a> · <span data-resolved>42</span> resolved</p>
+<p class="status"><a href="issues.html#open"><b data-open>1 open issue</b></a> · <span data-resolved>42</span> resolved</p>
 
 <h2>Drawings and model</h2>
 <p class="note">On graph paper: 1 square = 6", bold line every 30". Drag on a drawing to measure it.</p>
@@ -28,7 +28,7 @@
 
 <h2>Documentation</h2>
 <ul>
-  <li><a href="anomalies.html">Issues</a> <span>what is still open, and every resolved decision</span></li>
+  <li><a href="issues.html">Issues</a> <span>what is still open, and every resolved decision</span></li>
   <li><a href="cabinets.html">Cabinets</a> <span>every cabinet, panel and filler per run, and the order summary</span></li>
   <li><a href="appliances.html">Appliances</a> <span>model numbers, spec-sheet sizes and install gotchas</span></li>
   <li><a href="electrical.html">Electrical</a> <span>circuit, voltage and connection for each appliance</span></li>
@@ -44,9 +44,9 @@
 </ul>
 </main>
 <script>
-  // Counts come from anomalies.html: open items in a <ul> right after h2#open, resolved items after h2#resolved.
+  // Counts come from issues.html: open items in a <ul> right after h2#open, resolved items after h2#resolved.
   // Opened straight from the folder (file:), fetch fails and the typed text above stays.
-  fetch('anomalies.html').then(r => r.text()).then(html => {
+  fetch('issues.html').then(r => r.text()).then(html => {
     const doc = new DOMParser().parseFromString(html, 'text/html');
     const items = id => { const ul = doc.getElementById(id)?.nextElementSibling; return ul?.tagName === 'UL' ? ul.children.length : null; };
     const open = doc.getElementById('open') ? items('open') ?? 0 : null, resolved = items('resolved');

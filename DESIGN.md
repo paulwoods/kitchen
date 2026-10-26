@@ -151,7 +151,7 @@ Square corners everywhere. Tables use 1px Hairline borders with collapsed edges.
 - **Style:** Clean Sheet body, Header Mist header row, 1px Hairline borders, 8px × 10px cell padding, text aligned left and top. Code and size columns don't wrap.
 
 ### Lists
-- **Style:** plain bullet lists with 6–8px between items; used for the index and the anomalies log.
+- **Style:** plain bullet lists with 6–8px between items; used for the index and the issues log.
 
 ### Sketch Sheet (signature)
 - **Style:** a Clean Sheet SVG on graph paper (Grid Blue squares every 6", Bold Grid every 30"), with Sheet lift. Cabinets are labeled below the run: bold name, code, width in Pencil Gray. A ruler on the right marks the toe kick, counter, riser, hood, uppers and ceiling (elevations) or the wall, cabinet fronts and riser (plan).

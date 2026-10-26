@@ -14,7 +14,7 @@ web
 
 ## Product Purpose
 
-A single source of truth for one kitchen remodel. Every measurement, cabinet, appliance and decision lives here, and the sketches, documentation and 3D model must agree with each other. Success means nothing is ordered or cut until the pages agree, and every open inconsistency is listed on the anomalies page.
+A single source of truth for one kitchen remodel. Every measurement, cabinet, appliance and decision lives here, and the sketches, documentation and 3D model must agree with each other. Success means nothing is ordered or cut until the pages agree, and every open inconsistency is listed on the issues page.
 
 ## Positioning
 
@@ -24,7 +24,7 @@ It is the plan for this one kitchen, not a general kitchen-design tool: real mod
 
 - Opened locally from the project folder or `python3 -m http.server`; not published.
 - Read on a computer while planning, and handed to trades as a reference for quoting and building.
-- Pages: `index.html`; sketches (`sketch-island-front.html`, `sketch-wall-front.html`, `sketch-top.html`); 3D model (`model.html`); documentation (`anomalies.html`, `appliances.html`, `cabinets.html`, `electrical.html`).
+- Pages: `index.html`; sketches (`sketch-island-front.html`, `sketch-wall-front.html`, `sketch-top.html`); 3D model (`model.html`); documentation (`issues.html`, `appliances.html`, `cabinets.html`, `electrical.html`).
 - Sketches are drawn on graph paper by `sketch.js` (1 square = 6", bold line every 30").
 
 ## Capabilities and Constraints
@@ -39,7 +39,7 @@ It is the plan for this one kitchen, not a general kitchen-design tool: real mod
 - Appliance model numbers and spec-sheet dimensions in `appliances.html`.
 - Electrical requirements in `electrical.html`.
 - Cabinet list and order summary in `cabinets.html`.
-- Dated decisions and resolved / open inconsistencies in `anomalies.html`.
+- Dated decisions and resolved / open inconsistencies in `issues.html`.
 - No photos of the existing room, contractor quotes or final cabinet-maker drawings are in the repo; do not invent them.
 
 ## Product Principles

@@ -345,7 +345,7 @@
       "name": "Log List",
       "kind": "custom",
       "refersTo": "body",
-      "description": "Plain bullet list used for the index and the anomalies log.",
+      "description": "Plain bullet list used for the index and the issues log.",
       "html": "<div class=\"ds-log\"><h2>Resolved</h2><ul><li>Counter height: 35.75\" (decided 2026-10-24).</li><li>Cabinet A: one drawer over one door.</li></ul></div>",
       "css": ".ds-log { font-family: system-ui, sans-serif; color: #223; line-height: 1.5; max-width: 760px; } .ds-log h2 { font-size: 1.1em; margin: 0 0 8px; } .ds-log li { margin: 8px 0; }"
     },

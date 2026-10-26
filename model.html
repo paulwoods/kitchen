@@ -46,14 +46,14 @@ const wall = [
   { code: 'PC36',    w: 36,  kind: 'pantry', h: 81, upper: [{ code: 'W3615', h: 15, at: 81, glass: true }] },
   { code: 'filler',  w: 1.5, kind: 'panel', h: 96 },
   { code: 'B33',     w: 33,  kind: 'oven', receptacle: true,
-    upper: [{ light: 'UCB133SNWH', w: 33, h: 1, at: 53 }, { code: 'W3327', h: 27, at: 54 }, { code: 'W3315', h: 15, at: 81, glass: true }] },
+    upper: [{ light: 'UCB133SNWH', w: 33, h: 1.1, at: 52.9 }, { code: 'W3327', h: 27, at: 54 }, { code: 'W3315', h: 15, at: 81, glass: true }] },
   { code: 'filler',  w: 1.5, kind: 'filler', upper: [{ filler: true, at: 54, h: 42 }] },
   { code: 'MWB27',   w: 27,  kind: 'microwave', receptacle: true,
-    upper: [{ appliance: 'toaster oven', w: 21.5, h: 12.7, at: 35.75 }, { light: 'UCB124SNWH', w: 24, h: 1, at: 53 }, { code: 'W2727', h: 27, at: 54 }, { code: 'W2715', h: 15, at: 81, glass: true }] },
+    upper: [{ appliance: 'toaster oven', w: 21.5, h: 12.7, at: 35.75 }, { light: 'UCB124SNWH', w: 24, h: 1.1, at: 52.9 }, { code: 'W2727', h: 27, at: 54 }, { code: 'W2715', h: 15, at: 81, glass: true }] },
   { code: 'DB27-3',  w: 27,  kind: 'drawers', n: 3, receptacle: true,
-    upper: [{ appliance: 'air fryer', w: 11, h: 14.75, at: 35.75 }, { light: 'UCB124SNWH', w: 24, h: 1, at: 53 }, { code: 'W2727', h: 27, at: 54 }, { code: 'W2715', h: 15, at: 81, glass: true }] },
+    upper: [{ appliance: 'air fryer', w: 11, h: 14.75, at: 35.75 }, { light: 'UCB124SNWH', w: 24, h: 1.1, at: 52.9 }, { code: 'W2727', h: 27, at: 54 }, { code: 'W2715', h: 15, at: 81, glass: true }] },
   { code: 'DB27-3',  w: 27,  kind: 'drawers', n: 3, receptacle: true,
-    upper: [{ coffee: true, w: 8.5, h: 16.3, at: 35.75 }, { light: 'UCB124SNWH', w: 24, h: 1, at: 53 }, { code: 'W2727', h: 27, at: 54 }, { code: 'W2715', h: 15, at: 81, glass: true }] },
+    upper: [{ coffee: true, w: 8.5, h: 16.3, at: 35.75 }, { light: 'UCB124SNWH', w: 24, h: 1.1, at: 52.9 }, { code: 'W2727', h: 27, at: 54 }, { code: 'W2715', h: 15, at: 81, glass: true }] },
 ];
 
 const TOE = 4.5, BOX = 34.5, TOP = 1.25, CEILING = 96, OUTLET = 44; // OUTLET: center of a wall receptacle (assumed)
@@ -237,7 +237,7 @@ function side(run, flip, zBack) {
       } else if (x.coffee || x.appliance) B(u + (w - x.w) / 2, 2, x.at, x.w, APPLIANCE, x.h, M.black);
       else if (x.shelf) B(u, 0, x.at - 0.75, w, UPPER, 0.75, M.box);
       else if (x.filler) B(u, 0, x.at, w, UPPER, x.h, M.box);
-      else if (x.light) B(u + (w - x.w) / 2, UPPER - 4, x.at, x.w, 3, x.h, M.light); // under-cabinet light bar near the front edge (3" wide, assumed)
+      else if (x.light) B(u + (w - x.w) / 2, UPPER - 4, x.at, x.w, 3.5, x.h, M.light); // under-cabinet light bar near the front edge (3 1/2" wide, Nicor UCB sheet)
       else { // wall cabinet: depth from the code (W362424 is 24" deep), else 12"
         const d = +(x.code.match(/^W\d{4}(\d\d)/) || [])[1] || UPPER;
         B(u, 0, x.at, w, d, x.h, M.box);

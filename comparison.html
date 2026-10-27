@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="nav.js" defer></script>
+<title>Comparison · Galley Kitchen</title>
+<style>
+  body { margin: 24px; background: #fbfaf5; color: #223; font-family: system-ui, sans-serif; line-height: 1.5; }
+  h1 { margin: 0 0 4px; } p.sub { margin: 0; color: #667; } a { color: #2a5d9f; }
+  table { border-collapse: collapse; margin-top: 12px; background: #fff; font-size: 14px; }
+  th, td { border: 1px solid #ccd; padding: 6px 8px; text-align: left; vertical-align: top; min-width: 150px; }
+  th { background: #eef2f7; } td:first-child { min-width: 0; max-width: 220px; font-weight: 600; } td:nth-child(2) { min-width: 0; }
+  b.p { white-space: nowrap; } span.reg { color: #667; white-space: nowrap; } div.code { font-family: monospace; overflow-wrap: anywhere; } td:first-child span.reg { white-space: normal; } div.resized { color: #a33; }
+  tr.total td { font-weight: 600; background: #eef2f7; }
+  div.wrap { overflow-x: auto; }
+</style>
+<h1>Comparison</h1>
+<p class="sub">Every quote against the <a href="cabinets.html#order-summary">order summary</a> · <a href="index.html">index</a></p>
+<p>Down the left, the planned cabinets; across the top, the quotes. Each cell is that quote's sale price for the line (price × qty, glass prep included), the regular price under it, then the vendor's code, in red when that cabinet's size differs from the plan's (see each quote page for the notes).
+Read from each quote page's <code>lines</code>, so it stays in step with them. Quotes run from the highest sale total to the lowest; Access is one number, not itemized, and sorts by that.</p>
+<div class="wrap"><table id="cmp"><tr><td>Loading… (serve the folder over http; <code>fetch()</code> does not work from <code>file:</code>)</td></tr></table></div>
+
+<script>
+const quotes = [
+  ['quote-accessbycabinetjoint.html', 'Access'], ['quote-cabinets-monaco.html', 'Monaco'], ['quote-cabinets-cosmopolitan.html', 'Cosmopolitan'],
+  ['quote-rtawoodcabinets-edgeline.html', 'Edgeline'], ['quote-barker.html', 'Barker'], ['quote-thertastore-madison.html', 'Madison'],
+];
+// 'planned / vendor code' lines whose size (W × H × D, as supplied) differs from the plan's in cabinets.html.
+// Barker's pantry and microwave base are split in two but add up to the planned size, so they are not listed.
+const resized = {
+  Monaco: ['TEP / TEP2496', 'W362424 / RW3624', 'PC36 / UT362484', '1.5" filler 96" / UF396', '1.5" filler 34.5", 42" / UF342'],
+  Cosmopolitan: ['TEP / TEP2496', 'W362424 / RW3624', 'PC36 / UT362484', '1.5" filler 96" / UF396', '1.5" filler 34.5", 42" / UF342'],
+  Edgeline: ['SB42 / EW-SB36', 'TEP / EW-REPV3096', 'PC36 / EW-U309624', 'W3327 / EW-W3330', 'W3315 glass / EW-W3312GD', 'MWB27 / EW-BMW30',
+    'DB27-3 / EW-3DB24', 'W2727 / EW-W2730', 'W2715 glass / EW-W2712GD', '1.5" filler 96" / EW-F396', '1.5" filler 34.5", 42" / EW-F342'],
+  Madison: ['SB42 / SN-SB36', 'TEP / SN-REPV3096', 'PC36 / SN-U3084244RS', 'W3615 glass / SN-W3012GD', 'W3327 / SN-W3330', 'W3315 glass / SN-W3312GD',
+    'MWB27 / SN-BMW30', 'W2727 / SN-W2730', 'W2715 glass / SN-W2712GD', '1.5" filler 96" / SN-F396', '1.5" filler 34.5", 42" / SN-F342'],
+  Barker: ['TEP / TFETHICK', '1.5" filler 96" / TFILLER', '1.5" filler 34.5" / BFILLER', '1.5" filler 42" / WFILLER'],
+};
+const $ = n => '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const page = async url => new DOMParser().parseFromString(await (await fetch(url)).text(), 'text/html');
+
+(async () => {
+  // planned rows: [code, qty, where] from the order summary
+  const plan = [...(await page('cabinets.html')).querySelectorAll('#order-summary + table tr')].slice(1)
+    .map(tr => [...tr.cells].map(td => td.textContent));
+  const row = name => plan.filter(([code]) => name.startsWith(code)).sort((a, b) => b[0].length - a[0].length)[0]?.[0];
+
+  const cols = await Promise.all(quotes.map(async ([url, label]) => {
+    const doc = await page(url);
+    const src = [...doc.scripts].map(s => s.textContent).find(t => t.includes('const lines'));
+    if (!src) { const total = doc.querySelector('p.total b').textContent; return { url, label, total, price: +total.replace(/[$,]/g, '') }; } // not itemized
+    // ponytail: runs the quote page's own `glass` and `lines` declarations; they must stay before `const $`
+    const lines = new Function(src.slice(src.indexOf('const glass'), src.indexOf('const $')) + 'return lines;')();
+    const cells = {}; let reg = 0, sale = 0;
+    for (const [planned, code, qty, r, s, g, notes] of lines) {
+      const c = cells[row(planned)] ??= { reg: 0, sale: 0, items: [] };
+      c.reg += (r + g) * qty; c.sale += (s + g) * qty; reg += (r + g) * qty; sale += (s + g) * qty;
+      c.items.push({ planned, code, qty, notes: notes.replace(/^(island|wall): /, '') });
+    }
+    return { url, label, cells, price: sale, total: `${$(sale)}<br><span class="reg">${$(reg)} regular</span>` };
+  }));
+  cols.sort((a, b) => b.price - a.price); // highest first, by sale price (Access by its one total)
+
+  let html = `<tr><th>planned</th><th>qty</th>${cols.map(c => `<th><a href="${c.url}">${c.label}</a></th>`).join('')}</tr>`;
+  for (const [code, qty, where] of plan) {
+    html += `<tr><td>${code}<br><span class="reg">${where}</span></td><td>${qty}</td>`;
+    for (const col of cols) {
+      const c = col.cells?.[code];
+      if (!col.cells) { html += '<td class="same"><span class="reg">in the total</span></td>'; continue; }
+      if (!c || c.items.every(i => !i.qty)) { html += '<td><span class="reg">not supplied</span></td>'; continue; }
+      html += `<td><b class="p">${$(c.sale)}</b><br><span class="reg">${$(c.reg)} regular</span>` +
+        c.items.map(i => `<div class="code${resized[col.label]?.includes(i.planned + ' / ' + i.code) ? ' resized' : ''}">${i.qty} × ${i.code}</div>`).join('') + '</td>';
+    }
+    html += '</tr>';
+  }
+  html += `<tr class="total"><td>total</td><td></td>${cols.map(c => `<td>${c.total}</td>`).join('')}</tr>`;
+  document.getElementById('cmp').innerHTML = html;
+})();
+</script>

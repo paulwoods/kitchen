@@ -1,10 +1,11 @@
-// Row of links across the top of every page: Drawings and model, then Documentation (same as index.html).
+// Row of links across the top of every page: Drawings and model, Documentation, then Pricing (same as index.html).
 // Loaded with defer, so it runs after sketch.js has rebuilt the body. On model.html it goes inside the header,
 // which the canvas subtracts from the window height.
 const groups = [
   [['index.html', 'Index']],
   [['sketch-top.html', 'Top view'], ['sketch-island-front.html', 'Island front'], ['sketch-wall-front.html', 'Wall front'], ['model.html', '3D model']],
   [['issues.html', 'Issues'], ['cabinets.html', 'Cabinets'], ['appliances.html', 'Appliances'], ['electrical.html', 'Electrical'], ['review1.html', 'Review 1']],
+  [['quote-accessbycabinetjoint.html', 'Quote: Access']],
 ];
 const here = location.pathname.split('/').pop() || 'index.html';
 const nav = document.createElement('nav');

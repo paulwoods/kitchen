@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="nav.js" defer></script>
+<title>Quote: Edgeline · Galley Kitchen</title>
+<style>
+  body { margin: 24px; max-width: 1100px; background: #fbfaf5; color: #223; font-family: system-ui, sans-serif; line-height: 1.5; }
+  h1 { margin: 0 0 4px; } h2 { margin: 28px 0 8px; font-size: 1.25em; } p.sub { margin: 0; color: #667; }
+  p.total { margin: 16px 0; padding: 8px 12px; background: #fff; border: 1px solid #ccd; font-size: 1.25em; }
+  li { margin: 8px 0; } a { color: #2a5d9f; }
+  table { border-collapse: collapse; margin-top: 12px; background: #fff; }
+  th, td { border: 1px solid #ccd; padding: 8px 10px; text-align: left; vertical-align: top; }
+  th { background: #eef2f7; white-space: nowrap; } td.n { text-align: right; white-space: nowrap; }
+  tr.total td { font-weight: 600; background: #eef2f7; }
+  @media (max-width: 600px) {
+    table, tbody, tr, td { display: block; } tr:first-child { display: none; }
+    tr { border: 1px solid #ccd; border-top: 0; padding: 8px 10px; } tr:nth-child(2) { border-top: 1px solid #ccd; }
+    td { border: 0; padding: 0; white-space: normal !important; text-align: left !important; } td:empty { display: none; }
+    td:not(:last-child) { display: inline; font-weight: 600; } td:not(:last-child):not(:nth-last-child(2))::after { content: " · "; font-weight: 400; color: #667; }
+  }
+</style>
+
+<h1>Quote: RTA Wood Cabinets Edgeline White Shaker</h1>
+<p class="sub"><a href="https://rtawoodcabinets.com/collections/edgeline-white-shaker-rta-kitchen-cabinets">rtawoodcabinets.com, Edgeline White Shaker</a> · framed, ready to assemble · web prices read 2026-10-26 · <a href="index.html">index</a></p>
+
+<p class="total">Regular <b data-regular></b> · Sale <b data-sale></b></p>
+
+<p>Priced from the website against the <a href="cabinets.html#order-summary">order summary</a>, one line per cabinet. Tax, shipping and assembly are not included.
+Where the Edgeline line has no exact match, the nearest item is used and the difference is noted.</p>
+
+<table id="lines">
+<tr><th>planned</th><th>rtawoodcabinets.com</th><th>qty</th><th>regular</th><th>sale</th><th>regular × qty</th><th>sale × qty</th><th>notes</th></tr>
+</table>
+
+<h2>Differences from the plan</h2>
+<ul>
+  <li>Glass doors: the "GD" cabinets come prepped for glass with a finished interior, but the glass is not included (priced from a glass shop separately).</li>
+  <li>Wall cabinets over the oven, Toaster, Air Fryer and Coffee: no 27" tall cabinets. Each W2727 + W2715 pair becomes a 30" tall cabinet at 54" with a 12" glass cabinet at 84" (same 42" total to the ceiling); likewise the W3327 + W3315 over the oven.</li>
+  <li>Pantry: no 36" wide or 81" tall cabinet. The U309624 is 30" wide and 96" tall (to the ceiling), two door pairs over shelves, no roll-out trays and no glass cabinet above it.</li>
+  <li>Sink base: no 42"; the SB36 is 36" wide. The 33 1/2" Ruvati sink fits a 36" base only if its 34 1/2" inside clears the bowl flanges; check before ordering.</li>
+  <li>Microwave base: the BMW30 is 30" wide (3" wider than the MWB27) with one drawer under the opening, not two.</li>
+  <li>Drawer bases for Air Fryer and Coffee: no 27"; the 3DB24 is 24" wide (the 3DB30, $752.68 / $526.88, is the 30" option).</li>
+  <li>With those widths the wall run is 183", 9" short of 192"; the island is 186", 6" short. Fillers or wider neighbours make up the rest.</li>
+  <li>Trash: the B18TCPO is a single door with a drawer above and two 35-qt bins, not a full-height pull-out.</li>
+  <li>Oven base: a plain B33 (two doors, two drawers); the OW-B33-FH's oven opening is not offered at base height (only 84"+ oven cabinets).</li>
+  <li>Cabinet A: the B24 has double doors over one drawer; there is no 24" single-door base.</li>
+  <li>Tall end panels: the REPV3096 is 1 1/2" x 96" x 30" deep (a refrigerator panel), 6" deeper than the 24" TEP.</li>
+  <li>Fillers come 3" wide, cut down on site to 1.5". The 42" fillers are cut to 34.5" and 42".</li>
+</ul>
+
+<script>
+// [planned, rtawoodcabinets.com code, qty, regular, sale, glass add-on, notes]
+const glass = 0; // GD cabinets are prepped for glass; the glass itself is not sold
+const lines = [
+  ['DB24-3', 'EW-3DB24', 2, 667.00, 466.90, 0, 'island: spices, plates'],
+  ['DB36-3', 'EW-3DB36', 1, 855.60, 598.92, 0, 'island: cooktop'],
+  ['TRB18FH', 'EW-B18TCPO', 1, 1002.23, 701.56, 0, 'island: trash, door and drawer, 2 bins'],
+  ['SB42', 'EW-SB36', 1, 534.75, 374.33, 0, 'island: sink, 36" wide, 2 doors, 2 false drawers'],
+  ['B24-2', 'EW-B24', 1, 493.93, 345.75, 0, 'island: cabinet a, 2 doors, 1 drawer'],
+  ['TEP', 'EW-REPV3096', 2, 247.83, 173.48, 0, 'wall: each side of the fridge, 1 1/2" × 96" × 30"'],
+  ['W362424', 'EW-W362424', 1, 495.08, 346.56, 0, 'wall: over the fridge, 36" × 24" × 24"'],
+  ['PC36', 'EW-U309624', 1, 1351.25, 945.88, 0, 'wall: pantry, 30" × 96" × 24", 4 doors, shelves'],
+  ['W3615 glass', '(none)', 0, 0, 0, glass, 'wall: no room over a 96" pantry'],
+  ['B33 (OW-B33-FH)', 'EW-B33', 1, 668.15, 467.71, 0, 'wall: oven base, 2 doors, 2 drawers'],
+  ['W3327', 'EW-W3330', 1, 458.85, 321.20, 0, 'wall: over the oven, 30" tall'],
+  ['W3315 glass', 'EW-W3312GD', 1, 262.78, 183.95, glass, 'wall: over the W3330, 12" tall, glass not included'],
+  ['MWB27', 'EW-BMW30', 1, 534.75, 374.33, 0, 'wall: Toaster, microwave base, 30" wide, 1 drawer'],
+  ['DB27-3', 'EW-3DB24', 2, 667.00, 466.90, 0, 'wall: Air Fryer, Coffee, 24" wide'],
+  ['W2727', 'EW-W2730', 3, 392.73, 274.91, 0, 'wall: over the Toaster, Air Fryer and Coffee, 30" tall'],
+  ['W2715 glass', 'EW-W2712GD', 3, 238.05, 166.64, glass, 'wall: over the W2730s, 12" tall, glass not included'],
+  ['1.5" filler 96"', 'EW-F396', 1, 85.10, 59.57, 0, 'wall: left of the oven, 3" × 96", cut to 1.5"'],
+  ['1.5" filler 34.5", 42"', 'EW-F342', 2, 27.60, 19.32, 0, 'wall: right of the oven, 3" × 42", cut to 1.5" and to length'],
+];
+const $ = n => '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+let reg = 0, sale = 0;
+const table = document.getElementById('lines');
+for (const [plan, code, qty, r, s, g, notes] of lines) {
+  const rq = (r + g) * qty, sq = (s + g) * qty; reg += rq; sale += sq;
+  const price = p => g ? `${$(p)} + ${$(g)}` : $(p);
+  table.insertAdjacentHTML('beforeend', `<tr><td>${plan}</td><td>${code}</td><td class="n">${qty}</td><td class="n">${price(r)}</td><td class="n">${price(s)}</td><td class="n">${$(rq)}</td><td class="n">${$(sq)}</td><td>${notes}</td></tr>`);
+}
+table.insertAdjacentHTML('beforeend', `<tr class="total"><td>total</td><td></td><td class="n">${lines.reduce((n, l) => n + l[2], 0)}</td><td></td><td></td><td class="n">${$(reg)}</td><td class="n">${$(sale)}</td><td>before tax and shipping</td></tr>`);
+document.querySelector('[data-regular]').textContent = $(reg);
+document.querySelector('[data-sale]').textContent = $(sale);
+</script>

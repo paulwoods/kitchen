@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="nav.js" defer></script>
+<title>Quote: Cosmopolitan · Galley Kitchen</title>
+<style>
+  body { margin: 24px; max-width: 1100px; background: #fbfaf5; color: #223; font-family: system-ui, sans-serif; line-height: 1.5; }
+  h1 { margin: 0 0 4px; } h2 { margin: 28px 0 8px; font-size: 1.25em; } p.sub { margin: 0; color: #667; }
+  p.total { margin: 16px 0; padding: 8px 12px; background: #fff; border: 1px solid #ccd; font-size: 1.25em; }
+  li { margin: 8px 0; } a { color: #2a5d9f; }
+  table { border-collapse: collapse; margin-top: 12px; background: #fff; }
+  th, td { border: 1px solid #ccd; padding: 8px 10px; text-align: left; vertical-align: top; }
+  th { background: #eef2f7; white-space: nowrap; } td.n { text-align: right; white-space: nowrap; }
+  tr.total td { font-weight: 600; background: #eef2f7; }
+  @media (max-width: 600px) {
+    table, tbody, tr, td { display: block; } tr:first-child { display: none; }
+    tr { border: 1px solid #ccd; border-top: 0; padding: 8px 10px; } tr:nth-child(2) { border-top: 1px solid #ccd; }
+    td { border: 0; padding: 0; white-space: normal !important; text-align: left !important; } td:empty { display: none; }
+    td:not(:last-child) { display: inline; font-weight: 600; } td:not(:last-child):not(:nth-last-child(2))::after { content: " · "; font-weight: 400; color: #667; }
+  }
+</style>
+<h1>Quote: Cabinets.com Cosmopolitan Maple Fog</h1>
+<p class="sub"><a href="https://www.cabinets.com/kitchen-cabinets/cordova-collection/cosmopolitan-maple-fog">cabinets.com, Cordova collection</a> · frameless, assembled · web prices read 2026-10-26 · <a href="index.html">index</a></p>
+
+<p class="total">Regular <b data-regular></b> · Sale <b data-sale></b></p>
+
+<p>Priced from the website against the <a href="cabinets.html#order-summary">order summary</a>, one line per cabinet. Tax and shipping are not included.
+Where cabinets.com has no exact match, the nearest item is used and the difference is noted.</p>
+
+<table id="lines">
+<tr><th>planned</th><th>cabinets.com</th><th>qty</th><th>regular</th><th>sale</th><th>regular × qty</th><th>sale × qty</th><th>notes</th></tr>
+</table>
+
+<h2>Differences from the plan</h2>
+<ul>
+  <li>Glass doors: this door style has no glass option (the product pages offer only finished sides and depth changes), so the W3615, W3315 and W2715s are priced with solid doors.</li>
+  <li>Pantry: no 81" tall cabinet. The UT362484 is 84" with four doors over shelves, not a door pair over three roll-out trays. At 84" it would reach 3" past the W2727 tops.</li>
+  <li>Oven base: a plain B33 (two doors, one drawer); the oven cutout and the OW-B33-FH's full-height opening are not offered.</li>
+  <li>Microwave base: the MBC27 has one drawer under the opening, not two.</li>
+  <li>Over the fridge: the RW3624 is 23 11/16" tall, not 24".</li>
+  <li>Fillers come 1" or 3" wide, not 1.5"; the 3" pieces are cut down on site. The 42" fillers are cut to 34.5" and 42".</li>
+  <li>Cabinet A: B24-SINGLE (one door, one drawer), the B24 has two doors.</li>
+</ul>
+
+<script>
+// [planned, cabinets.com code, qty, regular, sale, glass add-on, notes]
+const glass = 0; // no glass door option in this door style
+const lines = [
+  ['DB24-3', 'DB24-3', 2, 1396.34, 907.62, 0, 'island: spices, plates'],
+  ['DB36-3', 'DB36-3', 1, 1635.41, 1063.02, 0, 'island: cooktop'],
+  ['TRB18FH', 'B18-FH Trash', 1, 1692.80, 1100.32, 0, 'island: trash, full height, 2 containers'],
+  ['SB42', 'SB42', 1, 916.57, 595.77, 0, 'island: sink, 2 doors, 2 false drawers'],
+  ['B24-2', 'B24-SINGLE', 1, 869.57, 565.22, 0, 'island: cabinet a, 1 door, 1 drawer'],
+  ['TEP', 'TEP2496', 2, 567.29, 368.74, 0, 'wall: each side of the fridge, 3/4" × 96" × 24"'],
+  ['W362424', 'RW3624', 1, 765.84, 497.80, 0, 'wall: over the fridge, 36" × 23 11/16" × 24"'],
+  ['PC36', 'UT362484', 1, 2183.24, 1419.11, 0, 'wall: pantry, 36" × 84" × 24", 4 doors, shelves'],
+  ['W3615 glass', 'W3615', 1, 532.44, 346.09, glass, 'wall: over the pantry, solid doors'],
+  ['B33 (OW-B33-FH)', 'B33', 1, 1036.51, 673.73, 0, 'wall: oven base, 2 doors, 1 drawer'],
+  ['W3327', 'W3327', 1, 666.16, 433.00, 0, 'wall: over the oven'],
+  ['W3315 glass', 'W3315', 1, 500.03, 325.02, glass, 'wall: over the W3327, solid doors'],
+  ['MWB27', 'MBC27', 1, 1002.48, 651.61, 0, 'wall: Toaster, microwave base, 1 drawer'],
+  ['DB27-3', 'DB27-3', 2, 1456.30, 946.60, 0, 'wall: Air Fryer, Coffee'],
+  ['W2727', 'W2727', 3, 592.41, 385.07, 0, 'wall: over the Toaster, Air Fryer and Coffee'],
+  ['W2715 glass', 'W2715', 3, 470.04, 305.53, glass, 'wall: over the W2727s, solid doors'],
+  ['1.5" filler 96"', 'UF396', 1, 170.99, 111.14, 0, 'wall: left of the oven, 3" × 96", cut to 1.5"'],
+  ['1.5" filler 34.5", 42"', 'UF342', 2, 67.26, 43.72, 0, 'wall: right of the oven, 3" × 42", cut to 1.5" and to length'],
+];
+const $ = n => '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+let reg = 0, sale = 0;
+const table = document.getElementById('lines');
+for (const [plan, code, qty, r, s, g, notes] of lines) {
+  const rq = (r + g) * qty, sq = (s + g) * qty; reg += rq; sale += sq;
+  const price = p => g ? `${$(p)} + ${$(g)}` : $(p);
+  table.insertAdjacentHTML('beforeend', `<tr><td>${plan}</td><td>${code}</td><td class="n">${qty}</td><td class="n">${price(r)}</td><td class="n">${price(s)}</td><td class="n">${$(rq)}</td><td class="n">${$(sq)}</td><td>${notes}</td></tr>`);
+}
+table.insertAdjacentHTML('beforeend', `<tr class="total"><td>total</td><td></td><td class="n">${lines.reduce((n, l) => n + l[2], 0)}</td><td></td><td></td><td class="n">${$(reg)}</td><td class="n">${$(sale)}</td><td>before tax and shipping</td></tr>`);
+document.querySelector('[data-regular]').textContent = $(reg);
+document.querySelector('[data-sale]').textContent = $(sale);
+</script>

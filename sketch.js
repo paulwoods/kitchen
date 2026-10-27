@@ -22,6 +22,7 @@ function sketch(title, run, opts = {}) {
   // Shapes classed apoff-N show only while appliance N is hidden.
   const apps = [];
   let ap = '';
+  let fin = ''; // ' base' while drawing a base-height item: Monaco Haze instead of Bright White
   const tag = (label, off) => { if (opts.toggles) { ap = ` ap-${apps.length}`; apps.push({ label, off }); } };
 
   // Stack of fronts from `top` down: each row is { h, pair, pull: 'mid' | 'top' | 'bottom' }.
@@ -30,26 +31,27 @@ function sketch(title, run, opts = {}) {
     for (const r of rows) {
       const mid = x + w / 2;
       if (r.pair) {
-        rect(x + 0.25, y, w / 2 - 0.375, r.h - 0.5, 'front');
-        rect(mid + 0.125, y, w / 2 - 0.375, r.h - 0.5, 'front');
+        rect(x + 0.25, y, w / 2 - 0.375, r.h - 0.5, 'front' + fin);
+        rect(mid + 0.125, y, w / 2 - 0.375, r.h - 0.5, 'front' + fin);
         const py = r.pull === 'bottom' ? y + r.h - 6.5 : y + 2;
         line(mid - 1.5, py, mid - 1.5, py + 4, 'pull');
         line(mid + 1.5, py, mid + 1.5, py + 4, 'pull');
       } else {
-        rect(x + 0.25, y, w - 0.5, r.h - 0.5, 'front');
+        rect(x + 0.25, y, w - 0.5, r.h - 0.5, 'front' + fin);
         const py = r.pull === 'top' ? y + 3 : y + r.h / 2;
         line(mid - 2, py, mid + 2, py, 'pull');
       }
       y += r.h;
     }
   };
-  const cabinet = (x, w, h) => { rect(x, FLOOR - h, w, h - TOE, 'box'); rect(x, FLOOR - TOE, w, TOE, 'toe'); };
+  const cabinet = (x, w, h) => { rect(x, FLOOR - h, w, h - TOE, 'box' + fin); rect(x, FLOOR - TOE, w, TOE, 'toe'); };
 
   if (opts.riser) rect(MARGIN, FLOOR - opts.riser, total, opts.riser - BOX - TOP, 'riser'); // behind everything else
 
   let x = MARGIN;
   const face = BOX - TOE;
   for (const c of run) {
+    fin = c.h ? '' : ' base';
     if (c.kind === 'gap') {
       const h = c.h || BOX;
       tag(c.name || c.tag, c.off);
@@ -94,8 +96,8 @@ function sketch(title, run, opts = {}) {
         rect(ox + 3, FLOOR - 28, ow - 6, 18, 'window');
         line(ox + 3, FLOOR - 31.5, ox + ow - 3, FLOOR - 31.5, 'pull');
         ap = '';
-      } else if (c.kind === 'microwave') { // Bosch HMD8454UC microwave drawer: 23 7/8" x 16 5/16" face from 17.75" to 7/16" under the counter (34 1/16"), two drawers below
-        fronts(x, c.w, FLOOR - 17.75, [{ h: 6.625 }, { h: 6.625 }]);
+      } else if (c.kind === 'microwave') { // Bosch HMD8454UC microwave drawer: 23 7/8" x 16 5/16" face from 17.75" to 7/16" under the counter (34 1/16"), one drawer below (like the cabinets.com MBC27)
+        fronts(x, c.w, FLOOR - 17.75, [{ h: 13.25 }]);
         const mw = 23.875, mx = x + (c.w - mw) / 2, top = FLOOR - 34.0625;
         tag('microwave', c.off);
         rect(mx, top, mw, 16.3125, 'oven');
@@ -105,6 +107,7 @@ function sketch(title, run, opts = {}) {
       if (c.falseTop) text(x + c.w / 2 + 3, FLOOR - BOX + 3.3, 'false front', 'code start'); // top row is a fixed front, labeled right of its pull
     }
     // Things hung above this item. Cabinet: { code, h, at: bottom off the floor, glass }; hood: { hood: true, w, h, at, chimney }; shelf: { shelf: true, at: top off the floor }; plain strip: { filler: true, h, at }; microwave: { microwave: true, w, h, at }; coffee maker: { coffee: true, w, h, at }; other appliance: { appliance, w, h, at, dx }; under-cabinet light: { light, w, h, at }.
+    fin = '';
     for (const u of c.upper || []) {
       ap = '';
       if (u.microwave || u.coffee || u.appliance) tag(u.microwave ? 'microwave' : u.coffee ? 'coffee maker' : u.appliance, u.off);
@@ -374,8 +377,9 @@ function page(title, view, W, H, oy, out, axes) {
       .readout { min-height: 1.5em; font-variant-numeric: tabular-nums; } .readout b { color: #223; }
       button { font: inherit; margin-left: 8px; padding: 0 8px; }
       .grid { fill: none; stroke: #bcd3ea; stroke-width: 0.1; } .ft { stroke: #8fb2d6; stroke-width: 0.2; }
-      .box { fill: #f3ead9; stroke: #223; stroke-width: 0.3; }
-      .front { fill: #fffdf7; stroke: #223; stroke-width: 0.2; }
+      .box { fill: #f4f4f3; stroke: #223; stroke-width: 0.3; }
+      .front { fill: #f4f4f3; stroke: #223; stroke-width: 0.2; } /* Monaco Bright White */
+      .base { fill: #bec8c2; } /* Monaco Haze */
       .toe { fill: #556; } .counter { fill: #8a8f99; stroke: #223; stroke-width: 0.2; }
       .riser { fill: #e4dccb; stroke: #223; stroke-width: 0.25; }
       .cooktop { fill: #111; } .burner { fill: none; stroke: #667; stroke-width: 0.3; }
@@ -385,7 +389,7 @@ function page(title, view, W, H, oy, out, axes) {
       .sinkbowl { fill: #c9ccd2; stroke: #223; stroke-width: 0.3; }
       .upper { fill: none; stroke: #223; stroke-width: 0.3; stroke-dasharray: 0.01 0.8; stroke-linecap: round; } .pull { stroke: #223; stroke-width: 0.4; stroke-linecap: round; }
       .oven { fill: #c9ccd2; stroke: #223; stroke-width: 0.25; } .window { fill: #3a3f4a; }
-      .glass { fill: #dbe9f2; stroke: #223; stroke-width: 0.15; } .shelf { fill: #f3ead9; stroke: #223; stroke-width: 0.2; }
+      .glass { fill: #dbe9f2; stroke: #223; stroke-width: 0.15; } .shelf { fill: #f4f4f3; stroke: #223; stroke-width: 0.2; }
       .light { fill: #fff6d8; stroke: #223; stroke-width: 0.15; } .chrome { fill: #c9ccd2; stroke: #223; stroke-width: 0.1; } .button { fill: #fff; stroke: #223; stroke-width: 0.15; } .plate { fill: #fff; stroke: #223; stroke-width: 0.15; } .outlet { fill: #fffdf7; stroke: #223; stroke-width: 0.1; }
       .gap { fill: none; stroke: #223; stroke-width: 0.25; stroke-dasharray: 1.5 1; }
       .floor { stroke: #223; stroke-width: 0.4; } .tick, .dimline { stroke: #667; stroke-width: 0.15; }

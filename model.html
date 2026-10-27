@@ -65,7 +65,8 @@ const scene = new THREE.Scene();
 scene.background = new THREE.Color('#fbfaf5');
 const mat = (color, extra = {}) => new THREE.MeshStandardMaterial({ color, roughness: 0.8, ...extra });
 const M = {
-  box: mat('#f3ead9'), front: mat('#fffdf7'), toe: mat('#556'), counter: mat('#ecebe6', { roughness: 0.3 }),
+  box: mat('#f4f4f3'), front: mat('#f4f4f3'), haze: mat('#bec8c2'), // Monaco Bright White; Monaco Haze on the base cabinets
+  toe: mat('#556'), counter: mat('#ecebe6', { roughness: 0.3 }),
   riser: mat('#e4dccb'), steel: mat('#c9ccd2', { metalness: 0.5, roughness: 0.4 }), black: mat('#1b1b1b', { roughness: 0.3 }), brass: mat('#b08d57', { metalness: 0.6, roughness: 0.35 }),
   glass: mat('#bcd7e8', { transparent: true, opacity: 0.5 }), ring: mat('#8a8f99', { roughness: 0.4 }), drain: mat('#4a4d52', { metalness: 0.5, roughness: 0.4 }), pull: mat('#2b2b2b'), plate: mat('#ffffff'),
   hoodGlass: mat('#bcd7e8', { transparent: true, opacity: 0.4, side: THREE.DoubleSide, roughness: 0.1 }), light: mat('#fff6d8', { emissive: '#fff1c0' }), wall: mat('#e9e4d8'), floor: mat('#c8b48f'),
@@ -104,7 +105,7 @@ function side(run, flip, zBack) {
   const fronts = (u, w, top, rows, v = DEPTH) => {
     let y = top;
     for (const r of rows) {
-      const m = r.glass ? M.glass : M.front, y0 = y - r.h + 0.125, h = r.h - 0.25;
+      const m = r.glass ? M.glass : base ? M.haze : M.front, y0 = y - r.h + 0.125, h = r.h - 0.25;
       if (r.pair) {
         B(u + 0.125, v, y0, w / 2 - 0.1875, 0.75, h, m);
         B(u + w / 2 + 0.0625, v, y0, w / 2 - 0.1875, 0.75, h, m);
@@ -117,13 +118,15 @@ function side(run, flip, zBack) {
       y -= r.h;
     }
   };
-  const cabinet = (u, w, h) => { B(u, 0, TOE, w, DEPTH, h - TOE, M.box); B(u, 0, 0, w, DEPTH - 3, TOE, M.toe); };
+  let base = false; // drawing a base-height item
+  const cabinet = (u, w, h) => { B(u, 0, TOE, w, DEPTH, h - TOE, base ? M.haze : M.box); B(u, 0, 0, w, DEPTH - 3, TOE, M.toe); };
 
   let u = 0;
   for (const c of run) { c.u = u; u += c.w; }
   const face = BOX - TOE;
   for (const c of run) {
     const { u, w } = c;
+    base = !c.h;
     if (c.kind === 'gap' && c.h) { // fridge: stainless box c.d deep, French doors over a freezer drawer
       const d = c.d || DEPTH;
       B(u + 0.25, 0, 0, w - 0.5, d, c.h, M.steel);
@@ -142,8 +145,8 @@ function side(run, flip, zBack) {
     } else if (c.sink) { // open above the bowl's bottom: sides and back only, so the bowl shows
       const y = BOX - c.sink.depth - 0.5;
       cabinet(u, w, y);
-      for (const x of [u, u + w - 0.75]) B(x, 0, y, 0.75, DEPTH, BOX - y, M.box);
-      B(u, 0, y, w, 0.75, BOX - y, M.box);
+      for (const x of [u, u + w - 0.75]) B(x, 0, y, 0.75, DEPTH, BOX - y, M.haze);
+      B(u, 0, y, w, 0.75, BOX - y, M.haze);
       fronts(u, w, BOX, [{ h: 6 }, { h: face - 6, pair: true }]);
     } else {
       cabinet(u, w, BOX);
@@ -152,14 +155,14 @@ function side(run, flip, zBack) {
         fronts(u, w, BOX, [{ h: 6 }, ...Array(c.n - 2).fill({ h: rest }), { h: rest, pull: 'top' }]);
       } else if (c.kind === 'door') fronts(u, w, BOX, [{ h: face, pull: 'top' }]);
       else if (c.kind === 'base') fronts(u, w, BOX, [{ h: 6 }, { h: face - 6, pull: 'top' }]);
-      else if (c.kind === 'filler') B(u, DEPTH, TOE, w, 0.75, face, M.front);
+      else if (c.kind === 'filler') B(u, DEPTH, TOE, w, 0.75, face, M.haze);
       else if (c.kind === 'oven') { // 29" oven face from 5" to 34" off the floor
         const ow = Math.min(29.75, w - 0.25), ou = u + (w - ow) / 2;
         B(ou, DEPTH, 5, ow, 0.75, 29, M.steel);
         B(ou + 3, DEPTH + 0.75, 10, ow - 6, 0.1, 18, M.black);
         B(ou + 3, DEPTH + 1, 31, ow - 6, 1, 0.75, M.steel);
-      } else if (c.kind === 'microwave') { // Bosch HMD8454UC microwave drawer: 23 7/8" x 16 5/16" face from 17.75" to 34 1/16", two drawers below
-        fronts(u, w, 17.75, [{ h: 6.625 }, { h: 6.625 }]);
+      } else if (c.kind === 'microwave') { // Bosch HMD8454UC microwave drawer: 23 7/8" x 16 5/16" face from 17.75" to 34 1/16", one drawer below (like the cabinets.com MBC27)
+        fronts(u, w, 17.75, [{ h: 13.25 }]);
         const mw = 23.875, mu = u + (w - mw) / 2;
         B(mu, DEPTH, 17.75, mw, 0.75, 16.3125, M.steel);
         B(mu + 0.5, DEPTH + 0.75, 31.875, mw - 1, 0.1, 1.6875, M.black); // control strip
@@ -215,6 +218,7 @@ function side(run, flip, zBack) {
       rod(P(cu + 0.6, f.back, y0 + 5), P(cu + 2.9, f.back, y0 + 5), 0.6, M.black); // lever hub
       rod(P(cu + 2.6, f.back, y0 + 5), P(cu + 2.6, f.back, y0 + 5 + 3.3125), 0.2, M.brass); // lever, at rest
     }
+    base = false;
     for (const x of c.upper || []) {
       if (x.hood) { // curved glass canopy over a steel body (filter, 4 lights, touch panel in front), chimney to the ceiling
         const top = x.at + x.h, bw = 21, bd = 17, bu = u + (w - bw) / 2, bv = COUNTER / 2 - bd / 2; // body size assumed

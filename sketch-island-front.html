@@ -8,21 +8,21 @@
 <script>
 // Left to right, widths in inches.
 sketch('Island front', [
-  { name: 'spices',    code: 'DB24-3',  w: 24, kind: 'drawers', n: 3, receptacle: true },
+  { name: 'spices',    code: 'DB24-3',  w: 24, kind: 'drawers', n: 3 },
   { name: 'cooktop',   code: 'DB36-3',  w: 36, kind: 'drawers', n: 3, cooktop: true, falseTop: true,
     inside: [{ label: 'j box', w: 4, h: 4, at: 25.75, dx: 3 },
               { label: '', w: 28.875, h: 4.125, at: 32.4375, dx: 18 }], // NIT8061UC body: cutout width, 4 1/8" below the counter
     upper: [ { hood: true, w: 41.5, h: 2, at: 66.1875, chimney: 13.375 } ] }, // Proline PLFI 544-42
-  { name: 'plates',    code: 'DB24-3',  w: 24, kind: 'drawers', n: 3, receptacle: true },
-  { name: 'trash',     code: 'TRB18FH', w: 18, kind: 'door', receptacle: true,
+  { name: 'plates',    code: 'DB24-3',  w: 24, kind: 'drawers', n: 3 },
+  { name: 'trash',     code: 'TRB18FH', w: 18, kind: 'door',
     inside: [{ label: '120v', w: 2.75, h: 4.5, at: 26, dx: 9 }] },
   { name: 'sink',      code: 'SB42',    w: 42, kind: 'sink', falseTop: true, airSwitch: { dx: 17, back: 3 },
     inside: [{ label: '120v', w: 2.75, h: 4.5, at: 9, dx: 3 },
               { label: 'air sw', w: 4.375, h: 4.375, at: 9, dx: 8, within: true }, // STS-OO power module, plugged into the 120v, the disposal plugs into it
               { label: 'disposal', w: 8.5, h: 12.25, at: 18.5, dx: 11.3125, within: true }], // InSinkErator 81138K: 12 1/4" tall under the drain (width assumed)
     bowl: { w: 31.875, left: 9.875, right: 9.25 }, // Ruvati RVH6222ST bowl, drain on the left, 6 1/4" in from the bowl's left wall
-    faucet: { h: 22.4375, reach: 9.5, back: 3 } }, // Kohler K-R30937-BMB, 3" from the riser face; InSinkErator STS-OO button 4" left of it
-  { name: 'dishwasher', code: '24" gap', w: 24, kind: 'gap', tag: 'DW', dishwasher: true, receptacle: true },
-  { name: 'cabinet a', code: 'B24-2',   w: 24, kind: 'base', receptacle: true },
-], { riser: 42 }); // riser behind the counter, 42" bar height, the length of the cabinets
+    faucet: { h: 22.4375, reach: 9.5, back: 3 } }, // Kohler K-R30937-BMB, 3" from the counter's back edge; InSinkErator STS-OO button 4" left of it
+  { name: 'dishwasher', code: '24" gap', w: 24, kind: 'gap', tag: 'DW', dishwasher: true },
+  { name: 'cabinet a', code: 'B24-2',   w: 24, kind: 'base' },
+]);
 </script>

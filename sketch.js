@@ -4,11 +4,10 @@ const SQ = 6, BOLD = 30, PX = 5;      // inches per square, per bold line (from 
 const TOE = 4.5, BOX = 34.5, TOP = 1.25; // toe kick, cabinet height, 3 cm countertop
 const MARGIN = 12, CEILING = 96, OUTLET = 44; // OUTLET: center of a wall receptacle off the floor (assumed)
 
-// Duplex receptacle plate, vertical, and its center height: halfway between the counter and the top of a riser, or OUTLET on the wall.
-const receptacle = riser => ({ w: 2.75, h: 4.5, at: riser ? (BOX + TOP + riser) / 2 : OUTLET });
+// Duplex receptacle plate on the wall, vertical, centered at OUTLET.
+const RECEPTACLE = { w: 2.75, h: 4.5, at: OUTLET };
 
 // Items with `h` are tall (panels, pantry, fridge space) and get no countertop.
-// opts.riser: top of a wall behind the counter, off the floor, spanning the cabinet run.
 function sketch(title, run, opts = {}) {
   const total = run.reduce((s, c) => s + c.w, 0);
   const tallest = Math.max(CEILING, ...run.map(c => c.h || 0), ...run.flatMap(c => (c.upper || []).map(u => u.at + (u.h || 0))));
@@ -45,8 +44,6 @@ function sketch(title, run, opts = {}) {
     }
   };
   const cabinet = (x, w, h) => { rect(x, FLOOR - h, w, h - TOE, 'box' + fin); rect(x, FLOOR - TOE, w, TOE, 'toe'); };
-
-  if (opts.riser) rect(MARGIN, FLOOR - opts.riser, total, opts.riser - BOX - TOP, 'riser'); // behind everything else
 
   let x = MARGIN;
   const face = BOX - TOE;
@@ -176,8 +173,8 @@ function sketch(title, run, opts = {}) {
       line(l, t, r, t, 'hidden'); line(r, t, r, t + c.bowl.right, 'hidden');
       line(r, t + c.bowl.right, l, t + c.bowl.left, 'hidden'); line(l, t + c.bowl.left, l, t, 'hidden');
     }
-    if (c.receptacle) { // duplex receptacle centered on the cabinet (assumed): a vertical 2.75" x 4.5" plate, halfway up a riser above the counter or centered at OUTLET on the wall
-      const r = receptacle(opts.riser), px = x + (c.w - r.w) / 2, top = FLOOR - r.at - r.h / 2;
+    if (c.receptacle) { // duplex receptacle centered on the cabinet (assumed): a vertical 2.75" x 4.5" plate centered at OUTLET on the wall
+      const r = RECEPTACLE, px = x + (c.w - r.w) / 2, top = FLOOR - r.at - r.h / 2;
       const behind = (c.upper || []).find(u => { // a countertop appliance stands in front of it: dashed
         const ax = x + (u.dx ?? (c.w - u.w) / 2);
         return (u.appliance || u.coffee || u.microwave) && ax <= px && ax + u.w >= px + r.w && u.at <= r.at - r.h / 2 && u.at + u.h >= r.at + r.h / 2;
@@ -193,10 +190,9 @@ function sketch(title, run, opts = {}) {
         if (ap) { ap = ap.replace('ap-', 'apoff-'); plate(); } // in plain view while the appliance is hidden
         ap = '';
       }
-      if (opts.riser) text(px + r.w + 0.5, top + r.h / 2 + 0.7, '120v', 'dim volts start'); // beside it, clear of the riser top
-      else text(px + r.w / 2, top - 0.4, '120v', 'dim volts');
+      text(px + r.w / 2, top - 0.4, '120v', 'dim volts');
     }
-    if (c.airSwitch) { // InSinkErator STS-OO disposal air button on the counter: { dx: center from the item's left end, back: from the riser face }
+    if (c.airSwitch) { // InSinkErator STS-OO disposal air button on the counter: { dx: center from the item's left end, back: from the counter's back edge }
       // chrome collar and white button, 1 3/4" across and 3/4" tall (assumed; it needs a 1 1/4" hole)
       const bx = x + c.airSwitch.dx, deck = FLOOR - BOX - TOP;
       rect(bx - 0.875, deck - 0.25, 1.75, 0.25, 'chrome');
@@ -232,8 +228,7 @@ function sketch(title, run, opts = {}) {
   const mark = (at, label) => marks.set(at, [...new Set([...(marks.get(at) || []), label])]);
   mark(TOE, 'toe kick');
   mark(BOX + TOP, 'counter');
-  if (opts.riser) mark(opts.riser, 'riser');
-  if (run.some(c => c.receptacle)) mark(receptacle(opts.riser).at, 'receptacles');
+  if (run.some(c => c.receptacle)) mark(RECEPTACLE.at, 'receptacles');
   for (const c of run) if (c.faucet) mark(BOX + TOP + c.faucet.h, 'faucet');
   for (const u of run.flatMap(c => c.upper || [])) {
     if (u.shelf) mark(u.at, 'shelf');
@@ -279,11 +274,11 @@ function sketch(title, run, opts = {}) {
 // Draws the galley in plan (top view): the island at the top, facing down across the aisle,
 // and the wall run at the bottom, facing up (so it reads right to left). The wall run's right end lines up with the island's left end.
 // Depths are measured from the wall; grid lines from the island's left end and the wall.
-const DEPTH = 24, COUNTER = 25, RISER = 4.5, AISLE = 48, WALL = 4.5; // cabinet box, countertop (1" over the fronts), riser thickness (assumed), aisle between cabinet fronts, room wall
+const DEPTH = 24, COUNTER = 25, AISLE = 48, WALL = 4.5; // cabinet box, countertop (1" over the fronts), aisle between cabinet fronts, room wall
 function plan(title, island, wall, opts = {}) {
   const len = run => run.reduce((s, c) => s + c.w, 0);
   const total = Math.max(len(island), len(wall));
-  const across = 2 * DEPTH + AISLE + (opts.riser ? RISER : 0); // wall to the back of the riser
+  const across = 2 * DEPTH + AISLE; // wall to the island's back
   const WALLY = MARGIN + 20 + across, H = WALLY + WALL + 24;
   const W = MARGIN * 2 + total + 34;
   const out = [];
@@ -303,7 +298,6 @@ function plan(title, island, wall, opts = {}) {
     let u = 0;
     for (const c of run) { c.u = u; u += c.w; }
 
-    if (!flip && opts.riser) box(0, -RISER, len(run), RISER, 'riser');
     // Countertop over each stretch of base-height items; 1" overhang only at the ends of the run.
     run.forEach((c, i) => {
       if (c.h || (i > 0 && !run[i - 1].h)) return;
@@ -324,10 +318,10 @@ function plan(title, island, wall, opts = {}) {
         box(cu, cv, 31, 21.25, 'cooktop');
         for (const [du, dv] of [[8, 6], [23, 6], [8, 15.25], [23, 15.25]]) circle(P(cu + du, cv + dv), 4, 'burner');
       }
-      if (c.receptacle) box(c.u + (c.w - 2.75) / 2, 0, 2.75, 0.25, 'plate'); // on the riser or wall face, over the counter
+      if (c.receptacle) box(c.u + (c.w - 2.75) / 2, 0, 2.75, 0.25, 'plate'); // on the wall face, over the counter
       if (c.airSwitch) circle(P(c.u + c.airSwitch.dx, c.airSwitch.back), 0.875, 'button'); // STS-OO disposal button
       if (c.kind === 'sink') box(c.u + (c.w - 33.5) / 2, COUNTER - 21, 33.5, 19, 'sinkbowl'); // Ruvati RVH6222ST: 33.5" x 19" outer, 2" from the counter front
-      if (c.faucet) { // hole c.faucet.back in front of the riser, spout reaching c.faucet.reach toward the front
+      if (c.faucet) { // hole c.faucet.back in front of the counter's back edge, spout reaching c.faucet.reach toward the front
         const [x1, y1] = mid(c.faucet.back), [x2, y2] = mid(c.faucet.back + c.faucet.reach);
         line(x1, y1, x2, y2, 'spout');
         circle([x1, y1], 1.25, 'faucet');
@@ -348,14 +342,13 @@ function plan(title, island, wall, opts = {}) {
     text((x0 + x1) / 2, labelY + 18.5, `${len(run)}"`, 'dim');
   };
 
-  rect(MARGIN, WALLY, total, WALL, 'riser'); // the room wall behind the wall run
-  side(island, false, MARGIN - 2); // labels above the riser, clear of the aisle
+  rect(MARGIN, WALLY, total, WALL, 'roomwall'); // the room wall behind the wall run
+  side(island, false, MARGIN - 2); // labels above the island, clear of the aisle
   side(wall, true, WALLY + WALL);
 
   // Depth ruler on the right, from the wall.
   const rx = MARGIN + total + 4;
-  const marks = [[0, 'wall'], [DEPTH, 'wall cabinet fronts'], [DEPTH + AISLE, 'island cabinet fronts'], [2 * DEPTH + AISLE, opts.riser ? 'island back, riser' : 'island back']];
-  if (opts.riser) marks.push([across, 'riser back']);
+  const marks = [[0, 'wall'], [DEPTH, 'wall cabinet fronts'], [DEPTH + AISLE, 'island cabinet fronts'], [2 * DEPTH + AISLE, 'island back']];
   line(rx, WALLY, rx, WALLY - across, 'dimline');
   for (const [m, label] of marks) {
     line(rx - 1, WALLY - m, rx + 1, WALLY - m, 'tick');
@@ -381,7 +374,7 @@ function page(title, view, W, H, oy, out, axes) {
       .front { fill: #f4f4f3; stroke: #223; stroke-width: 0.2; } /* Monaco Bright White */
       .base { fill: #bec8c2; } /* Monaco Haze */
       .toe { fill: #556; } .counter { fill: #8a8f99; stroke: #223; stroke-width: 0.2; }
-      .riser { fill: #e4dccb; stroke: #223; stroke-width: 0.25; }
+      .roomwall { fill: #e4dccb; stroke: #223; stroke-width: 0.25; }
       .cooktop { fill: #111; } .burner { fill: none; stroke: #667; stroke-width: 0.3; }
       .top { fill: #e9eaed; } .hidden { fill: none; stroke: #223; stroke-width: 0.2; stroke-dasharray: 1 0.6; }
       .faucet { fill: #2b2b2b; stroke: #b08d57; stroke-width: 0.2; } .spout { stroke: #2b2b2b; stroke-width: 1.375; }

@@ -8,14 +8,14 @@
 <script>
 // Left to right as seen from the aisle, widths in inches (same runs as sketch-island-front.html and sketch-wall-front.html).
 plan('Top view', [
-  { name: 'spices',    code: 'DB24-3',  w: 24, kind: 'drawers', n: 3, receptacle: true },
+  { name: 'spices',    code: 'DB24-3',  w: 24, kind: 'drawers', n: 3 },
   { name: 'cooktop',   code: 'DB36-3',  w: 36, kind: 'drawers', n: 3, cooktop: true },
-  { name: 'plates',    code: 'DB24-3',  w: 24, kind: 'drawers', n: 3, receptacle: true },
-  { name: 'trash',     code: 'TRB18FH', w: 18, kind: 'door', receptacle: true },
+  { name: 'plates',    code: 'DB24-3',  w: 24, kind: 'drawers', n: 3 },
+  { name: 'trash',     code: 'TRB18FH', w: 18, kind: 'door' },
   { name: 'sink',      code: 'SB42',    w: 42, kind: 'sink', airSwitch: { dx: 17, back: 3 },
-    faucet: { h: 22.4375, reach: 9.5, back: 3 } }, // Kohler K-R30937-BMB, 3" from the riser face
-  { name: 'dishwasher', code: '24" gap', w: 24, kind: 'gap', tag: 'DW', receptacle: true },
-  { name: 'cabinet a', code: 'B24-2',   w: 24, kind: 'base', receptacle: true },
+    faucet: { h: 22.4375, reach: 9.5, back: 3 } }, // Kohler K-R30937-BMB, 3" from the counter's back edge
+  { name: 'dishwasher', code: '24" gap', w: 24, kind: 'gap', tag: 'DW' },
+  { name: 'cabinet a', code: 'B24-2',   w: 24, kind: 'base' },
 ], [
   {                    code: 'TEP',     w: 1.5, kind: 'panel', h: 96 },
   { name: 'fridge',    code: '36" gap', w: 36,  kind: 'gap', h: 70, tag: 'REF', receptacle: true, d: 28.5, // 28 1/2" deep with doors
@@ -32,5 +32,5 @@ plan('Top view', [
     upper: [{ code: 'W2727' }, { code: 'W2715 glass' }] },
   { name: 'Coffee',    code: 'DB27-3',  w: 27,  kind: 'drawers', n: 3, receptacle: true,
     upper: [{ code: 'W2727' }, { code: 'W2715 glass' }] },
-], { riser: true }); // riser behind the island counter, the length of the cabinets
+]);
 </script>

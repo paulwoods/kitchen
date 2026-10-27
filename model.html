@@ -27,16 +27,16 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
 // Same runs as sketch-island-front.html and sketch-wall-front.html, left to right as seen from the aisle. Inches.
 const island = [
-  { code: 'DB24-3',  w: 24, kind: 'drawers', n: 3, receptacle: true },
+  { code: 'DB24-3',  w: 24, kind: 'drawers', n: 3 },
   { code: 'DB36-3',  w: 36, kind: 'drawers', n: 3, cooktop: true,
     upper: [ { hood: true, w: 41.5, h: 2, at: 66.1875, chimney: 13.375, chimneyD: 10.625 } ] }, // Proline PLFI 544-42
-  { code: 'DB24-3',  w: 24, kind: 'drawers', n: 3, receptacle: true },
-  { code: 'TRB18FH', w: 18, kind: 'door', receptacle: true },
+  { code: 'DB24-3',  w: 24, kind: 'drawers', n: 3 },
+  { code: 'TRB18FH', w: 18, kind: 'door' },
   { code: 'SB42',    w: 42, kind: 'sink', airSwitch: { dx: 17, back: 3 },
     sink: { w: 31.875, d: 17.375, v: 4.8125, depth: 9.875, ledge: 0.6875, drain: 11.3125 }, // Ruvati RVH6222ST bowl opening (centered in its 33.5" x 19" outline, 2" from the counter front), drain 6 1/4" in from the left wall
     faucet: { h: 22.4375, reach: 9.5, back: 3 } }, // Kohler K-R30937-BMB
-  { code: '24" gap', w: 24, kind: 'gap', tag: 'DW', receptacle: true },
-  { code: 'B24-2',   w: 24, kind: 'base', receptacle: true },
+  { code: '24" gap', w: 24, kind: 'gap', tag: 'DW' },
+  { code: 'B24-2',   w: 24, kind: 'base' },
 ];
 const wall = [
   { code: 'TEP',     w: 1.5, kind: 'panel', h: 96 },
@@ -57,9 +57,9 @@ const wall = [
 ];
 
 const TOE = 4.5, BOX = 34.5, TOP = 1.25, CEILING = 96, OUTLET = 44; // OUTLET: center of a wall receptacle (assumed)
-const BAR = 42, DEPTH = 24, COUNTER = 25, RISER = 4.5, AISLE = 48, UPPER = 12, APPLIANCE = 14, HOOD = 23.625; // appliance depth assumed; hood depth per the Proline sheet
+const DEPTH = 24, COUNTER = 25, AISLE = 48, UPPER = 12, APPLIANCE = 14, HOOD = 23.625; // appliance depth assumed; hood depth per the Proline sheet
 const total = 192;
-const ZWALL = RISER + 2 * DEPTH + AISLE; // the island riser's back is at z = 0, the room wall at ZWALL
+const ZWALL = 2 * DEPTH + AISLE; // the island's back is at z = 0, the room wall at ZWALL
 
 const scene = new THREE.Scene();
 scene.background = new THREE.Color('#fbfaf5');
@@ -67,7 +67,7 @@ const mat = (color, extra = {}) => new THREE.MeshStandardMaterial({ color, rough
 const M = {
   box: mat('#f4f4f3'), front: mat('#f4f4f3'), haze: mat('#bec8c2'), // Monaco Bright White; Monaco Haze on the base cabinets
   toe: mat('#556'), counter: mat('#ecebe6', { roughness: 0.3 }),
-  riser: mat('#e4dccb'), steel: mat('#c9ccd2', { metalness: 0.5, roughness: 0.4 }), black: mat('#1b1b1b', { roughness: 0.3 }), brass: mat('#b08d57', { metalness: 0.6, roughness: 0.35 }),
+  steel: mat('#c9ccd2', { metalness: 0.5, roughness: 0.4 }), black: mat('#1b1b1b', { roughness: 0.3 }), brass: mat('#b08d57', { metalness: 0.6, roughness: 0.35 }),
   glass: mat('#bcd7e8', { transparent: true, opacity: 0.5 }), ring: mat('#8a8f99', { roughness: 0.4 }), drain: mat('#4a4d52', { metalness: 0.5, roughness: 0.4 }), pull: mat('#2b2b2b'), plate: mat('#ffffff'),
   hoodGlass: mat('#bcd7e8', { transparent: true, opacity: 0.4, side: THREE.DoubleSide, roughness: 0.1 }), light: mat('#fff6d8', { emissive: '#fff1c0' }), wall: mat('#e9e4d8'), floor: mat('#c8b48f'),
 };
@@ -168,9 +168,8 @@ function side(run, flip, zBack) {
         B(mu + 0.5, DEPTH + 0.75, 31.875, mw - 1, 0.1, 1.6875, M.black); // control strip
       }
     }
-    if (c.receptacle) { // vertical duplex plate (assumed), halfway up the island riser or at OUTLET on the wall
-      const at = flip ? OUTLET : (BOX + TOP + BAR) / 2;
-      B(u + (w - 2.75) / 2, 0, at - 2.25, 2.75, 0.25, 4.5, M.plate);
+    if (c.receptacle) { // vertical duplex plate (assumed) at OUTLET on the wall
+      B(u + (w - 2.75) / 2, 0, OUTLET - 2.25, 2.75, 0.25, 4.5, M.plate);
     }
     if (c.airSwitch) { // InSinkErator STS-OO disposal air button: chrome collar and white button (size assumed)
       const p = (y) => P(u + c.airSwitch.dx, c.airSwitch.back, y);
@@ -269,17 +268,17 @@ function side(run, flip, zBack) {
 const runs = { island: new THREE.Group(), wall: new THREE.Group() };
 scene.add(runs.island, runs.wall);
 group = runs.island;
-side(island, false, RISER)(0, -RISER, 0, total, RISER, BAR, M.riser); // riser behind the island, 42" bar height
+side(island, false, 0);
 group = runs.wall;
 side(wall, true, ZWALL);
 group = scene;
 
-// Room: floor, and the wall behind the wall run (one-sided, so it hides itself when viewed from behind).
+// Room: floor, and the wall behind the wall run, only as wide as the run (one-sided, so it hides itself when viewed from behind).
 const floor = new THREE.Mesh(new THREE.PlaneGeometry(total + 96, ZWALL + 48), M.floor);
 floor.rotation.x = -Math.PI / 2;
 floor.position.set(total / 2, 0, ZWALL / 2 - 24);
 scene.add(floor);
-const back = new THREE.Mesh(new THREE.PlaneGeometry(total + 96, CEILING), M.wall);
+const back = new THREE.Mesh(new THREE.PlaneGeometry(total, CEILING), M.wall);
 back.rotation.y = Math.PI;
 back.position.set(total / 2, CEILING / 2, ZWALL);
 scene.add(back);

@@ -21,8 +21,9 @@ function sketch(title, run, opts = {}) {
   // Shapes classed apoff-N show only while appliance N is hidden.
   const apps = [];
   let ap = '';
+  // opts.white: base-height items stay Bright White (the wall run) instead of Monaco Naval.
   let fin = ''; // ' base' while drawing a base-height item: Monaco Naval instead of Bright White
-  const dark = (c = { h: !fin }) => c.h ? '' : ' ondark'; // light lines and labels over the Naval fronts
+  const dark = (c = { h: !fin }) => c.h || opts.white ? '' : ' ondark'; // light lines and labels over the Naval fronts
   const tag = (label, off) => { if (opts.toggles) { ap = ` ap-${apps.length}`; apps.push({ label, off }); } };
 
   // Stack of fronts from `top` down: each row is { h, pair, pull: 'mid' | 'top' | 'bottom' }.
@@ -49,7 +50,7 @@ function sketch(title, run, opts = {}) {
   let x = MARGIN;
   const face = BOX - TOE;
   for (const c of run) {
-    fin = c.h ? '' : ' base';
+    fin = c.h || opts.white ? '' : ' base';
     if (c.kind === 'gap') {
       const h = c.h || BOX;
       tag(c.name || c.tag, c.off);

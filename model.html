@@ -97,7 +97,7 @@ const ring = (p, r, m) => { // flat ring centered at p
 
 // One run in its own coordinates: u along the run from its left end, v from the cabinet backs toward the aisle, y up from the floor.
 // The island faces +z from its back at zBack; the wall run faces -z from the wall and reads right to left.
-function side(run, flip, zBack, back = 0) { // back: counter past the cabinet backs (an item's own `back` wins)
+function side(run, flip, zBack, back = 0, naval = true) { // back: counter past the cabinet backs (an item's own `back` wins); naval: base-height items in Monaco Naval, else Bright White
   const B = (u, v, y, w, d, h, m) => cube(flip ? total - u - w : u, y, flip ? zBack - v - d : zBack + v, w, h, d, m);
   const P = (u, v, y) => [flip ? total - u : u, y, flip ? zBack - v : zBack + v];
 
@@ -133,7 +133,7 @@ function side(run, flip, zBack, back = 0) { // back: counter past the cabinet ba
   const face = BOX - TOE;
   for (const c of run) {
     const { u, w } = c;
-    base = !c.h;
+    base = naval && !c.h;
     if (c.kind === 'gap' && c.h) { // fridge: stainless box c.d deep, French doors over a freezer drawer
       const d = c.d || DEPTH;
       B(u + 0.25, 0, 0, w - 0.5, d, c.h, M.steel);
@@ -162,7 +162,7 @@ function side(run, flip, zBack, back = 0) { // back: counter past the cabinet ba
         fronts(u, w, BOX, [{ h: 6 }, ...Array(c.n - 2).fill({ h: rest }), { h: rest, pull: 'top' }]);
       } else if (c.kind === 'door') fronts(u, w, BOX, [{ h: face, pull: 'top' }]);
       else if (c.kind === 'base') fronts(u, w, BOX, [{ h: 6 }, { h: face - 6, pull: 'top' }]);
-      else if (c.kind === 'filler') B(u, DEPTH, TOE, w, 0.75, face, M.naval);
+      else if (c.kind === 'filler') B(u, DEPTH, TOE, w, 0.75, face, base ? M.naval : M.front);
       else if (c.kind === 'oven') { // 29" oven face from 5" to 34" off the floor
         const ow = Math.min(29.75, w - 0.25), ou = u + (w - ow) / 2;
         B(ou, DEPTH, 5, ow, 0.75, 29, M.steel);
@@ -290,7 +290,7 @@ group = runs.island;
 side(island, false, 0, 1.75); // counter 1 3/4" past the cabinet backs (the 3/4" plywood, then 1"), 6 3/4" behind items with back: 6.75
 cube(0, 0, -0.75, island.reduce((s, c) => s + c.w, 0), BOX, 0.75, [M.naval, M.naval, M.ply, M.ply, M.ply, M.front]); // 3/4" plywood on the island's back, floor to the counter's underside: Naval ends, Bright White back (box faces +x, -x, +y, -y, +z, -z)
 group = runs.wall;
-side(wall, true, ZWALL);
+side(wall, true, ZWALL, 0, false); // base cabinets Bright White (2026-10-27)
 group = scene;
 
 // Room: floor, and the wall behind the wall run, only as wide as the run (one-sided, so it hides itself when viewed from behind).

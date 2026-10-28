@@ -329,6 +329,7 @@ function plan(title, island, wall, opts = {}) {
         for (const [du, dv] of [[8, 6], [23, 6], [8, 15.25], [23, 15.25]]) circle(P(cu + du, cv + dv), 4, 'burner');
       }
       if (c.receptacle) box(c.u + (c.w - 2.75) / 2, 0, 2.75, 0.25, 'plate'); // on the wall face, over the counter
+      if (c.backReceptacle) box(c.u + (c.w - 2.75) / 2, -1, 2.75, 0.25, 'plate'); // vertical plate on the island's plywood back
       if (c.airSwitch) circle(P(c.u + c.airSwitch.dx, c.airSwitch.back), 0.875, 'button'); // STS-OO disposal button
       if (c.kind === 'sink') box(c.u + (c.w - 33.5) / 2, COUNTER - 21, 33.5, 19, 'sinkbowl'); // Ruvati RVH6222ST: 33.5" x 19" outer, 2" from the counter front
       if (c.faucet) { // hole c.faucet.back in front of the cabinet backs, spout reaching c.faucet.reach toward the front

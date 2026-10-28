@@ -27,16 +27,16 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
 // Same runs as sketch-island-front.html and sketch-wall-front.html, left to right as seen from the aisle. Inches.
 const island = [
-  { code: 'DB24-3',  w: 24, kind: 'drawers', n: 3, back: 6.75 },
+  { code: 'DB24-3',  w: 24, kind: 'drawers', n: 3, back: 6.75, backReceptacle: true },
   { code: 'DB36-3',  w: 36, kind: 'drawers', n: 3, cooktop: true, back: 6.75,
     upper: [ { hood: true, w: 41.5, h: 2, at: 66.1875, chimney: 13.375, chimneyD: 10.625 } ] }, // Proline PLFI 544-42
-  { code: 'DB24-3',  w: 24, kind: 'drawers', n: 3, back: 6.75 },
-  { code: 'TRB18FH', w: 18, kind: 'door' },
+  { code: 'DB24-3',  w: 24, kind: 'drawers', n: 3, back: 6.75, backReceptacle: true },
+  { code: 'TRB18FH', w: 18, kind: 'door', backReceptacle: true },
   { code: 'SB42',    w: 42, kind: 'sink', airSwitch: { dx: 17, back: 3 },
     sink: { w: 31.875, d: 17.375, v: 4.8125, depth: 9.875, ledge: 0.6875, drain: 11.3125 }, // Ruvati RVH6222ST bowl opening (centered in its 33.5" x 19" outline, 2" from the counter front), drain 6 1/4" in from the left wall
     faucet: { h: 22.4375, reach: 9.5, back: 3 } }, // Kohler K-R30937-BMB
-  { code: '24" gap', w: 24, kind: 'gap', tag: 'DW' },
-  { code: 'B24-2',   w: 24, kind: 'base' },
+  { code: '24" gap', w: 24, kind: 'gap', tag: 'DW', backReceptacle: true },
+  { code: 'B24-2',   w: 24, kind: 'base', backReceptacle: true },
 ];
 const wall = [
   { code: 'TEP',     w: 1.5, kind: 'panel', h: 96 },
@@ -177,6 +177,9 @@ function side(run, flip, zBack, back = 0) { // back: counter past the cabinet ba
     }
     if (c.receptacle) { // vertical duplex plate (assumed) at OUTLET on the wall
       B(u + (w - 2.75) / 2, 0, OUTLET - 2.25, 2.75, 0.25, 4.5, M.plate);
+    }
+    if (c.backReceptacle) { // vertical duplex plate on the island's plywood back, centered at 30" (height assumed)
+      B(u + (w - 2.75) / 2, -1, 29 - 2.25, 2.75, 0.25, 4.5, M.plate);
     }
     if (c.airSwitch) { // InSinkErator STS-OO disposal air button: chrome collar and white button (size assumed)
       const p = (y) => P(u + c.airSwitch.dx, c.airSwitch.back, y);

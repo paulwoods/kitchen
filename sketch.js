@@ -21,7 +21,8 @@ function sketch(title, run, opts = {}) {
   // Shapes classed apoff-N show only while appliance N is hidden.
   const apps = [];
   let ap = '';
-  let fin = ''; // ' base' while drawing a base-height item: Monaco Haze instead of Bright White
+  let fin = ''; // ' base' while drawing a base-height item: Monaco Naval instead of Bright White
+  const dark = (c = { h: !fin }) => c.h ? '' : ' ondark'; // light lines and labels over the Naval fronts
   const tag = (label, off) => { if (opts.toggles) { ap = ` ap-${apps.length}`; apps.push({ label, off }); } };
 
   // Stack of fronts from `top` down: each row is { h, pair, pull: 'mid' | 'top' | 'bottom' }.
@@ -33,12 +34,12 @@ function sketch(title, run, opts = {}) {
         rect(x + 0.25, y, w / 2 - 0.375, r.h - 0.5, 'front' + fin);
         rect(mid + 0.125, y, w / 2 - 0.375, r.h - 0.5, 'front' + fin);
         const py = r.pull === 'bottom' ? y + r.h - 6.5 : y + 2;
-        line(mid - 1.5, py, mid - 1.5, py + 4, 'pull');
-        line(mid + 1.5, py, mid + 1.5, py + 4, 'pull');
+        line(mid - 1.5, py, mid - 1.5, py + 4, 'pull' + dark());
+        line(mid + 1.5, py, mid + 1.5, py + 4, 'pull' + dark());
       } else {
         rect(x + 0.25, y, w - 0.5, r.h - 0.5, 'front' + fin);
         const py = r.pull === 'top' ? y + 3 : y + r.h / 2;
-        line(mid - 2, py, mid + 2, py, 'pull');
+        line(mid - 2, py, mid + 2, py, 'pull' + dark());
       }
       y += r.h;
     }
@@ -101,7 +102,7 @@ function sketch(title, run, opts = {}) {
         rect(mx + 0.5, top + 0.5, mw - 1, 1.6875, 'window'); // tilt-out control strip; the drawer opens itself, no handle
         ap = '';
       }
-      if (c.falseTop) text(x + c.w / 2 + 3, FLOOR - BOX + 3.3, 'false front', 'code start'); // top row is a fixed front, labeled right of its pull
+      if (c.falseTop) text(x + c.w / 2 + 3, FLOOR - BOX + 3.3, 'false front', 'code start' + dark()); // top row is a fixed front, labeled right of its pull
     }
     // Things hung above this item. Cabinet: { code, h, at: bottom off the floor, glass }; hood: { hood: true, w, h, at, chimney }; shelf: { shelf: true, at: top off the floor }; plain strip: { filler: true, h, at }; microwave: { microwave: true, w, h, at }; coffee maker: { coffee: true, w, h, at }; other appliance: { appliance, w, h, at, dx }; under-cabinet light: { light, w, h, at }.
     fin = '';
@@ -170,8 +171,9 @@ function sketch(title, run, opts = {}) {
     }
     if (c.bowl) { // undermount sink bowl, centered, dashed: { w, left, right: depth below the counter at each end (sloped bottom) }
       const l = x + (c.w - c.bowl.w) / 2, r = l + c.bowl.w, t = FLOOR - BOX;
-      line(l, t, r, t, 'hidden'); line(r, t, r, t + c.bowl.right, 'hidden');
-      line(r, t + c.bowl.right, l, t + c.bowl.left, 'hidden'); line(l, t + c.bowl.left, l, t, 'hidden');
+      const cls = 'hidden' + dark(c);
+      line(l, t, r, t, cls); line(r, t, r, t + c.bowl.right, cls);
+      line(r, t + c.bowl.right, l, t + c.bowl.left, cls); line(l, t + c.bowl.left, l, t, cls);
     }
     if (c.receptacle) { // duplex receptacle centered on the cabinet (assumed): a vertical 2.75" x 4.5" plate centered at OUTLET on the wall
       const r = RECEPTACLE, px = x + (c.w - r.w) / 2, top = FLOOR - r.at - r.h / 2;
@@ -192,7 +194,7 @@ function sketch(title, run, opts = {}) {
       }
       text(px + r.w / 2, top - 0.4, '120v', 'dim volts');
     }
-    if (c.airSwitch) { // InSinkErator STS-OO disposal air button on the counter: { dx: center from the item's left end, back: from the counter's back edge }
+    if (c.airSwitch) { // InSinkErator STS-OO disposal air button on the counter: { dx: center from the item's left end, back: from the cabinet backs }
       // chrome collar and white button, 1 3/4" across and 3/4" tall (assumed; it needs a 1 1/4" hole)
       const bx = x + c.airSwitch.dx, deck = FLOOR - BOX - TOP;
       rect(bx - 0.875, deck - 0.25, 1.75, 0.25, 'chrome');
@@ -201,9 +203,9 @@ function sketch(title, run, opts = {}) {
     }
     for (const b of c.inside || []) { // hidden inside the cabinet, dashed: { label, w, h, at: center off the floor, dx: center from the item's left end, within: label inside the box }
       const side = Math.sign(c.w / 2 - b.dx), top = FLOOR - b.at - b.h / 2; // the label runs from the box's outer edge toward the cabinet's middle (centered when it's in the middle)
-      rect(x + b.dx - b.w / 2, top, b.w, b.h, 'hidden');
-      if (b.within) text(x + b.dx, top + b.h / 2 + 0.5, b.label, 'dim'); // label inside the box
-      else text(x + b.dx - side * b.w / 2, top - 1, b.label, `dim ${['end', '', 'start'][side + 1]}`);
+      rect(x + b.dx - b.w / 2, top, b.w, b.h, 'hidden' + dark(c));
+      if (b.within) text(x + b.dx, top + b.h / 2 + 0.5, b.label, 'dim' + dark(c)); // label inside the box
+      else text(x + b.dx - side * b.w / 2, top - 1, b.label, `dim ${['end', '', 'start'][side + 1]}${dark(c)}`);
     }
     if (c.name) text(x + c.w / 2, FLOOR + 5, c.name, 'name');
     text(x + c.w / 2, FLOOR + 8.5, c.code, 'code');
@@ -279,7 +281,7 @@ function plan(title, island, wall, opts = {}) {
   const len = run => run.reduce((s, c) => s + c.w, 0);
   const total = Math.max(len(island), len(wall));
   const across = 2 * DEPTH + AISLE; // wall to the island's back
-  const WALLY = MARGIN + 20 + across, H = WALLY + WALL + 24;
+  const WALLY = MARGIN + 27 + across, H = WALLY + WALL + 24;
   const W = MARGIN * 2 + total + 34;
   const out = [];
   const rect = (x, y, w, h, cls = '') => out.push(`<rect x="${x}" y="${y}" width="${w}" height="${h}" class="${cls}"/>`);
@@ -289,7 +291,7 @@ function plan(title, island, wall, opts = {}) {
 
   // One run in its own coordinates: u along the run from its left end, v from the cabinet backs toward the aisle.
   // labelY: where the labels go, on the page.
-  const side = (run, flip, labelY) => {
+  const side = (run, flip, labelY, back = 0) => { // back: counter past the cabinet backs (an item's own `back` wins)
     const P = (u, v) => flip ? [MARGIN + total - u, WALLY - v] : [MARGIN + u, WALLY - 2 * DEPTH - AISLE + v];
     const box = (u, v, w, h, cls) => {
       const [x1, y1] = P(u, v), [x2, y2] = P(u + w, v + h);
@@ -305,6 +307,14 @@ function plan(title, island, wall, opts = {}) {
       while (j + 1 < run.length && !run[j + 1].h) j++;
       const l = c.u - (i === 0 ? 1 : 0), r = run[j].u + run[j].w + (j === run.length - 1 ? 1 : 0);
       box(l, 0, r - l, COUNTER, 'counter top');
+    for (let k = i; k <= j; k++) { // counter behind the cabinet backs: c.back, else the run's back; neighbors with the same depth share a piece
+      const d = run[k].back ?? back;
+      if (!d || (k > i && (run[k - 1].back ?? back) === d)) continue;
+      let m = k;
+      while (m < j && (run[m + 1].back ?? back) === d) m++;
+      const bl = k === i ? l : run[k].u, br = m === j ? r : run[m].u + run[m].w;
+      box(bl, -d, br - bl, d, 'counter top');
+    }
     });
     for (const c of run) {
       const mid = (v) => P(c.u + c.w / 2, v);
@@ -313,15 +323,15 @@ function plan(title, island, wall, opts = {}) {
         const [tx, ty] = mid((c.d || DEPTH) / 2);
         text(tx, ty + 1, c.tag, 'gaplabel');
       } else box(c.u, 0, c.w, DEPTH, c.h ? 'box' : 'hidden'); // base cabinets sit under the counter
-      if (c.cooktop) { // Bosch NIT8061UC: 31" x 21 1/4", centered on the counter
-        const cu = c.u + (c.w - 31) / 2, cv = (COUNTER - 21.25) / 2;
+      if (c.cooktop) { // Bosch NIT8061UC: 31" x 21 1/4", centered along the cabinet, 2" back from centered on the counter
+        const cu = c.u + (c.w - 31) / 2, cv = (COUNTER - 21.25) / 2 - 2; // 2" back from centered on the 25" counter (2026-10-27)
         box(cu, cv, 31, 21.25, 'cooktop');
         for (const [du, dv] of [[8, 6], [23, 6], [8, 15.25], [23, 15.25]]) circle(P(cu + du, cv + dv), 4, 'burner');
       }
       if (c.receptacle) box(c.u + (c.w - 2.75) / 2, 0, 2.75, 0.25, 'plate'); // on the wall face, over the counter
       if (c.airSwitch) circle(P(c.u + c.airSwitch.dx, c.airSwitch.back), 0.875, 'button'); // STS-OO disposal button
       if (c.kind === 'sink') box(c.u + (c.w - 33.5) / 2, COUNTER - 21, 33.5, 19, 'sinkbowl'); // Ruvati RVH6222ST: 33.5" x 19" outer, 2" from the counter front
-      if (c.faucet) { // hole c.faucet.back in front of the counter's back edge, spout reaching c.faucet.reach toward the front
+      if (c.faucet) { // hole c.faucet.back in front of the cabinet backs, spout reaching c.faucet.reach toward the front
         const [x1, y1] = mid(c.faucet.back), [x2, y2] = mid(c.faucet.back + c.faucet.reach);
         line(x1, y1, x2, y2, 'spout');
         circle([x1, y1], 1.25, 'faucet');
@@ -343,7 +353,8 @@ function plan(title, island, wall, opts = {}) {
   };
 
   rect(MARGIN, WALLY, total, WALL, 'roomwall'); // the room wall behind the wall run
-  side(island, false, MARGIN - 2); // labels above the island, clear of the aisle
+  rect(MARGIN, MARGIN + 27 - 0.75, len(island), 0.75, 'ply'); // 3/4" plywood on the island's back
+  side(island, false, MARGIN - 2, 1.75); // labels above the island, clear of the aisle; counter 1 3/4" past the cabinet backs: the 3/4" plywood, then 1" (6 3/4" where an item says back: 6.75)
   side(wall, true, WALLY + WALL);
 
   // Depth ruler on the right, from the wall.
@@ -372,8 +383,11 @@ function page(title, view, W, H, oy, out, axes) {
       .grid { fill: none; stroke: #bcd3ea; stroke-width: 0.1; } .ft { stroke: #8fb2d6; stroke-width: 0.2; }
       .box { fill: #f4f4f3; stroke: #223; stroke-width: 0.3; }
       .front { fill: #f4f4f3; stroke: #223; stroke-width: 0.2; } /* Monaco Bright White */
-      .base { fill: #bec8c2; } /* Monaco Haze */
+      .base { fill: #253140; } /* Monaco Naval */
+      .hidden.ondark { stroke: #c9d0dc; } text.ondark { fill: #c9d0dc; } /* light lines and labels over the Naval fronts */
+      .pull.ondark { stroke: #b08d57; } /* gold pulls on the base cabinets */
       .toe { fill: #556; } .counter { fill: #8a8f99; stroke: #223; stroke-width: 0.2; }
+      .ply { fill: #d9b98a; stroke: #223; stroke-width: 0.15; }
       .roomwall { fill: #e4dccb; stroke: #223; stroke-width: 0.25; }
       .cooktop { fill: #111; } .burner { fill: none; stroke: #667; stroke-width: 0.3; }
       .top { fill: #e9eaed; } .hidden { fill: none; stroke: #223; stroke-width: 0.2; stroke-dasharray: 1 0.6; }

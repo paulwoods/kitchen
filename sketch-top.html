@@ -8,12 +8,12 @@
 <script>
 // Left to right as seen from the aisle, widths in inches (same runs as sketch-island-front.html and sketch-wall-front.html).
 plan('Top view', [
-  { name: 'spices',    code: 'DB24-3',  w: 24, kind: 'drawers', n: 3 },
-  { name: 'cooktop',   code: 'DB36-3',  w: 36, kind: 'drawers', n: 3, cooktop: true },
-  { name: 'plates',    code: 'DB24-3',  w: 24, kind: 'drawers', n: 3 },
+  { name: 'spices',    code: 'DB24-3',  w: 24, kind: 'drawers', n: 3, back: 6.75 },
+  { name: 'cooktop',   code: 'DB36-3',  w: 36, kind: 'drawers', n: 3, cooktop: true, back: 6.75 },
+  { name: 'plates',    code: 'DB24-3',  w: 24, kind: 'drawers', n: 3, back: 6.75 },
   { name: 'trash',     code: 'TRB18FH', w: 18, kind: 'door' },
   { name: 'sink',      code: 'SB42',    w: 42, kind: 'sink', airSwitch: { dx: 17, back: 3 },
-    faucet: { h: 22.4375, reach: 9.5, back: 3 } }, // Kohler K-R30937-BMB, 3" from the counter's back edge
+    faucet: { h: 22.4375, reach: 9.5, back: 3 } }, // Kohler K-R30937-BMB, 3" from the cabinet backs
   { name: 'dishwasher', code: '24" gap', w: 24, kind: 'gap', tag: 'DW' },
   { name: 'cabinet a', code: 'B24-2',   w: 24, kind: 'base' },
 ], [

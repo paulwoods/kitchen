@@ -27,10 +27,10 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
 // Same runs as sketch-island-front.html and sketch-wall-front.html, left to right as seen from the aisle. Inches.
 const island = [
-  { code: 'DB24-3',  w: 24, kind: 'drawers', n: 3 },
-  { code: 'DB36-3',  w: 36, kind: 'drawers', n: 3, cooktop: true,
+  { code: 'DB24-3',  w: 24, kind: 'drawers', n: 3, back: 6.75 },
+  { code: 'DB36-3',  w: 36, kind: 'drawers', n: 3, cooktop: true, back: 6.75,
     upper: [ { hood: true, w: 41.5, h: 2, at: 66.1875, chimney: 13.375, chimneyD: 10.625 } ] }, // Proline PLFI 544-42
-  { code: 'DB24-3',  w: 24, kind: 'drawers', n: 3 },
+  { code: 'DB24-3',  w: 24, kind: 'drawers', n: 3, back: 6.75 },
   { code: 'TRB18FH', w: 18, kind: 'door' },
   { code: 'SB42',    w: 42, kind: 'sink', airSwitch: { dx: 17, back: 3 },
     sink: { w: 31.875, d: 17.375, v: 4.8125, depth: 9.875, ledge: 0.6875, drain: 11.3125 }, // Ruvati RVH6222ST bowl opening (centered in its 33.5" x 19" outline, 2" from the counter front), drain 6 1/4" in from the left wall
@@ -65,11 +65,11 @@ const scene = new THREE.Scene();
 scene.background = new THREE.Color('#fbfaf5');
 const mat = (color, extra = {}) => new THREE.MeshStandardMaterial({ color, roughness: 0.8, ...extra });
 const M = {
-  box: mat('#f4f4f3'), front: mat('#f4f4f3'), haze: mat('#bec8c2'), // Monaco Bright White; Monaco Haze on the base cabinets
+  box: mat('#f4f4f3'), front: mat('#f4f4f3'), naval: mat('#253140'), // Monaco Bright White; Monaco Naval on the base cabinets
   toe: mat('#556'), counter: mat('#ecebe6', { roughness: 0.3 }),
   steel: mat('#c9ccd2', { metalness: 0.5, roughness: 0.4 }), black: mat('#1b1b1b', { roughness: 0.3 }), brass: mat('#b08d57', { metalness: 0.6, roughness: 0.35 }),
   glass: mat('#bcd7e8', { transparent: true, opacity: 0.5 }), ring: mat('#8a8f99', { roughness: 0.4 }), drain: mat('#4a4d52', { metalness: 0.5, roughness: 0.4 }), pull: mat('#2b2b2b'), plate: mat('#ffffff'),
-  hoodGlass: mat('#bcd7e8', { transparent: true, opacity: 0.4, side: THREE.DoubleSide, roughness: 0.1 }), light: mat('#fff6d8', { emissive: '#fff1c0' }), wall: mat('#e9e4d8'), floor: mat('#c8b48f'),
+  hoodGlass: mat('#bcd7e8', { transparent: true, opacity: 0.4, side: THREE.DoubleSide, roughness: 0.1 }), light: mat('#fff6d8', { emissive: '#fff1c0' }), wall: mat('#e9e4d8'), ply: mat('#d9b98a'), floor: mat('#c8b48f'),
 };
 const edges = new THREE.LineBasicMaterial({ color: '#223', transparent: true, opacity: 0.35 });
 const geo = new THREE.BoxGeometry(1, 1, 1), edgeGeo = new THREE.EdgesGeometry(geo);
@@ -97,7 +97,7 @@ const ring = (p, r, m) => { // flat ring centered at p
 
 // One run in its own coordinates: u along the run from its left end, v from the cabinet backs toward the aisle, y up from the floor.
 // The island faces +z from its back at zBack; the wall run faces -z from the wall and reads right to left.
-function side(run, flip, zBack) {
+function side(run, flip, zBack, back = 0) { // back: counter past the cabinet backs (an item's own `back` wins)
   const B = (u, v, y, w, d, h, m) => cube(flip ? total - u - w : u, y, flip ? zBack - v - d : zBack + v, w, h, d, m);
   const P = (u, v, y) => [flip ? total - u : u, y, flip ? zBack - v : zBack + v];
 
@@ -105,21 +105,21 @@ function side(run, flip, zBack) {
   const fronts = (u, w, top, rows, v = DEPTH) => {
     let y = top;
     for (const r of rows) {
-      const m = r.glass ? M.glass : base ? M.haze : M.front, y0 = y - r.h + 0.125, h = r.h - 0.25;
+      const m = r.glass ? M.glass : base ? M.naval : M.front, y0 = y - r.h + 0.125, h = r.h - 0.25;
       if (r.pair) {
         B(u + 0.125, v, y0, w / 2 - 0.1875, 0.75, h, m);
         B(u + w / 2 + 0.0625, v, y0, w / 2 - 0.1875, 0.75, h, m);
         const py = r.pull === 'bottom' ? y - r.h + 2 : y - 6;
-        for (const px of [u + w / 2 - 1.75, u + w / 2 + 1.25]) B(px, v + 0.75, py, 0.5, 0.75, 4, M.pull);
+        for (const px of [u + w / 2 - 1.75, u + w / 2 + 1.25]) B(px, v + 0.75, py, 0.5, 0.75, 4, base ? M.brass : M.pull); // gold pulls on the base cabinets
       } else {
         B(u + 0.125, v, y0, w - 0.25, 0.75, h, m);
-        B(u + w / 2 - 2, v + 0.75, r.pull === 'top' ? y - 3 : y - r.h / 2, 4, 0.75, 0.5, M.pull);
+        B(u + w / 2 - 2, v + 0.75, r.pull === 'top' ? y - 3 : y - r.h / 2, 4, 0.75, 0.5, base ? M.brass : M.pull);
       }
       y -= r.h;
     }
   };
   let base = false; // drawing a base-height item
-  const cabinet = (u, w, h) => { B(u, 0, TOE, w, DEPTH, h - TOE, base ? M.haze : M.box); B(u, 0, 0, w, DEPTH - 3, TOE, M.toe); };
+  const cabinet = (u, w, h) => { B(u, 0, TOE, w, DEPTH, h - TOE, base ? M.naval : M.box); B(u, 0, 0, w, DEPTH - 3, TOE, M.toe); };
 
   let u = 0;
   for (const c of run) { c.u = u; u += c.w; }
@@ -145,8 +145,8 @@ function side(run, flip, zBack) {
     } else if (c.sink) { // open above the bowl's bottom: sides and back only, so the bowl shows
       const y = BOX - c.sink.depth - 0.5;
       cabinet(u, w, y);
-      for (const x of [u, u + w - 0.75]) B(x, 0, y, 0.75, DEPTH, BOX - y, M.haze);
-      B(u, 0, y, w, 0.75, BOX - y, M.haze);
+      for (const x of [u, u + w - 0.75]) B(x, 0, y, 0.75, DEPTH, BOX - y, M.naval);
+      B(u, 0, y, w, 0.75, BOX - y, M.naval);
       fronts(u, w, BOX, [{ h: 6 }, { h: face - 6, pair: true }]);
     } else {
       cabinet(u, w, BOX);
@@ -155,7 +155,7 @@ function side(run, flip, zBack) {
         fronts(u, w, BOX, [{ h: 6 }, ...Array(c.n - 2).fill({ h: rest }), { h: rest, pull: 'top' }]);
       } else if (c.kind === 'door') fronts(u, w, BOX, [{ h: face, pull: 'top' }]);
       else if (c.kind === 'base') fronts(u, w, BOX, [{ h: 6 }, { h: face - 6, pull: 'top' }]);
-      else if (c.kind === 'filler') B(u, DEPTH, TOE, w, 0.75, face, M.haze);
+      else if (c.kind === 'filler') B(u, DEPTH, TOE, w, 0.75, face, M.naval);
       else if (c.kind === 'oven') { // 29" oven face from 5" to 34" off the floor
         const ow = Math.min(29.75, w - 0.25), ou = u + (w - ow) / 2;
         B(ou, DEPTH, 5, ow, 0.75, 29, M.steel);
@@ -177,7 +177,8 @@ function side(run, flip, zBack) {
       rod(p(BOX + TOP + 0.25), p(BOX + TOP + 0.75), 0.6, M.plate);
     }
     if (c.cooktop) { // Bosch NIT8061UC: black glass, four zones, touch-control strip at the front (layout as in the top view)
-      const cu = u + (w - 31) / 2, cv = (COUNTER - 21.25) / 2, y = BOX + TOP + 0.25;
+      const cu = u + (w - 31) / 2, cv = (COUNTER - 21.25) / 2 - 2, // 2" back from centered on the 25" counter (2026-10-27)
+        y = BOX + TOP + 0.25;
       B(cu, cv, BOX + TOP, 31, 21.25, 0.25, M.black);
       for (const [du, dv] of [[8, 6], [23, 6], [8, 15.25], [23, 15.25]]) ring(P(cu + du, cv + dv, y + 0.02), 4, M.ring);
       B(cu + 8, cv + 19.25, y, 15, 1, 0.02, M.ring);
@@ -254,6 +255,14 @@ function side(run, flip, zBack) {
     let j = i;
     while (j + 1 < run.length && !run[j + 1].h) j++;
     const l = c.u - (i === 0 ? 1 : 0), r = run[j].u + run[j].w + (j === run.length - 1 ? 1 : 0);
+    for (let k = i; k <= j; k++) { // counter behind the cabinet backs: c.back, else the run's back; neighbors with the same depth share a piece
+      const d = run[k].back ?? back;
+      if (!d || (k > i && (run[k - 1].back ?? back) === d)) continue;
+      let m = k;
+      while (m < j && (run[m + 1].back ?? back) === d) m++;
+      const bl = k === i ? l : run[k].u, br = m === j ? r : run[m].u + run[m].w;
+      B(bl, -d, BOX, br - bl, d, TOP, M.counter);
+    }
     const h = run.slice(i, j + 1).find(c => c.sink); // counter in four pieces around the sink cutout
     if (!h) return B(l, 0, BOX, r - l, COUNTER, TOP, M.counter);
     const s = h.sink, a = h.u + (h.w - s.w) / 2, b = a + s.w;
@@ -268,7 +277,8 @@ function side(run, flip, zBack) {
 const runs = { island: new THREE.Group(), wall: new THREE.Group() };
 scene.add(runs.island, runs.wall);
 group = runs.island;
-side(island, false, 0);
+side(island, false, 0, 1.75); // counter 1 3/4" past the cabinet backs (the 3/4" plywood, then 1"), 6 3/4" behind items with back: 6.75
+cube(0, 0, -0.75, island.reduce((s, c) => s + c.w, 0), BOX, 0.75, [M.naval, M.naval, M.ply, M.ply, M.ply, M.front]); // 3/4" plywood on the island's back, floor to the counter's underside: Naval ends, Bright White back (box faces +x, -x, +y, -y, +z, -z)
 group = runs.wall;
 side(wall, true, ZWALL);
 group = scene;

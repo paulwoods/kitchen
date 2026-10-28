@@ -43,7 +43,7 @@ const wall = [
   { code: '36" gap', w: 36,  kind: 'gap', h: 70, tag: 'REF', receptacle: true, d: 28.5,
     upper: [{ code: 'W362424', h: 24, at: 72 }] },
   { code: 'TEP',     w: 1.5, kind: 'panel', h: 96 },
-  { code: 'PC36',    w: 36,  kind: 'pantry', h: 81, upper: [{ code: 'W3615', h: 15, at: 81, glass: true }] },
+  { code: 'PC36',    w: 36,  kind: 'pantry', h: 81, upper: [{ code: 'W361524', h: 15, at: 81, glass: true }] },
   { code: 'filler',  w: 1.5, kind: 'panel', h: 96 },
   { code: 'B33',     w: 33,  kind: 'oven', receptacle: true,
     upper: [{ light: 'UCB133SNWH', w: 33, h: 1.1, at: 52.9 }, { code: 'W3327', h: 27, at: 54 }, { code: 'W3315', h: 15, at: 81, glass: true }] },
@@ -105,14 +105,21 @@ function side(run, flip, zBack, back = 0) { // back: counter past the cabinet ba
   const fronts = (u, w, top, rows, v = DEPTH) => {
     let y = top;
     for (const r of rows) {
-      const m = r.glass ? M.glass : base ? M.naval : M.front, y0 = y - r.h + 0.125, h = r.h - 0.25;
+      const m = base ? M.naval : M.front, y0 = y - r.h + 0.125, h = r.h - 0.25;
+      const door = (du, dw) => {
+        if (!r.glass) return B(du, v, y0, dw, 0.75, h, m);
+        const f = 2.25; // glass door: a frame 2 1/4" wide (assumed) around a pane set back in it
+        for (const fx of [du, du + dw - f]) B(fx, v, y0, f, 0.75, h, m);
+        for (const fy of [y0, y0 + h - f]) B(du + f, v, fy, dw - 2 * f, 0.75, f, m);
+        B(du + f, v + 0.25, y0 + f, dw - 2 * f, 0.125, h - 2 * f, M.glass);
+      };
       if (r.pair) {
-        B(u + 0.125, v, y0, w / 2 - 0.1875, 0.75, h, m);
-        B(u + w / 2 + 0.0625, v, y0, w / 2 - 0.1875, 0.75, h, m);
+        door(u + 0.125, w / 2 - 0.1875);
+        door(u + w / 2 + 0.0625, w / 2 - 0.1875);
         const py = r.pull === 'bottom' ? y - r.h + 2 : y - 6;
         for (const px of [u + w / 2 - 1.75, u + w / 2 + 1.25]) B(px, v + 0.75, py, 0.5, 0.75, 4, base ? M.brass : M.pull); // gold pulls on the base cabinets
       } else {
-        B(u + 0.125, v, y0, w - 0.25, 0.75, h, m);
+        door(u + 0.125, w - 0.25);
         B(u + w / 2 - 2, v + 0.75, r.pull === 'top' ? y - 3 : y - r.h / 2, 4, 0.75, 0.5, base ? M.brass : M.pull);
       }
       y -= r.h;

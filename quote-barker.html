@@ -34,7 +34,7 @@
 raw/unfinished, 5/8" hard white maple drawer boxes, standard toe kick.</p>
 
 <table id="lines">
-<tr><th>planned</th><th>barkercabinets.com</th><th>qty</th><th>regular</th><th>sale</th><th>regular × qty</th><th>sale × qty</th><th>notes</th></tr>
+<tr><th>size</th><th>planned</th><th>barkercabinets.com</th><th>qty</th><th>regular</th><th>sale</th><th>regular × qty</th><th>sale × qty</th><th>notes</th></tr>
 </table>
 
 <h2>Construction</h2>
@@ -61,14 +61,15 @@ raw/unfinished, 5/8" hard white maple drawer boxes, standard toe kick.</p>
 <ul>
   <li>Toe kick: Barker's standard is 4" tall, not 4.5". The 34.50" height includes it (confirmed); depth is the box only, not the door.</li>
   <li>Cooktop base: the B2DR1FFCOOKTOP is a false front over two drawers, the DB36-3's layout as planned.</li>
-  <li>Pantry: built as two cabinets, as Barker stacks them: a 36" × 34.5" B2D (two doors over three roll-outs, $299.95 of the price) with a 36" × 46.5" × 24" W2D (two doors over shelves) set on top, 81" in all. Barker's tall pantry box starts at 48 1/4", too tall for the upper part.</li>
+  <li>Pantry: built as two cabinets, as Barker stacks them: a 36" × 34.5" B2D (two doors over three roll-outs, $299.95 of the price) with a 36" × 46.5" × 24" W2D (two doors over shelves) set on top, 81" in all, priced before the pantry went to 84" (2026-10-28; the W2D would be 49.5" and the glass cabinet 12" tall). Barker's tall pantry box starts at 48 1/4", too tall for the upper part.</li>
+  <li>Wall cabinets: built 27" and 15" tall, for the W3327, W3315, W2727 and W2715 planned before 2026-10-28; the plan now has 30" and 12" (W3330, W3312, W2730, W2712), and the end panels over Coffee would be 30" and 12".</li>
   <li>Microwave base: built as Barker's undercounter microwave layout: an open 27" × 16.75" × 24" case on a 27" × 17.75" two-drawer base, split at the bottom of the microwave face (17.75"). The plan now has one 13 1/4" drawer there (2026-10-26), so ask for a one-drawer base.</li>
   <li>Oven base: the B0D is an open case with no doors or shelves. The plan's reinforced bottom (about 158 lb) is not an option; ask Barker.</li>
   <li>Tall end panels: the 1 1/2" thick TFETHICK goes up to 95", 1" short of the 96" ceiling (the oversized panel starts at 96 1/4" and is only 3/4" thick). Priced 24 13/16" deep, for a 24" box plus a 3/4" door (assumed).</li>
   <li>Fillers: the narrowest is 2"; three 2" fillers are priced, to be ripped to 1.5" on site.</li>
   <li>Cabinet A: one drawer over one door, hinged on the left (assumed; same price either way).</li>
   <li>Trash: the B0DPULLOUTTRASH is a full-height pull-out for two cans, 18" wide. The Servo-Drive opener is not included (+$295).</li>
-  <li>Painted sides (2026-10-28): a 3/4" slab end panel (paint grade, raw, like the fronts) on the spices (left side), Cabinet A (right side), Coffee and the W2727 and W2715 over Coffee (right side): BFE 34.50" × 24 5/8" on the base cabinets ($1.50 for the height), WFE 27" and 15" × 12 5/8" on the wall cabinets. Depths are Barker's recommendation for a 24" (or 12") box plus the door.</li>
+  <li>Painted sides (2026-10-28): a 3/4" slab end panel (paint grade, raw, like the fronts) on the spices (left side), Cabinet A (right side), Coffee and the W2730 and W2712 over Coffee (right side): BFE 34.50" × 24 5/8" on the base cabinets ($1.50 for the height), WFE 27" and 15" × 12 5/8" on the wall cabinets. Depths are Barker's recommendation for a 24" (or 12") box plus the door.</li>
   <li>Not priced: toe skins, crown and any appliance panel for the dishwasher.</li>
 </ul>
 
@@ -87,31 +88,35 @@ const lines = [
   ['W362424', 'W2D', 1, 1069.95, 732.95, 0, 'wall: over the fridge'],
   ['PC36 lower', 'B2D', 1, 1501.90, 1092.90, 0, 'wall: pantry, 2 doors over 3 roll-outs'],
   ['PC36 upper', 'W2D', 1, 1117.45, 780.45, 0, 'wall: pantry, 2 doors over shelves, set on the B2D (81" total)'],
-  ['W361524 glass', 'W2DGLASS', 1, 1363.95, 882.95, 0, 'wall: over the pantry, glass not included'],
+  ['W361224 glass', 'W2DGLASS', 1, 1363.95, 882.95, 0, 'wall: over the pantry, glass not included'],
   ['B33 (OW-B33-FH)', 'B0D', 1, 660.95, 435.95, 0, 'wall: oven base, open case'],
-  ['W3327', 'W2D', 1, 988.95, 651.95, 0, 'wall: over the oven'],
-  ['W3315 glass', 'W2DGLASS', 1, 1342.95, 861.95, 0, 'wall: over the W3327, glass not included'],
+  ['W3330', 'W2D', 1, 988.95, 651.95, 0, 'wall: over the oven'],
+  ['W3312 glass', 'W2DGLASS', 1, 1342.95, 861.95, 0, 'wall: over the W3330, glass not included'],
   ['MWB27 upper', 'WEXPOSEDNOSHELVES', 1, 808.95, 563.95, 0, 'wall: Toaster, open case for the microwave drawer'],
   ['MWB27 lower', 'B2DRTALL', 1, 1683.95, 1125.95, 0, 'wall: Toaster, 2 drawers under the microwave'],
   ['DB27-3', 'B3DRV3', 2, 2045.95, 1364.95, 0, 'wall: Air Fryer, Coffee'],
   ['DB27-3 end panel', 'BFE', 1, 81.45, 51.45, 0, 'wall: Coffee, right side, 34.50" × 24 5/8"'],
-  ['W2727', 'W2D', 3, 952.95, 615.95, 0, 'wall: over the Toaster, Air Fryer and Coffee'],
-  ['W2727 end panel', 'WFE', 1, 79.95, 49.95, 0, 'wall: over Coffee, right side, 27" × 12 5/8"'],
-  ['W2715 glass', 'W2DGLASS', 3, 1306.95, 825.95, 0, 'wall: over the W2727s, glass not included'],
-  ['W2715 glass end panel', 'WFE', 1, 79.95, 49.95, 0, 'wall: over Coffee, right side, 15" × 12 5/8"'],
+  ['W2730', 'W2D', 3, 952.95, 615.95, 0, 'wall: over the Toaster, Air Fryer and Coffee'],
+  ['W2730 end panel', 'WFE', 1, 79.95, 49.95, 0, 'wall: over Coffee, right side, 27" × 12 5/8"'],
+  ['W2712 glass', 'W2DGLASS', 3, 1306.95, 825.95, 0, 'wall: over the W2730s, glass not included'],
+  ['W2712 glass end panel', 'WFE', 1, 79.95, 49.95, 0, 'wall: over Coffee, right side, 15" × 12 5/8"'],
   ['1.5" filler 96"', 'TFILLER', 1, 245.95, 209.95, 0, 'wall: left of the oven, 2" cut to 1.5"'],
   ['1.5" filler 34.5"', 'BFILLER', 1, 47.95, 29.95, 0, 'wall: right of the oven, 2" cut to 1.5"'],
   ['1.5" filler 42"', 'WFILLER', 1, 63.95, 45.95, 0, 'wall: right of the oven, 54" to the ceiling, 2" cut to 1.5"'],
 ];
+// 'planned / code' lines whose size (W × H × D, as supplied) differs from the plan's in cabinets.html (comparison.html reads this too)
+// The microwave base is split in two but adds up to the planned size, so it is not listed.
+const resized = ['PC36 upper / W2D', 'W361224 glass / W2DGLASS', 'W3330 / W2D', 'W3312 glass / W2DGLASS', 'W2730 / W2D', 'W2730 end panel / WFE', 'W2712 glass / W2DGLASS', 'W2712 glass end panel / WFE', 'TEP / TFETHICK', '1.5" filler 96" / TFILLER', '1.5" filler 34.5" / BFILLER', '1.5" filler 42" / WFILLER'];
 const $ = n => '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 let reg = 0, sale = 0;
 const table = document.getElementById('lines');
 for (const [plan, code, qty, r, s, g, notes] of lines) {
   const rq = (r + g) * qty, sq = (s + g) * qty; reg += rq; sale += sq;
   const price = p => g ? `${$(p)} + ${$(g)}` : $(p);
-  table.insertAdjacentHTML('beforeend', `<tr><td>${plan}</td><td>${code}</td><td class="n">${qty}</td><td class="n">${price(r)}</td><td class="n">${price(s)}</td><td class="n">${$(rq)}</td><td class="n">${$(sq)}</td><td>${notes}</td></tr>`);
+  const fits = !resized.includes(plan + ' / ' + code);
+  table.insertAdjacentHTML('beforeend', `<tr><td title="${fits ? 'size matches the plan' : 'size differs from the plan'}">${fits ? '✅' : '⚠️'}</td><td>${plan}</td><td>${code}</td><td class="n">${qty}</td><td class="n">${price(r)}</td><td class="n">${price(s)}</td><td class="n">${$(rq)}</td><td class="n">${$(sq)}</td><td>${notes}</td></tr>`);
 }
-table.insertAdjacentHTML('beforeend', `<tr class="total"><td>total</td><td></td><td class="n">${lines.reduce((n, l) => n + l[2], 0)}</td><td></td><td></td><td class="n">${$(reg)}</td><td class="n">${$(sale)}</td><td>before tax and shipping</td></tr>`);
+table.insertAdjacentHTML('beforeend', `<tr class="total"><td></td><td>total</td><td></td><td class="n">${lines.reduce((n, l) => n + l[2], 0)}</td><td></td><td></td><td class="n">${$(reg)}</td><td class="n">${$(sale)}</td><td>before tax and shipping</td></tr>`);
 document.querySelector('[data-regular]').textContent = $(reg);
 document.querySelector('[data-sale]').textContent = $(sale);
 </script>

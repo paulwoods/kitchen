@@ -30,7 +30,7 @@
 Where the Madison line has no exact match, the nearest item is used and the difference is noted. The sale prices are the site's 25% off.</p>
 
 <table id="lines">
-<tr><th>planned</th><th>thertastore.com</th><th>qty</th><th>regular</th><th>sale</th><th>regular × qty</th><th>sale × qty</th><th>notes</th></tr>
+<tr><th>size</th><th>planned</th><th>thertastore.com</th><th>qty</th><th>regular</th><th>sale</th><th>regular × qty</th><th>sale × qty</th><th>notes</th></tr>
 </table>
 
 <h2>Construction</h2>
@@ -54,10 +54,9 @@ Where the Madison line has no exact match, the nearest item is used and the diff
 
 <h2>Differences from the plan</h2>
 <ul>
-  <li>Painted sides (2026-10-28): exposed sides come finished at no charge, so the spices (left side), Cabinet A (right side), Coffee and the W2727 and W2715 over Coffee (right side) need no option or panel.</li>
+  <li>Painted sides (2026-10-28): exposed sides come finished at no charge, so the spices (left side), Cabinet A (right side), Coffee and the W2730 and W2712 over Coffee (right side) need no option or panel.</li>
   <li>Glass doors: the "GD" cabinets come with doors routed for glass and a finished interior; the glass is not included.</li>
-  <li>Wall cabinets over the oven, Toaster, Air Fryer and Coffee: no 27" tall cabinets. Each W2727 + W2715 pair becomes a 30" tall cabinet at 54" with a 12" glass cabinet at 84" (same 42" to the ceiling); likewise the W3327 + W3315 over the oven.</li>
-  <li>Pantry: no 36" wide pantry (only 18", 24" and 30"). The U3084244RS is 30" wide and 84" tall: two doors on top, two below, one fixed and two adjustable shelves and four roll-out trays (one more than planned). A 30" × 12" glass cabinet (W3012GD) on top takes it to the 96" ceiling, in place of the W3615.</li>
+  <li>Pantry: no 36" wide pantry (only 18", 24" and 30"). The U3084244RS is 30" wide and 84" tall: two doors on top, two below, one fixed and two adjustable shelves and four roll-out trays (one more than planned). A 30" × 12" glass cabinet (W3012GD) on top takes it to the 96" ceiling, in place of the W361224.</li>
   <li>Sink base: no 42"; the SB36 is 36" wide. The 33 1/2" Ruvati sink fits a 36" base only if the opening between the face frame stiles clears it; check before ordering.</li>
   <li>Microwave base: the BMW30 is 30" wide (3" wider than the MWB27) with one 6 1/4" drawer under a 26 1/2" W × 16 1/2" H × 23" D opening, as planned. Check the HMD8454UC fits it.</li>
   <li>With those widths the wall run is 189", 3" short of 192"; the island is 186", 6" short. Fillers or wider neighbours make up the rest.</li>
@@ -81,26 +80,29 @@ const lines = [
   ['TEP', 'SN-REPV3096', 2, 287.21, 215.41, 0, 'wall: each side of the fridge, 1 1/2" × 96" × 30"'],
   ['W362424', 'SN-W362424', 1, 573.04, 429.78, 0, 'wall: over the fridge, 36" × 24" × 24"'],
   ['PC36', 'SN-U3084244RS', 1, 1971.01, 1478.26, 0, 'wall: pantry, 30" × 84" × 24", 4 doors, 4 roll-outs'],
-  ['W361524 glass', 'SN-W3012GD', 1, 289.29, 216.97, glass, 'wall: over the pantry, 30" × 12", glass not included'],
+  ['W361224 glass', 'SN-W3012GD', 1, 289.29, 216.97, glass, 'wall: over the pantry, 30" × 12", glass not included'],
   ['B33 (OW-B33-FH)', 'SN-B33', 1, 773.73, 580.30, 0, 'wall: oven base, 2 doors, 2 drawers'],
-  ['W3327', 'SN-W3330', 1, 531.50, 398.63, 0, 'wall: over the oven, 30" tall'],
-  ['W3315 glass', 'SN-W3312GD', 1, 304.50, 228.38, glass, 'wall: over the W3330, 12" tall, glass not included'],
+  ['W3330', 'SN-W3330', 1, 531.50, 398.63, 0, 'wall: over the oven, 30" tall'],
+  ['W3312 glass', 'SN-W3312GD', 1, 304.50, 228.38, glass, 'wall: over the W3330, 12" tall, glass not included'],
   ['MWB27', 'SN-BMW30', 1, 619.40, 464.55, 0, 'wall: Toaster, microwave base, 30" wide, 1 drawer'],
   ['DB27-3', 'SN-3DB27', 2, 772.27, 579.20, 0, 'wall: Air Fryer, Coffee'],
-  ['W2727', 'SN-W2730', 3, 454.69, 341.02, 0, 'wall: over the Toaster, Air Fryer and Coffee, 30" tall'],
-  ['W2715 glass', 'SN-W2712GD', 3, 275.44, 206.58, glass, 'wall: over the W2730s, 12" tall, glass not included'],
+  ['W2730', 'SN-W2730', 3, 454.69, 341.02, 0, 'wall: over the Toaster, Air Fryer and Coffee, 30" tall'],
+  ['W2712 glass', 'SN-W2712GD', 3, 275.44, 206.58, glass, 'wall: over the W2730s, 12" tall, glass not included'],
   ['1.5" filler 96"', 'SN-F396', 1, 98.27, 73.70, 0, 'wall: left of the oven, 3" × 96", cut to 1.5"'],
   ['1.5" filler 34.5", 42"', 'SN-F342', 2, 31.83, 23.87, 0, 'wall: right of the oven, 3" × 42", cut to 1.5" and to length'],
 ];
+// 'planned / code' lines whose size (W × H × D, as supplied) differs from the plan's in cabinets.html (comparison.html reads this too)
+const resized = ['SB42 / SN-SB36', 'TEP / SN-REPV3096', 'PC36 / SN-U3084244RS', 'W361224 glass / SN-W3012GD', 'MWB27 / SN-BMW30', '1.5" filler 96" / SN-F396', '1.5" filler 34.5", 42" / SN-F342'];
 const $ = n => '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 let reg = 0, sale = 0;
 const table = document.getElementById('lines');
 for (const [plan, code, qty, r, s, g, notes] of lines) {
   const rq = (r + g) * qty, sq = (s + g) * qty; reg += rq; sale += sq;
   const price = p => g ? `${$(p)} + ${$(g)}` : $(p);
-  table.insertAdjacentHTML('beforeend', `<tr><td>${plan}</td><td>${code}</td><td class="n">${qty}</td><td class="n">${price(r)}</td><td class="n">${price(s)}</td><td class="n">${$(rq)}</td><td class="n">${$(sq)}</td><td>${notes}</td></tr>`);
+  const fits = !resized.includes(plan + ' / ' + code);
+  table.insertAdjacentHTML('beforeend', `<tr><td title="${fits ? 'size matches the plan' : 'size differs from the plan'}">${fits ? '✅' : '⚠️'}</td><td>${plan}</td><td>${code}</td><td class="n">${qty}</td><td class="n">${price(r)}</td><td class="n">${price(s)}</td><td class="n">${$(rq)}</td><td class="n">${$(sq)}</td><td>${notes}</td></tr>`);
 }
-table.insertAdjacentHTML('beforeend', `<tr class="total"><td>total</td><td></td><td class="n">${lines.reduce((n, l) => n + l[2], 0)}</td><td></td><td></td><td class="n">${$(reg)}</td><td class="n">${$(sale)}</td><td>before tax and shipping</td></tr>`);
+table.insertAdjacentHTML('beforeend', `<tr class="total"><td></td><td>total</td><td></td><td class="n">${lines.reduce((n, l) => n + l[2], 0)}</td><td></td><td></td><td class="n">${$(reg)}</td><td class="n">${$(sale)}</td><td>before tax and shipping</td></tr>`);
 document.querySelector('[data-regular]').textContent = $(reg);
 document.querySelector('[data-sale]').textContent = $(sale);
 </script>

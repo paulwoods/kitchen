@@ -30,7 +30,7 @@
 Where the Edgeline line has no exact match, the nearest item is used and the difference is noted.</p>
 
 <table id="lines">
-<tr><th>planned</th><th>rtawoodcabinets.com</th><th>qty</th><th>regular</th><th>sale</th><th>regular × qty</th><th>sale × qty</th><th>notes</th></tr>
+<tr><th>size</th><th>planned</th><th>rtawoodcabinets.com</th><th>qty</th><th>regular</th><th>sale</th><th>regular × qty</th><th>sale × qty</th><th>notes</th></tr>
 </table>
 
 <h2>Construction</h2>
@@ -54,10 +54,9 @@ Where the Edgeline line has no exact match, the nearest item is used and the dif
 
 <h2>Differences from the plan</h2>
 <ul>
-  <li>Painted sides (2026-10-28): exposed sides come finished to match at no charge, so the spices (left side), Cabinet A (right side), Coffee and the W2727 and W2715 over Coffee (right side) need no option or panel.</li>
+  <li>Painted sides (2026-10-28): exposed sides come finished to match at no charge, so the spices (left side), Cabinet A (right side), Coffee and the W2730 and W2712 over Coffee (right side) need no option or panel.</li>
   <li>Glass doors: the "GD" cabinets come prepped for glass with a finished interior, but the glass is not included (priced from a glass shop separately).</li>
-  <li>Wall cabinets over the oven, Toaster, Air Fryer and Coffee: no 27" tall cabinets. Each W2727 + W2715 pair becomes a 30" tall cabinet at 54" with a 12" glass cabinet at 84" (same 42" total to the ceiling); likewise the W3327 + W3315 over the oven.</li>
-  <li>Pantry: no 36" wide or 81" tall cabinet. The U309624 is 30" wide and 96" tall (to the ceiling), two door pairs over shelves, no roll-out trays and no glass cabinet above it.</li>
+  <li>Pantry: no 36" wide or 84" tall cabinet. The U309624 is 30" wide and 96" tall (to the ceiling), two door pairs over shelves, no roll-out trays and no glass cabinet above it.</li>
   <li>Sink base: no 42"; the SB36 is 36" wide. The 33 1/2" Ruvati sink fits a 36" base only if its 34 1/2" inside clears the bowl flanges; check before ordering.</li>
   <li>Microwave base: the BMW30 is 30" wide (3" wider than the MWB27) with one drawer under the opening, as planned.</li>
   <li>Drawer bases for Air Fryer and Coffee: no 27"; the 3DB24 is 24" wide (the 3DB30, $752.68 / $526.88, is the 30" option).</li>
@@ -81,26 +80,29 @@ const lines = [
   ['TEP', 'EW-REPV3096', 2, 247.83, 173.48, 0, 'wall: each side of the fridge, 1 1/2" × 96" × 30"'],
   ['W362424', 'EW-W362424', 1, 495.08, 346.56, 0, 'wall: over the fridge, 36" × 24" × 24"'],
   ['PC36', 'EW-U309624', 1, 1351.25, 945.88, 0, 'wall: pantry, 30" × 96" × 24", 4 doors, shelves'],
-  ['W361524 glass', '(none)', 0, 0, 0, glass, 'wall: no room over a 96" pantry'],
+  ['W361224 glass', '(none)', 0, 0, 0, glass, 'wall: no room over a 96" pantry'],
   ['B33 (OW-B33-FH)', 'EW-B33', 1, 668.15, 467.71, 0, 'wall: oven base, 2 doors, 2 drawers'],
-  ['W3327', 'EW-W3330', 1, 458.85, 321.20, 0, 'wall: over the oven, 30" tall'],
-  ['W3315 glass', 'EW-W3312GD', 1, 262.78, 183.95, glass, 'wall: over the W3330, 12" tall, glass not included'],
+  ['W3330', 'EW-W3330', 1, 458.85, 321.20, 0, 'wall: over the oven, 30" tall'],
+  ['W3312 glass', 'EW-W3312GD', 1, 262.78, 183.95, glass, 'wall: over the W3330, 12" tall, glass not included'],
   ['MWB27', 'EW-BMW30', 1, 534.75, 374.33, 0, 'wall: Toaster, microwave base, 30" wide, 1 drawer'],
   ['DB27-3', 'EW-3DB24', 2, 667.00, 466.90, 0, 'wall: Air Fryer, Coffee, 24" wide'],
-  ['W2727', 'EW-W2730', 3, 392.73, 274.91, 0, 'wall: over the Toaster, Air Fryer and Coffee, 30" tall'],
-  ['W2715 glass', 'EW-W2712GD', 3, 238.05, 166.64, glass, 'wall: over the W2730s, 12" tall, glass not included'],
+  ['W2730', 'EW-W2730', 3, 392.73, 274.91, 0, 'wall: over the Toaster, Air Fryer and Coffee, 30" tall'],
+  ['W2712 glass', 'EW-W2712GD', 3, 238.05, 166.64, glass, 'wall: over the W2730s, 12" tall, glass not included'],
   ['1.5" filler 96"', 'EW-F396', 1, 85.10, 59.57, 0, 'wall: left of the oven, 3" × 96", cut to 1.5"'],
   ['1.5" filler 34.5", 42"', 'EW-F342', 2, 27.60, 19.32, 0, 'wall: right of the oven, 3" × 42", cut to 1.5" and to length'],
 ];
+// 'planned / code' lines whose size (W × H × D, as supplied) differs from the plan's in cabinets.html (comparison.html reads this too)
+const resized = ['SB42 / EW-SB36', 'TEP / EW-REPV3096', 'PC36 / EW-U309624', 'MWB27 / EW-BMW30', 'DB27-3 / EW-3DB24', '1.5" filler 96" / EW-F396', '1.5" filler 34.5", 42" / EW-F342', 'W361224 glass / (none)'];
 const $ = n => '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 let reg = 0, sale = 0;
 const table = document.getElementById('lines');
 for (const [plan, code, qty, r, s, g, notes] of lines) {
   const rq = (r + g) * qty, sq = (s + g) * qty; reg += rq; sale += sq;
   const price = p => g ? `${$(p)} + ${$(g)}` : $(p);
-  table.insertAdjacentHTML('beforeend', `<tr><td>${plan}</td><td>${code}</td><td class="n">${qty}</td><td class="n">${price(r)}</td><td class="n">${price(s)}</td><td class="n">${$(rq)}</td><td class="n">${$(sq)}</td><td>${notes}</td></tr>`);
+  const fits = !resized.includes(plan + ' / ' + code);
+  table.insertAdjacentHTML('beforeend', `<tr><td title="${fits ? 'size matches the plan' : 'size differs from the plan'}">${fits ? '✅' : '⚠️'}</td><td>${plan}</td><td>${code}</td><td class="n">${qty}</td><td class="n">${price(r)}</td><td class="n">${price(s)}</td><td class="n">${$(rq)}</td><td class="n">${$(sq)}</td><td>${notes}</td></tr>`);
 }
-table.insertAdjacentHTML('beforeend', `<tr class="total"><td>total</td><td></td><td class="n">${lines.reduce((n, l) => n + l[2], 0)}</td><td></td><td></td><td class="n">${$(reg)}</td><td class="n">${$(sale)}</td><td>before tax and shipping</td></tr>`);
+table.insertAdjacentHTML('beforeend', `<tr class="total"><td></td><td>total</td><td></td><td class="n">${lines.reduce((n, l) => n + l[2], 0)}</td><td></td><td></td><td class="n">${$(reg)}</td><td class="n">${$(sale)}</td><td>before tax and shipping</td></tr>`);
 document.querySelector('[data-regular]').textContent = $(reg);
 document.querySelector('[data-sale]').textContent = $(sale);
 </script>

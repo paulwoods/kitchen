@@ -29,7 +29,7 @@
 Where cabinets.com has no exact match, the nearest item is used and the difference is noted.</p>
 
 <table id="lines">
-<tr><th>planned</th><th>cabinets.com</th><th>qty</th><th>regular</th><th>sale</th><th>regular × qty</th><th>sale × qty</th><th>notes</th></tr>
+<tr><th>size</th><th>planned</th><th>cabinets.com</th><th>qty</th><th>regular</th><th>sale</th><th>regular × qty</th><th>sale × qty</th><th>notes</th></tr>
 </table>
 
 <h2>Construction</h2>
@@ -53,9 +53,10 @@ Where cabinets.com has no exact match, the nearest item is used and the differen
 
 <h2>Differences from the plan</h2>
 <ul>
-  <li>Painted sides (2026-10-28): "Matching Finished Sides" on the spices (left side), Cabinet A (right side), Coffee and the W2727 and W2715 over Coffee (right side). The option finishes both sides, the only choice offered. The sale had ended when the option prices were read; the sale column takes 35% off, as on the cabinets.</li>
+  <li>Painted sides (2026-10-28): "Matching Finished Sides" on the spices (left side), Cabinet A (right side), Coffee and the W2730 and W2712 over Coffee (right side). The option finishes both sides, the only choice offered. The sale had ended when the option prices were read; the sale column takes 35% off, as on the cabinets.</li>
   <li>Glass doors: this door style has no glass option (the product pages offer only finished sides and depth changes), so the W3615, W3315 and W2715s are priced with solid doors.</li>
-  <li>Pantry: no 81" tall cabinet. The UT362484 is 84" with four doors over shelves, not a door pair over three roll-out trays. At 84" it would reach 3" past the W2727 tops.</li>
+  <li>Wall cabinets: priced as the W3327, W3315, W2727 and W2715 planned before 2026-10-28; the plan now has the W3330, W3312, W2730 and W2712 (54"–84" and 84"–96").</li>
+  <li>Pantry: the UT362484 is the planned 36" × 84" × 24", but with four doors over shelves, not a door pair over three roll-out trays.</li>
   <li>Oven base: a plain B33 (two doors, one drawer); the oven cutout and the OW-B33-FH's full-height opening are not offered.</li>
   <li>Microwave base: the MBC27 has one drawer under the opening, as planned.</li>
   <li>Over the fridge: the RW3624 is 23 11/16" tall, not 24".</li>
@@ -77,29 +78,32 @@ const lines = [
   ['TEP', 'TEP2496', 2, 567.29, 368.74, 0, 'wall: each side of the fridge, 3/4" × 96" × 24"'],
   ['W362424', 'RW3624', 1, 765.84, 497.80, 0, 'wall: over the fridge, 36" × 23 11/16" × 24"'],
   ['PC36', 'UT362484', 1, 2183.24, 1419.11, 0, 'wall: pantry, 36" × 84" × 24", 4 doors, shelves'],
-  ['W361524 glass', 'W3615', 1, 532.44, 346.09, glass, 'wall: over the pantry, solid doors'],
+  ['W361224 glass', 'W3615', 1, 532.44, 346.09, glass, 'wall: over the pantry, solid doors'],
   ['B33 (OW-B33-FH)', 'B33', 1, 1036.51, 673.73, 0, 'wall: oven base, 2 doors, 1 drawer'],
-  ['W3327', 'W3327', 1, 666.16, 433.00, 0, 'wall: over the oven'],
-  ['W3315 glass', 'W3315', 1, 500.03, 325.02, glass, 'wall: over the W3327, solid doors'],
+  ['W3330', 'W3327', 1, 666.16, 433.00, 0, 'wall: over the oven'],
+  ['W3312 glass', 'W3315', 1, 500.03, 325.02, glass, 'wall: over the W3330, solid doors'],
   ['MWB27', 'MBC27', 1, 1002.48, 651.61, 0, 'wall: Toaster, microwave base, 1 drawer'],
   ['DB27-3', 'DB27-3', 2, 1456.30, 946.60, 0, 'wall: Air Fryer, Coffee'],
   ['DB27-3 finished sides', 'Matching Finished Sides', 1, 145.63, 94.66, 0, 'wall: Coffee, the right side shows'],
-  ['W2727', 'W2727', 3, 592.41, 385.07, 0, 'wall: over the Toaster, Air Fryer and Coffee'],
-  ['W2727 finished sides', 'Matching Finished Sides', 1, 88.86, 57.76, 0, 'wall: over Coffee, the right side shows'],
-  ['W2715 glass', 'W2715', 3, 470.04, 305.53, glass, 'wall: over the W2727s, solid doors'],
-  ['W2715 glass finished sides', 'Matching Finished Sides', 1, 70.51, 45.83, 0, 'wall: over Coffee, the right side shows'],
+  ['W2730', 'W2727', 3, 592.41, 385.07, 0, 'wall: over the Toaster, Air Fryer and Coffee'],
+  ['W2730 finished sides', 'Matching Finished Sides', 1, 88.86, 57.76, 0, 'wall: over Coffee, the right side shows'],
+  ['W2712 glass', 'W2715', 3, 470.04, 305.53, glass, 'wall: over the W2730s, solid doors'],
+  ['W2712 glass finished sides', 'Matching Finished Sides', 1, 70.51, 45.83, 0, 'wall: over Coffee, the right side shows'],
   ['1.5" filler 96"', 'UF396', 1, 170.99, 111.14, 0, 'wall: left of the oven, 3" × 96", cut to 1.5"'],
   ['1.5" filler 34.5", 42"', 'UF342', 2, 67.26, 43.72, 0, 'wall: right of the oven, 3" × 42", cut to 1.5" and to length'],
 ];
+// 'planned / code' lines whose size (W × H × D, as supplied) differs from the plan's in cabinets.html (comparison.html reads this too)
+const resized = ['W361224 glass / W3615', 'W3330 / W3327', 'W3312 glass / W3315', 'W2730 / W2727', 'W2712 glass / W2715', 'TEP / TEP2496', 'W362424 / RW3624', '1.5" filler 96" / UF396', '1.5" filler 34.5", 42" / UF342'];
 const $ = n => '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 let reg = 0, sale = 0;
 const table = document.getElementById('lines');
 for (const [plan, code, qty, r, s, g, notes] of lines) {
   const rq = (r + g) * qty, sq = (s + g) * qty; reg += rq; sale += sq;
   const price = p => g ? `${$(p)} + ${$(g)}` : $(p);
-  table.insertAdjacentHTML('beforeend', `<tr><td>${plan}</td><td>${code}</td><td class="n">${qty}</td><td class="n">${price(r)}</td><td class="n">${price(s)}</td><td class="n">${$(rq)}</td><td class="n">${$(sq)}</td><td>${notes}</td></tr>`);
+  const fits = !resized.includes(plan + ' / ' + code);
+  table.insertAdjacentHTML('beforeend', `<tr><td title="${fits ? 'size matches the plan' : 'size differs from the plan'}">${fits ? '✅' : '⚠️'}</td><td>${plan}</td><td>${code}</td><td class="n">${qty}</td><td class="n">${price(r)}</td><td class="n">${price(s)}</td><td class="n">${$(rq)}</td><td class="n">${$(sq)}</td><td>${notes}</td></tr>`);
 }
-table.insertAdjacentHTML('beforeend', `<tr class="total"><td>total</td><td></td><td class="n">${lines.reduce((n, l) => n + l[2], 0)}</td><td></td><td></td><td class="n">${$(reg)}</td><td class="n">${$(sale)}</td><td>before tax and shipping</td></tr>`);
+table.insertAdjacentHTML('beforeend', `<tr class="total"><td></td><td>total</td><td></td><td class="n">${lines.reduce((n, l) => n + l[2], 0)}</td><td></td><td></td><td class="n">${$(reg)}</td><td class="n">${$(sale)}</td><td>before tax and shipping</td></tr>`);
 document.querySelector('[data-regular]').textContent = $(reg);
 document.querySelector('[data-sale]').textContent = $(sale);
 </script>

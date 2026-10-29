@@ -23,7 +23,7 @@ Read from each quote page's <code>lines</code>, so it stays in step with them. Q
 <script>
 const quotes = [
   ['quote-accessbycabinetjoint.html', 'Access'], ['quote-cabinets-monaco.html', 'Monaco'], ['quote-cabinets-cosmopolitan.html', 'Cosmopolitan'],
-  ['quote-rtawoodcabinets-edgeline.html', 'Edgeline'], ['quote-barker.html', 'Barker'], ['quote-thertastore-madison.html', 'Madison'],
+  ['quote-rtawoodcabinets-edgeline.html', 'Edgeline'], ['quote-barker.html', 'Barker'], ['quote-thertastore-madison.html', 'Madison'], ['quote-lilyann-colorado.html', 'Colorado'],
 ];
 // 'planned / vendor code' lines whose size (W × H × D, as supplied) differs from the plan's in cabinets.html.
 // Barker's pantry and microwave base are split in two but add up to the planned size, so they are not listed.
@@ -34,6 +34,8 @@ const resized = {
     'DB27-3 / EW-3DB24', 'W2727 / EW-W2730', 'W2715 glass / EW-W2712GD', '1.5" filler 96" / EW-F396', '1.5" filler 34.5", 42" / EW-F342'],
   Madison: ['SB42 / SN-SB36', 'TEP / SN-REPV3096', 'PC36 / SN-U3084244RS', 'W361524 glass / SN-W3012GD', 'W3327 / SN-W3330', 'W3315 glass / SN-W3312GD',
     'MWB27 / SN-BMW30', 'W2727 / SN-W2730', 'W2715 glass / SN-W2712GD', '1.5" filler 96" / SN-F396', '1.5" filler 34.5", 42" / SN-F342'],
+  Colorado: ['PC36 / WSH-U308424', 'W361524 glass / WSH-W3012BGFI', 'W3327 / WSH-W3330', 'W3315 glass / WSH-W3312BGFI', 'MWB27 / WSH-MB30',
+    'DB27-3 / WSH-DB24-3', 'W2727 / WSH-W2730', 'W2715 glass / WSH-W2712BGFI', '1.5" filler 96" / WSH-WF396', '1.5" filler 34.5", 42" / WSH-WF342'],
   Barker: ['W361524 glass / W2DGLASS', 'TEP / TFETHICK', '1.5" filler 96" / TFILLER', '1.5" filler 34.5" / BFILLER', '1.5" filler 42" / WFILLER'],
 };
 const $ = n => '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });

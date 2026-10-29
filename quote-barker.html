@@ -68,7 +68,8 @@ raw/unfinished, 5/8" hard white maple drawer boxes, standard toe kick.</p>
   <li>Fillers: the narrowest is 2"; three 2" fillers are priced, to be ripped to 1.5" on site.</li>
   <li>Cabinet A: one drawer over one door, hinged on the left (assumed; same price either way).</li>
   <li>Trash: the B0DPULLOUTTRASH is a full-height pull-out for two cans, 18" wide. The Servo-Drive opener is not included (+$295).</li>
-  <li>Not priced: finished end panels for the exposed sides, toe skins, crown and any appliance panel for the dishwasher.</li>
+  <li>Painted sides (2026-10-28): a 3/4" slab end panel (paint grade, raw, like the fronts) on the spices (left side), Cabinet A (right side), Coffee and the W2727 and W2715 over Coffee (right side): BFE 34.50" × 24 5/8" on the base cabinets ($1.50 for the height), WFE 27" and 15" × 12 5/8" on the wall cabinets. Depths are Barker's recommendation for a 24" (or 12") box plus the door.</li>
+  <li>Not priced: toe skins, crown and any appliance panel for the dishwasher.</li>
 </ul>
 
 <script>
@@ -76,10 +77,12 @@ raw/unfinished, 5/8" hard white maple drawer boxes, standard toe kick.</p>
 const glass = 0; // glass doors come without the glass
 const lines = [
   ['DB24-3', 'B3DRV3', 2, 2024.95, 1343.95, 0, 'island: spices, plates'],
+  ['DB24-3 end panel', 'BFE', 1, 81.45, 51.45, 0, 'island: spices, left side, 34.50" × 24 5/8"'],
   ['DB36-3', 'B2DR1FFCOOKTOP', 1, 1817.95, 1203.95, 0, 'island: cooktop, false front over 2 drawers'],
   ['TRB18FH', 'B0DPULLOUTTRASH', 1, 1610.95, 1017.95, 0, 'island: trash, full-height pull-out'],
   ['SB42', 'B2D1FFSINK', 1, 1005.95, 690.95, 0, 'island: sink, 2 doors, 1 false front'],
   ['B24-2', 'B1D1DR', 1, 1197.95, 800.95, 0, 'island: cabinet a, 1 drawer over 1 door'],
+  ['B24-2 end panel', 'BFE', 1, 81.45, 51.45, 0, 'island: cabinet a, right side, 34.50" × 24 5/8"'],
   ['TEP', 'TFETHICK', 2, 749.95, 749.95, 0, 'wall: each side of the fridge, 1 1/2" thick, 95" tall'],
   ['W362424', 'W2D', 1, 1069.95, 732.95, 0, 'wall: over the fridge'],
   ['PC36 lower', 'B2D', 1, 1501.90, 1092.90, 0, 'wall: pantry, 2 doors over 3 roll-outs'],
@@ -91,8 +94,11 @@ const lines = [
   ['MWB27 upper', 'WEXPOSEDNOSHELVES', 1, 808.95, 563.95, 0, 'wall: Toaster, open case for the microwave drawer'],
   ['MWB27 lower', 'B2DRTALL', 1, 1683.95, 1125.95, 0, 'wall: Toaster, 2 drawers under the microwave'],
   ['DB27-3', 'B3DRV3', 2, 2045.95, 1364.95, 0, 'wall: Air Fryer, Coffee'],
+  ['DB27-3 end panel', 'BFE', 1, 81.45, 51.45, 0, 'wall: Coffee, right side, 34.50" × 24 5/8"'],
   ['W2727', 'W2D', 3, 952.95, 615.95, 0, 'wall: over the Toaster, Air Fryer and Coffee'],
+  ['W2727 end panel', 'WFE', 1, 79.95, 49.95, 0, 'wall: over Coffee, right side, 27" × 12 5/8"'],
   ['W2715 glass', 'W2DGLASS', 3, 1306.95, 825.95, 0, 'wall: over the W2727s, glass not included'],
+  ['W2715 glass end panel', 'WFE', 1, 79.95, 49.95, 0, 'wall: over Coffee, right side, 15" × 12 5/8"'],
   ['1.5" filler 96"', 'TFILLER', 1, 245.95, 209.95, 0, 'wall: left of the oven, 2" cut to 1.5"'],
   ['1.5" filler 34.5"', 'BFILLER', 1, 47.95, 29.95, 0, 'wall: right of the oven, 2" cut to 1.5"'],
   ['1.5" filler 42"', 'WFILLER', 1, 63.95, 45.95, 0, 'wall: right of the oven, 54" to the ceiling, 2" cut to 1.5"'],

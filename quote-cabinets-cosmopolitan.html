@@ -44,7 +44,7 @@ Where cabinets.com has no exact match, the nearest item is used and the differen
   <li><b>Drawer sizes inside</b> (cabinets.com <a href="https://www.cabinets.com/media/download/interior-drawer-box-dimensions.pdf">interior drawer box sheet</a>, frameless): 19 3/4" deep; 21 1/8" wide in a 24" base, 24 1/8" in a 27", 30 1/8" in a 33", 33 1/8" in a 36". In a 3-drawer base the top box is 3 1/4" tall and the two below are 5 1/4" (side heights as read off the sheet). The 4.3" spice jars do not stand upright in the top drawer.</li>
   <li><b>Glides:</b> Blum full-extension undermount with integrated soft close (Blum Motion).</li>
   <li><b>Hinges:</b> Blum, integrated soft close, 6-way cam adjustable.</li>
-  <li><b>Exposed sides:</b> unfinished. Finished sides are a paid option on each cabinet (about $72 to $115 for both sides; $97.49 on the SB42); not in the prices above.</li>
+  <li><b>Exposed sides:</b> unfinished. "Matching Finished Sides" is a paid option on each cabinet, both sides only: 10% of a base cabinet's price, 15% of a wall cabinet's (read 2026-10-28). It is priced on the five cabinets with an exposed side.</li>
   <li><b>Toe kick and legs:</b> not stated.</li>
   <li><b>Certifications</b> (site-wide): CARB 2 compliant, KCMA quality tested.</li>
   <li><b>Warranty:</b> not stated on the product or collection pages.</li>
@@ -53,6 +53,7 @@ Where cabinets.com has no exact match, the nearest item is used and the differen
 
 <h2>Differences from the plan</h2>
 <ul>
+  <li>Painted sides (2026-10-28): "Matching Finished Sides" on the spices (left side), Cabinet A (right side), Coffee and the W2727 and W2715 over Coffee (right side). The option finishes both sides, the only choice offered. The sale had ended when the option prices were read; the sale column takes 35% off, as on the cabinets.</li>
   <li>Glass doors: this door style has no glass option (the product pages offer only finished sides and depth changes), so the W3615, W3315 and W2715s are priced with solid doors.</li>
   <li>Pantry: no 81" tall cabinet. The UT362484 is 84" with four doors over shelves, not a door pair over three roll-out trays. At 84" it would reach 3" past the W2727 tops.</li>
   <li>Oven base: a plain B33 (two doors, one drawer); the oven cutout and the OW-B33-FH's full-height opening are not offered.</li>
@@ -67,10 +68,12 @@ Where cabinets.com has no exact match, the nearest item is used and the differen
 const glass = 0; // no glass door option in this door style
 const lines = [
   ['DB24-3', 'DB24-3', 2, 1396.34, 907.62, 0, 'island: spices, plates'],
+  ['DB24-3 finished sides', 'Matching Finished Sides', 1, 139.63, 90.76, 0, 'island: spices, the left side shows'],
   ['DB36-3', 'DB36-3', 1, 1635.41, 1063.02, 0, 'island: cooktop'],
   ['TRB18FH', 'B18-FH Trash', 1, 1692.80, 1100.32, 0, 'island: trash, full height, 2 containers'],
   ['SB42', 'SB42', 1, 916.57, 595.77, 0, 'island: sink, 2 doors, 2 false drawers'],
   ['B24-2', 'B24-SINGLE', 1, 869.57, 565.22, 0, 'island: cabinet a, 1 door, 1 drawer'],
+  ['B24-2 finished sides', 'Matching Finished Sides', 1, 130.44, 84.79, 0, 'island: cabinet a, the right side shows'],
   ['TEP', 'TEP2496', 2, 567.29, 368.74, 0, 'wall: each side of the fridge, 3/4" × 96" × 24"'],
   ['W362424', 'RW3624', 1, 765.84, 497.80, 0, 'wall: over the fridge, 36" × 23 11/16" × 24"'],
   ['PC36', 'UT362484', 1, 2183.24, 1419.11, 0, 'wall: pantry, 36" × 84" × 24", 4 doors, shelves'],
@@ -80,8 +83,11 @@ const lines = [
   ['W3315 glass', 'W3315', 1, 500.03, 325.02, glass, 'wall: over the W3327, solid doors'],
   ['MWB27', 'MBC27', 1, 1002.48, 651.61, 0, 'wall: Toaster, microwave base, 1 drawer'],
   ['DB27-3', 'DB27-3', 2, 1456.30, 946.60, 0, 'wall: Air Fryer, Coffee'],
+  ['DB27-3 finished sides', 'Matching Finished Sides', 1, 145.63, 94.66, 0, 'wall: Coffee, the right side shows'],
   ['W2727', 'W2727', 3, 592.41, 385.07, 0, 'wall: over the Toaster, Air Fryer and Coffee'],
+  ['W2727 finished sides', 'Matching Finished Sides', 1, 88.86, 57.76, 0, 'wall: over Coffee, the right side shows'],
   ['W2715 glass', 'W2715', 3, 470.04, 305.53, glass, 'wall: over the W2727s, solid doors'],
+  ['W2715 glass finished sides', 'Matching Finished Sides', 1, 70.51, 45.83, 0, 'wall: over Coffee, the right side shows'],
   ['1.5" filler 96"', 'UF396', 1, 170.99, 111.14, 0, 'wall: left of the oven, 3" × 96", cut to 1.5"'],
   ['1.5" filler 34.5", 42"', 'UF342', 2, 67.26, 43.72, 0, 'wall: right of the oven, 3" × 42", cut to 1.5" and to length'],
 ];

@@ -66,10 +66,9 @@ raw/unfinished, 5/8" hard white maple drawer boxes, standard toe kick.</p>
   <li>Microwave base: built as Barker's undercounter microwave layout: an open 27" × 16.75" × 24" case on a 27" × 17.75" two-drawer base, split at the bottom of the microwave face (17.75"). The plan now has one 13 1/4" drawer there (2026-10-26), so ask for a one-drawer base.</li>
   <li>Oven base: the B0D is an open case with no doors or shelves. The plan's reinforced bottom (about 158 lb) is not an option; ask Barker.</li>
   <li>Tall end panels: the 1 1/2" thick TFETHICK goes up to 95", 1" short of the 96" ceiling (the oversized panel starts at 96 1/4" and is only 3/4" thick). Priced 24 13/16" deep, for a 24" box plus a 3/4" door (assumed).</li>
-  <li>Fillers: the narrowest is 2"; three 2" fillers are priced, to be ripped to 1.5" on site.</li>
   <li>Cabinet A: one drawer over one door, hinged on the left (assumed; same price either way).</li>
   <li>Trash: the B0DPULLOUTTRASH is a full-height pull-out for two cans, 18" wide. The Servo-Drive opener is not included (+$295).</li>
-  <li>Painted sides (2026-10-28): a 3/4" slab end panel (paint grade, raw, like the fronts) on the spices (left side), Cabinet A (right side), Coffee and the W2730 and W2712 over Coffee (right side): BFE 34.50" × 24 5/8" on the base cabinets ($1.50 for the height), WFE 27" and 15" × 12 5/8" on the wall cabinets. Depths are Barker's recommendation for a 24" (or 12") box plus the door.</li>
+  <li>Painted sides (2026-10-28): a 3/4" slab end panel (paint grade, raw, like the fronts) on the spices (left side), Cabinet A (right side), Coffee and the W2730 and W2712 over Coffee (right side): BFE 34.50" × 24 5/8" on the base cabinets ($1.50 for the height), WFE 27" and 15" × 12 5/8" on the wall cabinets. Depths are Barker's recommendation for a 24" (or 12") box plus the door. Not priced yet: the pantry's right side (from the counter to 84", or full height) and the right side of the 24" deep W361224 over it, which show because the W3330 and W3312 beside them are 12" deep (added 2026-10-28).</li>
   <li>Not priced: toe skins, crown and any appliance panel for the dishwasher.</li>
 </ul>
 
@@ -84,7 +83,7 @@ const lines = [
   ['SB42', 'B2D1FFSINK', 1, 1005.95, 690.95, 0, 'island: sink, 2 doors, 1 false front'],
   ['B24-2', 'B1D1DR', 1, 1197.95, 800.95, 0, 'island: cabinet a, 1 drawer over 1 door'],
   ['B24-2 end panel', 'BFE', 1, 81.45, 51.45, 0, 'island: cabinet a, right side, 34.50" × 24 5/8"'],
-  ['TEP', 'TFETHICK', 2, 749.95, 749.95, 0, 'wall: each side of the fridge, 1 1/2" thick, 95" tall'],
+  ['REP2496-1.5', 'TFETHICK', 2, 749.95, 749.95, 0, 'wall: each side of the fridge, 1 1/2" thick, 95" tall'],
   ['W362424', 'W2D', 1, 1069.95, 732.95, 0, 'wall: over the fridge'],
   ['PC36 lower', 'B2D', 1, 1501.90, 1092.90, 0, 'wall: pantry, 2 doors over 3 roll-outs'],
   ['PC36 upper', 'W2D', 1, 1117.45, 780.45, 0, 'wall: pantry, 2 doors over shelves, set on the B2D (81" total)'],
@@ -100,13 +99,10 @@ const lines = [
   ['W2730 end panel', 'WFE', 1, 79.95, 49.95, 0, 'wall: over Coffee, right side, 27" × 12 5/8"'],
   ['W2712 glass', 'W2DGLASS', 3, 1306.95, 825.95, 0, 'wall: over the W2730s, glass not included'],
   ['W2712 glass end panel', 'WFE', 1, 79.95, 49.95, 0, 'wall: over Coffee, right side, 15" × 12 5/8"'],
-  ['1.5" filler 96"', 'TFILLER', 1, 245.95, 209.95, 0, 'wall: left of the oven, 2" cut to 1.5"'],
-  ['1.5" filler 34.5"', 'BFILLER', 1, 47.95, 29.95, 0, 'wall: right of the oven, 2" cut to 1.5"'],
-  ['1.5" filler 42"', 'WFILLER', 1, 63.95, 45.95, 0, 'wall: right of the oven, 54" to the ceiling, 2" cut to 1.5"'],
 ];
 // 'planned / code' lines whose size (W × H × D, as supplied) differs from the plan's in cabinets.html (comparison.html reads this too)
 // The microwave base is split in two but adds up to the planned size, so it is not listed.
-const resized = ['PC36 upper / W2D', 'W361224 glass / W2DGLASS', 'W3330 / W2D', 'W3312 glass / W2DGLASS', 'W2730 / W2D', 'W2730 end panel / WFE', 'W2712 glass / W2DGLASS', 'W2712 glass end panel / WFE', 'TEP / TFETHICK', '1.5" filler 96" / TFILLER', '1.5" filler 34.5" / BFILLER', '1.5" filler 42" / WFILLER'];
+const resized = ['PC36 upper / W2D', 'W361224 glass / W2DGLASS', 'W3330 / W2D', 'W3312 glass / W2DGLASS', 'W2730 / W2D', 'W2730 end panel / WFE', 'W2712 glass / W2DGLASS', 'W2712 glass end panel / WFE', 'REP2496-1.5 / TFETHICK'];
 const $ = n => '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 let reg = 0, sale = 0;
 const table = document.getElementById('lines');

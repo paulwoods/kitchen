@@ -53,7 +53,7 @@ Where the Colorado line has no exact match, the nearest item is used and the dif
 
 <h2>Differences from the plan</h2>
 <ul>
-  <li>Painted sides (2026-10-28): exposed sides come finished to match the doors at no charge, so the spices (left side), Cabinet A (right side), Coffee and the W2730 and W2712 over Coffee (right side) need no option or panel.</li>
+  <li>Painted sides (2026-10-28): exposed sides come finished to match the doors at no charge, so the spices (left side), Cabinet A (right side), Coffee and the W2730 and W2712 over Coffee (right side), and the pantry and the cabinet over it (right side, added 2026-10-28) need no option or panel.</li>
   <li>Glass doors: the "BGFI" cabinets are glass door cabinets with a finished interior. The listing does not say whether the glass is included; check before ordering.</li>
   <li>Pantry: no 36" wide pantry (utility cabinets come 18", 24" and 30" wide). The U308424 is 30" wide and 84" tall: two 29" doors on top, two 49 1/4" doors below, three adjustable shelves and one fixed. Three RS30 roll-out shelves are added for the lower part. A 30" × 12" × 12" glass cabinet (W3012BGFI) on top takes it to the 96" ceiling, in place of the W361224.</li>
   <li>Sink base: the SB42 is 42" wide, as planned, but ships as a B42 (two doors, two drawers) that is converted to a sink base on site.</li>
@@ -64,7 +64,6 @@ Where the Colorado line has no exact match, the nearest item is used and the dif
   <li>Oven base: a plain B33 (two doors, two drawers); the Colorado oven cabinets are 84" to 96" tall, not base height.</li>
   <li>Cabinet A: the B24 has two butt doors under one drawer; there is no 24" single-door base.</li>
   <li>Tall end panels: the REP1.596 is 1 1/2" × 96" × 24", the planned size.</li>
-  <li>Fillers come 3" wide, cut down on site to 1.5". The 42" fillers are cut to 34.5" and 42".</li>
 </ul>
 
 <script>
@@ -77,7 +76,7 @@ const lines = [
   ['TRB18FH pull-out', '4WCBM18DM2', 1, 487.20, 471.85, 0, 'island: trash, door-mounted double 35 qt waste pull-out, no lids'],
   ['SB42', 'WSH-SB42', 1, 2393.28, 598.32, 0, 'island: sink, ships as a B42 to convert, 2 doors, 2 drawer fronts'],
   ['B24-2', 'WSH-B24', 1, 1448.40, 362.10, 0, 'island: cabinet a, 2 doors, 1 drawer'],
-  ['TEP', 'WSH-REP1.596', 2, 1140.08, 285.02, 0, 'wall: each side of the fridge, 1 1/2" × 96" × 24"'],
+  ['REP2496-1.5', 'WSH-REP1.596', 2, 1140.08, 285.02, 0, 'wall: each side of the fridge, 1 1/2" × 96" × 24"'],
   ['W362424', 'WSH-W362424', 1, 1350.44, 337.61, 0, 'wall: over the fridge, 36" × 24" × 24"'],
   ['PC36', 'WSH-U308424', 1, 4311.28, 1077.82, 0, 'wall: pantry, 30" × 84" × 24", 4 doors'],
   ['PC36 roll-outs', 'TYPE-B-RS30', 3, 536.62, 134.16, 0, 'wall: pantry, 30" roll-out shelves with glides'],
@@ -89,11 +88,9 @@ const lines = [
   ['DB27-3', 'WSH-DB24-3', 2, 2196.64, 549.16, 0, 'wall: Air Fryer, Coffee, 24" wide'],
   ['W2730', 'WSH-W2730', 3, 1102.24, 275.56, 0, 'wall: over the Toaster, Air Fryer and Coffee, 30" tall'],
   ['W2712 glass', 'WSH-W2712BGFI', 3, 786.32, 196.58, glass, 'wall: over the W2730s, 12" tall'],
-  ['1.5" filler 96"', 'WSH-WF396', 1, 349.16, 87.29, 0, 'wall: left of the oven, 3" × 96", cut to 1.5"'],
-  ['1.5" filler 34.5", 42"', 'WSH-WF342', 2, 155.92, 38.98, 0, 'wall: right of the oven, 3" × 42", cut to 1.5" and to length'],
 ];
 // 'planned / code' lines whose size (W × H × D, as supplied) differs from the plan's in cabinets.html (comparison.html reads this too)
-const resized = ['PC36 / WSH-U308424', 'W361224 glass / WSH-W3012BGFI', 'MWB27 / WSH-MB30', 'DB27-3 / WSH-DB24-3', '1.5" filler 96" / WSH-WF396', '1.5" filler 34.5", 42" / WSH-WF342'];
+const resized = ['PC36 / WSH-U308424', 'W361224 glass / WSH-W3012BGFI', 'MWB27 / WSH-MB30', 'DB27-3 / WSH-DB24-3'];
 const $ = n => '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 let reg = 0, sale = 0;
 const table = document.getElementById('lines');

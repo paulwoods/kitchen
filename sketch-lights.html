@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="nav.js" defer></script>
+<script src="sketch.js"></script>
+<body>
+<script>
+// The top view (same runs as sketch-top.html) with the work areas and the lights marked.
+const island = [
+  { name: 'spices',    code: 'DB24-3',  w: 24, kind: 'drawers', n: 3, back: 6.75, backReceptacle: true },
+  { name: 'cooktop',   code: 'DB36-3',  w: 36, kind: 'drawers', n: 3, cooktop: true, back: 6.75 },
+  { name: 'plates',    code: 'DB24-3',  w: 24, kind: 'drawers', n: 3, back: 6.75, backReceptacle: true },
+  { name: 'trash',     code: 'TRB18FH', w: 18, kind: 'door', backReceptacle: true },
+  { name: 'sink',      code: 'SB42',    w: 42, kind: 'sink', airSwitch: { dx: 17, back: 3 },
+    faucet: { h: 22.4375, reach: 9.5, back: 3 } }, // Kohler K-R30937-BMB, 3" from the cabinet backs
+  { name: 'dishwasher', code: '24" gap', w: 24, kind: 'gap', tag: 'DW', backReceptacle: true },
+  { name: 'cabinet a', code: 'B24-2',   w: 24, kind: 'base', backReceptacle: true },
+];
+const wall = [
+  {                    code: 'FP2496',  w: 0.25, kind: 'panel', h: 96 }, // skin on the REP's exposed left side, 1/4" thick (assumed)
+  {                    code: 'REP2496-1.5', w: 1.5, kind: 'panel', h: 96 },
+  { name: 'fridge',    code: '36" gap', w: 36,  kind: 'gap', h: 70, tag: 'REF', receptacle: true, d: 28.5, // 28 1/2" deep with doors
+    upper: [{ code: 'W362424' }] },
+  {                    code: 'REP2496-1.5', w: 1.5, kind: 'panel', h: 96 },
+  { name: 'pantry',    code: 'PC36',    w: 36,  kind: 'pantry', h: 84, upper: [{ code: 'W361224 glass' }] },
+  { name: 'oven',      code: 'B33',     w: 33,  kind: 'oven', receptacle: true,
+    upper: [{ code: 'W3330' }, { code: 'W3312 glass' }] },
+  { name: 'Toaster',   code: 'MWB27',   w: 27,  kind: 'microwave', receptacle: true,
+    upper: [{ code: 'W2730' }, { code: 'W2712 glass' }] },
+  { name: 'Air Fryer', code: 'DB27-3',  w: 27,  kind: 'drawers', n: 3, receptacle: true,
+    upper: [{ code: 'W2730' }, { code: 'W2712 glass' }] },
+  { name: 'Coffee',    code: 'DB27-3',  w: 27,  kind: 'drawers', n: 3, receptacle: true,
+    upper: [{ code: 'W2730' }, { code: 'W2712 glass' }] },
+];
+const I = Object.fromEntries(island.map(c => [c.name, c])), Wl = Object.fromEntries(wall.filter(c => c.name).map(c => [c.name, c]));
+plan('Lights', island, wall, { extra: ({ out, text, ix, iy, wx, wy }) => {
+  const mid = (a, b = a) => (a.u + b.u + b.w) / 2; // middle of a, or of a through b
+  const isl = (u, v, s, cls) => text(ix(u), iy(v) + 1, s, cls), wal = (u, v, s, cls) => text(wx(u), wy(v) + 1, s, cls);
+  text(ix(96), 6, 'guest facing side', 'name');
+  // Areas, in the aisle in front of each counter.
+  for (const [a, b, s] of [['spices', , 'landing'], ['cooktop', , 'cooktop'], ['plates', 'trash', 'prep'], ['sink', , 'sink'],
+    ['dishwasher', , 'dish unload'], ['cabinet a', , 'fridge loading']]) isl(mid(I[a], I[b || a]), COUNTER + 6, s, 'zone');
+  isl(mid(I.cooktop), COUNTER + 9, 'vent hood', 'code');
+  wal(mid(Wl.Coffee), COUNTER + 6, 'coffee', 'zone');
+  wal((mid(Wl.Toaster) + mid(Wl['Air Fryer'])) / 2, COUNTER + 6, 'oven landing', 'zone');
+  for (const n of ['Toaster', 'Air Fryer', 'Coffee']) {
+    wal(mid(Wl[n]), 5, 'wall cabinet', 'code');
+    wal(mid(Wl[n]), 10, 'UC', 'lamp l-UC'); // under-cabinet light, near the front
+  }
+  // Lights in island [u, v]: T over the island counter, A down the middle of the aisle between each pair of opposite centers.
+  const T = [mid(I.spices), I.trash.u, mid(I.sink), I['cabinet a'].u].map(u => [u, 18]);
+  const A = [['cooktop', 'Air Fryer'], ['trash', 'oven'], ['dishwasher', 'fridge']]
+    .map(([a, b]) => [(ix(mid(I[a])) + wx(mid(Wl[b]))) / 2 - ix(0), DEPTH + AISLE / 2]);
+  // People 74" tall facing the island, belly 3" off the counter front, seen from above. Each light (at the 96" ceiling, assumed)
+  // throws the body's slices (waist at the counter, shoulders, head) onto the counter; the shadow is their hull, clipped to the counter.
+  const people = [mid(I.plates, I.trash), mid(I.sink)];
+  const slices = u => [[7, 5, 33, TOP + BOX], [9.5, 5.5, 33, 61], [3.25, 4, 32, 74]] // rx, ry, center v, height (assumed proportions)
+    .flatMap(([rx, ry, v, h]) => Array.from({ length: 16 }, (_, k) => [u + rx * Math.cos(k * Math.PI / 8), v + ry * Math.sin(k * Math.PI / 8), h]));
+  const onCounter = ([lu, lv], [u, v, h]) => { const t = (CEILING - TOP - BOX) / (CEILING - h); return [lu + (u - lu) * t, lv + (v - lv) * t]; };
+  const hull = ps => { // monotone chain
+    ps.sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+    const cr = (o, a, b) => (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0]), h = [];
+    for (const pass of [ps, [...ps].reverse()]) {
+      const s = h.length;
+      for (const p of pass) { while (h.length >= s + 2 && cr(h[h.length - 2], h[h.length - 1], p) <= 0) h.pop(); h.push(p); }
+      h.pop();
+    }
+    return h;
+  };
+  out.push(`<clipPath id="counter"><rect x="${ix(-1)}" y="${iy(-6.75)}" width="${island.reduce((s, c) => s + c.w, 2)}" height="${COUNTER + 6.75}"/></clipPath>`);
+  for (const u of people) for (const [L, k] of [...T.map(L => [L, 'T']), ...A.map(L => [L, 'A'])]) // class l-T / l-A: hidden with its light
+    out.push(`<polygon class="shadow l-${k}" clip-path="url(#counter)" points="${hull(slices(u).map(p => onCounter(L, p))).map(([u, v]) => `${ix(u)},${iy(v)}`).join(' ')}"/>`);
+  for (const u of people) {
+    out.unshift(`<ellipse class="person" cx="${ix(u)}" cy="${iy(33)}" rx="9.5" ry="5.5"/><ellipse class="person head" cx="${ix(u)}" cy="${iy(32)}" rx="3.25" ry="4"/>`);
+    isl(u, 41, '74" person', 'code');
+  }
+  for (const [u, v] of T) isl(u, v, 'T', 'lamp l-T');
+  for (const [u, v] of A) isl(u, v, 'A', 'lamp l-A');
+  // X: toe-kick lights in front of each cabinet (not the appliance gaps or panels).
+  for (const c of island) if (c.kind !== 'gap') isl(mid(c), COUNTER + 2.5, 'X', 'lamp l-X');
+  for (const c of wall) if (!['gap', 'panel'].includes(c.kind)) wal(mid(c), COUNTER + 2.5, 'X', 'lamp l-X');
+} });
+document.querySelector('svg').insertAdjacentHTML('beforebegin', `<p><label><input type="checkbox" data-light="T" checked> <b class="legend">T</b> task light (bright wafer on the ceiling)</label> · <label><input type="checkbox" data-light="A" checked> <b class="legend">A</b> ambient light</label> ·
+  <label><input type="checkbox" data-light="X" checked> <b class="legend">X</b> accent light (toe kick)</label> · <label><input type="checkbox" data-light="UC" checked> <b class="legend">UC</b> under-cabinet light</label> · <b style="color: #1f6b3a">green</b>: work areas ·
+  gray: shadow each light (at the 96" ceiling) casts on the counter from a 74" person (checked: light on)</p>
+  <style>.legend { color: #e07000; } .zone, .lamp { paint-order: stroke; stroke: #fff; stroke-width: 0.6; } .shadow { fill: #000; fill-opacity: 0.15; } .person { fill: #445; fill-opacity: 0.85; } .head { fill: #223; }
+  svg .lamp.off { fill: #bbb; } svg .shadow.off { display: none; }</style>`);
+// A light turned off greys out its marks and drops its shadows.
+for (const box of document.querySelectorAll('[data-light]'))
+  box.onchange = () => document.querySelectorAll(`svg .l-${box.dataset.light}`).forEach(el => el.classList.toggle('off', !box.checked));
+</script>

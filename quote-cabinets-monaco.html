@@ -44,7 +44,7 @@ Where cabinets.com has no exact match, the nearest item is used and the differen
   <li><b>Drawer sizes inside</b> (cabinets.com <a href="https://www.cabinets.com/media/download/interior-drawer-box-dimensions.pdf">interior drawer box sheet</a>, frameless): 19 3/4" deep; 21 1/8" wide in a 24" base, 24 1/8" in a 27", 30 1/8" in a 33", 33 1/8" in a 36". In a 3-drawer base the top box is 3 1/4" tall and the two below are 5 1/4" (side heights as read off the sheet). The 4.3" spice jars do not stand upright in the top drawer.</li>
   <li><b>Glides:</b> Blum full-extension undermount with integrated soft close (Blum Motion).</li>
   <li><b>Hinges:</b> Blum, integrated soft close, 6-way cam adjustable.</li>
-  <li><b>Exposed sides:</b> unfinished. "Matching Finished Sides" is a paid option on each cabinet, both sides only: 10% of a base cabinet's price, 15% of a wall cabinet's (read 2026-10-28). It is priced on the five cabinets with an exposed side.</li>
+  <li><b>Exposed sides:</b> unfinished. "Matching Finished Sides" is a paid option on each cabinet, both sides only: 10% of a base cabinet's price, 15% of a wall cabinet's (read 2026-10-28). It is priced on the seven cabinets with an exposed side.</li>
   <li><b>Toe kick and legs:</b> not stated.</li>
   <li><b>Certifications</b> (site-wide): CARB 2 compliant, KCMA quality tested.</li>
   <li><b>Warranty:</b> not stated on the product or collection pages.</li>
@@ -53,20 +53,19 @@ Where cabinets.com has no exact match, the nearest item is used and the differen
 
 <h2>Differences from the plan</h2>
 <ul>
-  <li>Painted sides (2026-10-28): "Matching Finished Sides" on the spices (left side), Cabinet A (right side), Coffee and the W2730 and W2712 over Coffee (right side). The option finishes both sides, the only choice offered. The sale had ended when the option prices were read; the sale column takes 35% off, as on the cabinets.</li>
-  <li>Glass doors are a custom option, "Prepared for Glass/Finished Interior", $129.81 per cabinet (read off the W2715 page); the glass is not included. The add-on is counted at the same price in both columns (assumed).</li>
-  <li>Wall cabinets: priced as the W3327, W3315, W2727 and W2715 planned before 2026-10-28; the plan now has the W3330, W3312, W2730 and W2712 (54"–84" and 84"–96").</li>
+  <li>Painted sides (2026-10-28): "Matching Finished Sides" on the spices (left side), Cabinet A (right side), Coffee and the W2730 and W2712 over Coffee (right side), and the pantry and the cabinet over it (right side, added 2026-10-28: the W3330 and W3312 beside them are 12" deep, so the pantry side shows above the counter and the cabinet's whole side shows). The pantry's option price is 15% of its price, as for a wall cabinet (assumed; the rate for tall cabinets was not read). The option finishes both sides, the only choice offered. The sale had ended when the option prices were read; the sale column takes 35% off, as on the cabinets.</li>
+  <li>Glass doors are a custom option, "Prepared for Glass/Finished Interior", $129.81 per cabinet when first read (off the W2715 page); it is priced per cabinet, read 2026-10-28: $231.64 on the W3612 over the pantry, $221.65 on the W3312, $177.33 on each W2712; the glass is not included. The add-on is counted at the same price in both columns (assumed).</li>
+  <li>Wall cabinets: the W3327 and W2727s are priced as planned before 2026-10-28; the plan now has the W3330 and W2730s (54"–84"). The W3312 and W2712s over them are priced as planned (read 2026-10-28).</li>
   <li>Pantry: the UT362484 is the planned 36" × 84" × 24", but with four doors over shelves, not a door pair over three roll-out trays.</li>
   <li>Oven base: a plain B33 (two doors, one drawer); the oven cutout and the OW-B33-FH's full-height opening are not offered.</li>
   <li>Microwave base: the MBC27 has one drawer under the opening, as planned.</li>
   <li>Over the fridge: the RW3624 is 23 11/16" tall, not 24".</li>
-  <li>Fillers come 1" or 3" wide, not 1.5"; the 3" pieces are cut down on site. The 42" fillers are cut to 34.5" and 42".</li>
   <li>Cabinet A: B24-SINGLE (one door, one drawer), the B24 has two doors.</li>
 </ul>
 
 <script>
 // [planned, cabinets.com code, qty, regular, sale, glass add-on, notes]
-const glass = 129.81;
+const glass = 129.81; // first glass-prep price read; each glass line now carries its own (comparison.html reads from this line on)
 const lines = [
   ['DB24-3', 'DB24-3', 2, 1282.45, 833.59, 0, 'island: spices, plates'],
   ['DB24-3 finished sides', 'Matching Finished Sides', 1, 128.25, 83.36, 0, 'island: spices, the left side shows'],
@@ -75,25 +74,25 @@ const lines = [
   ['SB42', 'SB42', 1, 744.77, 484.10, 0, 'island: sink, 2 doors, 2 false drawers'],
   ['B24-2', 'B24-SINGLE', 1, 737.29, 479.24, 0, 'island: cabinet a, 1 door, 1 drawer'],
   ['B24-2 finished sides', 'Matching Finished Sides', 1, 110.59, 71.88, 0, 'island: cabinet a, the right side shows'],
-  ['TEP', 'TEP2496', 2, 567.29, 368.74, 0, 'wall: each side of the fridge, 3/4" × 96" × 24"'],
+  ['REP2496-1.5', 'REP2496-1.5', 2, 340.50, 221.33, 0, 'wall: each side of the fridge, refrigerator return panel, 1.5" × 96" × 24" (read 2026-10-28, no sale; sale 35% off assumed)'],
   ['W362424', 'RW3624', 1, 654.99, 425.74, 0, 'wall: over the fridge, 36" × 23 11/16" × 24"'],
   ['PC36', 'UT362484', 1, 1977.28, 1285.23, 0, 'wall: pantry, 36" × 84" × 24", 4 doors, shelves'],
-  ['W361224 glass', 'W3615', 1, 516.96, 336.02, glass, 'wall: over the pantry, + glass prep'],
+  ['PC36 finished sides', 'Matching Finished Sides', 1, 296.59, 192.78, 0, 'wall: pantry, the right side shows above the counter (15% assumed)'],
+  ['W361224 glass', 'W3612', 1, 648.59, 421.58, 231.64, 'wall: over the pantry, $463.28 + $185.31 to increase the depth 12" (to 24"), + glass prep $231.64 (read 2026-10-28, no sale; sale 35% off assumed)'],
+  ['W361224 glass finished sides', 'Matching Finished Sides', 1, 69.49, 45.17, 0, 'wall: over the pantry, the right side shows'],
   ['B33 (OW-B33-FH)', 'B33', 1, 873.98, 568.09, 0, 'wall: oven base, 2 doors, 1 drawer'],
   ['W3330', 'W3327', 1, 610.07, 396.55, 0, 'wall: over the oven'],
-  ['W3312 glass', 'W3315', 1, 487.02, 316.56, glass, 'wall: over the W3330, + glass prep'],
+  ['W3312 glass', 'W3312', 1, 443.30, 288.15, 221.65, 'wall: over the W3330, + glass prep $221.65 (read 2026-10-28, no sale; sale 35% off assumed)'],
   ['MWB27', 'MBC27', 1, 910.40, 591.76, 0, 'wall: Toaster, microwave base, 1 drawer'],
   ['DB27-3', 'DB27-3', 2, 1403.92, 912.55, 0, 'wall: Air Fryer, Coffee'],
   ['DB27-3 finished sides', 'Matching Finished Sides', 1, 140.39, 91.25, 0, 'wall: Coffee, the right side shows'],
   ['W2730', 'W2727', 3, 531.22, 345.29, 0, 'wall: over the Toaster, Air Fryer and Coffee'],
   ['W2730 finished sides', 'Matching Finished Sides', 1, 79.68, 51.79, 0, 'wall: over Coffee, the right side shows'],
-  ['W2712 glass', 'W2715', 3, 399.41, 259.62, glass, 'wall: over the W2730s, + glass prep'],
-  ['W2712 glass finished sides', 'Matching Finished Sides', 1, 59.91, 38.94, 0, 'wall: over Coffee, the right side shows'],
-  ['1.5" filler 96"', 'UF396', 1, 168.53, 109.54, 0, 'wall: left of the oven, 3" × 96", cut to 1.5"'],
-  ['1.5" filler 34.5", 42"', 'UF342', 2, 65.94, 42.86, 0, 'wall: right of the oven, 3" × 42", cut to 1.5" and to length'],
+  ['W2712 glass', 'W2712', 3, 354.65, 230.52, 177.33, 'wall: over the W2730s, + glass prep $177.33 (read 2026-10-28, no sale; sale 35% off assumed)'],
+  ['W2712 glass finished sides', 'Matching Finished Sides', 1, 53.20, 34.58, 0, 'wall: over Coffee, the right side shows'],
 ];
 // 'planned / code' lines whose size (W × H × D, as supplied) differs from the plan's in cabinets.html (comparison.html reads this too)
-const resized = ['W361224 glass / W3615', 'W3330 / W3327', 'W3312 glass / W3315', 'W2730 / W2727', 'W2712 glass / W2715', 'TEP / TEP2496', 'W362424 / RW3624', '1.5" filler 96" / UF396', '1.5" filler 34.5", 42" / UF342'];
+const resized = ['W3330 / W3327', 'W2730 / W2727', 'W362424 / RW3624'];
 const $ = n => '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 let reg = 0, sale = 0;
 const table = document.getElementById('lines');

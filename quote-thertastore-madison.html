@@ -54,7 +54,7 @@ Where the Madison line has no exact match, the nearest item is used and the diff
 
 <h2>Differences from the plan</h2>
 <ul>
-  <li>Painted sides (2026-10-28): exposed sides come finished at no charge, so the spices (left side), Cabinet A (right side), Coffee and the W2730 and W2712 over Coffee (right side) need no option or panel.</li>
+  <li>Painted sides (2026-10-28): exposed sides come finished at no charge, so the spices (left side), Cabinet A (right side), Coffee and the W2730 and W2712 over Coffee (right side), and the pantry and the cabinet over it (right side, added 2026-10-28) need no option or panel.</li>
   <li>Glass doors: the "GD" cabinets come with doors routed for glass and a finished interior; the glass is not included.</li>
   <li>Pantry: no 36" wide pantry (only 18", 24" and 30"). The U3084244RS is 30" wide and 84" tall: two doors on top, two below, one fixed and two adjustable shelves and four roll-out trays (one more than planned). A 30" × 12" glass cabinet (W3012GD) on top takes it to the 96" ceiling, in place of the W361224.</li>
   <li>Sink base: no 42"; the SB36 is 36" wide. The 33 1/2" Ruvati sink fits a 36" base only if the opening between the face frame stiles clears it; check before ordering.</li>
@@ -64,7 +64,6 @@ Where the Madison line has no exact match, the nearest item is used and the diff
   <li>Oven base: a plain B33 (two doors, two drawers); the Madison oven cabinets are 84" to 96" tall, not base height.</li>
   <li>Cabinet A: the B24 has double doors over one drawer; there is no 24" single-door base.</li>
   <li>Tall end panels: the REPV3096 is 1 1/2" × 96" × 30" deep (a refrigerator panel with a 1 1/2" stile, finished both sides), 6" deeper than the 24" TEP.</li>
-  <li>Fillers come 3" wide, cut down on site to 1.5". The 42" fillers are cut to 34.5" and 42".</li>
   <li>The collection has only a limited number of wall cabinets (navy is sold as an accent line); every wall cabinet above is listed.</li>
 </ul>
 
@@ -77,7 +76,7 @@ const lines = [
   ['TRB18FH', 'SN-B18FHTCPO', 1, 1370.29, 1027.72, 0, 'island: trash, full-height door, double trash pull-out'],
   ['SB42', 'SN-SB36', 1, 619.40, 464.55, 0, 'island: sink, 36" wide, 2 doors, 2 false drawers'],
   ['B24-2', 'SN-B24', 1, 571.65, 428.74, 0, 'island: cabinet a, 2 doors, 1 drawer'],
-  ['TEP', 'SN-REPV3096', 2, 287.21, 215.41, 0, 'wall: each side of the fridge, 1 1/2" × 96" × 30"'],
+  ['REP2496-1.5', 'SN-REPV3096', 2, 287.21, 215.41, 0, 'wall: each side of the fridge, 1 1/2" × 96" × 30"'],
   ['W362424', 'SN-W362424', 1, 573.04, 429.78, 0, 'wall: over the fridge, 36" × 24" × 24"'],
   ['PC36', 'SN-U3084244RS', 1, 1971.01, 1478.26, 0, 'wall: pantry, 30" × 84" × 24", 4 doors, 4 roll-outs'],
   ['W361224 glass', 'SN-W3012GD', 1, 289.29, 216.97, glass, 'wall: over the pantry, 30" × 12", glass not included'],
@@ -88,11 +87,9 @@ const lines = [
   ['DB27-3', 'SN-3DB27', 2, 772.27, 579.20, 0, 'wall: Air Fryer, Coffee'],
   ['W2730', 'SN-W2730', 3, 454.69, 341.02, 0, 'wall: over the Toaster, Air Fryer and Coffee, 30" tall'],
   ['W2712 glass', 'SN-W2712GD', 3, 275.44, 206.58, glass, 'wall: over the W2730s, 12" tall, glass not included'],
-  ['1.5" filler 96"', 'SN-F396', 1, 98.27, 73.70, 0, 'wall: left of the oven, 3" × 96", cut to 1.5"'],
-  ['1.5" filler 34.5", 42"', 'SN-F342', 2, 31.83, 23.87, 0, 'wall: right of the oven, 3" × 42", cut to 1.5" and to length'],
 ];
 // 'planned / code' lines whose size (W × H × D, as supplied) differs from the plan's in cabinets.html (comparison.html reads this too)
-const resized = ['SB42 / SN-SB36', 'TEP / SN-REPV3096', 'PC36 / SN-U3084244RS', 'W361224 glass / SN-W3012GD', 'MWB27 / SN-BMW30', '1.5" filler 96" / SN-F396', '1.5" filler 34.5", 42" / SN-F342'];
+const resized = ['SB42 / SN-SB36', 'REP2496-1.5 / SN-REPV3096', 'PC36 / SN-U3084244RS', 'W361224 glass / SN-W3012GD', 'MWB27 / SN-BMW30'];
 const $ = n => '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 let reg = 0, sale = 0;
 const table = document.getElementById('lines');

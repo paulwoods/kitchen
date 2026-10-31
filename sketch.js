@@ -11,7 +11,8 @@ const RECEPTACLE = { w: 2.75, h: 4.5, at: OUTLET };
 function sketch(title, run, opts = {}) {
   const total = run.reduce((s, c) => s + c.w, 0);
   const tallest = Math.max(CEILING, ...run.map(c => c.h || 0), ...run.flatMap(c => (c.upper || []).map(u => u.at + (u.h || 0))));
-  const FLOOR = Math.ceil((tallest + 12) / SQ) * SQ, H = FLOOR + 24;
+  const low = 6 * Math.max(0, ...run.map(c => c.drop || 0)); // `drop: n` moves an item's labels n rows down, clear of a neighbor's
+  const FLOOR = Math.ceil((tallest + 12) / SQ) * SQ, H = FLOOR + 24 + low;
   const W = MARGIN * 2 + Math.max(total, 96) + 24; // + room for the elevation ruler
   const out = [];
   const rect = (x, y, w, h, cls = '') => out.push(`<rect x="${x}" y="${y}" width="${w}" height="${h}" class="${cls}${ap}"/>`);
@@ -150,9 +151,11 @@ function sketch(title, run, opts = {}) {
       rect(x, top, c.w, u.h, 'box');
       fronts(x, c.w, top, [{ h: u.h, pair: true, pull: 'bottom' }]);
       if (u.glass) for (const gx of [x + 2, x + c.w / 2 + 1.875]) rect(gx, top + 2, c.w / 2 - 3.875, u.h - 4.5, 'glass');
-      text(x + c.w / 2, top + u.h / 2, u.code, 'code');
     }
     ap = '';
+    // Upper cabinet codes in the margin above the ceiling, top cabinet first, the lowest nearest the drawing.
+    const codes = (c.upper || []).filter(u => u.code).sort((a, b) => b.at - a.at);
+    codes.forEach((u, i) => text(x + c.w / 2, FLOOR - CEILING - 2 - 3 * (codes.length - 1 - i), u.code, 'code'));
     if (c.cooktop) rect(x + (c.w - 30) / 2, FLOOR - BOX - TOP - 0.75, 30, 0.75, 'cooktop');
     if (c.faucet) { // { h, reach, back }, centered (Kohler spec sheet): a column 13" tall (from the sheet's drawing), then the exposed spring
       // arching up to h and over to the sprayhead, docked in front with 9 1/2" clear under it; seen end-on, the arch is one band.
@@ -208,9 +211,10 @@ function sketch(title, run, opts = {}) {
       if (b.within) text(x + b.dx, top + b.h / 2 + 0.5, b.label, 'dim' + dark(c)); // label inside the box
       else text(x + b.dx - side * b.w / 2, top - 1, b.label, `dim ${['end', '', 'start'][side + 1]}${dark(c)}`);
     }
-    if (c.name) text(x + c.w / 2, FLOOR + 5, c.name, 'name');
-    text(x + c.w / 2, FLOOR + 8.5, c.code, 'code');
-    text(x + c.w / 2, FLOOR + 11.5, `${c.w}"`, 'dim');
+    const dy = 6 * (c.drop || 0);
+    if (c.name) text(x + c.w / 2, FLOOR + 5 + dy, c.name, 'name');
+    text(x + c.w / 2, FLOOR + 8.5 + dy, c.code, 'code');
+    text(x + c.w / 2, FLOOR + 11.5 + dy, `${c.w}"`, 'dim');
     line(x, FLOOR + 1, x, FLOOR + 12, 'tick');
     c.x = x;
     x += c.w;
@@ -247,8 +251,8 @@ function sketch(title, run, opts = {}) {
 
   if (total) {
     line(x, FLOOR + 1, x, FLOOR + 12, 'tick');
-    line(MARGIN, FLOOR + 15, x, FLOOR + 15, 'dimline');
-    text(MARGIN + total / 2, FLOOR + 18.5, `${total}"`, 'dim');
+    line(MARGIN, FLOOR + 15 + low, x, FLOOR + 15 + low, 'dimline');
+    text(MARGIN + total / 2, FLOOR + 18.5 + low, `${total}"`, 'dim');
   } else {
     text(W / 2, FLOOR - 18, 'no cabinets yet', 'code');
   }
@@ -293,7 +297,8 @@ function plan(title, island, wall, opts = {}) {
   // One run in its own coordinates: u along the run from its left end, v from the cabinet backs toward the aisle.
   // labelY: where the labels go, on the page.
   const side = (run, flip, labelY, back = 0) => { // back: counter past the cabinet backs (an item's own `back` wins)
-    const P = (u, v) => flip ? [MARGIN + total - u, WALLY - v] : [MARGIN + u, WALLY - 2 * DEPTH - AISLE + v];
+    const n = len(run); // the wall run is flipped about its own length, so its right end meets the island's left end
+    const P = (u, v) => flip ? [MARGIN + n - u, WALLY - v] : [MARGIN + u, WALLY - 2 * DEPTH - AISLE + v];
     const box = (u, v, w, h, cls) => {
       const [x1, y1] = P(u, v), [x2, y2] = P(u + w, v + h);
       rect(Math.min(x1, x2), Math.min(y1, y2), Math.abs(x2 - x1), Math.abs(y2 - y1), cls);
@@ -354,7 +359,7 @@ function plan(title, island, wall, opts = {}) {
     text((x0 + x1) / 2, labelY + 18.5, `${len(run)}"`, 'dim');
   };
 
-  rect(MARGIN, WALLY, total, WALL, 'roomwall'); // the room wall behind the wall run
+  rect(MARGIN, WALLY, len(wall), WALL, 'roomwall'); // the room wall behind the wall run
   rect(MARGIN, MARGIN + 27 - 0.75, len(island), 0.75, 'ply'); // 3/4" plywood on the island's back
   side(island, false, MARGIN - 2, 1.75); // labels above the island, clear of the aisle; counter 1 3/4" past the cabinet backs: the 3/4" plywood, then 1" (6 3/4" where an item says back: 6.75)
   side(wall, true, WALLY + WALL);
@@ -368,6 +373,8 @@ function plan(title, island, wall, opts = {}) {
     text(rx + 1.5, WALLY - m + 0.7, `${m}" ${label}`, 'dim ruler');
   }
   text(rx + 1.5, WALLY - DEPTH - AISLE / 2 + 0.7, `${AISLE}" aisle`, 'dim ruler');
+  // opts.extra: draws more on top (out: raw svg strings), given page x of an island or wall u and page y of an island or wall v (as in side()).
+  opts.extra?.({ out, text, ix: u => MARGIN + u, iy: v => WALLY - across + v, wx: u => MARGIN + len(wall) - u, wy: v => WALLY - v });
   page(title, 'Plan of both runs', W, H, WALLY, out, ["from the island's left end", 'from the wall']);
 }
 
@@ -405,6 +412,7 @@ function page(title, view, W, H, oy, out, axes) {
       text { text-anchor: middle; font-size: 2.4px; fill: #223; }
       .volts { font-size: 1.6px; paint-order: stroke; stroke: #fff; stroke-width: 0.5; } /* halo: readable over appliances */
       .start { text-anchor: start; } .end { text-anchor: end; } .name { font-weight: 700; } .code { font-size: 2.2px; } .dim { font-size: 2px; fill: #667; }
+      .zone { fill: #1f6b3a; font-weight: 700; } .lamp { fill: #e07000; font-weight: 700; font-size: 3px; } /* sketch-lights.html */
       .gaplabel { font-size: 3px; fill: #667; } .ruler { text-anchor: start; }
       .tapes { pointer-events: none; } .tape .blade { pointer-events: visiblePainted; cursor: pointer; }
       .blade { fill: #f5c400; fill-opacity: 0.85; } .tick-mark { stroke: #223; stroke-width: 1px; vector-effect: non-scaling-stroke; }

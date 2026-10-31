@@ -39,15 +39,14 @@ const island = [
   { code: 'B24-2',   w: 24, kind: 'base', backReceptacle: true },
 ];
 const wall = [
-  { code: 'TEP',     w: 1.5, kind: 'panel', h: 96 },
+  { code: 'FP2496',  w: 0.25, kind: 'panel', h: 96 }, // skin on the REP's exposed left side, 1/4" thick (assumed)
+  { code: 'REP2496-1.5', w: 1.5, kind: 'panel', h: 96 },
   { code: '36" gap', w: 36,  kind: 'gap', h: 70, tag: 'REF', receptacle: true, d: 28.5,
     upper: [{ code: 'W362424', h: 24, at: 72 }] },
-  { code: 'TEP',     w: 1.5, kind: 'panel', h: 96 },
+  { code: 'REP2496-1.5', w: 1.5, kind: 'panel', h: 96 },
   { code: 'PC36',    w: 36,  kind: 'pantry', h: 84, upper: [{ code: 'W361224', h: 12, at: 84, glass: true }] },
-  { code: 'filler',  w: 1.5, kind: 'panel', h: 96 },
   { code: 'B33',     w: 33,  kind: 'oven', receptacle: true,
     upper: [{ light: 'UCB133SNWH', w: 33, h: 1.1, at: 52.9 }, { code: 'W3330', h: 30, at: 54 }, { code: 'W3312', h: 12, at: 84, glass: true }] },
-  { code: 'filler',  w: 1.5, kind: 'filler', upper: [{ filler: true, at: 54, h: 42 }] },
   { code: 'MWB27',   w: 27,  kind: 'microwave', receptacle: true,
     upper: [{ appliance: 'toaster oven', w: 21.5, h: 12.7, at: 35.75 }, { light: 'UCB124SNWH', w: 24, h: 1.1, at: 52.9 }, { code: 'W2730', h: 30, at: 54 }, { code: 'W2712', h: 12, at: 84, glass: true }] },
   { code: 'DB27-3',  w: 27,  kind: 'drawers', n: 3, receptacle: true,
@@ -58,7 +57,8 @@ const wall = [
 
 const TOE = 4.5, BOX = 34.5, TOP = 1.25, CEILING = 96, OUTLET = 44; // OUTLET: center of a wall receptacle (assumed)
 const DEPTH = 24, COUNTER = 25, AISLE = 48, UPPER = 12, APPLIANCE = 14, HOOD = 23.625; // appliance depth assumed; hood depth per the Proline sheet
-const total = 192;
+const len = run => run.reduce((s, c) => s + c.w, 0);
+const total = Math.max(len(island), len(wall));
 const ZWALL = 2 * DEPTH + AISLE; // the island's back is at z = 0, the room wall at ZWALL
 
 const scene = new THREE.Scene();
@@ -98,8 +98,9 @@ const ring = (p, r, m) => { // flat ring centered at p
 // One run in its own coordinates: u along the run from its left end, v from the cabinet backs toward the aisle, y up from the floor.
 // The island faces +z from its back at zBack; the wall run faces -z from the wall and reads right to left.
 function side(run, flip, zBack, back = 0, naval = true) { // back: counter past the cabinet backs (an item's own `back` wins); naval: base-height items in Monaco Naval, else Bright White
-  const B = (u, v, y, w, d, h, m) => cube(flip ? total - u - w : u, y, flip ? zBack - v - d : zBack + v, w, h, d, m);
-  const P = (u, v, y) => [flip ? total - u : u, y, flip ? zBack - v : zBack + v];
+  const n = len(run); // the wall run is flipped about its own length, so its right end meets the island's left end
+  const B = (u, v, y, w, d, h, m) => cube(flip ? n - u - w : u, y, flip ? zBack - v - d : zBack + v, w, h, d, m);
+  const P = (u, v, y) => [flip ? n - u : u, y, flip ? zBack - v : zBack + v];
 
   // Stack of fronts from `top` down, on the face at v; each row is { h, pair, pull: 'mid' | 'top' | 'bottom', glass }.
   const fronts = (u, w, top, rows, v = DEPTH) => {
@@ -298,9 +299,9 @@ const floor = new THREE.Mesh(new THREE.PlaneGeometry(total + 96, ZWALL + 48), M.
 floor.rotation.x = -Math.PI / 2;
 floor.position.set(total / 2, 0, ZWALL / 2 - 24);
 scene.add(floor);
-const back = new THREE.Mesh(new THREE.PlaneGeometry(total, CEILING), M.wall);
+const back = new THREE.Mesh(new THREE.PlaneGeometry(len(wall), CEILING), M.wall);
 back.rotation.y = Math.PI;
-back.position.set(total / 2, CEILING / 2, ZWALL);
+back.position.set(len(wall) / 2, CEILING / 2, ZWALL);
 scene.add(back);
 
 scene.add(new THREE.HemisphereLight('#ffffff', '#b0a080', 2.2));

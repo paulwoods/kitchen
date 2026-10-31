@@ -17,15 +17,14 @@ plan('Top view', [
   { name: 'dishwasher', code: '24" gap', w: 24, kind: 'gap', tag: 'DW', backReceptacle: true },
   { name: 'cabinet a', code: 'B24-2',   w: 24, kind: 'base', backReceptacle: true },
 ], [
-  {                    code: 'TEP',     w: 1.5, kind: 'panel', h: 96 },
+  {                    code: 'FP2496',  w: 0.25, kind: 'panel', h: 96 }, // skin on the REP's exposed left side, 1/4" thick (assumed)
+  {                    code: 'REP2496-1.5', w: 1.5, kind: 'panel', h: 96 },
   { name: 'fridge',    code: '36" gap', w: 36,  kind: 'gap', h: 70, tag: 'REF', receptacle: true, d: 28.5, // 28 1/2" deep with doors
     upper: [{ code: 'W362424' }] },
-  {                    code: 'TEP',     w: 1.5, kind: 'panel', h: 96 },
+  {                    code: 'REP2496-1.5', w: 1.5, kind: 'panel', h: 96 },
   { name: 'pantry',    code: 'PC36',    w: 36,  kind: 'pantry', h: 84, upper: [{ code: 'W361224 glass' }] },
-  {                    code: 'filler',  w: 1.5, kind: 'panel', h: 96 },
   { name: 'oven',      code: 'B33',     w: 33,  kind: 'oven', receptacle: true,
     upper: [{ code: 'W3330' }, { code: 'W3312 glass' }] },
-  {                    code: 'filler',  w: 1.5, kind: 'filler' },
   { name: 'Toaster',   code: 'MWB27',   w: 27,  kind: 'microwave', receptacle: true,
     upper: [{ code: 'W2730' }, { code: 'W2712 glass' }] },
   { name: 'Air Fryer', code: 'DB27-3',  w: 27,  kind: 'drawers', n: 3, receptacle: true,

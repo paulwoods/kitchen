@@ -8,6 +8,7 @@ const lines = [
   ['DB36-3', 'SN-3DB36', 1, 990.34, 742.76, 0, 'island: cooktop'],
   ['TRB18FH', 'SN-B18FHTCPO', 1, 1370.29, 1027.72, 0, 'island: trash, full-height door, double trash pull-out'],
   ['SB42', 'SN-SB36', 1, 619.40, 464.55, 0, 'island: sink, 36" wide, 2 doors, 2 false drawers'],
+  ['DW panel', 'SN-BDEP', 1, 183.39, 137.54, 0, 'island: dishwasher front, base decorative end panel, size not listed (read 2026-10-31)'],
   ['B24-2', 'SN-B24', 1, 571.65, 428.74, 0, 'island: cabinet a, 2 doors, 1 drawer'],
   ['REP2496-1.5', 'SN-REPV3096', 2, 287.21, 215.41, 0, 'wall: each side of the fridge, 1 1/2" × 96" × 30"'],
   ['W362424', 'SN-W362424', 1, 573.04, 429.78, 0, 'wall: over the fridge, 36" × 24" × 24"'],

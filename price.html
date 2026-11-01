@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="nav.js" defer></script>
+<title>Price · Galley Kitchen</title>
+<style>
+  body { margin: 24px; max-width: 1100px; background: #fbfaf5; color: #223; font-family: system-ui, sans-serif; line-height: 1.5; }
+  h1 { margin: 0 0 4px; } p.sub { margin: 0; color: #667; } a { color: #2a5d9f; }
+  p.total { margin: 16px 0; padding: 8px 12px; background: #fff; border: 1px solid #ccd; font-size: 1.25em; }
+  table { border-collapse: collapse; margin-top: 12px; background: #fff; }
+  th, td { border: 1px solid #ccd; padding: 8px 10px; text-align: left; vertical-align: top; }
+  th { background: #eef2f7; white-space: nowrap; } td.n { text-align: right; white-space: nowrap; } span.tbd { color: #a33; }
+  tr.group td { font-weight: 600; background: #f4f6f9; } tr.total td { font-weight: 600; background: #eef2f7; }
+  @media (max-width: 600px) {
+    table, tbody, tr, td { display: block; } tr:first-child { display: none; }
+    tr { border: 1px solid #ccd; border-top: 0; padding: 8px 10px; } tr:nth-child(2) { border-top: 1px solid #ccd; }
+    td { border: 0; padding: 0; white-space: normal !important; text-align: left !important; } td:empty { display: none; }
+    td:not(:last-child) { display: inline; font-weight: 600; } td:not(:last-child):not(:nth-last-child(2))::after { content: " · "; font-weight: 400; color: #667; }
+  }
+</style>
+<h1>Price</h1>
+<p class="sub">The whole kitchen, as planned · prices read 2026-10-31 · <a href="index.html">index</a></p>
+
+<p class="total">Priced so far <b data-known></b> · <span data-tbd></span></p>
+
+<p>One line per thing to buy or hire. Cabinets are the <a href="quote-cabinets-monaco.html">Monaco quote</a>'s sale total (read from its data file, so it follows that page).
+Appliance prices are one US retailer's web price each, read 2026-10-31; most were sale prices, so check before buying. Labor and stone are <span class="tbd">TBD</span> until there's a bid; the notes say what each bid covers.</p>
+
+<table id="price">
+<tr><th>item</th><th>qty</th><th>each</th><th>total</th><th>notes</th></tr>
+</table>
+
+<script src="quote-cabinets-monaco.js"></script>
+<script>
+const monaco = quotes[0].lines.reduce((n, [, , qty, , s, g]) => n + (s + g) * qty, 0);
+// [item, qty, each (null = TBD), notes]; a string alone starts a group
+const rows = [
+  'Cabinets',
+  ['Monaco Maple Naval, cabinets.com (sale)', 1, monaco, 'Every cabinet, panel and finished side in the <a href="cabinets.html#order-summary">order summary</a>, shipped assembled. Tax and shipping not included; the glass for the glass doors not included.'],
+  ['Cabinet pulls', 1, null, 'Gold on the island (#b08d57), dark on the wall run. Not chosen.'],
+  ['Dishwasher pull', 1, null, 'For the SHV78CM3N panel (the panel itself, a BEPD decorative door, is in the Monaco quote; 11–18 lb as shipped).'],
+  ['Glass for the glass-door cabinets', 5, null, 'W361224, W3312 and three W2712s.'],
+  'Appliances',
+  ['Bosch NIT8061UC 30" induction cooktop', 1, 2549, '<a href="https://www.bosch-home.com/us/en/mkt-product/cooking-baking/induction-electric-cooktops/induction-cooktops/NIT8061UC">Bosch</a>'],
+  ['Bosch HBL8454UC 30" wall oven', 1, 2899, '<a href="https://www.plessers.com/b/bosch-single-wall-ovens">Plessers</a>; others to $3,449'],
+  ['Bosch HMD8454UC 24" microwave drawer', 1, 2149, '<a href="https://www.bosch-home.com/us/en/product/HMD8454UC">Bosch</a> (out of stock there)'],
+  ['Proline PLFI 544-42 island hood', 1, 1299.99, '<a href="https://prolinerangehoods.com/products/42-inch-plfi544-island-600cfm">Proline</a>, sale from $1,799.99'],
+  ['Bosch SHV78CM3N panel-ready dishwasher', 1, 1349, 'Several US retailers, $1,349–$1,399; panel above'],
+  ['Frigidaire PRFC2383AF 36" counter-depth refrigerator', 1, 2598.97, '<a href="https://www.pcrichard.com/frigidaire-professional/on-sale-major-appliance-savings/">P.C. Richard</a>, from $3,399.97'],
+  ['InSinkErator 81138K Evolution 1 HP disposal', 1, 681.89, 'InSinkErator list price, cord and hardwire adapter included; street price likely lower'],
+  ['InSinkErator STS-OO air switch', 1, 109, '<a href="https://www.homedepot.com/p/InSinkErator-Dual-Outlet-SinkTop-Switch-Kit-for-InSinkErator-Garbage-Disposals-and-Hot-Water-Dispensers-STS-OO/100062918">Home Depot</a>'],
+  ['Ruvati RVH6222ST 33" workstation sink', 1, 329, 'Ruvati eBay store; the only price found'],
+  ['Kohler K-R30937-BMB Clarus faucet', 1, 274, 'Estimate: the BMB finish wasn\'t listed; Home Depot has the matte black R30937-BL at $274'],
+  ['Nicor UCB133SNWH 33" under-cabinet light', 1, 52.70, 'Home Depot'],
+  ['Nicor UCB124SNWH 24" under-cabinet light', 3, 29.47, 'Elliott Electric'],
+  'Stone and floor',
+  ['Countertop, 3 cm white quartzite', 1, null, 'Island 192" plus 1" overhangs × 25" deep plus the strip past the cabinet backs; wall run 189.25". Sink and cooktop cutouts, 1 1/4" button hole, 3/4" plywood subtop. Templating after the cabinets are in.'],
+  ['Flooring', 1, null, 'Not chosen.'],
+  ['Backsplash, wall run', 1, null, 'Not chosen. None on the island.'],
+  'Labor',
+  ['Demolition and haul-off', 1, null, 'Old cabinets, counters and appliances out; dumpster.'],
+  ['Cabinet installation', 1, null, 'Monaco ships assembled. Hang, level and scribe both runs, the plywood island back, the pantry and the REP panels; reinforce the oven base bottom (~158 lb oven).'],
+  ['Electrical', 1, null, 'Per <a href="electrical.html">Electrical</a>: 30 A 240 V for the cooktop and the oven (j box in the pantry), circuits for the dishwasher, disposal, microwave drawer, fridge and hood, GFCI receptacles on the wall and the island back, the receptacles inside the island cabinets, under-cabinet light feeds and switch, ceiling and toe-kick lights.'],
+  ['Plumbing', 1, null, 'Island sink drain with a loop vent or AAV, sink, faucet, disposal, dishwasher hookup and drain loop, fridge water line.'],
+  ['Hood duct', 1, null, '6" round duct up through the ceiling and out; ceiling blocking for the hood.'],
+  ['Appliance installation', 1, null, 'Oven in the modified B33, microwave drawer, cooktop, dishwasher panel mounting, hood.'],
+  ['Drywall patch and paint', 1, null, 'After the electrical and duct work.'],
+  'Other',
+  ['Lighting fixtures', 1, null, 'Ceiling task (T) and ambient (A) lights and toe-kick lights (X) on the <a href="sketch-lights.html">Lights</a> plan; not chosen.'],
+  ['Permits', 1, null, 'City of Plano: electrical, plumbing and mechanical (hood duct).'],
+  ['Shipping and delivery', 1, null, 'Cabinets and appliances.'],
+  ['Sales tax', 1, null, 'On the materials.'],
+  ['Contingency', 1, null, 'Commonly 10–15% of the total for surprises behind the walls.'],
+];
+const $ = n => '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const tbd = '<span class="tbd">TBD</span>';
+let known = 0, open = 0, html = '';
+for (const r of rows) {
+  if (typeof r === 'string') { html += `<tr class="group"><td colspan="5">${r}</td></tr>`; continue; }
+  const [item, qty, each, notes] = r;
+  if (each == null) open++; else known += each * qty;
+  html += `<tr><td>${item}</td><td class="n">${qty}</td><td class="n">${each == null ? tbd : $(each)}</td><td class="n">${each == null ? tbd : $(each * qty)}</td><td>${notes}</td></tr>`;
+}
+html += `<tr class="total"><td>priced so far</td><td></td><td></td><td class="n">${$(known)}</td><td>${open} lines TBD</td></tr>`;
+document.querySelector('#price tbody').insertAdjacentHTML('beforeend', html);
+document.querySelector('[data-known]').textContent = $(known);
+document.querySelector('[data-tbd]').textContent = `${open} lines TBD`;
+</script>

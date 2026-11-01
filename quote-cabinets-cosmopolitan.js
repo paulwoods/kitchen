@@ -9,6 +9,7 @@ const lines = [
   ['DB36-3', 'DB36-3', 1, 1635.41, 1063.02, 0, 'island: cooktop'],
   ['TRB18FH', 'B18-FH Trash', 1, 1692.80, 1100.32, 0, 'island: trash, full height, 2 containers'],
   ['SB42', 'SB42', 1, 916.57, 595.77, 0, 'island: sink, 2 doors, 2 false drawers'],
+  ['DW panel', 'BEPD', 1, 229.34, 149.07, 0, 'island: dishwasher front, base decorative door (no dishwasher panel sold; size not listed, ask for one to fit the Bosch, read 2026-10-31)'],
   ['B24-2', 'B24-SINGLE', 1, 869.57, 565.22, 0, 'island: cabinet a, 1 door, 1 drawer'],
   ['B24-2 finished sides', 'Matching Finished Sides', 1, 130.44, 84.79, 0, 'island: cabinet a, the right side shows'],
   ['REP2496-1.5', 'TEP2496', 2, 567.29, 368.74, 0, 'wall: each side of the fridge, 3/4" × 96" × 24"'],

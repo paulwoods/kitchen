@@ -4,6 +4,7 @@ const orderSummary = [
   ['DB36-3', 1, 'island: cooktop'],
   ['TRB18FH', 1, 'island: trash'],
   ['SB42', 1, 'island: sink'],
+  ['DW panel', 1, 'island: dishwasher front (Bosch SHV78CM3N, panel-ready)'],
   ['B24-2', 1, 'island: cabinet a'],
   ['REP2496-1.5', 2, 'wall: each side of the fridge'],
   ['FP2496', 1, "wall: skin on the left REP's exposed side"],

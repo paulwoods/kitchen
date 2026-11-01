@@ -9,6 +9,7 @@ const lines = [
   ['TRB18FH', 'WSH-B18FHD', 1, 999.72, 249.93, 0, 'island: trash, full-height door'],
   ['TRB18FH pull-out', '4WCBM18DM2', 1, 487.20, 471.85, 0, 'island: trash, door-mounted double 35 qt waste pull-out, no lids'],
   ['SB42', 'WSH-SB42', 1, 2393.28, 598.32, 0, 'island: sink, ships as a B42 to convert, 2 doors, 2 drawer fronts'],
+  ['DW panel', 'WSH-BDD24', 1, 672.28, 168.07, 0, 'island: dishwasher front, base decorative door panel, 23 1/2" × 29 1/4" × 3/4" (read 2026-10-31; its DWR3 is a 3" return)'],
   ['B24-2', 'WSH-B24', 1, 1448.40, 362.10, 0, 'island: cabinet a, 2 doors, 1 drawer'],
   ['REP2496-1.5', 'WSH-REP1.596', 2, 1140.08, 285.02, 0, 'wall: each side of the fridge, 1 1/2" × 96" × 24"'],
   ['W362424', 'WSH-W362424', 1, 1350.44, 337.61, 0, 'wall: over the fridge, 36" × 24" × 24"'],

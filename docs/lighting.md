@@ -4,14 +4,14 @@ Refinement sheet, 2026-10-31. A planning exercise: nothing here is installed, wi
 
 ## Working positions
 
-Drawn on the [Top view](../drawings/sketch-top.html): a 74" person at prep (plates and trash) and at the sink, arrows from the two lights each one relies on to the head. Prep: the T over the counter ahead and the A in the aisle behind; their coverage overlaps on the counter. Red mark: leaning over the prep counter, the head blocks the T while the back blocks the A, so both are lost right at the counter front. The green arrow marks the guest-side view: check for exposed LEDs in the T and A trims, glare off the hood's canopy glass and LEDs, and whether the hood (canopy bottom at 66 3/16") cuts into conversation across the island.
+Drawn on the [Top view](../drawings/sketch-top.html): a 74" person at prep (plates and trash) and at the sink, arrows from the two lights each one relies on to the head. Prep: the T over the counter ahead and the A in the aisle behind; their coverage overlaps on the counter. Leaning over the prep counter, the head blocks the T while the back blocks the A, so both are lost right at the counter front. The green arrow marks the guest-side view: check for exposed LEDs in the T and A trims, glare off the hood's canopy glass and LEDs, and whether the hood (canopy bottom at 66 3/16") cuts into conversation across the island.
 
 ## Scenes
 
 | Scene | Active light groups | Starting color settings | Brightness intent | Check needed |
 |---|---|---|---|---|
 | Cooking | Hood lights, T, A, UC | Hood at its 2800–3500K setting nearest 3000K; T, A and UC 3000K | Hood high, T high, A medium, UC medium | Hood and T color match on the cooktop; hood glare from the guest side |
-| Prep and cleanup | T, A, UC | T 3000K vs 3500K vs 4000K; A and UC 3000K | T high, A medium, UC medium | Clear coverage at prep and the sink, including leaning in (the red mark); shadow in the sink bowl |
+| Prep and cleanup | T, A, UC | T 3000K vs 3500K vs 4000K; A and UC 3000K | T high, A medium, UC medium | Clear coverage at prep and the sink, including leaning in; shadow in the sink bowl |
 | Coffee and breakfast | UC (Coffee and Toaster), A | UC 3000K; A 3000K | UC medium, A low | Enough light on the coffee maker and Coffee counter with T off |
 | Evening entertaining | A, X, UC; T over the island only where food is still handled | All 3000K | A low, X low, UC low; T medium where food is handled | No exposed LEDs or glare from the guest side; T can be switched apart from the rest |
 

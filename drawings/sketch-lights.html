@@ -2,7 +2,7 @@
 <html lang="en">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="nav.js" defer></script>
+<script src="../nav.js" defer></script>
 <script src="sketch.js"></script>
 <body>
 <script>
@@ -94,7 +94,7 @@ document.querySelector('svg').insertAdjacentHTML('beforebegin', `<p><label><inpu
   <style>.legend { color: #e07000; } .zone, .lamp { paint-order: stroke; stroke: #fff; stroke-width: 0.6; } .shadow { fill: #000; fill-opacity: 0.15; } .person { fill: #445; fill-opacity: 0.85; } .head { fill: #223; }
   svg .lamp.off { fill: #bbb; } svg .shadow.off, svg .ray.off { display: none; }
   .ray { stroke: #e07000; stroke-width: 0.5; } .ray.guest { stroke: #1f6b3a; } .block { fill: #b00020; font-size: 2.2px; paint-order: stroke; stroke: #fff; stroke-width: 0.5; }</style>
-  <p>Arrows: the two lights over each working position, aimed at the head (74"). Prep: T over the counter ahead, A in the aisle behind; their coverage overlaps on the counter. Red: where the body can block both (head over the counter blocks the T, the back blocks the A). <a href="lighting.html">Lighting scenes</a></p>`);
+  <p>Arrows: the two lights over each working position, aimed at the head (74"). Prep: T over the counter ahead, A in the aisle behind; their coverage overlaps on the counter. Red: where the body can block both (head over the counter blocks the T, the back blocks the A). <a href="../docs/lighting.html">Lighting scenes</a></p>`);
 // A light turned off greys out its marks and drops its shadows.
 for (const box of document.querySelectorAll('[data-light]'))
   box.onchange = () => document.querySelectorAll(`svg .l-${box.dataset.light}`).forEach(el => el.classList.toggle('off', !box.checked));

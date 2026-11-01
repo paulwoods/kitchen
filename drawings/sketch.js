@@ -422,7 +422,7 @@ function page(title, view, W, H, oy, out, axes) {
       .snap-pt { fill: none; stroke: #223; stroke-width: 1.5px; vector-effect: non-scaling-stroke; }
     </style>
     <h1>${title}</h1>
-    <p><a href="index.html">index</a></p>
+    <p><a href="../index.html">index</a></p>
     <p>${view} · 1 square = 6" · bold line = ${BOLD}"</p>
     <p class="readout"><span id="readout">Drag on the drawing to measure. It snaps to edges; Shift keeps it level or plumb.</span><button id="clear" hidden>Clear tapes</button></p>
     <svg viewBox="0 0 ${W} ${H}" width="${W * PX}" height="${H * PX}">

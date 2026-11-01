@@ -2,7 +2,7 @@
 <html lang="en">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="nav.js" defer></script>
+<script src="../nav.js" defer></script>
 <title>Comparison · Galley Kitchen</title>
 <style>
   body { margin: 24px; background: #fbfaf5; color: #223; font-family: system-ui, sans-serif; line-height: 1.5; }
@@ -15,12 +15,12 @@
   div.wrap { overflow-x: auto; }
 </style>
 <h1>Comparison</h1>
-<p class="sub">Every quote against the <a href="cabinets.html#order-summary">order summary</a> · <a href="index.html">index</a></p>
+<p class="sub">Every quote against the <a href="../docs/cabinets.html#order-summary">order summary</a> · <a href="../index.html">index</a></p>
 <p>Down the left, the planned cabinets; across the top, the quotes. Each cell is that quote's sale price for the line (price × qty, glass prep included), the regular price under it, then the vendor's code, in red when that cabinet's size differs from the plan's (see each quote page for the notes).
 Read from each quote's <code>quote-*.js</code> data file (the one its page shows), so it stays in step with them. Quotes run in rank order (each data file's <code>rank</code>, 1 first); Access is one number, not itemized.</p>
 <div class="wrap"><table id="cmp"></table></div>
 
-<script src="order-summary.js"></script>
+<script src="../docs/order-summary.js"></script>
 <script src="quote-accessbycabinetjoint.js"></script>
 <script src="quote-cabinets-monaco.js"></script>
 <script src="quote-cabinets-cosmopolitan.js"></script>

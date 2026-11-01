@@ -24,7 +24,7 @@ It is the plan for this one kitchen, not a general kitchen-design tool: real mod
 
 - Opened locally from the project folder or `python3 -m http.server`; not published.
 - Read on a computer while planning, and handed to trades as a reference for quoting and building.
-- Pages: `index.html`; sketches (`sketch-island-front.html`, `sketch-wall-front.html`, `sketch-top.html`); 3D model (`model.html`); documentation (`issues.html`, `appliances.html`, `cabinets.html`, `electrical.html`).
+- Pages: `index.html`; in `drawings/`, sketches (`sketch-island-front.html`, `sketch-wall-front.html`, `sketch-top.html`); 3D model (`model.html`); in `docs/`, documentation (`issues.html`, `appliances.html`, `cabinets.html`, `electrical.html`); in `pricing/`, the price, comparison and quote pages.
 - Sketches are drawn on graph paper by `sketch.js` (1 square = 6", bold line every 30").
 
 ## Capabilities and Constraints

@@ -3,16 +3,19 @@
 // which the canvas subtracts from the window height.
 const groups = [
   [['index.html', 'Index']],
-  [['sketch-top.html', 'Top view'], ['sketch-lights.html', 'Lights'], ['sketch-island-front.html', 'Island front'], ['sketch-wall-front.html', 'Wall front'], ['model.html', '3D model']],
-  [['issues.html', 'Issues'], ['cabinets.html', 'Cabinets'], ['appliances.html', 'Appliances'], ['electrical.html', 'Electrical'], ['lighting.html', 'Lighting scenes'], ['review1.html', 'Review 1']],
-  [['price.html', 'Price'], ['comparison.html', 'Comparison'], ['quote-accessbycabinetjoint.html', 'Quote: Access'], ['quote-cabinets-monaco.html', 'Quote: Monaco'], ['quote-cabinets-cosmopolitan.html', 'Quote: Cosmopolitan'], ['quote-rtawoodcabinets-edgeline.html', 'Quote: Edgeline'], ['quote-barker.html', 'Quote: Barker'], ['quote-thertastore-madison.html', 'Quote: Madison'], ['quote-lilyann-colorado.html', 'Quote: Colorado']],
+  [['drawings/sketch-top.html', 'Top view'], ['drawings/sketch-lights.html', 'Lights'], ['drawings/sketch-island-front.html', 'Island front'], ['drawings/sketch-wall-front.html', 'Wall front'], ['drawings/model.html', '3D model']],
+  [['docs/issues.html', 'Issues'], ['docs/cabinets.html', 'Cabinets'], ['docs/appliances.html', 'Appliances'], ['docs/electrical.html', 'Electrical'], ['docs/lighting.html', 'Lighting scenes'], ['docs/review1.html', 'Review 1']],
+  [['pricing/price.html', 'Price'], ['pricing/comparison.html', 'Comparison'], ['pricing/quote-accessbycabinetjoint.html', 'Quote: Access'], ['pricing/quote-cabinets-monaco.html', 'Quote: Monaco'], ['pricing/quote-cabinets-cosmopolitan.html', 'Quote: Cosmopolitan'], ['pricing/quote-rtawoodcabinets-edgeline.html', 'Quote: Edgeline'], ['pricing/quote-barker.html', 'Quote: Barker'], ['pricing/quote-thertastore-madison.html', 'Quote: Madison'], ['pricing/quote-lilyann-colorado.html', 'Quote: Colorado']],
 ];
-const here = location.pathname.split('/').pop() || 'index.html';
+// Links are relative to this script's folder (the site root), so pages in subfolders load it as ../nav.js.
+const root = document.currentScript.src;
+const url = href => new URL(href, root).href;
+const here = location.href.split('#')[0].replace(/\/$/, '/index.html');
 const nav = document.createElement('nav');
 nav.innerHTML = `<style>
   nav.links { display: flex; flex-wrap: wrap; gap: 4px 16px; margin: 0 0 16px; padding-bottom: 8px; border-bottom: 1px solid #ccd; font: 15px/1.5 system-ui, sans-serif; }
   nav.links a { color: #2a5d9f; } nav.links b { color: #223; } nav.links span { color: #ccd; }
-</style>` + groups.map(g => g.map(([href, label]) => href === here ? `<b>${label}</b>` : `<a href="${href}">${label}</a>`).join('')).join('<span>|</span>');
+</style>` + groups.map(g => g.map(([href, label]) => url(href) === here ? `<b>${label}</b>` : `<a href="${url(href)}">${label}</a>`).join('')).join('<span>|</span>');
 nav.className = 'links';
 (document.querySelector('header') ?? document.body).prepend(nav);
-document.head.insertAdjacentHTML('beforeend', '<link rel="icon" href="favicon.svg" type="image/svg+xml">');
+document.head.insertAdjacentHTML('beforeend', `<link rel="icon" href="${url('favicon.svg')}" type="image/svg+xml">`);

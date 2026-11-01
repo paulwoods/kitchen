@@ -24,8 +24,7 @@ function sketch(title, run, opts = {}) {
   let ap = '';
   // opts.darkPulls: base-height items keep dark pulls (the wall run) instead of gold.
   let fin = ''; // ' base' while drawing a base-height item: gold pulls
-  let paint = ''; // ' alabaster' while drawing a tall item or an upper cabinet: Alabaster instead of Moss
-  const dark = (c = {}) => c.h ? '' : ' ondark'; // light lines and labels over the Moss fronts
+  let paint = ''; // ' alabaster' while drawing a tall item or an upper cabinet: Alabaster instead of Haze
   const tag = (label, off) => { if (opts.toggles) { ap = ` ap-${apps.length}`; apps.push({ label, off }); } };
 
   // Stack of fronts from `top` down: each row is { h, pair, pull: 'mid' | 'top' | 'bottom' }.
@@ -106,7 +105,7 @@ function sketch(title, run, opts = {}) {
         rect(mx + 0.5, top + 0.5, mw - 1, 1.6875, 'window'); // tilt-out control strip; the drawer opens itself, no handle
         ap = '';
       }
-      if (c.falseTop) text(x + c.w / 2 + 3, FLOOR - BOX + 3.3, 'false front', 'code start' + dark()); // top row is a fixed front, labeled right of its pull
+      if (c.falseTop) text(x + c.w / 2 + 3, FLOOR - BOX + 3.3, 'false front', 'code start'); // top row is a fixed front, labeled right of its pull
     }
     // Things hung above this item. Cabinet: { code, h, at: bottom off the floor, glass }; hood: { hood: true, w, h, at, chimney }; coffee maker: { coffee: true, w, h, at }; other appliance: { appliance, w, h, at, dx }; light bar: { light, w, h, at, inside }.
     fin = '';
@@ -164,7 +163,7 @@ function sketch(title, run, opts = {}) {
     }
     if (c.bowl) { // undermount sink bowl, centered, dashed: { w, left, right: depth below the counter at each end (sloped bottom) }
       const l = x + (c.w - c.bowl.w) / 2, r = l + c.bowl.w, t = FLOOR - BOX;
-      const cls = 'hidden' + dark(c);
+      const cls = 'hidden';
       line(l, t, r, t, cls); line(r, t, r, t + c.bowl.right, cls);
       line(r, t + c.bowl.right, l, t + c.bowl.left, cls); line(l, t + c.bowl.left, l, t, cls);
     }
@@ -196,9 +195,9 @@ function sketch(title, run, opts = {}) {
     }
     for (const b of c.inside || []) { // hidden inside the cabinet, dashed: { label, w, h, at: center off the floor, dx: center from the item's left end, within: label inside the box }
       const side = Math.sign(c.w / 2 - b.dx), top = FLOOR - b.at - b.h / 2; // the label runs from the box's outer edge toward the cabinet's middle (centered when it's in the middle)
-      rect(x + b.dx - b.w / 2, top, b.w, b.h, 'hidden' + dark(c));
-      if (b.within) text(x + b.dx, top + b.h / 2 + 0.5, b.label, 'dim' + dark(c)); // label inside the box
-      else text(x + b.dx - side * b.w / 2, top - 1, b.label, `dim ${['end', '', 'start'][side + 1]}${dark(c)}`);
+      rect(x + b.dx - b.w / 2, top, b.w, b.h, 'hidden');
+      if (b.within) text(x + b.dx, top + b.h / 2 + 0.5, b.label, 'dim'); // label inside the box
+      else text(x + b.dx - side * b.w / 2, top - 1, b.label, `dim ${['end', '', 'start'][side + 1]}`);
     }
     const dy = 6 * (c.drop || 0);
     if (c.name) text(x + c.w / 2, FLOOR + 5 + dy, c.name, 'name');
@@ -388,10 +387,9 @@ function page(title, view, W, H, oy, out, axes) {
       .readout { min-height: 1.5em; font-variant-numeric: tabular-nums; } .readout b { color: #223; }
       button { font: inherit; margin-left: 8px; padding: 0 8px; }
       .grid { fill: none; stroke: #bcd3ea; stroke-width: 0.1; } .ft { stroke: #8fb2d6; stroke-width: 0.2; }
-      .box { fill: #67786e; stroke: #223; stroke-width: 0.3; }
-      .front { fill: #67786e; stroke: #223; stroke-width: 0.2; } /* Colonial Maple Moss */
+      .box { fill: #bec6bd; stroke: #223; stroke-width: 0.3; }
+      .front { fill: #bec6bd; stroke: #223; stroke-width: 0.2; } /* Colonial Maple Haze */
       .alabaster { fill: #ebeae6; } /* Colonial Maple Alabaster: the tall items and upper cabinets */
-      .hidden.ondark { stroke: #eef1ee; } text.ondark { fill: #eef1ee; } /* light lines and labels over the Moss fronts */
       .pull.base { stroke: #b08d57; } /* gold pulls on the base cabinets */
       .toe { fill: #556; } .counter { fill: #8a8f99; stroke: #223; stroke-width: 0.2; }
       .ply { fill: #d9b98a; stroke: #223; stroke-width: 0.15; }

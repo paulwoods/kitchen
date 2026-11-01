@@ -32,5 +32,5 @@ const lines = [
 // 'planned / code' lines whose size (W × H × D, as supplied) differs from the plan's in cabinets.html (comparison.html reads this too)
 // The microwave base is split in two but adds up to the planned size, so it is not listed.
 const resized = ['PC36 upper / W2D', 'W361224 glass / W2DGLASS', 'W3330 / W2D', 'W3312 glass / W2DGLASS', 'W2730 / W2D', 'W2730 end panel / WFE', 'W2712 glass / W2DGLASS', 'W2712 glass end panel / WFE', 'REP2496-1.5 / TFETHICK'];
-quotes.push({ url: 'quote-barker.html', label: 'Barker', rank: 3, lines, resized });
+quotes.push({ url: 'quote-barker.html', label: 'Barker', rank: 4, lines, resized });
 }

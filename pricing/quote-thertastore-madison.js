@@ -24,5 +24,5 @@ const lines = [
 ];
 // 'planned / code' lines whose size (W × H × D, as supplied) differs from the plan's in cabinets.html (comparison.html reads this too)
 const resized = ['SB42 / SN-SB36', 'REP2496-1.5 / SN-REPV3096', 'PC36 / SN-U3084244RS', 'W361224 glass / SN-W3012GD', 'MWB27 / SN-BMW30'];
-quotes.push({ url: 'quote-thertastore-madison.html', label: 'Madison', rank: 5, lines, resized });
+quotes.push({ url: 'quote-thertastore-madison.html', label: 'Madison', rank: 6, lines, resized });
 }

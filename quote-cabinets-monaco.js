@@ -30,5 +30,5 @@ const lines = [
 ];
 // 'planned / code' lines whose size (W × H × D, as supplied) differs from the plan's in cabinets.html (comparison.html reads this too)
 const resized = ['W362424 / RW3624'];
-quotes.push({ url: 'quote-cabinets-monaco.html', label: 'Monaco', lines, resized });
+quotes.push({ url: 'quote-cabinets-monaco.html', label: 'Monaco', rank: 1, lines, resized });
 }

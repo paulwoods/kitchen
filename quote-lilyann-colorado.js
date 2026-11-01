@@ -25,5 +25,5 @@ const lines = [
 ];
 // 'planned / code' lines whose size (W × H × D, as supplied) differs from the plan's in cabinets.html (comparison.html reads this too)
 const resized = ['PC36 / WSH-U308424', 'W361224 glass / WSH-W3012BGFI', 'MWB27 / WSH-MB30', 'DB27-3 / WSH-DB24-3'];
-quotes.push({ url: 'quote-lilyann-colorado.html', label: 'Colorado', lines, resized });
+quotes.push({ url: 'quote-lilyann-colorado.html', label: 'Colorado', rank: 4, lines, resized });
 }

@@ -17,7 +17,7 @@
 <h1>Comparison</h1>
 <p class="sub">Every quote against the <a href="cabinets.html#order-summary">order summary</a> · <a href="index.html">index</a></p>
 <p>Down the left, the planned cabinets; across the top, the quotes. Each cell is that quote's sale price for the line (price × qty, glass prep included), the regular price under it, then the vendor's code, in red when that cabinet's size differs from the plan's (see each quote page for the notes).
-Read from each quote's <code>quote-*.js</code> data file (the one its page shows), so it stays in step with them. Quotes run from the highest sale total to the lowest; Access is one number, not itemized, and sorts by that.</p>
+Read from each quote's <code>quote-*.js</code> data file (the one its page shows), so it stays in step with them. Quotes run in rank order (each data file's <code>rank</code>, 1 first); Access is one number, not itemized.</p>
 <div class="wrap"><table id="cmp"></table></div>
 
 <script src="order-summary.js"></script>
@@ -32,19 +32,20 @@ Read from each quote's <code>quote-*.js</code> data file (the one its page shows
 const $ = n => '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 const row = name => orderSummary.filter(([code]) => name.startsWith(code)).sort((a, b) => b[0].length - a[0].length)[0]?.[0];
 
-const cols = quotes.map(({ url, label, lines, resized, total }) => {
-  if (!lines) return { url, label, total: $(total), price: total }; // not itemized
+const cols = quotes.map(({ url, label, rank, lines, resized, total }) => {
+  if (!lines) return { url, label, rank, total: $(total) }; // not itemized
   const cells = {}; let reg = 0, sale = 0;
   for (const [planned, code, qty, r, s, g, notes] of lines) {
     const c = cells[row(planned)] ??= { reg: 0, sale: 0, items: [] };
     c.reg += (r + g) * qty; c.sale += (s + g) * qty; reg += (r + g) * qty; sale += (s + g) * qty;
     c.items.push({ planned, code, qty, notes: notes.replace(/^(island|wall): /, '') });
   }
-  return { url, label, cells, resized, price: sale, total: `${$(sale)}<br><span class="reg">${$(reg)} regular</span>` };
+  return { url, label, rank, cells, resized, total: `${$(sale)}<br><span class="reg">${$(reg)} regular</span>` };
 });
-cols.sort((a, b) => b.price - a.price); // highest first, by sale price (Access by its one total)
+cols.sort((a, b) => a.rank - b.rank);
 
 let html = `<tr><th>planned</th><th>qty</th>${cols.map(c => `<th><a href="${c.url}">${c.label}</a></th>`).join('')}</tr>`;
+html += `<tr class="total"><td>rank</td><td></td>${cols.map(c => `<td>${c.rank}</td>`).join('')}</tr>`;
 for (const [code, qty, where] of orderSummary) {
   html += `<tr><td>${code}<br><span class="reg">${where}</span></td><td>${qty}</td>`;
   for (const col of cols) {

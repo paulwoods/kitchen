@@ -30,5 +30,5 @@ const lines = [
 ];
 // 'planned / code' lines whose size (W × H × D, as supplied) differs from the plan's in cabinets.html (comparison.html reads this too)
 const resized = ['W361224 glass / W3615', 'W3312 glass / W3315', 'W2712 glass / W2715', 'REP2496-1.5 / TEP2496', 'W362424 / RW3624'];
-quotes.push({ url: 'quote-cabinets-cosmopolitan.html', label: 'Cosmopolitan', lines, resized });
+quotes.push({ url: 'quote-cabinets-cosmopolitan.html', label: 'Cosmopolitan', rank: 2, lines, resized });
 }

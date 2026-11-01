@@ -1,3 +1,3 @@
 // Access quote data, shown by quote-accessbycabinetjoint.html and comparison.html
 var quotes = quotes || [];
-quotes.push({ url: 'quote-accessbycabinetjoint.html', label: 'Access', total: 27978.67 }); // one number, not itemized
+quotes.push({ url: 'quote-accessbycabinetjoint.html', label: 'Access', rank: 6, total: 27978.67 }); // one number, not itemized

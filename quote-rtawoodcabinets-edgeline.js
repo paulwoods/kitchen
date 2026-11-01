@@ -23,5 +23,5 @@ const lines = [
 ];
 // 'planned / code' lines whose size (W × H × D, as supplied) differs from the plan's in cabinets.html (comparison.html reads this too)
 const resized = ['SB42 / EW-SB36', 'REP2496-1.5 / EW-REPV3096', 'PC36 / EW-U309624', 'MWB27 / EW-BMW30', 'DB27-3 / EW-3DB24', 'W361224 glass / (none)'];
-quotes.push({ url: 'quote-rtawoodcabinets-edgeline.html', label: 'Edgeline', lines, resized });
+quotes.push({ url: 'quote-rtawoodcabinets-edgeline.html', label: 'Edgeline', rank: 7, lines, resized });
 }

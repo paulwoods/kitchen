@@ -10,7 +10,7 @@ Store all project memories in this file (not in ~/.claude memory).
 
 ## Kitchen
 
-- Folders (2026-10-31): `index.html`, `nav.js` and `favicon.svg` stay at the root; `drawings/` holds the sketches, `sketch.js` and `model.html`; `docs/` the documentation pages, `lighting.md` and `order-summary.js`; `pricing/` the price, comparison and quote pages with their `quote-*.js` data files; `images/` the screenshots; `cabinets/` (vendor notes) and `manuals/` (PDFs). Pages in a folder link with relative paths (`../index.html`, `../docs/cabinets.html`) and load `../nav.js`, which builds its links from its own location. File names below are given without their folder.
+- Folders (2026-10-31): `index.html`, `nav.js` and `favicon.svg` stay at the root; `drawings/` holds the sketches, `sketch.js` and `model.html`; `docs/` the documentation pages, `lighting.md` and `order-summary.js`; `pricing/` the price, comparison and quote pages with their `quote-*.js` data files; `cabinets/` (vendor notes) and `manuals/` (PDFs). Pages in a folder link with relative paths (`../index.html`, `../docs/cabinets.html`) and load `../nav.js`, which builds its links from its own location. File names below are given without their folder.
 - Galley kitchen with two sides: **island** and **wall**.
 - Where things are recorded: sizes, positions and models in `cabinets.html`, `appliances.html` and `electrical.html`; decisions and their history in `issues.html`; assumptions in those pages or in a comment beside the value in the drawing code. Add new detail there, not here.
 

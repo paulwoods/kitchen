@@ -2,8 +2,6 @@
 
 Refinement sheet, 2026-10-31. A planning exercise: nothing here is installed, wired or tested. Light groups as on the [Lights](../drawings/sketch-lights.html) plan: T task, A ambient, X toe-kick accent, UC under-cabinet, plus the hood's own lights.
 
-![Lights plan](../images/lights.png)
-
 ## Working positions
 
 Drawn on the [Lights](../drawings/sketch-lights.html) plan: a 74" person at prep (plates and trash) and at the sink, arrows from the two lights each one relies on to the head. Prep: the T over the counter ahead and the A in the aisle behind; their coverage overlaps on the counter. Red mark: leaning over the prep counter, the head blocks the T while the back blocks the A, so both are lost right at the counter front. The green arrow marks the guest-side view: check for exposed LEDs in the T and A trims, glare off the hood's canopy glass and LEDs, and whether the hood (canopy bottom at 66 3/16") cuts into conversation across the island.

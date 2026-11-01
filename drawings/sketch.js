@@ -410,7 +410,7 @@ function page(title, view, W, H, oy, out, axes) {
       text { text-anchor: middle; font-size: 2.4px; fill: #223; }
       .volts { font-size: 1.6px; paint-order: stroke; stroke: #fff; stroke-width: 0.5; } /* halo: readable over appliances */
       .start { text-anchor: start; } .end { text-anchor: end; } .name { font-weight: 700; } .code { font-size: 2.2px; } .dim { font-size: 2px; fill: #667; }
-      .zone { fill: #1f6b3a; font-weight: 700; } .lamp { fill: #e07000; font-weight: 700; font-size: 3px; } /* sketch-lights.html */
+      .zone { fill: #1f6b3a; font-weight: 700; } .lamp { fill: #e07000; font-weight: 700; font-size: 3px; } /* sketch-top.html */
       .gaplabel { font-size: 3px; fill: #667; } .ruler { text-anchor: start; }
       .tapes { pointer-events: none; } .tape .blade { pointer-events: visiblePainted; cursor: pointer; }
       .blade { fill: #f5c400; fill-opacity: 0.85; } .tick-mark { stroke: #223; stroke-width: 1px; vector-effect: non-scaling-stroke; }

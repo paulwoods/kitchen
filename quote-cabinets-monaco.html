@@ -55,7 +55,7 @@ Where cabinets.com has no exact match, the nearest item is used and the differen
 <ul>
   <li>Painted sides (2026-10-28): "Matching Finished Sides" on the spices (left side), Cabinet A (right side), Coffee and the W2730 and W2712 over Coffee (right side), and the pantry and the cabinet over it (right side, added 2026-10-28: the W3330 and W3312 beside them are 12" deep, so the pantry side shows above the counter and the cabinet's whole side shows). The pantry's option price is 15% of its price, as for a wall cabinet (assumed; the rate for tall cabinets was not read). The option finishes both sides, the only choice offered. The sale had ended when the option prices were read; the sale column takes 35% off, as on the cabinets.</li>
   <li>Glass doors are a custom option, "Prepared for Glass/Finished Interior", $129.81 per cabinet when first read (off the W2715 page); it is priced per cabinet, read 2026-10-28: $231.64 on the W3612 over the pantry, $221.65 on the W3312, $177.33 on each W2712; the glass is not included. The add-on is counted at the same price in both columns (assumed).</li>
-  <li>Wall cabinets: the W3327 and W2727s are priced as planned before 2026-10-28; the plan now has the W3330 and W2730s (54"–84"). The W3312 and W2712s over them are priced as planned (read 2026-10-28).</li>
+  <li>Wall cabinets: the W3330 and W2730s are priced as planned (read 2026-10-31; the W3327 and W2727s planned before 2026-10-28 until then). The W3312 and W2712s over them are priced as planned (read 2026-10-28).</li>
   <li>Pantry: the UT362484 is the planned 36" × 84" × 24", but with four doors over shelves, not a door pair over three roll-out trays.</li>
   <li>Oven base: a plain B33 (two doors, one drawer); the oven cutout and the OW-B33-FH's full-height opening are not offered.</li>
   <li>Microwave base: the MBC27 has one drawer under the opening, as planned.</li>
@@ -81,18 +81,18 @@ const lines = [
   ['W361224 glass', 'W3612', 1, 648.59, 421.58, 231.64, 'wall: over the pantry, $463.28 + $185.31 to increase the depth 12" (to 24"), + glass prep $231.64 (read 2026-10-28, no sale; sale 35% off assumed)'],
   ['W361224 glass finished sides', 'Matching Finished Sides', 1, 69.49, 45.17, 0, 'wall: over the pantry, the right side shows'],
   ['B33 (OW-B33-FH)', 'B33', 1, 873.98, 568.09, 0, 'wall: oven base, 2 doors, 1 drawer'],
-  ['W3330', 'W3327', 1, 610.07, 396.55, 0, 'wall: over the oven'],
+  ['W3330', 'W3330', 1, 642.95, 417.92, 0, 'wall: over the oven (read 2026-10-31)'],
   ['W3312 glass', 'W3312', 1, 443.30, 288.15, 221.65, 'wall: over the W3330, + glass prep $221.65 (read 2026-10-28, no sale; sale 35% off assumed)'],
   ['MWB27', 'MBC27', 1, 910.40, 591.76, 0, 'wall: Toaster, microwave base, 1 drawer'],
   ['DB27-3', 'DB27-3', 2, 1403.92, 912.55, 0, 'wall: Air Fryer, Coffee'],
   ['DB27-3 finished sides', 'Matching Finished Sides', 1, 140.39, 91.25, 0, 'wall: Coffee, the right side shows'],
-  ['W2730', 'W2727', 3, 531.22, 345.29, 0, 'wall: over the Toaster, Air Fryer and Coffee'],
-  ['W2730 finished sides', 'Matching Finished Sides', 1, 79.68, 51.79, 0, 'wall: over Coffee, the right side shows'],
+  ['W2730', 'W2730', 3, 540.72, 351.47, 0, 'wall: over the Toaster, Air Fryer and Coffee (read 2026-10-31)'],
+  ['W2730 finished sides', 'Matching Finished Sides', 1, 81.11, 52.72, 0, 'wall: over Coffee, the right side shows'],
   ['W2712 glass', 'W2712', 3, 354.65, 230.52, 177.33, 'wall: over the W2730s, + glass prep $177.33 (read 2026-10-28, no sale; sale 35% off assumed)'],
   ['W2712 glass finished sides', 'Matching Finished Sides', 1, 53.20, 34.58, 0, 'wall: over Coffee, the right side shows'],
 ];
 // 'planned / code' lines whose size (W × H × D, as supplied) differs from the plan's in cabinets.html (comparison.html reads this too)
-const resized = ['W3330 / W3327', 'W2730 / W2727', 'W362424 / RW3624'];
+const resized = ['W362424 / RW3624'];
 const $ = n => '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 let reg = 0, sale = 0;
 const table = document.getElementById('lines');

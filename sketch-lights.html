@@ -75,6 +75,13 @@ plan('Lights', island, wall, { extra: ({ out, text, ix, iy, wx, wy }) => {
     out.unshift(`<ellipse class="person" cx="${ix(u)}" cy="${iy(33)}" rx="9.5" ry="5.5"/><ellipse class="person head" cx="${ix(u)}" cy="${iy(32)}" rx="3.25" ry="4"/>`);
     isl(u, 41, '74" person', 'code');
   }
+  // Refinement sheet (2026-10-31): arrows from the two lights each working position relies on (the T over its counter, the A behind) to the head.
+  out.push('<marker id="arrow" viewBox="0 0 6 6" refX="5" refY="3" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#e07000"/></marker>');
+  const ray = ([u0, v0], [u1, v1], cls) => out.push(`<line class="ray ${cls}" x1="${ix(u0)}" y1="${iy(v0)}" x2="${ix(u1)}" y2="${iy(v1)}" marker-end="url(#arrow)"/>`);
+  for (const [u, t, a] of [[people[0], T[1], A[1]], [people[1], T[2], A[1]]]) { ray([t[0], t[1] + 2], [u, 29], 'l-T'); ray([a[0], a[1] - 2], [u, 36], 'l-A'); }
+  isl(people[0], COUNTER - 3.5, 'both blocked when leaning in', 'block');
+  out.push(`<line class="ray guest" x1="${ix(168)}" y1="8" x2="${ix(168)}" y2="${iy(-8)}" marker-end="url(#arrow)"/>`);
+  text(ix(150), 6, 'guest view: exposed LEDs, hood glare, fixture in the sightline?', 'code');
   for (const [u, v] of T) isl(u, v, 'T', 'lamp l-T');
   for (const [u, v] of A) isl(u, v, 'A', 'lamp l-A');
   // X: toe-kick lights in front of each cabinet (not the appliance gaps or panels).
@@ -85,7 +92,9 @@ document.querySelector('svg').insertAdjacentHTML('beforebegin', `<p><label><inpu
   <label><input type="checkbox" data-light="X" checked> <b class="legend">X</b> accent light (toe kick)</label> · <label><input type="checkbox" data-light="UC" checked> <b class="legend">UC</b> under-cabinet light</label> · <b style="color: #1f6b3a">green</b>: work areas ·
   gray: shadow each light (at the 96" ceiling) casts on the counter from a 74" person (checked: light on)</p>
   <style>.legend { color: #e07000; } .zone, .lamp { paint-order: stroke; stroke: #fff; stroke-width: 0.6; } .shadow { fill: #000; fill-opacity: 0.15; } .person { fill: #445; fill-opacity: 0.85; } .head { fill: #223; }
-  svg .lamp.off { fill: #bbb; } svg .shadow.off { display: none; }</style>`);
+  svg .lamp.off { fill: #bbb; } svg .shadow.off, svg .ray.off { display: none; }
+  .ray { stroke: #e07000; stroke-width: 0.5; } .ray.guest { stroke: #1f6b3a; } .block { fill: #b00020; font-size: 2.2px; paint-order: stroke; stroke: #fff; stroke-width: 0.5; }</style>
+  <p>Arrows: the two lights over each working position, aimed at the head (74"). Prep: T over the counter ahead, A in the aisle behind; their coverage overlaps on the counter. Red: where the body can block both (head over the counter blocks the T, the back blocks the A). <a href="lighting.html">Lighting scenes</a></p>`);
 // A light turned off greys out its marks and drops its shadows.
 for (const box of document.querySelectorAll('[data-light]'))
   box.onchange = () => document.querySelectorAll(`svg .l-${box.dataset.light}`).forEach(el => el.classList.toggle('off', !box.checked));

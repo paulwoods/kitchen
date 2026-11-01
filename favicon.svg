@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- The galley from above on graph paper: the Naval island at the top, the white wall run at the bottom, a light in the aisle. -->
+  <rect width="32" height="32" rx="5" fill="#fbfaf5"/>
+  <path d="M8 0V32M16 0V32M24 0V32M0 8H32M0 16H32M0 24H32" stroke="#bcd3ee" stroke-width="1"/>
+  <rect x="4" y="4" width="24" height="8" rx="1" fill="#253140"/>
+  <rect x="4.5" y="20.5" width="23" height="7" rx="1" fill="#f4f4f3" stroke="#223"/>
+  <circle cx="16" cy="16" r="2.5" fill="#e07000"/>
+</svg>

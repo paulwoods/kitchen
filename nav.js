@@ -4,7 +4,7 @@
 const groups = [
   [['index.html', 'Index']],
   [['sketch-top.html', 'Top view'], ['sketch-lights.html', 'Lights'], ['sketch-island-front.html', 'Island front'], ['sketch-wall-front.html', 'Wall front'], ['model.html', '3D model']],
-  [['issues.html', 'Issues'], ['cabinets.html', 'Cabinets'], ['appliances.html', 'Appliances'], ['electrical.html', 'Electrical'], ['review1.html', 'Review 1']],
+  [['issues.html', 'Issues'], ['cabinets.html', 'Cabinets'], ['appliances.html', 'Appliances'], ['electrical.html', 'Electrical'], ['lighting.html', 'Lighting scenes'], ['review1.html', 'Review 1']],
   [['comparison.html', 'Comparison'], ['quote-accessbycabinetjoint.html', 'Quote: Access'], ['quote-cabinets-monaco.html', 'Quote: Monaco'], ['quote-cabinets-cosmopolitan.html', 'Quote: Cosmopolitan'], ['quote-rtawoodcabinets-edgeline.html', 'Quote: Edgeline'], ['quote-barker.html', 'Quote: Barker'], ['quote-thertastore-madison.html', 'Quote: Madison'], ['quote-lilyann-colorado.html', 'Quote: Colorado']],
 ];
 const here = location.pathname.split('/').pop() || 'index.html';
@@ -15,3 +15,4 @@ nav.innerHTML = `<style>
 </style>` + groups.map(g => g.map(([href, label]) => href === here ? `<b>${label}</b>` : `<a href="${href}">${label}</a>`).join('')).join('<span>|</span>');
 nav.className = 'links';
 (document.querySelector('header') ?? document.body).prepend(nav);
+document.head.insertAdjacentHTML('beforeend', '<link rel="icon" href="favicon.svg" type="image/svg+xml">');

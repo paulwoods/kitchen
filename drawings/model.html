@@ -44,15 +44,15 @@ const wall = [
   { code: '36" gap', w: 36,  kind: 'gap', h: 70, tag: 'REF', receptacle: true, d: 28.5,
     upper: [{ code: 'W362424', h: 24, at: 72 }] },
   { code: 'REP2496-1.5', w: 1.5, kind: 'panel', h: 96 },
-  { code: 'PC36',    w: 36,  kind: 'pantry', h: 84, upper: [{ code: 'W361224', h: 12, at: 84, glass: true }] },
+  { code: 'PC36',    w: 36,  kind: 'pantry', h: 84, upper: [{ code: 'W361224', h: 12, at: 84, glass: true }, { light: 'UCB133SNWH', w: 33, h: 1.1, at: 94.275, d: 24 }] },
   { code: 'B33',     w: 33,  kind: 'oven', receptacle: true,
-    upper: [{ light: 'UCB133SNWH', w: 33, h: 1.1, at: 52.9 }, { code: 'W3330', h: 30, at: 54 }, { code: 'W3312', h: 12, at: 84, glass: true }] },
+    upper: [{ light: 'UCB133SNWH', w: 33, h: 1.1, at: 52.9 }, { code: 'W3330', h: 30, at: 54 }, { code: 'W3312', h: 12, at: 84, glass: true }, { light: 'UCB124SNWH', w: 24, h: 1.1, at: 94.275 }] },
   { code: 'MWB27',   w: 27,  kind: 'microwave', receptacle: true,
-    upper: [{ appliance: 'toaster oven', w: 21.5, h: 12.7, at: 35.75 }, { light: 'UCB124SNWH', w: 24, h: 1.1, at: 52.9 }, { code: 'W2730', h: 30, at: 54 }, { code: 'W2712', h: 12, at: 84, glass: true }] },
+    upper: [{ appliance: 'toaster oven', w: 21.5, h: 12.7, at: 35.75 }, { light: 'UCB124SNWH', w: 24, h: 1.1, at: 52.9 }, { code: 'W2730', h: 30, at: 54 }, { code: 'W2712', h: 12, at: 84, glass: true }, { light: 'UCB124SNWH', w: 24, h: 1.1, at: 94.275 }] },
   { code: 'DB27-3',  w: 27,  kind: 'drawers', n: 3, receptacle: true,
-    upper: [{ appliance: 'air fryer', w: 11, h: 14.75, at: 35.75 }, { light: 'UCB124SNWH', w: 24, h: 1.1, at: 52.9 }, { code: 'W2730', h: 30, at: 54 }, { code: 'W2712', h: 12, at: 84, glass: true }] },
+    upper: [{ appliance: 'air fryer', w: 11, h: 14.75, at: 35.75 }, { light: 'UCB124SNWH', w: 24, h: 1.1, at: 52.9 }, { code: 'W2730', h: 30, at: 54 }, { code: 'W2712', h: 12, at: 84, glass: true }, { light: 'UCB124SNWH', w: 24, h: 1.1, at: 94.275 }] },
   { code: 'DB27-3',  w: 27,  kind: 'drawers', n: 3, receptacle: true,
-    upper: [{ coffee: true, w: 8.5, h: 16.3, at: 35.75 }, { light: 'UCB124SNWH', w: 24, h: 1.1, at: 52.9 }, { code: 'W2730', h: 30, at: 54 }, { code: 'W2712', h: 12, at: 84, glass: true }] },
+    upper: [{ coffee: true, w: 8.5, h: 16.3, at: 35.75 }, { light: 'UCB124SNWH', w: 24, h: 1.1, at: 52.9 }, { code: 'W2730', h: 30, at: 54 }, { code: 'W2712', h: 12, at: 84, glass: true }, { light: 'UCB124SNWH', w: 24, h: 1.1, at: 94.275 }] },
 ];
 
 const TOE = 4.5, BOX = 34.5, TOP = 1.25, CEILING = 96, OUTLET = 44; // OUTLET: center of a wall receptacle (assumed)
@@ -97,7 +97,7 @@ const ring = (p, r, m) => { // flat ring centered at p
 
 // One run in its own coordinates: u along the run from its left end, v from the cabinet backs toward the aisle, y up from the floor.
 // The island faces +z from its back at zBack; the wall run faces -z from the wall and reads right to left.
-function side(run, flip, zBack, back = 0, naval = true) { // back: counter past the cabinet backs (an item's own `back` wins); naval: base-height items in Monaco Naval, else Bright White
+function side(run, flip, zBack, back = 0, naval = true, walls = false) { // back: counter past the cabinet backs (an item's own `back` wins); naval: base-height items in Monaco Naval, else Bright White; walls: side walls at the ends, so no overhang
   const n = len(run); // the wall run is flipped about its own length, so its right end meets the island's left end
   const B = (u, v, y, w, d, h, m) => cube(flip ? n - u - w : u, y, flip ? zBack - v - d : zBack + v, w, h, d, m);
   const P = (u, v, y) => [flip ? n - u : u, y, flip ? zBack - v : zBack + v];
@@ -252,7 +252,7 @@ function side(run, flip, zBack, back = 0, naval = true) { // back: counter past 
       } else if (x.coffee || x.appliance) B(u + (w - x.w) / 2, 2, x.at, x.w, APPLIANCE, x.h, M.black);
       else if (x.shelf) B(u, 0, x.at - 0.75, w, UPPER, 0.75, M.box);
       else if (x.filler) B(u, 0, x.at, w, UPPER, x.h, M.box);
-      else if (x.light) B(u + (w - x.w) / 2, UPPER - 4, x.at, x.w, 3.5, x.h, M.light); // under-cabinet light bar near the front edge (3 1/2" wide, Nicor UCB sheet)
+      else if (x.light) B(u + (w - x.w) / 2, (x.d || UPPER) - 4, x.at, x.w, 3.5, x.h, M.light); // light bar near the front edge of a cabinet x.d deep (3 1/2" wide, Nicor UCB sheet); under a cabinet, or inside a glass one under its top
       else { // wall cabinet: depth from the code (W362424 is 24" deep), else 12"
         const d = +(x.code.match(/^W\d{4}(\d\d)/) || [])[1] || UPPER;
         B(u, 0, x.at, w, d, x.h, M.box);
@@ -265,7 +265,8 @@ function side(run, flip, zBack, back = 0, naval = true) { // back: counter past 
     if (c.h || (i > 0 && !run[i - 1].h)) return;
     let j = i;
     while (j + 1 < run.length && !run[j + 1].h) j++;
-    const l = c.u - (i === 0 ? 1 : 0), r = run[j].u + run[j].w + (j === run.length - 1 ? 1 : 0);
+    const o = walls ? 0 : 1;
+    const l = c.u - (i === 0 ? o : 0), r = run[j].u + run[j].w + (j === run.length - 1 ? o : 0);
     for (let k = i; k <= j; k++) { // counter behind the cabinet backs: c.back, else the run's back; neighbors with the same depth share a piece
       const d = run[k].back ?? back;
       if (!d || (k > i && (run[k - 1].back ?? back) === d)) continue;
@@ -291,7 +292,8 @@ group = runs.island;
 side(island, false, 0, 1.75); // counter 1 3/4" past the cabinet backs (the 3/4" plywood, then 1"), 6 3/4" behind items with back: 6.75
 cube(0, 0, -0.75, island.reduce((s, c) => s + c.w, 0), BOX, 0.75, [M.naval, M.naval, M.ply, M.ply, M.ply, M.front]); // 3/4" plywood on the island's back, floor to the counter's underside: Naval ends, Bright White back (box faces +x, -x, +y, -y, +z, -z)
 group = runs.wall;
-side(wall, true, ZWALL, 0, false); // base cabinets Bright White (2026-10-27)
+side(wall, true, ZWALL, 0, false, true); // base cabinets Bright White (2026-10-27)
+for (const x of [-4.5, len(wall)]) cube(x, 0, ZWALL - DEPTH, 4.5, CEILING, DEPTH + 4.5, M.wall); // stud wall at each end of the wall run (2x4 studs, 1/2" drywall each side), as deep as the cabinets
 group = scene;
 
 // Room: floor, and the wall behind the wall run, only as wide as the run (one-sided, so it hides itself when viewed from behind).

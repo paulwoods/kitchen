@@ -13,7 +13,7 @@ function sketch(title, run, opts = {}) {
   const tallest = Math.max(CEILING, ...run.map(c => c.h || 0), ...run.flatMap(c => (c.upper || []).map(u => u.at + (u.h || 0))));
   const low = 6 * Math.max(0, ...run.map(c => c.drop || 0)); // `drop: n` moves an item's labels n rows down, clear of a neighbor's
   const FLOOR = Math.ceil((tallest + 12) / SQ) * SQ, H = FLOOR + 24 + low;
-  const W = MARGIN * 2 + Math.max(total, 96) + 24; // + room for the elevation ruler
+  const W = MARGIN * 2 + Math.max(total, 96) + 24 + (opts.walls ? WALL : 0); // + room for the elevation ruler (and a side wall)
   const out = [];
   const rect = (x, y, w, h, cls = '') => out.push(`<rect x="${x}" y="${y}" width="${w}" height="${h}" class="${cls}${ap}"/>`);
   const line = (x1, y1, x2, y2, cls = '') => out.push(`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" class="${cls}${ap}"/>`);
@@ -106,7 +106,7 @@ function sketch(title, run, opts = {}) {
       }
       if (c.falseTop) text(x + c.w / 2 + 3, FLOOR - BOX + 3.3, 'false front', 'code start' + dark()); // top row is a fixed front, labeled right of its pull
     }
-    // Things hung above this item. Cabinet: { code, h, at: bottom off the floor, glass }; hood: { hood: true, w, h, at, chimney }; shelf: { shelf: true, at: top off the floor }; plain strip: { filler: true, h, at }; microwave: { microwave: true, w, h, at }; coffee maker: { coffee: true, w, h, at }; other appliance: { appliance, w, h, at, dx }; under-cabinet light: { light, w, h, at }.
+    // Things hung above this item. Cabinet: { code, h, at: bottom off the floor, glass }; hood: { hood: true, w, h, at, chimney }; shelf: { shelf: true, at: top off the floor }; plain strip: { filler: true, h, at }; microwave: { microwave: true, w, h, at }; coffee maker: { coffee: true, w, h, at }; other appliance: { appliance, w, h, at, dx }; light bar: { light, w, h, at, inside }.
     fin = '';
     for (const u of c.upper || []) {
       ap = '';
@@ -141,7 +141,7 @@ function sketch(title, run, opts = {}) {
         continue;
       }
       if (u.filler) { rect(x, FLOOR - u.at - u.h, c.w, u.h, 'box'); continue; }
-      if (u.light) { rect(x + (c.w - u.w) / 2, FLOOR - u.at - u.h, u.w, u.h, 'light'); continue; } // under-cabinet light bar, centered: { light: model, w, h, at: bottom off the floor }
+      if (u.light) { rect(x + (c.w - u.w) / 2, FLOOR - u.at - u.h, u.w, u.h, u.inside ? 'hidden' : 'light'); continue; } // light bar, centered: { light: model, w, h, at: bottom off the floor, inside: in a cabinet, behind its door (dashed) }
       if (u.shelf) {
         rect(x, FLOOR - u.at, c.w, 0.75, 'shelf');
         text(x + c.w / 2, FLOOR - u.at - 1, `shelf ${u.at}"`, 'dim');
@@ -225,12 +225,14 @@ function sketch(title, run, opts = {}) {
     if (c.h || (i > 0 && !run[i - 1].h)) return;
     let j = i;
     while (j + 1 < run.length && !run[j + 1].h) j++;
-    const l = c.x - (i === 0 ? 1 : 0), r = run[j].x + run[j].w + (j === run.length - 1 ? 1 : 0);
+    const o = opts.walls ? 0 : 1; // no overhang into a side wall
+    const l = c.x - (i === 0 ? o : 0), r = run[j].x + run[j].w + (j === run.length - 1 ? o : 0);
     rect(l, FLOOR - BOX - TOP, r - l, TOP, 'counter');
   });
+  if (opts.walls) for (const x of [MARGIN - WALL, MARGIN + total]) rect(x, FLOOR - CEILING, WALL, CEILING, 'roomwall'); // stud wall at each end of the run
 
   // Elevation ruler on the right, off the floor; marks at the same height share a label.
-  const rx = MARGIN + Math.max(total, 96) + 4;
+  const rx = MARGIN + Math.max(total, 96) + 4 + (opts.walls ? WALL : 0);
   const marks = new Map();
   const mark = (at, label) => marks.set(at, [...new Set([...(marks.get(at) || []), label])]);
   mark(TOE, 'toe kick');
@@ -281,13 +283,13 @@ function sketch(title, run, opts = {}) {
 // Draws the galley in plan (top view): the island at the top, facing down across the aisle,
 // and the wall run at the bottom, facing up (so it reads right to left). The wall run's right end lines up with the island's left end.
 // Depths are measured from the wall; grid lines from the island's left end and the wall.
-const DEPTH = 24, COUNTER = 25, AISLE = 48, WALL = 4.5; // cabinet box, countertop (1" over the fronts), aisle between cabinet fronts, room wall
+const DEPTH = 24, COUNTER = 25, AISLE = 48, WALL = 4.5; // cabinet box, countertop (1" over the fronts), aisle between cabinet fronts, room wall (2x4 studs, 1/2" drywall each side)
 function plan(title, island, wall, opts = {}) {
   const len = run => run.reduce((s, c) => s + c.w, 0);
   const total = Math.max(len(island), len(wall));
   const across = 2 * DEPTH + AISLE; // wall to the island's back
   const WALLY = MARGIN + 27 + across, H = WALLY + WALL + 24;
-  const W = MARGIN * 2 + total + 34;
+  const W = MARGIN * 2 + total + 34 + WALL + 3; // + the side wall and its Picos
   const out = [];
   const rect = (x, y, w, h, cls = '') => out.push(`<rect x="${x}" y="${y}" width="${w}" height="${h}" class="${cls}"/>`);
   const line = (x1, y1, x2, y2, cls = '') => out.push(`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" class="${cls}"/>`);
@@ -296,7 +298,7 @@ function plan(title, island, wall, opts = {}) {
 
   // One run in its own coordinates: u along the run from its left end, v from the cabinet backs toward the aisle.
   // labelY: where the labels go, on the page.
-  const side = (run, flip, labelY, back = 0) => { // back: counter past the cabinet backs (an item's own `back` wins)
+  const side = (run, flip, labelY, back = 0, walls = false) => { // back: counter past the cabinet backs (an item's own `back` wins); walls: side walls at the ends, so no overhang
     const n = len(run); // the wall run is flipped about its own length, so its right end meets the island's left end
     const P = (u, v) => flip ? [MARGIN + n - u, WALLY - v] : [MARGIN + u, WALLY - 2 * DEPTH - AISLE + v];
     const box = (u, v, w, h, cls) => {
@@ -311,7 +313,8 @@ function plan(title, island, wall, opts = {}) {
       if (c.h || (i > 0 && !run[i - 1].h)) return;
       let j = i;
       while (j + 1 < run.length && !run[j + 1].h) j++;
-      const l = c.u - (i === 0 ? 1 : 0), r = run[j].u + run[j].w + (j === run.length - 1 ? 1 : 0);
+      const o = walls ? 0 : 1;
+      const l = c.u - (i === 0 ? o : 0), r = run[j].u + run[j].w + (j === run.length - 1 ? o : 0);
       box(l, 0, r - l, COUNTER, 'counter top');
     for (let k = i; k <= j; k++) { // counter behind the cabinet backs: c.back, else the run's back; neighbors with the same depth share a piece
       const d = run[k].back ?? back;
@@ -362,10 +365,17 @@ function plan(title, island, wall, opts = {}) {
   rect(MARGIN, WALLY, len(wall), WALL, 'roomwall'); // the room wall behind the wall run
   rect(MARGIN, MARGIN + 27 - 0.75, len(island), 0.75, 'ply'); // 3/4" plywood on the island's back
   side(island, false, MARGIN - 2, 1.75); // labels above the island, clear of the aisle; counter 1 3/4" past the cabinet backs: the 3/4" plywood, then 1" (6 3/4" where an item says back: 6.75)
-  side(wall, true, WALLY + WALL);
+  side(wall, true, WALLY + WALL, 0, true);
+  for (const x of [MARGIN - WALL, MARGIN + len(wall)]) rect(x, WALLY - DEPTH, WALL, DEPTH + WALL, 'roomwall'); // stud wall at each end of the wall run, as deep as the cabinets
+  // Lighting controls on the side walls' outside faces, 4-gang plates (8.19" wide, assumed) centered on the wall at 48": Caseta dimmers by Coffee, Picos by the fridge.
+  for (const [x, label] of [[MARGIN - WALL - 0.25, '4 dimmers'], [MARGIN + len(wall) + WALL, '4 Picos']]) {
+    rect(x, WALLY - DEPTH / 2 - 4.1, 0.25, 8.19, 'plate');
+    const tx = x < MARGIN ? x - 1 : x + 3; // label runs along the wall, outside it (rotated glyphs sit left of tx)
+    out.push(`<text x="${tx}" y="${WALLY - DEPTH / 2}" class="dim" transform="rotate(-90 ${tx} ${WALLY - DEPTH / 2})">${label}</text>`);
+  }
 
   // Depth ruler on the right, from the wall.
-  const rx = MARGIN + total + 4;
+  const rx = MARGIN + Math.max(len(island), len(wall) + WALL) + 7; // clear of the side wall's Picos
   const marks = [[0, 'wall'], [DEPTH, 'wall cabinet fronts'], [DEPTH + AISLE, 'island cabinet fronts'], [2 * DEPTH + AISLE, 'island back']];
   line(rx, WALLY, rx, WALLY - across, 'dimline');
   for (const [m, label] of marks) {

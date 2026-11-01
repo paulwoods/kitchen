@@ -87,9 +87,11 @@ plan('Lights', island, wall, { extra: ({ out, text, ix, iy, wx, wy }) => {
   // X: toe-kick lights in front of each cabinet (not the appliance gaps or panels).
   for (const c of island) if (c.kind !== 'gap') isl(mid(c), COUNTER + 2.5, 'X', 'lamp l-X');
   for (const c of wall) if (!['gap', 'panel'].includes(c.kind)) wal(mid(c), COUNTER + 2.5, 'X', 'lamp l-X');
+  // X: Nicor bars inside the glass cabinets at the top of the wall run (2026-10-31).
+  for (const c of wall) if ((c.upper || []).some(x => / glass$/.test(x.code))) { wal(mid(c), 16, 'X', 'lamp l-X'); wal(mid(c), 19.5, 'glass cabinet', 'code'); }
 } });
 document.querySelector('svg').insertAdjacentHTML('beforebegin', `<p><label><input type="checkbox" data-light="T" checked> <b class="legend">T</b> task light (bright wafer on the ceiling)</label> · <label><input type="checkbox" data-light="A" checked> <b class="legend">A</b> ambient light</label> ·
-  <label><input type="checkbox" data-light="X" checked> <b class="legend">X</b> accent light (toe kick)</label> · <label><input type="checkbox" data-light="UC" checked> <b class="legend">UC</b> under-cabinet light</label> · <b style="color: #1f6b3a">green</b>: work areas ·
+  <label><input type="checkbox" data-light="X" checked> <b class="legend">X</b> accent light (toe kick, inside the glass cabinets)</label> · <label><input type="checkbox" data-light="UC" checked> <b class="legend">UC</b> under-cabinet light</label> · <b style="color: #1f6b3a">green</b>: work areas ·
   gray: shadow each light (at the 96" ceiling) casts on the counter from a 74" person (checked: light on)</p>
   <style>.legend { color: #e07000; } .zone, .lamp { paint-order: stroke; stroke: #fff; stroke-width: 0.6; } .shadow { fill: #000; fill-opacity: 0.15; } .person { fill: #445; fill-opacity: 0.85; } .head { fill: #223; }
   svg .lamp.off { fill: #bbb; } svg .shadow.off, svg .ray.off { display: none; }

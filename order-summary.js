@@ -1,0 +1,20 @@
+// The order summary: [code, qty, where], shown by cabinets.html and priced against in comparison.html
+const orderSummary = [
+  ['DB24-3', 2, 'island: spices, plates'],
+  ['DB36-3', 1, 'island: cooktop'],
+  ['TRB18FH', 1, 'island: trash'],
+  ['SB42', 1, 'island: sink'],
+  ['B24-2', 1, 'island: cabinet a'],
+  ['REP2496-1.5', 2, 'wall: each side of the fridge'],
+  ['FP2496', 1, "wall: skin on the left REP's exposed side"],
+  ['W362424', 1, 'wall: over the fridge'],
+  ['PC36', 1, 'wall: pantry'],
+  ['W361224 glass', 1, 'wall: over the pantry'],
+  ['B33 (OW-B33-FH)', 1, 'wall: oven base'],
+  ['W3330', 1, 'wall: over the oven'],
+  ['W3312 glass', 1, 'wall: over the W3330'],
+  ['MWB27', 1, 'wall: Toaster (microwave drawer base)'],
+  ['DB27-3', 2, 'wall: Air Fryer, Coffee'],
+  ['W2730', 3, 'wall: over the Toaster, Air Fryer and Coffee'],
+  ['W2712 glass', 3, 'wall: over the W2730s'],
+];

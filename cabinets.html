@@ -61,23 +61,10 @@
 </table>
 
 <h2 id="order-summary">Order summary</h2>
-<table>
+<table id="order">
 <tr><th>code</th><th>qty</th><th>where</th></tr>
-<tr><td>DB24-3</td><td>2</td><td>island: spices, plates</td></tr>
-<tr><td>DB36-3</td><td>1</td><td>island: cooktop</td></tr>
-<tr><td>TRB18FH</td><td>1</td><td>island: trash</td></tr>
-<tr><td>SB42</td><td>1</td><td>island: sink</td></tr>
-<tr><td>B24-2</td><td>1</td><td>island: cabinet a</td></tr>
-<tr><td>REP2496-1.5</td><td>2</td><td>wall: each side of the fridge</td></tr>
-<tr><td>FP2496</td><td>1</td><td>wall: skin on the left REP's exposed side</td></tr>
-<tr><td>W362424</td><td>1</td><td>wall: over the fridge</td></tr>
-<tr><td>PC36</td><td>1</td><td>wall: pantry</td></tr>
-<tr><td>W361224 glass</td><td>1</td><td>wall: over the pantry</td></tr>
-<tr><td>B33 (OW-B33-FH)</td><td>1</td><td>wall: oven base</td></tr>
-<tr><td>W3330</td><td>1</td><td>wall: over the oven</td></tr>
-<tr><td>W3312 glass</td><td>1</td><td>wall: over the W3330</td></tr>
-<tr><td>MWB27</td><td>1</td><td>wall: Toaster (microwave drawer base)</td></tr>
-<tr><td>DB27-3</td><td>2</td><td>wall: Air Fryer, Coffee</td></tr>
-<tr><td>W2730</td><td>3</td><td>wall: over the Toaster, Air Fryer and Coffee</td></tr>
-<tr><td>W2712 glass</td><td>3</td><td>wall: over the W2730s</td></tr>
 </table>
+<script src="order-summary.js"></script>
+<script>
+document.querySelector('#order tbody').insertAdjacentHTML('beforeend', orderSummary.map(r => `<tr><td>${r.join('</td><td>')}</td></tr>`).join(''));
+</script>

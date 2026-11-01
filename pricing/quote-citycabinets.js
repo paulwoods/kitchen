@@ -32,5 +32,5 @@ const lines = [
 // 'planned / code' lines whose size (W × H × D, as supplied) differs from the plan's in cabinets.html (comparison.html reads this too)
 // The pantry is split in two but adds up to the planned size, so it is not listed.
 const resized = ['W361224 glass end panel / WFE', 'W2712 glass end panel / WFE'];
-quotes.push({ url: 'quote-citycabinets.html', label: 'City', rank: 2, lines, resized });
+quotes.push({ url: 'quote-citycabinets.html', label: 'City', rank: 3, lines, resized });
 }

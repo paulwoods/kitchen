@@ -17,24 +17,18 @@
 <h1>Comparison</h1>
 <p class="sub">Every quote against the <a href="../docs/cabinets.html#order-summary">order summary</a> · <a href="../index.html">index</a></p>
 <p>Down the left, the planned cabinets; across the top, the quotes. Each cell is that quote's sale price for the line (price × qty, glass prep included), the regular price under it, then the vendor's code, in red when that cabinet's size differs from the plan's (see each quote page for the notes).
-Read from each quote's <code>quote-*.js</code> data file (the one its page shows), so it stays in step with them. Quotes run in rank order (each data file's <code>rank</code>, 1 first); Access is one number, not itemized.</p>
+Read from each quote's <code>quote-*.js</code> data file (the one its page shows), so it stays in step with them. Quotes run in rank order (each data file's <code>rank</code>, 1 first).</p>
 <div class="wrap"><table id="cmp"></table></div>
 
 <script src="../docs/order-summary.js"></script>
-<script src="quote-accessbycabinetjoint.js"></script>
+<script src="quote-cabinets-colonial.js"></script>
 <script src="quote-cabinets-monaco.js"></script>
-<script src="quote-cabinets-cosmopolitan.js"></script>
-<script src="quote-rtawoodcabinets-edgeline.js"></script>
-<script src="quote-barker.js"></script>
-<script src="quote-thertastore-madison.js"></script>
-<script src="quote-lilyann-colorado.js"></script>
 <script src="quote-citycabinets.js"></script>
 <script>
 const $ = n => '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 const row = name => orderSummary.filter(([code]) => name.startsWith(code)).sort((a, b) => b[0].length - a[0].length)[0]?.[0];
 
-const cols = quotes.map(({ url, label, rank, lines, resized, total }) => {
-  if (!lines) return { url, label, rank, total: $(total) }; // not itemized
+const cols = quotes.map(({ url, label, rank, lines, resized }) => {
   const cells = {}; let reg = 0, sale = 0;
   for (const [planned, code, qty, r, s, g, notes] of lines) {
     const c = cells[row(planned)] ??= { reg: 0, sale: 0, items: [] };
@@ -51,7 +45,6 @@ for (const [code, qty, where] of orderSummary) {
   html += `<tr><td>${code}<br><span class="reg">${where}</span></td><td>${qty}</td>`;
   for (const col of cols) {
     const c = col.cells?.[code];
-    if (!col.cells) { html += '<td class="same"><span class="reg">in the total</span></td>'; continue; }
     if (!c || c.items.every(i => !i.qty)) { html += '<td><span class="reg">not supplied</span></td>'; continue; }
     html += `<td><b class="p">${$(c.sale)}</b><br><span class="reg">${$(c.reg)} regular</span>` +
       c.items.map(i => `<div class="code${col.resized.includes(i.planned + ' / ' + i.code) ? ' resized' : ''}">${i.qty} × ${i.code}</div>`).join('') + '</td>';

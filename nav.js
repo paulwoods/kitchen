@@ -5,7 +5,7 @@ const groups = [
   [['index.html', 'Index']],
   [['drawings/sketch-top.html', 'Top view'], ['drawings/sketch-lights.html', 'Lights'], ['drawings/sketch-island-front.html', 'Island front'], ['drawings/sketch-wall-front.html', 'Wall front'], ['drawings/model.html', '3D model']],
   [['docs/issues.html', 'Issues'], ['docs/cabinets.html', 'Cabinets'], ['docs/appliances.html', 'Appliances'], ['docs/electrical.html', 'Electrical'], ['docs/lighting.html', 'Lighting scenes'], ['docs/review1.html', 'Review 1']],
-  [['pricing/price.html', 'Price'], ['pricing/comparison.html', 'Comparison'], ['pricing/quote-accessbycabinetjoint.html', 'Quote: Access'], ['pricing/quote-cabinets-monaco.html', 'Quote: Monaco'], ['pricing/quote-cabinets-cosmopolitan.html', 'Quote: Cosmopolitan'], ['pricing/quote-rtawoodcabinets-edgeline.html', 'Quote: Edgeline'], ['pricing/quote-barker.html', 'Quote: Barker'], ['pricing/quote-thertastore-madison.html', 'Quote: Madison'], ['pricing/quote-lilyann-colorado.html', 'Quote: Colorado'], ['pricing/quote-citycabinets.html', 'Quote: City']],
+  [['pricing/price.html', 'Price'], ['pricing/comparison.html', 'Comparison'], ['pricing/quote-cabinets-colonial.html', 'Quote: Colonial'], ['pricing/quote-cabinets-monaco.html', 'Quote: Monaco'], ['pricing/quote-citycabinets.html', 'Quote: City']],
 ];
 // Links are relative to this script's folder (the site root), so pages in subfolders load it as ../nav.js.
 const root = document.currentScript.src;

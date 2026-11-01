@@ -22,9 +22,10 @@ function sketch(title, run, opts = {}) {
   // Shapes classed apoff-N show only while appliance N is hidden.
   const apps = [];
   let ap = '';
-  // opts.white: base-height items stay Bright White (the wall run) instead of Monaco Naval.
-  let fin = ''; // ' base' while drawing a base-height item: Monaco Naval instead of Bright White
-  const dark = (c = { h: !fin }) => c.h || opts.white ? '' : ' ondark'; // light lines and labels over the Naval fronts
+  // opts.darkPulls: base-height items keep dark pulls (the wall run) instead of gold.
+  let fin = ''; // ' base' while drawing a base-height item: gold pulls
+  let paint = ''; // ' alabaster' while drawing a tall item or an upper cabinet: Alabaster instead of Moss
+  const dark = (c = {}) => c.h ? '' : ' ondark'; // light lines and labels over the Moss fronts
   const tag = (label, off) => { if (opts.toggles) { ap = ` ap-${apps.length}`; apps.push({ label, off }); } };
 
   // Stack of fronts from `top` down: each row is { h, pair, pull: 'mid' | 'top' | 'bottom' }.
@@ -33,25 +34,26 @@ function sketch(title, run, opts = {}) {
     for (const r of rows) {
       const mid = x + w / 2;
       if (r.pair) {
-        rect(x + 0.25, y, w / 2 - 0.375, r.h - 0.5, 'front' + fin);
-        rect(mid + 0.125, y, w / 2 - 0.375, r.h - 0.5, 'front' + fin);
+        rect(x + 0.25, y, w / 2 - 0.375, r.h - 0.5, 'front' + paint);
+        rect(mid + 0.125, y, w / 2 - 0.375, r.h - 0.5, 'front' + paint);
         const py = r.pull === 'bottom' ? y + r.h - 6.5 : y + 2;
-        line(mid - 1.5, py, mid - 1.5, py + 4, 'pull' + dark());
-        line(mid + 1.5, py, mid + 1.5, py + 4, 'pull' + dark());
+        line(mid - 1.5, py, mid - 1.5, py + 4, 'pull' + fin);
+        line(mid + 1.5, py, mid + 1.5, py + 4, 'pull' + fin);
       } else {
-        rect(x + 0.25, y, w - 0.5, r.h - 0.5, 'front' + fin);
+        rect(x + 0.25, y, w - 0.5, r.h - 0.5, 'front' + paint);
         const py = r.pull === 'top' ? y + 3 : y + r.h / 2;
-        line(mid - 2, py, mid + 2, py, 'pull' + dark());
+        line(mid - 2, py, mid + 2, py, 'pull' + fin);
       }
       y += r.h;
     }
   };
-  const cabinet = (x, w, h) => { rect(x, FLOOR - h, w, h - TOE, 'box' + fin); rect(x, FLOOR - TOE, w, TOE, 'toe'); };
+  const cabinet = (x, w, h) => { rect(x, FLOOR - h, w, h - TOE, 'box' + paint); rect(x, FLOOR - TOE, w, TOE, 'toe'); };
 
   let x = MARGIN;
   const face = BOX - TOE;
   for (const c of run) {
-    fin = c.h || opts.white ? '' : ' base';
+    fin = c.h || opts.darkPulls ? '' : ' base';
+    paint = c.h ? ' alabaster' : '';
     if (c.kind === 'gap') {
       const h = c.h || BOX;
       tag(c.name || c.tag, c.off);
@@ -76,7 +78,7 @@ function sketch(title, run, opts = {}) {
       }
       ap = '';
     } else if (c.kind === 'panel') {
-      rect(x, FLOOR - c.h, c.w, c.h, 'box');
+      rect(x, FLOOR - c.h, c.w, c.h, 'box' + paint);
     } else if (c.kind === 'pantry') {
       cabinet(x, c.w, c.h);
       const lower = BOX - TOE, upper = c.h - TOE - lower; // lower doors line up with the base cabinets
@@ -106,20 +108,12 @@ function sketch(title, run, opts = {}) {
       }
       if (c.falseTop) text(x + c.w / 2 + 3, FLOOR - BOX + 3.3, 'false front', 'code start' + dark()); // top row is a fixed front, labeled right of its pull
     }
-    // Things hung above this item. Cabinet: { code, h, at: bottom off the floor, glass }; hood: { hood: true, w, h, at, chimney }; shelf: { shelf: true, at: top off the floor }; plain strip: { filler: true, h, at }; microwave: { microwave: true, w, h, at }; coffee maker: { coffee: true, w, h, at }; other appliance: { appliance, w, h, at, dx }; light bar: { light, w, h, at, inside }.
+    // Things hung above this item. Cabinet: { code, h, at: bottom off the floor, glass }; hood: { hood: true, w, h, at, chimney }; coffee maker: { coffee: true, w, h, at }; other appliance: { appliance, w, h, at, dx }; light bar: { light, w, h, at, inside }.
     fin = '';
     for (const u of c.upper || []) {
       ap = '';
-      if (u.microwave || u.coffee || u.appliance) tag(u.microwave ? 'microwave' : u.coffee ? 'coffee maker' : u.appliance, u.off);
+      if (u.coffee || u.appliance) tag(u.coffee ? 'coffee maker' : u.appliance, u.off);
       u.ap = ap;
-      if (u.microwave) { // countertop microwave, centered: { microwave: true, w, h, at: bottom off the floor }
-        const mx = x + (c.w - u.w) / 2, top = FLOOR - u.at - u.h;
-        rect(mx, top, u.w, u.h, 'oven');
-        rect(mx + 1.5, top + 1.5, u.w - 8, u.h - 5, 'window');
-        for (let i = 0; i < 4; i++) rect(mx + u.w - 5, top + 1.5 + i * 2, 3.5, 1.2, 'front'); // keypad
-        text(mx + u.w / 2, top + u.h - 1.2, 'microwave', 'code');
-        continue;
-      }
       if (u.coffee) { // drip coffee maker, centered: { coffee: true, w, h, at: bottom off the floor }
         const cx = x + (c.w - u.w) / 2, top = FLOOR - u.at - u.h;
         rect(cx, top, u.w, u.h, 'oven');
@@ -140,15 +134,10 @@ function sketch(title, run, opts = {}) {
         text(x + c.w / 2, top - 2, 'hood', 'code');
         continue;
       }
-      if (u.filler) { rect(x, FLOOR - u.at - u.h, c.w, u.h, 'box'); continue; }
       if (u.light) { rect(x + (c.w - u.w) / 2, FLOOR - u.at - u.h, u.w, u.h, u.inside ? 'hidden' : 'light'); continue; } // light bar, centered: { light: model, w, h, at: bottom off the floor, inside: in a cabinet, behind its door (dashed) }
-      if (u.shelf) {
-        rect(x, FLOOR - u.at, c.w, 0.75, 'shelf');
-        text(x + c.w / 2, FLOOR - u.at - 1, `shelf ${u.at}"`, 'dim');
-        continue;
-      }
       const top = FLOOR - u.at - u.h;
-      rect(x, top, c.w, u.h, 'box');
+      paint = ' alabaster';
+      rect(x, top, c.w, u.h, 'box' + paint);
       fronts(x, c.w, top, [{ h: u.h, pair: true, pull: 'bottom' }]);
       if (u.glass) for (const gx of [x + 2, x + c.w / 2 + 1.875]) rect(gx, top + 2, c.w / 2 - 3.875, u.h - 4.5, 'glass');
     }
@@ -183,7 +172,7 @@ function sketch(title, run, opts = {}) {
       const r = RECEPTACLE, px = x + (c.w - r.w) / 2, top = FLOOR - r.at - r.h / 2;
       const behind = (c.upper || []).find(u => { // a countertop appliance stands in front of it: dashed
         const ax = x + (u.dx ?? (c.w - u.w) / 2);
-        return (u.appliance || u.coffee || u.microwave) && ax <= px && ax + u.w >= px + r.w && u.at <= r.at - r.h / 2 && u.at + u.h >= r.at + r.h / 2;
+        return (u.appliance || u.coffee) && ax <= px && ax + u.w >= px + r.w && u.at <= r.at - r.h / 2 && u.at + u.h >= r.at + r.h / 2;
       }) || (c.kind === 'gap' && c.h >= r.at + r.h / 2 && c); // or behind the fridge
       const plate = () => {
         rect(px, top, r.w, r.h, 'plate');
@@ -229,7 +218,7 @@ function sketch(title, run, opts = {}) {
     const l = c.x - (i === 0 ? o : 0), r = run[j].x + run[j].w + (j === run.length - 1 ? o : 0);
     rect(l, FLOOR - BOX - TOP, r - l, TOP, 'counter');
   });
-  if (opts.walls) for (const x of [MARGIN - WALL, MARGIN + total]) rect(x, FLOOR - CEILING, WALL, CEILING, 'roomwall'); // stud wall at each end of the run
+  if (opts.walls) rect(MARGIN + total, FLOOR - CEILING, WALL, CEILING, 'roomwall'); // stud wall at the run's right end
 
   // Elevation ruler on the right, off the floor; marks at the same height share a label.
   const rx = MARGIN + Math.max(total, 96) + 4 + (opts.walls ? WALL : 0);
@@ -240,8 +229,7 @@ function sketch(title, run, opts = {}) {
   if (run.some(c => c.receptacle)) mark(RECEPTACLE.at, 'receptacles');
   for (const c of run) if (c.faucet) mark(BOX + TOP + c.faucet.h, 'faucet');
   for (const u of run.flatMap(c => c.upper || [])) {
-    if (u.shelf) mark(u.at, 'shelf');
-    else if (u.hood) mark(u.at, 'hood');
+    if (u.hood) mark(u.at, 'hood');
     else if (u.code) mark(u.at + u.h, 'uppers');
   }
   mark(CEILING, 'ceiling');
@@ -289,7 +277,7 @@ function plan(title, island, wall, opts = {}) {
   const total = Math.max(len(island), len(wall));
   const across = 2 * DEPTH + AISLE; // wall to the island's back
   const WALLY = MARGIN + 27 + across, H = WALLY + WALL + 24;
-  const W = MARGIN * 2 + total + 34 + WALL + 3; // + the side wall and its Picos
+  const W = MARGIN * 2 + total + 40; // + the Picos and the ruler
   const out = [];
   const rect = (x, y, w, h, cls = '') => out.push(`<rect x="${x}" y="${y}" width="${w}" height="${h}" class="${cls}"/>`);
   const line = (x1, y1, x2, y2, cls = '') => out.push(`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" class="${cls}"/>`);
@@ -298,7 +286,7 @@ function plan(title, island, wall, opts = {}) {
 
   // One run in its own coordinates: u along the run from its left end, v from the cabinet backs toward the aisle.
   // labelY: where the labels go, on the page.
-  const side = (run, flip, labelY, back = 0, walls = false) => { // back: counter past the cabinet backs (an item's own `back` wins); walls: side walls at the ends, so no overhang
+  const side = (run, flip, labelY, back = 0, walls = false) => { // back: counter past the cabinet backs (an item's own `back` wins); walls: a side wall at the counter's end, so no overhang
     const n = len(run); // the wall run is flipped about its own length, so its right end meets the island's left end
     const P = (u, v) => flip ? [MARGIN + n - u, WALLY - v] : [MARGIN + u, WALLY - 2 * DEPTH - AISLE + v];
     const box = (u, v, w, h, cls) => {
@@ -331,7 +319,7 @@ function plan(title, island, wall, opts = {}) {
         box(c.u, 0, c.w, c.d || DEPTH, c.h ? 'oven' : 'gap');
         const [tx, ty] = mid((c.d || DEPTH) / 2);
         text(tx, ty + 1, c.tag, 'gaplabel');
-      } else box(c.u, 0, c.w, DEPTH, c.h ? 'box' : 'hidden'); // base cabinets sit under the counter
+      } else box(c.u, 0, c.w, DEPTH, c.h ? 'box alabaster' : 'hidden'); // base cabinets sit under the counter
       if (c.cooktop) { // Bosch NIT8061UC: 31" x 21 1/4", centered along the cabinet, 2" back from centered on the counter
         const cu = c.u + (c.w - 31) / 2, cv = (COUNTER - 21.25) / 2 - 2; // 2" back from centered on the 25" counter (2026-10-27)
         box(cu, cv, 31, 21.25, 'cooktop');
@@ -366,16 +354,16 @@ function plan(title, island, wall, opts = {}) {
   rect(MARGIN, MARGIN + 27 - 0.75, len(island), 0.75, 'ply'); // 3/4" plywood on the island's back
   side(island, false, MARGIN - 2, 1.75); // labels above the island, clear of the aisle; counter 1 3/4" past the cabinet backs: the 3/4" plywood, then 1" (6 3/4" where an item says back: 6.75)
   side(wall, true, WALLY + WALL, 0, true);
-  for (const x of [MARGIN - WALL, MARGIN + len(wall)]) rect(x, WALLY - DEPTH, WALL, DEPTH + WALL, 'roomwall'); // stud wall at each end of the wall run, as deep as the cabinets
-  // Lighting controls on the side walls' outside faces, 4-gang plates (8.19" wide, assumed) centered on the wall at 48": Caseta dimmers by Coffee, Picos by the fridge.
-  for (const [x, label] of [[MARGIN - WALL - 0.25, '4 dimmers'], [MARGIN + len(wall) + WALL, '4 Picos']]) {
+  rect(MARGIN - WALL, WALLY - DEPTH, WALL, DEPTH + WALL, 'roomwall'); // stud wall at the Coffee end of the wall run, as deep as the cabinets
+  // Lighting controls, 4-gang plates (8.19" wide, assumed) centered on the 24" depth at 48": Caseta dimmers on the side wall's outside face by Coffee, Picos on the FP2496 skin by the fridge.
+  for (const [x, label] of [[MARGIN - WALL - 0.25, '4 dimmers'], [MARGIN + len(wall), '4 Picos']]) {
     rect(x, WALLY - DEPTH / 2 - 4.1, 0.25, 8.19, 'plate');
     const tx = x < MARGIN ? x - 1 : x + 3; // label runs along the wall, outside it (rotated glyphs sit left of tx)
     out.push(`<text x="${tx}" y="${WALLY - DEPTH / 2}" class="dim" transform="rotate(-90 ${tx} ${WALLY - DEPTH / 2})">${label}</text>`);
   }
 
   // Depth ruler on the right, from the wall.
-  const rx = MARGIN + Math.max(len(island), len(wall) + WALL) + 7; // clear of the side wall's Picos
+  const rx = MARGIN + Math.max(len(island), len(wall) + 3) + 7; // clear of the Picos
   const marks = [[0, 'wall'], [DEPTH, 'wall cabinet fronts'], [DEPTH + AISLE, 'island cabinet fronts'], [2 * DEPTH + AISLE, 'island back']];
   line(rx, WALLY, rx, WALLY - across, 'dimline');
   for (const [m, label] of marks) {
@@ -400,11 +388,11 @@ function page(title, view, W, H, oy, out, axes) {
       .readout { min-height: 1.5em; font-variant-numeric: tabular-nums; } .readout b { color: #223; }
       button { font: inherit; margin-left: 8px; padding: 0 8px; }
       .grid { fill: none; stroke: #bcd3ea; stroke-width: 0.1; } .ft { stroke: #8fb2d6; stroke-width: 0.2; }
-      .box { fill: #f4f4f3; stroke: #223; stroke-width: 0.3; }
-      .front { fill: #f4f4f3; stroke: #223; stroke-width: 0.2; } /* Monaco Bright White */
-      .base { fill: #253140; } /* Monaco Naval */
-      .hidden.ondark { stroke: #c9d0dc; } text.ondark { fill: #c9d0dc; } /* light lines and labels over the Naval fronts */
-      .pull.ondark { stroke: #b08d57; } /* gold pulls on the base cabinets */
+      .box { fill: #67786e; stroke: #223; stroke-width: 0.3; }
+      .front { fill: #67786e; stroke: #223; stroke-width: 0.2; } /* Colonial Maple Moss */
+      .alabaster { fill: #ebeae6; } /* Colonial Maple Alabaster: the tall items and upper cabinets */
+      .hidden.ondark { stroke: #eef1ee; } text.ondark { fill: #eef1ee; } /* light lines and labels over the Moss fronts */
+      .pull.base { stroke: #b08d57; } /* gold pulls on the base cabinets */
       .toe { fill: #556; } .counter { fill: #8a8f99; stroke: #223; stroke-width: 0.2; }
       .ply { fill: #d9b98a; stroke: #223; stroke-width: 0.15; }
       .roomwall { fill: #e4dccb; stroke: #223; stroke-width: 0.25; }
@@ -415,7 +403,7 @@ function page(title, view, W, H, oy, out, axes) {
       .sinkbowl { fill: #c9ccd2; stroke: #223; stroke-width: 0.3; }
       .upper { fill: none; stroke: #223; stroke-width: 0.3; stroke-dasharray: 0.01 0.8; stroke-linecap: round; } .pull { stroke: #223; stroke-width: 0.4; stroke-linecap: round; }
       .oven { fill: #c9ccd2; stroke: #223; stroke-width: 0.25; } .window { fill: #3a3f4a; }
-      .glass { fill: #dbe9f2; stroke: #223; stroke-width: 0.15; } .shelf { fill: #f4f4f3; stroke: #223; stroke-width: 0.2; }
+      .glass { fill: #dbe9f2; stroke: #223; stroke-width: 0.15; }
       .light { fill: #fff6d8; stroke: #223; stroke-width: 0.15; } .chrome { fill: #c9ccd2; stroke: #223; stroke-width: 0.1; } .button { fill: #fff; stroke: #223; stroke-width: 0.15; } .plate { fill: #fff; stroke: #223; stroke-width: 0.15; } .outlet { fill: #fffdf7; stroke: #223; stroke-width: 0.1; }
       .gap { fill: none; stroke: #223; stroke-width: 0.25; stroke-dasharray: 1.5 1; }
       .floor { stroke: #223; stroke-width: 0.4; } .tick, .dimline { stroke: #667; stroke-width: 0.15; }

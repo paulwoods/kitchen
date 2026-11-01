@@ -23,7 +23,7 @@ Drawn on the [Lights](../drawings/sketch-lights.html) plan: a 74" person at prep
 - Nicor UCB bars: selectable 2700K–5000K, so 3000K, 3500K and 4000K are all available. Set them all the same.
 - Hood (Proline PLFI 544-42): 2800–3500K reported, and Proline says this of all its hoods, not this model. Whether it is adjustable, and how (touch panel, fixed, switch), is **to be verified** with Proline.
 - T and A fixtures: TBD, so their color options are unknown.
-- Later: look at Monaco Maple Naval, Monaco Maple White and soapstone samples together under the chosen settings. (The plan's counter is quartzite; add its sample too.)
+- Later: look at Colonial Maple Moss, Colonial Maple Alabaster and soapstone samples together under the chosen settings. (The plan's counter is quartzite; add its sample too.)
 
 ## Electrician questions
 

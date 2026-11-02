@@ -279,7 +279,7 @@ function plan(title, island, wall, opts = {}) {
   const len = run => run.reduce((s, c) => s + c.w, 0);
   const total = Math.max(len(island), len(wall));
   const across = 2 * DEPTH + AISLE; // wall to the island's back
-  const WALLY = MARGIN + 27 + across, H = WALLY + WALL + 24;
+  const WALLY = MARGIN + 30.75 + across, H = WALLY + WALL + 24;
   const W = MARGIN * 2 + total + 40; // + the Picos and the ruler
   const out = [];
   const rect = (x, y, w, h, cls = '') => out.push(`<rect x="${x}" y="${y}" width="${w}" height="${h}" class="${cls}"/>`);
@@ -330,7 +330,7 @@ function plan(title, island, wall, opts = {}) {
         for (const [du, dv] of [[8, 6], [23, 6], [8, 15.25], [23, 15.25]]) circle(P(cu + du, cv + dv), 4, 'burner');
       }
       if (c.receptacle) box(c.u + (c.w - 2.75) / 2, 0, 2.75, 0.25, 'plate'); // on the wall face, over the counter
-      if (c.backReceptacle) box(c.u + (c.w - 2.75) / 2, -1, 2.75, 0.25, 'plate'); // vertical plate on the island's plywood back
+      if (c.backReceptacle) box(c.u + (c.w - 2.75) / 2, -WALL - 0.25, 2.75, 0.25, 'plate'); // vertical plate on the island's back wall
       if (c.airSwitch) circle(P(c.u + c.airSwitch.dx, c.airSwitch.back), 0.875, 'button'); // STS-OO disposal button
       if (c.kind === 'sink') box(c.u + (c.w - 33.5) / 2, COUNTER - 21, 33.5, 19, 'sinkbowl'); // Ruvati RVH6222ST: 33.5" x 19" outer, 2" from the counter front
       if (c.faucet) { // hole c.faucet.back in front of the cabinet backs, spout reaching c.faucet.reach toward the front
@@ -355,8 +355,8 @@ function plan(title, island, wall, opts = {}) {
   };
 
   rect(MARGIN, WALLY, len(wall), WALL, 'roomwall'); // the room wall behind the wall run
-  rect(MARGIN, MARGIN + 27 - 0.75, len(island), 0.75, 'ply'); // 3/4" plywood on the island's back
-  side(island, false, MARGIN - 2, 1.75); // labels above the island, clear of the aisle; counter 1 3/4" past the cabinet backs: the 3/4" plywood, then 1" (6 3/4" where an item says back: 6.75)
+  side(island, false, MARGIN - 2, 5.5); // labels above the island, clear of the aisle; counter 5 1/2" past the cabinet backs: the back wall, then 1" (10 1/2" where an item says back: 10.5)
+  rect(MARGIN, WALLY - across - WALL, len(island), WALL, 'hidden'); // the island's back wall (2x4 studs, 1/2" drywall each side), under the counter
   side(wall, true, WALLY + WALL, 0, true);
   rect(MARGIN - WALL, WALLY - DEPTH, WALL, DEPTH + WALL, 'roomwall'); // stud wall at the Coffee end of the wall run, as deep as the cabinets
   // Lighting controls, 4-gang plates (8.19" wide, assumed) centered on the 24" depth at 48": Caseta dimmers on the side wall's outside face by Coffee, Picos on the FP2496 skin by the fridge.
@@ -368,8 +368,8 @@ function plan(title, island, wall, opts = {}) {
 
   // Depth ruler on the right, from the wall.
   const rx = MARGIN + Math.max(len(island), len(wall) + 3) + 7; // clear of the Picos
-  const marks = [[0, 'wall'], [DEPTH, 'wall cabinet fronts'], [DEPTH + AISLE, 'island cabinet fronts'], [2 * DEPTH + AISLE, 'island back']];
-  line(rx, WALLY, rx, WALLY - across, 'dimline');
+  const marks = [[0, 'wall'], [DEPTH, 'wall cabinet fronts'], [DEPTH + AISLE, 'island cabinet fronts'], [across, 'island cabinet backs'], [across + WALL, 'island back wall']];
+  line(rx, WALLY, rx, WALLY - across - WALL, 'dimline');
   for (const [m, label] of marks) {
     line(rx - 1, WALLY - m, rx + 1, WALLY - m, 'tick');
     text(rx + 1.5, WALLY - m + 0.7, `${m}" ${label}`, 'dim ruler');
@@ -397,7 +397,6 @@ function page(title, view, W, H, oy, out, axes) {
       .alabaster { fill: #ebeae6; } /* Colonial Maple Alabaster: the tall items and upper cabinets */
       .pull.base { stroke: #b08d57; } /* gold pulls on the base cabinets */
       .toe { fill: #556; } .counter { fill: #8a8f99; stroke: #223; stroke-width: 0.2; }
-      .ply { fill: #d9b98a; stroke: #223; stroke-width: 0.15; }
       .roomwall { fill: #e4dccb; stroke: #223; stroke-width: 0.25; }
       .cooktop { fill: #111; } .burner { fill: none; stroke: #667; stroke-width: 0.3; }
       .top { fill: #e9eaed; } .hidden { fill: none; stroke: #223; stroke-width: 0.2; stroke-dasharray: 1 0.6; }

@@ -8,9 +8,9 @@
 <script>
 // Left to right as seen from the aisle, widths in inches (same runs as sketch-island-front.html and sketch-wall-front.html), with the work areas and the lights marked.
 const island = [
-  { name: 'spices',    code: 'DB24-3',  w: 24, kind: 'drawers', n: 3, back: 6.75, backReceptacle: true },
-  { name: 'cooktop',   code: 'DB36-3',  w: 36, kind: 'drawers', n: 3, cooktop: true, back: 6.75 },
-  { name: 'plates',    code: 'DB24-3',  w: 24, kind: 'drawers', n: 3, back: 6.75, backReceptacle: true },
+  { name: 'spices',    code: 'DB24-3',  w: 24, kind: 'drawers', n: 3, back: 10.5, backReceptacle: true },
+  { name: 'cooktop',   code: 'DB36-3',  w: 36, kind: 'drawers', n: 3, cooktop: true, back: 10.5 },
+  { name: 'plates',    code: 'DB24-3',  w: 24, kind: 'drawers', n: 3, back: 10.5, backReceptacle: true },
   { name: 'trash',     code: 'TRB18FH', w: 18, kind: 'door', backReceptacle: true },
   { name: 'sink',      code: 'SB42',    w: 42, kind: 'sink', airSwitch: { dx: 17, back: 3 },
     faucet: { h: 22.4375, reach: 9.5, back: 3 } }, // Kohler K-R30937-BMB, 3" from the cabinet backs
@@ -70,7 +70,7 @@ plan('Top view', island, wall, { extra: ({ out, text, ix, iy, wx, wy }) => {
     }
     return h;
   };
-  out.push(`<clipPath id="counter"><rect x="${ix(-1)}" y="${iy(-6.75)}" width="${island.reduce((s, c) => s + c.w, 2)}" height="${COUNTER + 6.75}"/></clipPath>`);
+  out.push(`<clipPath id="counter"><rect x="${ix(-1)}" y="${iy(-10.5)}" width="${island.reduce((s, c) => s + c.w, 2)}" height="${COUNTER + 10.5}"/></clipPath>`);
   for (const u of people) for (const [L, k] of [...T.map(L => [L, 'T']), ...A.map(L => [L, 'A'])]) // class l-T / l-A: hidden with its light
     out.push(`<polygon class="shadow l-${k}" clip-path="url(#counter)" points="${hull(slices(u).map(p => onCounter(L, p))).map(([u, v]) => `${ix(u)},${iy(v)}`).join(' ')}"/>`);
   for (const u of people) {
@@ -81,7 +81,7 @@ plan('Top view', island, wall, { extra: ({ out, text, ix, iy, wx, wy }) => {
   out.push('<marker id="arrow" viewBox="0 0 6 6" refX="5" refY="3" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#e07000"/></marker>');
   const ray = ([u0, v0], [u1, v1], cls) => out.push(`<line class="ray ${cls}" x1="${ix(u0)}" y1="${iy(v0)}" x2="${ix(u1)}" y2="${iy(v1)}" marker-end="url(#arrow)"/>`);
   for (const [u, t, a] of [[people[0], T[1], A[1]], [people[1], T[2], A[1]]]) { ray([t[0], t[1] + 2], [u, 29], 'l-T'); ray([a[0], a[1] - 2], [u, 36], 'l-A'); }
-  out.push(`<line class="ray guest" x1="${ix(168)}" y1="8" x2="${ix(168)}" y2="${iy(-8)}" marker-end="url(#arrow)"/>`);
+  out.push(`<line class="ray guest" x1="${ix(168)}" y1="8" x2="${ix(168)}" y2="${iy(-12)}" marker-end="url(#arrow)"/>`);
   text(ix(150), 6, 'guest view: exposed LEDs, hood glare, fixture in the sightline?', 'code');
   for (const [u, v] of T) isl(u, v, 'T', 'lamp l-T');
   for (const [u, v] of A) isl(u, v, 'A', 'lamp l-A');

@@ -23,11 +23,8 @@ const lines = [
   ['W3312 glass', 'W3312', 1, 664.95, 432.22, 0, 'wall: over the W3330, $443.30 + $221.65 glass prep; sale $288.15 + $144.07'],
   ['MWB27', 'MBC27', 1, 910.40, 591.76, 0, 'wall: Toaster, microwave base, 1 drawer'],
   ['DB27-3', 'DB27-3', 2, 1403.92, 912.55, 0, 'wall: Air Fryer, Coffee'],
-  ['DB27-3 finished sides', 'Matching Finished Sides', 1, 140.39, 91.25, 0, 'wall: Coffee, the right side shows'],
   ['W2730', 'W2730', 3, 540.72, 351.47, 0, 'wall: over the Toaster, Air Fryer and Coffee'],
-  ['W2730 finished sides', 'Matching Finished Sides', 1, 81.11, 52.72, 0, 'wall: over Coffee, the right side shows'],
   ['W2712 glass', 'W2712', 3, 531.98, 345.78, 0, 'wall: over the W2730s, $354.65 + $177.33 glass prep; sale $230.52 + $115.26'],
-  ['W2712 glass finished sides', 'Matching Finished Sides', 1, 53.20, 34.58, 0, 'wall: over Coffee, the right side shows'],
 ];
 // 'planned / code' lines whose size (W × H × D, as supplied) differs from the plan's in cabinets.html (comparison.html reads this too)
 const resized = ['W362424 / RW3624'];

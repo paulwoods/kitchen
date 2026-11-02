@@ -28,7 +28,7 @@ Drawn on the [Top view](../drawings/sketch-top.html): a 74" person at prep (plat
 | Question | Affected groups and fixtures |
 |---|---|
 | Which exact dimmer and driver combinations support smooth dimming for these fixtures? | UC: Nicor UCB133SNWH ×1, UCB124SNWH ×3 (TRIAC or ELV, to 5%; Nicor lists the Lutron PD-5NE-WH-C and TGCL-153P)<br>T: TBD · A: TBD · X: TBD |
-| What supported multi-location arrangement gives control at both ends of the galley? | T: TBD · A: TBD · X: TBD · UC: Nicor UCB (wall switch location still open, see [Issues](issues.html#open)) |
+| What supported multi-location arrangement gives control at both ends of the galley? | T: TBD · A: TBD · X: TBD · UC: Nicor UCB (Caséta dimmer at the Coffee end, Pico at the fridge end, see [Electrical](electrical.html)) |
 | Which hood-light controls and dimming functions does the manufacturer permit? | Hood: Proline PLFI 544-42 (120 V hardwired; lights on its touch panel) |
 
 No wiring or changes to any light for this exercise.

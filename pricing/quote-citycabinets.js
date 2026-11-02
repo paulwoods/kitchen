@@ -23,14 +23,11 @@ const lines = [
   ['W3312 glass', 'W2DGLASS', 1, 1304.95, 748.95, 0, 'wall: over the W3330, glass not included'],
   ['MWB27', 'B1DRAPPLIANCECASE', 1, 901.95, 533.95, 0, 'wall: Toaster, 16" opening for the microwave drawer over 1 drawer'],
   ['DB27-3', 'B3DR', 2, 1495.95, 891.95, 0, 'wall: Air Fryer, Coffee'],
-  ['DB27-3 end panel', 'BFE', 1, 89.95, 49.95, 0, 'wall: Coffee, right side, 34.50" × 24 5/8"'],
   ['W2730', 'W2D', 3, 801.95, 469.95, 0, 'wall: over the Toaster, Air Fryer and Coffee'],
-  ['W2730 end panel', 'WFE', 1, 89.95, 49.95, 0, 'wall: over Coffee, right side, 30" × 12 5/8"'],
   ['W2712 glass', 'W2DGLASS', 3, 1274.95, 718.95, 0, 'wall: over the W2730s, glass not included'],
-  ['W2712 glass end panel', 'WFE', 1, 89.95, 49.95, 0, 'wall: over Coffee, right side, 22" × 12 5/8" (the shortest sold), cut to 12" on site'],
 ];
 // 'planned / code' lines whose size (W × H × D, as supplied) differs from the plan's in cabinets.html (comparison.html reads this too)
 // The pantry is split in two but adds up to the planned size, so it is not listed.
-const resized = ['W361224 glass end panel / WFE', 'W2712 glass end panel / WFE'];
+const resized = ['W361224 glass end panel / WFE'];
 quotes.push({ url: 'quote-citycabinets.html', label: 'City', rank: 3, lines, resized });
 }

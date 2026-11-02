@@ -41,8 +41,10 @@ const island = [
 const wall = [
   { code: 'FP2496',  w: 0.25, kind: 'panel', h: 96 }, // skin on the REP's exposed left side, 1/4" thick (assumed)
   { code: 'REP2496-1.5', w: 1.5, kind: 'panel', h: 96 },
+  { kind: 'space', w: 0.5, h: 96, filler: { h: 24, at: 72 } }, // 1/2" clear between the panel and the fridge
   { code: '36" gap', w: 36,  kind: 'gap', h: 70, tag: 'REF', receptacle: true, d: 28.5,
     upper: [{ code: 'W362424', h: 24, at: 72 }] },
+  { kind: 'space', w: 0.5, h: 96, filler: { h: 24, at: 72 } },
   { code: 'REP2496-1.5', w: 1.5, kind: 'panel', h: 96 },
   { code: 'UT362484ROT4', w: 36,  kind: 'pantry', h: 84, upper: [{ code: 'W361224', h: 12, at: 84, glass: true }, { light: 'UCB133SNWH', w: 33, h: 1.1, at: 94.275, d: 24 }] },
   { code: 'B33',     w: 33,  kind: 'oven', receptacle: true,
@@ -134,6 +136,10 @@ function side(run, flip, zBack, back = 0, gold = true, walls = false) { // back:
   for (const c of run) { c.u = u; u += c.w; }
   const face = BOX - TOE;
   for (const c of run) {
+    if (c.kind === 'space') {
+      if (c.filler) B(c.u, DEPTH - 0.75, c.filler.at, c.w, 0.75, c.filler.h, M.alabaster);
+      continue;
+    }
     const { u, w } = c;
     base = gold && !c.h;
     alabaster = c.kind === 'pantry';

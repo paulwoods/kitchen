@@ -10,8 +10,10 @@
 sketch('Wall front', [
   {                    code: 'FP2496',  w: 0.25, kind: 'panel', h: 96, drop: 1 }, // skin on the REP's exposed left side, 1/4" thick (assumed)
   {                    code: 'REP2496-1.5', w: 1.5, kind: 'panel', h: 96 },
+  { kind: 'space', w: 0.5, h: 96, filler: { h: 24, at: 72 } }, // 1/2" clear between the panel and the fridge
   { name: 'fridge',    code: '36" gap', w: 36,  kind: 'gap', h: 70, tag: 'REF', fridge: true, receptacle: true,
     upper: [{ code: 'W362424', h: 24, at: 72 }] },
+  { kind: 'space', w: 0.5, h: 96, filler: { h: 24, at: 72 } },
   {                    code: 'REP2496-1.5', w: 1.5, kind: 'panel', h: 96 },
   { name: 'pantry',    code: 'UT362484ROT4', w: 36,  kind: 'pantry', h: 84, upper: [{ code: 'W361224 glass', h: 12, at: 84, glass: true }, { light: 'UCB133SNWH', w: 33, h: 1.1, at: 94.275, inside: true }], inside: [{ label: 'oven j box', w: 4, h: 4, at: 12, dx: 32 }, { label: '120v', w: 2.75, h: 4.5, at: 75, dx: 33 }] },
   { name: 'oven',      code: 'B33',     w: 33,  kind: 'oven', receptacle: true,

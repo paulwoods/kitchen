@@ -13,6 +13,7 @@ const lines = [
   ['B24-2 end panel', 'BFE', 1, 89.95, 49.95, 0, 'island: cabinet a, right side, 34.50" × 24 5/8"'],
   ['REP2496-1.5', 'TFETHICK', 2, 1149.95, 749.95, 0, 'wall: each side of the fridge, 1 1/2" × 96" × 24"'],
   ['W362424', 'W2D', 1, 966.95, 634.95, 0, 'wall: over the fridge'],
+  ['W362424 filler', 'WSLIMFILLER', 2, 44.95, 24.95, 0, 'wall: each side of the W2D, 3/4" × 24" × 4 1/2", raw, cut to 1/2" wide on site (read 2026-11-02)'],
   ['UT362484ROT4 lower', 'T2D', 1, 2537.95, 1640.95, 0, 'wall: pantry, 36" × 54" × 24", 2 doors over 4 roll-outs'],
   ['UT362484ROT4 upper', 'W2D', 1, 966.95, 634.95, 0, 'wall: pantry, 36" × 30" × 24", 2 doors over shelves, set on the T2D (84" total)'],
   ['UT362484ROT4 end panel', 'TFE', 1, 539.95, 299.95, 0, 'wall: pantry, right side, counter to 84", 48 1/4" × 24 5/8"'],
@@ -28,6 +29,6 @@ const lines = [
 ];
 // 'planned / code' lines whose size (W × H × D, as supplied) differs from the plan's in cabinets.html (comparison.html reads this too)
 // The pantry is split in two but adds up to the planned size, so it is not listed.
-const resized = ['W361224 glass end panel / WFE'];
+const resized = ['W362424 filler / WSLIMFILLER', 'W361224 glass end panel / WFE'];
 quotes.push({ url: 'quote-citycabinets.html', label: 'City', rank: 3, lines, resized });
 }

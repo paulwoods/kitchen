@@ -7,7 +7,7 @@ const MARGIN = 12, CEILING = 96, OUTLET = 44; // OUTLET: center of a wall recept
 // Duplex receptacle plate on the wall, vertical, centered at OUTLET.
 const RECEPTACLE = { w: 2.75, h: 4.5, at: OUTLET };
 
-// Items with `h` are tall (panels, pantry, fridge space) and get no countertop.
+// Items with `h` are tall (panels, pantry, fridge space) and get no countertop. `kind: 'space'` is an empty, unlabeled gap, with an optional `filler: { h, at }` strip across it.
 function sketch(title, run, opts = {}) {
   const total = run.reduce((s, c) => s + c.w, 0);
   const tallest = Math.max(CEILING, ...run.map(c => c.h || 0), ...run.flatMap(c => (c.upper || []).map(u => u.at + (u.h || 0))));
@@ -51,6 +51,10 @@ function sketch(title, run, opts = {}) {
   let x = MARGIN;
   const face = BOX - TOE;
   for (const c of run) {
+    if (c.kind === 'space') {
+      if (c.filler) rect(x, FLOOR - c.filler.at - c.filler.h, c.w, c.filler.h, 'front alabaster');
+      c.x = x; x += c.w; continue;
+    }
     fin = c.h || opts.darkPulls ? '' : ' base';
     paint = c.h ? ' alabaster' : '';
     if (c.kind === 'gap') {
@@ -313,6 +317,7 @@ function plan(title, island, wall, opts = {}) {
     }
     });
     for (const c of run) {
+      if (c.kind === 'space') continue;
       const mid = (v) => P(c.u + c.w / 2, v);
       if (c.kind === 'gap') { // c.d: how far the appliance stands from the wall (default flush with the cabinets)
         box(c.u, 0, c.w, c.d || DEPTH, c.h ? 'oven' : 'gap');

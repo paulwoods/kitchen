@@ -9,6 +9,7 @@ const orderSummary = [
   ['REP2496-1.5', 2, 'wall: each side of the fridge'],
   ['FP2496', 1, "wall: skin on the left REP's exposed side"],
   ['W362424', 1, 'wall: over the fridge'],
+  ['W362424 filler', 2, 'wall: each side of the W362424'],
   ['UT362484ROT4', 1, 'wall: pantry'],
   ['W361224 glass', 1, 'wall: over the pantry'],
   ['B33 (OW-B33-FH)', 1, 'wall: oven base'],

@@ -20,8 +20,10 @@ const island = [
 const wall = [
   {                    code: 'FP2496',  w: 0.25, kind: 'panel', h: 96 }, // skin on the REP's exposed left side, 1/4" thick (assumed)
   {                    code: 'REP2496-1.5', w: 1.5, kind: 'panel', h: 96 },
+  { kind: 'space', w: 0.5, h: 96 }, // 1/2" clear between the panel and the fridge
   { name: 'fridge',    code: '36" gap', w: 36,  kind: 'gap', h: 70, tag: 'REF', receptacle: true, d: 28.5, // 28 1/2" deep with doors
     upper: [{ code: 'W362424' }] },
+  { kind: 'space', w: 0.5, h: 96 },
   {                    code: 'REP2496-1.5', w: 1.5, kind: 'panel', h: 96 },
   { name: 'pantry',    code: 'UT362484ROT4', w: 36,  kind: 'pantry', h: 84, upper: [{ code: 'W361224 glass' }] },
   { name: 'oven',      code: 'B33',     w: 33,  kind: 'oven', receptacle: true,

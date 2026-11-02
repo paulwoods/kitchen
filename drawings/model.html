@@ -44,7 +44,7 @@ const wall = [
   { code: '36" gap', w: 36,  kind: 'gap', h: 70, tag: 'REF', receptacle: true, d: 28.5,
     upper: [{ code: 'W362424', h: 24, at: 72 }] },
   { code: 'REP2496-1.5', w: 1.5, kind: 'panel', h: 96 },
-  { code: 'PC36',    w: 36,  kind: 'pantry', h: 84, upper: [{ code: 'W361224', h: 12, at: 84, glass: true }, { light: 'UCB133SNWH', w: 33, h: 1.1, at: 94.275, d: 24 }] },
+  { code: 'UT362484ROT4', w: 36,  kind: 'pantry', h: 84, upper: [{ code: 'W361224', h: 12, at: 84, glass: true }, { light: 'UCB133SNWH', w: 33, h: 1.1, at: 94.275, d: 24 }] },
   { code: 'B33',     w: 33,  kind: 'oven', receptacle: true,
     upper: [{ light: 'UCB133SNWH', w: 33, h: 1.1, at: 52.9 }, { code: 'W3330', h: 30, at: 54 }, { code: 'W3312', h: 12, at: 84, glass: true }, { light: 'UCB124SNWH', w: 24, h: 1.1, at: 94.275 }] },
   { code: 'MWB27',   w: 27,  kind: 'microwave', receptacle: true,
@@ -151,7 +151,7 @@ function side(run, flip, zBack, back = 0, gold = true, walls = false) { // back:
       B(u, 0, 0, w, DEPTH + 0.75, c.h, M.alabaster);
     } else if (c.kind === 'pantry') {
       cabinet(u, w, c.h);
-      fronts(u, w, c.h, [{ h: c.h - TOE - face, pair: true, pull: 'bottom' }, { h: face, pair: true, pull: 'top' }]);
+      fronts(u, w, c.h, [{ h: 30, pair: true, pull: 'bottom' }, { h: c.h - TOE - 30, pair: true, pull: 'top' }]); // top doors match a 30" wall cabinet
     } else if (c.sink) { // open above the bowl's bottom: sides and back only, so the bowl shows
       const y = BOX - c.sink.depth - 0.5;
       cabinet(u, w, y);

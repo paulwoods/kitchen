@@ -80,7 +80,7 @@ function sketch(title, run, opts = {}) {
       rect(x, FLOOR - c.h, c.w, c.h, 'box' + paint);
     } else if (c.kind === 'pantry') {
       cabinet(x, c.w, c.h);
-      const lower = BOX - TOE, upper = c.h - TOE - lower; // lower doors line up with the base cabinets
+      const upper = 30, lower = c.h - TOE - upper; // top doors match a 30" wall cabinet
       fronts(x, c.w, FLOOR - c.h, [{ h: upper, pair: true, pull: 'bottom' }, { h: lower, pair: true }]);
     } else {
       cabinet(x, c.w, BOX);

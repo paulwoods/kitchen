@@ -49,4 +49,4 @@ Store all project memories in this file (not in ~/.claude memory).
 ### The runs
 
 - Island (192"): spices DB24-3, cooktop DB36-3 (false top drawer), plates DB24-3, trash TRB18FH, sink SB42, dishwasher 24" gap, cabinet a B24-2. A 3/4" plywood back runs the full length, with five receptacles on it; no riser.
-- Wall (189.25"): FP2496 skin, REP2496-1.5, fridge 36" gap (W362424 above), REP2496-1.5, pantry PC36 (84" tall, W361224 glass above), oven B33 (W3330 and W3312 glass above), Toaster MWB27, Air Fryer DB27-3, Coffee DB27-3 (each W2730 and W2712 glass above), then the side wall.
+- Wall (189.25"): FP2496 skin, REP2496-1.5, fridge 36" gap (W362424 above), REP2496-1.5, pantry UT362484ROT4 (84" tall, 4 doors, 4 roll-out trays, W361224 glass above), oven B33 (W3330 and W3312 glass above), Toaster MWB27, Air Fryer DB27-3, Coffee DB27-3 (each W2730 and W2712 glass above), then the side wall.

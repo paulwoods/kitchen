@@ -15,7 +15,7 @@
 <main>
 <h1>Galley Kitchen</h1>
 <p class="sub">Plan as of <span data-date>2026-11-02</span></p>
-<p class="status"><a href="docs/issues.html#open"><b data-open>12 open issues</b></a> · <span data-resolved>76</span> resolved</p>
+<p class="status"><a href="docs/issues.html#open"><b data-open>12 open issues</b></a> · <span data-resolved>77</span> resolved</p>
 
 <h2>Drawings and model</h2>
 <p class="note">On graph paper: 1 square = 6", bold line every 30". Drag on a drawing to measure it.</p>
@@ -48,17 +48,17 @@
 <h2>For the trades</h2>
 <ul>
   <li>Cabinet maker <span><a href="docs/cabinets.html#order-summary">order summary</a>, the <a href="docs/cabinets.html#island">island</a> and <a href="docs/cabinets.html#wall">wall</a> tables, both front elevations</span></li>
-  <li>Electrician <span><a href="docs/electrical.html">Electrical</a>, then <a href="docs/appliances.html">Appliances</a> for the oven and cooktop junction boxes, GFCI outlets (on the wall run and the island's back wall), under-cabinet light feeds and the receptacles inside the island cabinets, including the sink base one for the disposal air switch</span></li>
+  <li>Electrician <span><a href="docs/electrical.html">Electrical</a>, then <a href="docs/appliances.html">Appliances</a> for the oven and cooktop junction boxes, GFCI outlets (on the wall run and the island's back wall), under-cabinet light feeds and the sink base receptacle for the disposal air switch</span></li>
   <li>Plumber <span><a href="docs/appliances.html">Appliances</a>: sink, faucet, disposal, dishwasher drain loop, fridge water line</span></li>
   <li>Countertop <span><a href="drawings/sketch-top.html">Top view</a> for depths and positions, <a href="docs/appliances.html">Appliances</a> for the sink and cooktop cutouts and the 1 1/4" disposal button hole</span></li>
 </ul>
 </main>
 <script>
-  // Counts come from issues.html: open items in a <ul> right after h2#open, resolved items after h2#resolved.
+  // Counts come from issues.html: open items in an <ol> right after h2#open, resolved items after h2#resolved.
   // Opened straight from the folder (file:), fetch fails and the typed text above stays.
   fetch('docs/issues.html').then(r => r.text()).then(html => {
     const doc = new DOMParser().parseFromString(html, 'text/html');
-    const items = id => { const ul = doc.getElementById(id)?.nextElementSibling; return ul?.tagName === 'UL' ? ul.children.length : null; };
+    const items = id => { const list = doc.getElementById(id)?.nextElementSibling; return ['OL', 'UL'].includes(list?.tagName) ? list.children.length : null; };
     const open = doc.getElementById('open') ? items('open') ?? 0 : null, resolved = items('resolved');
     if (open === null || resolved === null) return;
     document.querySelector('[data-open]').textContent = `${open} open issue${open === 1 ? '' : 's'}`;

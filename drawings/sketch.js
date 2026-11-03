@@ -22,8 +22,6 @@ function sketch(title, run, opts = {}) {
   // Shapes classed apoff-N show only while appliance N is hidden.
   const apps = [];
   let ap = '';
-  // opts.darkPulls: base-height items keep dark pulls (the wall run) instead of gold.
-  let fin = ''; // ' base' while drawing a base-height item: gold pulls
   let paint = ''; // ' alabaster' while drawing a tall item or an upper cabinet: Alabaster instead of Haze
   const tag = (label, off) => { if (opts.toggles) { ap = ` ap-${apps.length}`; apps.push({ label, off }); } };
 
@@ -35,13 +33,13 @@ function sketch(title, run, opts = {}) {
       if (r.pair) {
         rect(x + 0.25, y, w / 2 - 0.375, r.h - 0.5, 'front' + paint);
         rect(mid + 0.125, y, w / 2 - 0.375, r.h - 0.5, 'front' + paint);
-        const py = r.pull === 'bottom' ? y + r.h - 6.5 : y + 2;
-        line(mid - 1.5, py, mid - 1.5, py + 4, 'pull' + fin);
-        line(mid + 1.5, py, mid + 1.5, py + 4, 'pull' + fin);
+        const py = r.pull === 'bottom' ? y + r.h - 10.5 : y + 2;
+        line(mid - 1.5, py, mid - 1.5, py + 8, 'pull'); // Berenson 9020-4055-P, 8" long
+        line(mid + 1.5, py, mid + 1.5, py + 8, 'pull');
       } else {
         rect(x + 0.25, y, w - 0.5, r.h - 0.5, 'front' + paint);
         const py = r.pull === 'top' ? y + 3 : y + r.h / 2;
-        line(mid - 2, py, mid + 2, py, 'pull' + fin);
+        line(mid - 4, py, mid + 4, py, 'pull');
       }
       y += r.h;
     }
@@ -55,7 +53,6 @@ function sketch(title, run, opts = {}) {
       if (c.filler) rect(x, FLOOR - c.filler.at - c.filler.h, c.w, c.filler.h, 'front alabaster');
       c.x = x; x += c.w; continue;
     }
-    fin = c.h || opts.darkPulls ? '' : ' base';
     paint = c.h ? ' alabaster' : '';
     if (c.kind === 'gap') {
       const h = c.h || BOX;
@@ -109,10 +106,9 @@ function sketch(title, run, opts = {}) {
         rect(mx + 0.5, top + 0.5, mw - 1, 1.6875, 'window'); // tilt-out control strip; the drawer opens itself, no handle
         ap = '';
       }
-      if (c.falseTop) text(x + c.w / 2 + 3, FLOOR - BOX + 3.3, 'false front', 'code start'); // top row is a fixed front, labeled right of its pull
+      if (c.falseTop) text(x + c.w / 2 + 5, FLOOR - BOX + 3.3, 'false front', 'code start'); // top row is a fixed front, labeled right of its pull
     }
     // Things hung above this item. Cabinet: { code, h, at: bottom off the floor, glass }; hood: { hood: true, w, h, at, chimney }; coffee maker: { coffee: true, w, h, at }; other appliance: { appliance, w, h, at, dx }; light bar: { light, w, h, at, inside }.
-    fin = '';
     for (const u of c.upper || []) {
       ap = '';
       if (u.coffee || u.appliance) tag(u.coffee ? 'coffee maker' : u.appliance, u.off);
@@ -395,7 +391,6 @@ function page(title, view, W, H, oy, out, axes) {
       .box { fill: #bec6bd; stroke: #223; stroke-width: 0.3; }
       .front { fill: #bec6bd; stroke: #223; stroke-width: 0.2; } /* Colonial Maple Haze */
       .alabaster { fill: #ebeae6; } /* Colonial Maple Alabaster: the tall items and upper cabinets */
-      .pull.base { stroke: #b08d57; } /* gold pulls on the base cabinets */
       .toe { fill: #556; } .counter { fill: #8a8f99; stroke: #223; stroke-width: 0.2; }
       .roomwall { fill: #e4dccb; stroke: #223; stroke-width: 0.25; }
       .cooktop { fill: #111; } .burner { fill: none; stroke: #667; stroke-width: 0.3; }
@@ -403,7 +398,7 @@ function page(title, view, W, H, oy, out, axes) {
       .faucet { fill: #2b2b2b; stroke: #b08d57; stroke-width: 0.2; } .spout { stroke: #2b2b2b; stroke-width: 1.375; }
       .brass { fill: #b08d57; stroke: #223; stroke-width: 0.1; } .coil { stroke: #2b2b2b; stroke-width: 0.2; }
       .sinkbowl { fill: #c9ccd2; stroke: #223; stroke-width: 0.3; }
-      .upper { fill: none; stroke: #223; stroke-width: 0.3; stroke-dasharray: 0.01 0.8; stroke-linecap: round; } .pull { stroke: #223; stroke-width: 0.4; stroke-linecap: round; }
+      .upper { fill: none; stroke: #223; stroke-width: 0.3; stroke-dasharray: 0.01 0.8; stroke-linecap: round; } .pull { stroke: #2b2b2b; stroke-width: 0.4; stroke-linecap: round; }
       .oven { fill: #c9ccd2; stroke: #223; stroke-width: 0.25; } .window { fill: #3a3f4a; }
       .glass { fill: #dbe9f2; stroke: #223; stroke-width: 0.15; }
       .light { fill: #fff6d8; stroke: #223; stroke-width: 0.15; } .chrome { fill: #c9ccd2; stroke: #223; stroke-width: 0.1; } .button { fill: #fff; stroke: #223; stroke-width: 0.15; } .plate { fill: #fff; stroke: #223; stroke-width: 0.15; } .outlet { fill: #fffdf7; stroke: #223; stroke-width: 0.1; }

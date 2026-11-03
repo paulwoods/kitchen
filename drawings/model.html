@@ -99,7 +99,7 @@ const ring = (p, r, m) => { // flat ring centered at p
 
 // One run in its own coordinates: u along the run from its left end, v from the cabinet backs toward the aisle, y up from the floor.
 // The island faces +z from its back at zBack; the wall run faces -z from the wall and reads right to left.
-function side(run, flip, zBack, back = 0, gold = true, walls = false) { // back: counter past the cabinet backs (an item's own `back` wins); gold: base-height items with gold pulls, else dark; walls: side walls at the ends, so no overhang
+function side(run, flip, zBack, back = 0, walls = false) { // back: counter past the cabinet backs (an item's own `back` wins); walls: side walls at the ends, so no overhang
   const n = len(run); // the wall run is flipped about its own length, so its right end meets the island's left end
   const B = (u, v, y, w, d, h, m) => cube(flip ? n - u - w : u, y, flip ? zBack - v - d : zBack + v, w, h, d, m);
   const P = (u, v, y) => [flip ? n - u : u, y, flip ? zBack - v : zBack + v];
@@ -119,11 +119,11 @@ function side(run, flip, zBack, back = 0, gold = true, walls = false) { // back:
       if (r.pair) {
         door(u + 0.125, w / 2 - 0.1875);
         door(u + w / 2 + 0.0625, w / 2 - 0.1875);
-        const py = r.pull === 'bottom' ? y - r.h + 2 : y - 6;
-        for (const px of [u + w / 2 - 1.75, u + w / 2 + 1.25]) B(px, v + 0.75, py, 0.5, 0.75, 4, base ? M.brass : M.pull); // gold pulls on the base cabinets
+        const py = r.pull === 'bottom' ? y - r.h + 2 : y - 10;
+        for (const px of [u + w / 2 - 1.75, u + w / 2 + 1.25]) B(px, v + 0.75, py, 0.5, 0.75, 8, M.pull); // Berenson 9020-4055-P, 8" long
       } else {
         door(u + 0.125, w - 0.25);
-        B(u + w / 2 - 2, v + 0.75, r.pull === 'top' ? y - 3 : y - r.h / 2, 4, 0.75, 0.5, base ? M.brass : M.pull);
+        B(u + w / 2 - 4, v + 0.75, r.pull === 'top' ? y - 3 : y - r.h / 2, 8, 0.75, 0.5, M.pull);
       }
       y -= r.h;
     }
@@ -141,7 +141,7 @@ function side(run, flip, zBack, back = 0, gold = true, walls = false) { // back:
       continue;
     }
     const { u, w } = c;
-    base = gold && !c.h;
+    base = !c.h;
     alabaster = c.kind === 'pantry';
     if (c.kind === 'gap' && c.h) { // fridge: stainless box c.d deep, French doors over a freezer drawer
       const d = c.d || DEPTH;
@@ -294,7 +294,7 @@ group = runs.island;
 side(island, false, 0, 5.5); // counter 5 1/2" past the cabinet backs (the back wall, then 1"), 19 1/2" behind items with back: 19.5
 cube(0, 0, -4.5, island.reduce((s, c) => s + c.w, 0), BOX, 4.5, M.base); // the island's back wall (2x4 studs, 1/2" drywall each side), floor to the counter's underside, painted Haze
 group = runs.wall;
-side(wall, true, ZWALL, 0, false, true); // dark pulls on the base cabinets
+side(wall, true, ZWALL, 0, true);
 cube(-4.5, 0, ZWALL - DEPTH, 4.5, CEILING, DEPTH + 4.5, M.wall); // stud wall at the Coffee end of the wall run (2x4 studs, 1/2" drywall each side), as deep as the cabinets
 group = scene;
 

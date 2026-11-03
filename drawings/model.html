@@ -27,10 +27,10 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
 // Same runs as sketch-island-front.html and sketch-wall-front.html, left to right as seen from the aisle. Inches.
 const island = [
-  { code: 'DB24-3',  w: 24, kind: 'drawers', n: 3, back: 10.5, backReceptacle: true },
-  { code: 'DB36-3',  w: 36, kind: 'drawers', n: 3, cooktop: true, back: 10.5,
+  { code: 'DB24-3',  w: 24, kind: 'drawers', n: 3, back: 19.5, backReceptacle: true },
+  { code: 'DB36-3',  w: 36, kind: 'drawers', n: 3, cooktop: true, back: 19.5,
     upper: [ { hood: true, w: 41.5, h: 2, at: 66.1875, chimney: 13.375, chimneyD: 10.625 } ] }, // Proline PLFI 544-42
-  { code: 'DB24-3',  w: 24, kind: 'drawers', n: 3, back: 10.5, backReceptacle: true },
+  { code: 'DB24-3',  w: 24, kind: 'drawers', n: 3, back: 19.5, backReceptacle: true },
   { code: 'TRB18FH', w: 18, kind: 'door', backReceptacle: true },
   { code: 'SB42',    w: 42, kind: 'sink', airSwitch: { dx: 17, back: 3 },
     sink: { w: 31.875, d: 17.375, v: 4.8125, depth: 9.875, ledge: 0.6875, drain: 11.3125 }, // Ruvati RVH6222ST bowl opening (centered in its 33.5" x 19" outline, 2" from the counter front), drain 6 1/4" in from the left wall
@@ -291,7 +291,7 @@ function side(run, flip, zBack, back = 0, gold = true, walls = false) { // back:
 const runs = { island: new THREE.Group(), wall: new THREE.Group() };
 scene.add(runs.island, runs.wall);
 group = runs.island;
-side(island, false, 0, 5.5); // counter 5 1/2" past the cabinet backs (the back wall, then 1"), 10 1/2" behind items with back: 10.5
+side(island, false, 0, 5.5); // counter 5 1/2" past the cabinet backs (the back wall, then 1"), 19 1/2" behind items with back: 19.5
 cube(0, 0, -4.5, island.reduce((s, c) => s + c.w, 0), BOX, 4.5, M.base); // the island's back wall (2x4 studs, 1/2" drywall each side), floor to the counter's underside, painted Haze
 group = runs.wall;
 side(wall, true, ZWALL, 0, false, true); // dark pulls on the base cabinets

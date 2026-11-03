@@ -279,7 +279,7 @@ function plan(title, island, wall, opts = {}) {
   const len = run => run.reduce((s, c) => s + c.w, 0);
   const total = Math.max(len(island), len(wall));
   const across = 2 * DEPTH + AISLE; // wall to the island's back
-  const WALLY = MARGIN + 30.75 + across, H = WALLY + WALL + 24;
+  const WALLY = MARGIN + 39.75 + across, H = WALLY + WALL + 24;
   const W = MARGIN * 2 + total + 40; // + the Picos and the ruler
   const out = [];
   const rect = (x, y, w, h, cls = '') => out.push(`<rect x="${x}" y="${y}" width="${w}" height="${h}" class="${cls}"/>`);
@@ -355,7 +355,7 @@ function plan(title, island, wall, opts = {}) {
   };
 
   rect(MARGIN, WALLY, len(wall), WALL, 'roomwall'); // the room wall behind the wall run
-  side(island, false, MARGIN - 2, 5.5); // labels above the island, clear of the aisle; counter 5 1/2" past the cabinet backs: the back wall, then 1" (10 1/2" where an item says back: 10.5)
+  side(island, false, MARGIN - 2, 5.5); // labels above the island, clear of the aisle; counter 5 1/2" past the cabinet backs: the back wall, then 1" (19 1/2" where an item says back: 19.5)
   rect(MARGIN, WALLY - across - WALL, len(island), WALL, 'hidden'); // the island's back wall (2x4 studs, 1/2" drywall each side), under the counter
   side(wall, true, WALLY + WALL, 0, true);
   rect(MARGIN - WALL, WALLY - DEPTH, WALL, DEPTH + WALL, 'roomwall'); // stud wall at the Coffee end of the wall run, as deep as the cabinets

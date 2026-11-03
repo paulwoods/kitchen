@@ -8,9 +8,9 @@
 <script>
 // Left to right as seen from the aisle, widths in inches (same runs as sketch-island-front.html and sketch-wall-front.html), with the work areas and the lights marked.
 const island = [
-  { name: 'spices',    code: 'DB24-3',  w: 24, kind: 'drawers', n: 3, back: 10.5, backReceptacle: true },
-  { name: 'cooktop',   code: 'DB36-3',  w: 36, kind: 'drawers', n: 3, cooktop: true, back: 10.5 },
-  { name: 'plates',    code: 'DB24-3',  w: 24, kind: 'drawers', n: 3, back: 10.5, backReceptacle: true },
+  { name: 'spices',    code: 'DB24-3',  w: 24, kind: 'drawers', n: 3, back: 19.5, backReceptacle: true },
+  { name: 'cooktop',   code: 'DB36-3',  w: 36, kind: 'drawers', n: 3, cooktop: true, back: 19.5 },
+  { name: 'plates',    code: 'DB24-3',  w: 24, kind: 'drawers', n: 3, back: 19.5, backReceptacle: true },
   { name: 'trash',     code: 'TRB18FH', w: 18, kind: 'door', backReceptacle: true },
   { name: 'sink',      code: 'SB42',    w: 42, kind: 'sink', airSwitch: { dx: 17, back: 3 },
     faucet: { h: 22.4375, reach: 9.5, back: 3 } }, // Kohler K-R30937-BMB, 3" from the cabinet backs
@@ -70,7 +70,7 @@ plan('Top view', island, wall, { extra: ({ out, text, ix, iy, wx, wy }) => {
     }
     return h;
   };
-  out.push(`<clipPath id="counter"><rect x="${ix(-1)}" y="${iy(-10.5)}" width="${island.reduce((s, c) => s + c.w, 2)}" height="${COUNTER + 10.5}"/></clipPath>`);
+  out.push(`<clipPath id="counter"><rect x="${ix(-1)}" y="${iy(-19.5)}" width="${island.reduce((s, c) => s + c.w, 2)}" height="${COUNTER + 19.5}"/></clipPath>`);
   for (const u of people) for (const [L, k] of [...T.map(L => [L, 'T']), ...A.map(L => [L, 'A'])]) // class l-T / l-A: hidden with its light
     out.push(`<polygon class="shadow l-${k}" clip-path="url(#counter)" points="${hull(slices(u).map(p => onCounter(L, p))).map(([u, v]) => `${ix(u)},${iy(v)}`).join(' ')}"/>`);
   for (const u of people) {

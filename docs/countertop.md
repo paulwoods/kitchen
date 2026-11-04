@@ -46,7 +46,7 @@ The Nicor bars can be set to all three color temperatures, but none is on hand, 
 
 1. Care and wear: how does Luce di Luna scratch, stain and etch in daily kitchen use, and what care do you recommend?
 2. Availability and pricing: do you have two matching slabs of Luce di Luna that can yield 85" × 44 1/2", 109" × 30 1/2" and 114" × 25" in 3 cm, and what is the delivered price, and the fabricated and installed price, for that scope?
-3. Fabrication: can you fabricate and install Luce di Luna in 3 cm with no subtop, with the expected island seam between plates and trash, the cooktop cutout, an undermount sink cutout, a 1 3/8" faucet hole and a 1 1/4" air button hole, the dishwasher gap, the edges you offer, and a 15" seating overhang on seven 16" flat brackets about 13" apart, starting about 3/8" behind the cooktop's back edge?
+3. Fabrication: can you fabricate and install Luce di Luna in 3 cm with no subtop, with the expected island seam between plates and trash, the cooktop cutout, an undermount sink cutout, a 1 3/8" faucet hole and a 1 1/4" air button hole, the dishwasher gap, an eased edge, and a 15" seating overhang on seven 16" flat brackets about 13" apart, starting about 3/8" behind the cooktop's back edge?
 
 ### Separate questions
 

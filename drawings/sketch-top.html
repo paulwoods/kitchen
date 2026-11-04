@@ -22,18 +22,18 @@ const wall = [
   {                    code: 'REP2496-1.5', w: 1.5, kind: 'panel', h: 96 },
   { kind: 'space', w: 0.5, h: 96 }, // 1/2" clear between the panel and the fridge
   { name: 'fridge',    code: '36" gap', w: 36,  kind: 'gap', h: 70, tag: 'REF', receptacle: true, d: 28.5, // 28 1/2" deep with doors
-    upper: [{ code: 'W362424' }] },
+    upper: [{ code: 'RW3721', w: 37, dx: -0.5, d: 24 }] },
   { kind: 'space', w: 0.5, h: 96 },
   {                    code: 'REP2496-1.5', w: 1.5, kind: 'panel', h: 96 },
-  { name: 'pantry',    code: 'UT362484ROT4', w: 36,  kind: 'pantry', h: 84, upper: [{ code: 'W361224 glass' }] },
+  { name: 'pantry',    code: 'UT362493ROT4', w: 36,  kind: 'pantry', h: 93 },
   { name: 'oven',      code: 'B33',     w: 33,  kind: 'oven', receptacle: true,
-    upper: [{ code: 'W3330' }, { code: 'W3312 glass' }] },
+    upper: [{ code: 'W3327' }, { code: 'W3312 glass' }] },
   { name: 'Toaster',   code: 'MWB27',   w: 27,  kind: 'microwave', receptacle: true,
-    upper: [{ code: 'W2730' }, { code: 'W2712 glass' }] },
+    upper: [{ code: 'W2727' }, { code: 'W2712 glass' }] },
   { name: 'Air Fryer', code: 'DB27-3',  w: 27,  kind: 'drawers', n: 3, receptacle: true,
-    upper: [{ code: 'W2730' }, { code: 'W2712 glass' }] },
+    upper: [{ code: 'W2727' }, { code: 'W2712 glass' }] },
   { name: 'Coffee',    code: 'DB27-3',  w: 27,  kind: 'drawers', n: 3, receptacle: true,
-    upper: [{ code: 'W2730' }, { code: 'W2712 glass' }] },
+    upper: [{ code: 'W2727' }, { code: 'W2712 glass' }] },
 ];
 const I = Object.fromEntries(island.map(c => [c.name, c])), Wl = Object.fromEntries(wall.filter(c => c.name).map(c => [c.name, c]));
 plan('Top view', island, wall, { extra: ({ out, text, ix, iy, wx, wy }) => {

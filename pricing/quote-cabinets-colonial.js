@@ -13,21 +13,18 @@ const lines = [
   ['B24-2 finished sides', 'Matching Finished Sides', 1, 110.59, 71.89, 0, 'island: cabinet a, the right side shows'],
   ['FP2496', 'FP2496', 1, 167.58, 108.93, 0, "wall: skin on the left REP's exposed side, 1/4\" × 96\" × 24\""],
   ['REP2496-1.5', 'REP2496-1.5', 2, 340.50, 221.33, 0, 'wall: each side of the fridge, refrigerator return panel, 1.5" × 96" × 24"'],
-  ['W362424', 'RW3624', 1, 654.99, 425.74, 0, 'wall: over the fridge, 36" × 23 11/16" × 24"'],
-  ['W362424 filler', 'UF130', 2, 31.39, 20.40, 0, 'wall: each side of the W362424, 1" × 30" × 3/4", cut to 1/2" × 24" on site (read 2026-11-02)'],
-  ['UT362484ROT4', 'UT362484-ROT/4', 1, 2880.52, 1872.34, 0, 'wall: pantry, 36" × 84" × 24", 4 doors, 4 roll-out trays below, shelves above (read 2026-11-02)'],
-  ['UT362484ROT4 finished sides', 'Matching Finished Sides', 1, 288.05, 187.23, 0, 'wall: pantry, the right side shows above the counter (10% of the price, read 2026-11-02)'],
-  ['W361224 glass', 'W3612', 1, 880.23, 572.15, 0, 'wall: over the pantry, $463.28 + $185.31 to increase the depth 12" (to 24") + $231.64 glass prep; sale $301.13 + $120.45 + $150.57'],
-  ['W361224 glass finished sides', 'Matching Finished Sides', 1, 69.49, 45.17, 0, 'wall: over the pantry, the right side shows'],
+  ['RW3721', 'RW3721', 1, 701.04, 455.68, 0, 'wall: over the fridge, panel to panel, 37" × 20 11/16" × 24" (read 2026-11-03)'],
+  ['UT362493ROT4', 'UT362493-ROT/4', 1, 3003.21, 1952.09, 0, 'wall: pantry, 36" × 93" × 24", 4 doors, 4 roll-out trays below, 3 shelves above (read 2026-11-03)'],
+  ['UT362493ROT4 finished sides', 'Matching Finished Sides', 1, 300.32, 195.21, 0, 'wall: pantry, the right side shows above the counter (10% of the price, read 2026-11-03)'],
   ['B33 (OW-B33-FH)', 'B33', 1, 873.98, 568.09, 0, 'wall: oven base, 2 doors, 1 drawer'],
-  ['W3330', 'W3330', 1, 642.95, 417.92, 0, 'wall: over the oven'],
-  ['W3312 glass', 'W3312', 1, 664.95, 432.22, 0, 'wall: over the W3330, $443.30 + $221.65 glass prep; sale $288.15 + $144.07'],
+  ['W3327', 'W3327', 1, 610.07, 396.55, 0, 'wall: over the oven (read 2026-11-03)'],
+  ['W3312 glass', 'W3312', 1, 664.95, 432.22, 0, 'wall: over the W3327, $443.30 + $221.65 glass prep; sale $288.15 + $144.07'],
   ['MWB27', 'MBC27', 1, 910.40, 591.76, 0, 'wall: Toaster, microwave base, 1 drawer'],
   ['DB27-3', 'DB27-3', 2, 1403.92, 912.55, 0, 'wall: Air Fryer, Coffee'],
-  ['W2730', 'W2730', 3, 540.72, 351.47, 0, 'wall: over the Toaster, Air Fryer and Coffee'],
-  ['W2712 glass', 'W2712', 3, 531.98, 345.78, 0, 'wall: over the W2730s, $354.65 + $177.33 glass prep; sale $230.52 + $115.26'],
+  ['W2727', 'W2727', 3, 531.22, 345.29, 0, 'wall: over the Toaster, Air Fryer and Coffee (read 2026-11-03)'],
+  ['W2712 glass', 'W2712', 3, 531.98, 345.78, 0, 'wall: over the W2727s, $354.65 + $177.33 glass prep; sale $230.52 + $115.26'],
 ];
 // 'planned / code' lines whose size (W × H × D, as supplied) differs from the plan's in cabinets.html (comparison.html reads this too)
-const resized = ['W362424 / RW3624', 'W362424 filler / UF130'];
+const resized = [];
 quotes.push({ url: 'quote-cabinets-colonial.html', label: 'Colonial', rank: 1, lines, resized });
 }

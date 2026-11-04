@@ -10,19 +10,19 @@
 sketch('Wall front', [
   {                    code: 'FP2496',  w: 0.25, kind: 'panel', h: 96, drop: 1 }, // skin on the REP's exposed left side, 1/4" thick (assumed)
   {                    code: 'REP2496-1.5', w: 1.5, kind: 'panel', h: 96 },
-  { kind: 'space', w: 0.5, h: 96, filler: { h: 24, at: 72 } }, // 1/2" clear between the panel and the fridge
+  { kind: 'space', w: 0.5, h: 96 }, // 1/2" clear between the panel and the fridge
   { name: 'fridge',    code: '36" gap', w: 36,  kind: 'gap', h: 70, tag: 'REF', fridge: true, receptacle: true,
-    upper: [{ code: 'W362424', h: 24, at: 72 }] },
-  { kind: 'space', w: 0.5, h: 96, filler: { h: 24, at: 72 } },
+    upper: [{ code: 'RW3721', w: 37, dx: -0.5, h: 20.6875, at: 72.3125, d: 24 }, { riser: true, w: 37, dx: -0.5, h: 3, at: 93, d: 24 }] },
+  { kind: 'space', w: 0.5, h: 96 },
   {                    code: 'REP2496-1.5', w: 1.5, kind: 'panel', h: 96 },
-  { name: 'pantry',    code: 'UT362484ROT4', w: 36,  kind: 'pantry', h: 84, upper: [{ code: 'W361224 glass', h: 12, at: 84, glass: true }, { light: 'UCB133SNWH', w: 33, h: 1.1, at: 94.275, inside: true }], inside: [{ label: 'oven j box', w: 4, h: 4, at: 12, dx: 32 }, { label: '120v', w: 2.75, h: 4.5, at: 75, dx: 33 }] },
+  { name: 'pantry',    code: 'UT362493ROT4', w: 36,  kind: 'pantry', h: 93, upper: [{ riser: true, h: 3, at: 93, d: 24, side: true }], inside: [{ label: 'oven j box', w: 4, h: 4, at: 12, dx: 32 }, { label: '120v', w: 2.75, h: 4.5, at: 75, dx: 33 }] },
   { name: 'oven',      code: 'B33',     w: 33,  kind: 'oven', receptacle: true,
-    upper: [{ light: 'UCB133SNWH', w: 33, h: 1.1, at: 52.9 }, { code: 'W3330', h: 30, at: 54 }, { code: 'W3312 glass', h: 12, at: 84, glass: true }, { light: 'UCB124SNWH', w: 24, h: 1.1, at: 94.275, inside: true }] },
+    upper: [{ light: 'UCB133SNWH', w: 33, h: 1.1, at: 52.9 }, { code: 'W3327', h: 27, at: 54 }, { code: 'W3312 glass', h: 12, at: 81, glass: true }, { riser: true, h: 3, at: 93 }, { light: 'UCB124SNWH', w: 24, h: 1.1, at: 91.275, inside: true }] },
   { name: 'Toaster',   code: 'MWB27',   w: 27,  kind: 'microwave', receptacle: true, inside: [{ label: '120v', w: 2.75, h: 4.5, at: 14, dx: 3 }],
-    upper: [{ off: true, appliance: 'toaster oven', w: 21.5, h: 12.7, at: 35.75 }, { light: 'UCB124SNWH', w: 24, h: 1.1, at: 52.9 }, { code: 'W2730', h: 30, at: 54 }, { code: 'W2712 glass', h: 12, at: 84, glass: true }, { light: 'UCB124SNWH', w: 24, h: 1.1, at: 94.275, inside: true }] },
+    upper: [{ off: true, appliance: 'toaster oven', w: 21.5, h: 12.7, at: 35.75 }, { light: 'UCB124SNWH', w: 24, h: 1.1, at: 52.9 }, { code: 'W2727', h: 27, at: 54 }, { code: 'W2712 glass', h: 12, at: 81, glass: true }, { riser: true, h: 3, at: 93 }, { light: 'UCB124SNWH', w: 24, h: 1.1, at: 91.275, inside: true }] },
   { name: 'Air Fryer', code: 'DB27-3',  w: 27,  kind: 'drawers', n: 3, receptacle: true,
-    upper: [{ off: true, appliance: 'air fryer', w: 11, h: 14.75, at: 35.75 }, { light: 'UCB124SNWH', w: 24, h: 1.1, at: 52.9 }, { code: 'W2730', h: 30, at: 54 }, { code: 'W2712 glass', h: 12, at: 84, glass: true }, { light: 'UCB124SNWH', w: 24, h: 1.1, at: 94.275, inside: true }] },
+    upper: [{ off: true, appliance: 'air fryer', w: 11, h: 14.75, at: 35.75 }, { light: 'UCB124SNWH', w: 24, h: 1.1, at: 52.9 }, { code: 'W2727', h: 27, at: 54 }, { code: 'W2712 glass', h: 12, at: 81, glass: true }, { riser: true, h: 3, at: 93 }, { light: 'UCB124SNWH', w: 24, h: 1.1, at: 91.275, inside: true }] },
   { name: 'Coffee',    code: 'DB27-3',  w: 27,  kind: 'drawers', n: 3, receptacle: true,
-    upper: [{ off: true, coffee: true, w: 8.5, h: 16.3, at: 35.75 }, { light: 'UCB124SNWH', w: 24, h: 1.1, at: 52.9 }, { code: 'W2730', h: 30, at: 54 }, { code: 'W2712 glass', h: 12, at: 84, glass: true }, { light: 'UCB124SNWH', w: 24, h: 1.1, at: 94.275, inside: true }] },
+    upper: [{ off: true, coffee: true, w: 8.5, h: 16.3, at: 35.75 }, { light: 'UCB124SNWH', w: 24, h: 1.1, at: 52.9 }, { code: 'W2727', h: 27, at: 54 }, { code: 'W2712 glass', h: 12, at: 81, glass: true }, { riser: true, h: 3, at: 93 }, { light: 'UCB124SNWH', w: 24, h: 1.1, at: 91.275, inside: true }] },
 ], { toggles: true, walls: true }); // stud wall at the right end
 </script>

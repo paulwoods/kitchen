@@ -7,7 +7,7 @@ const MARGIN = 12, CEILING = 96, OUTLET = 44; // OUTLET: center of a wall recept
 // Duplex receptacle plate on the wall, vertical, centered at OUTLET.
 const RECEPTACLE = { w: 2.75, h: 4.5, at: OUTLET };
 
-// Items with `h` are tall (panels, pantry, fridge space) and get no countertop. `kind: 'space'` is an empty, unlabeled gap, with an optional `filler: { h, at }` strip across it.
+// Items with `h` are tall (panels, pantry, fridge space) and get no countertop. `kind: 'space'` is an empty, unlabeled gap.
 function sketch(title, run, opts = {}) {
   const total = run.reduce((s, c) => s + c.w, 0);
   const tallest = Math.max(CEILING, ...run.map(c => c.h || 0), ...run.flatMap(c => (c.upper || []).map(u => u.at + (u.h || 0))));
@@ -50,7 +50,6 @@ function sketch(title, run, opts = {}) {
   const face = BOX - TOE;
   for (const c of run) {
     if (c.kind === 'space') {
-      if (c.filler) rect(x, FLOOR - c.filler.at - c.filler.h, c.w, c.filler.h, 'front alabaster');
       c.x = x; x += c.w; continue;
     }
     paint = c.h ? ' alabaster' : '';
@@ -81,7 +80,7 @@ function sketch(title, run, opts = {}) {
       rect(x, FLOOR - c.h, c.w, c.h, 'box' + paint);
     } else if (c.kind === 'pantry') {
       cabinet(x, c.w, c.h);
-      const upper = 30, lower = c.h - TOE - upper; // top doors match a 30" wall cabinet
+      const upper = 39, lower = c.h - TOE - upper; // top doors match a 39" wall cabinet
       fronts(x, c.w, FLOOR - c.h, [{ h: upper, pair: true, pull: 'bottom' }, { h: lower, pair: true }]);
     } else {
       cabinet(x, c.w, BOX);
@@ -108,7 +107,7 @@ function sketch(title, run, opts = {}) {
       }
       if (c.falseTop) text(x + c.w / 2 + 5, FLOOR - BOX + 3.3, 'false front', 'code start'); // top row is a fixed front, labeled right of its pull
     }
-    // Things hung above this item. Cabinet: { code, h, at: bottom off the floor, glass }; hood: { hood: true, w, h, at, chimney }; coffee maker: { coffee: true, w, h, at }; other appliance: { appliance, w, h, at, dx }; light bar: { light, w, h, at, inside }.
+    // Things hung above this item. Cabinet: { code, h, at: bottom off the floor, glass, w, dx: wider than the item, from its left end }; hood: { hood: true, w, h, at, chimney }; coffee maker: { coffee: true, w, h, at }; other appliance: { appliance, w, h, at, dx }; light bar: { light, w, h, at, inside }.
     for (const u of c.upper || []) {
       ap = '';
       if (u.coffee || u.appliance) tag(u.coffee ? 'coffee maker' : u.appliance, u.off);
@@ -133,11 +132,12 @@ function sketch(title, run, opts = {}) {
         text(x + c.w / 2, top - 2, 'hood', 'code');
         continue;
       }
+      if (u.riser) { rect(x + (u.dx || 0), FLOOR - u.at - u.h, u.w || c.w, u.h, 'front alabaster'); continue; } // riser molding to the ceiling: { riser: true, h, at, w, dx }
       if (u.light) { rect(x + (c.w - u.w) / 2, FLOOR - u.at - u.h, u.w, u.h, u.inside ? 'hidden' : 'light'); continue; } // light bar, centered: { light: model, w, h, at: bottom off the floor, inside: in a cabinet, behind its door (dashed) }
       const top = FLOOR - u.at - u.h;
       paint = ' alabaster';
-      rect(x, top, c.w, u.h, 'box' + paint);
-      fronts(x, c.w, top, [{ h: u.h, pair: true, pull: 'bottom' }]);
+      rect(x + (u.dx || 0), top, u.w || c.w, u.h, 'box' + paint);
+      fronts(x + (u.dx || 0), u.w || c.w, top, [{ h: u.h, pair: true, pull: 'bottom' }]);
       if (u.glass) for (const gx of [x + 2, x + c.w / 2 + 1.875]) rect(gx, top + 2, c.w / 2 - 3.875, u.h - 4.5, 'glass');
     }
     ap = '';
@@ -335,9 +335,9 @@ function plan(title, island, wall, opts = {}) {
         circle([x1, y1], 1.25, 'faucet');
         circle([x2, y2], 0.65, 'brass');
       }
-      // Upper cabinets, dotted: depth from the code (W362424 is 24" deep), else 12".
-      const ud = Math.max(0, ...(c.upper || []).map(x => +(x.code.match(/^W\d{4}(\d\d)/) || [])[1] || 12));
-      if (ud) box(c.u, 0, c.w, ud, 'upper');
+      // Upper cabinets, dotted: x.d deep, else 12"; x.w wide from x.dx, else the item's width.
+      const ups = c.upper || [], ud = Math.max(0, ...ups.map(x => x.d || 12));
+      if (ud) box(c.u + (ups[0].dx || 0), 0, ups[0].w || c.w, ud, 'upper');
       const [tx] = mid(0);
       if (c.name) text(tx, labelY + 5, c.name, 'name');
       text(tx, labelY + 8.5, c.code, 'code');

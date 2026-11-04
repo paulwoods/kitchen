@@ -41,20 +41,20 @@ const island = [
 const wall = [
   { code: 'FP2496',  w: 0.25, kind: 'panel', h: 96 }, // skin on the REP's exposed left side, 1/4" thick (assumed)
   { code: 'REP2496-1.5', w: 1.5, kind: 'panel', h: 96 },
-  { kind: 'space', w: 0.5, h: 96, filler: { h: 24, at: 72 } }, // 1/2" clear between the panel and the fridge
+  { kind: 'space', w: 0.5, h: 96 }, // 1/2" clear between the panel and the fridge
   { code: '36" gap', w: 36,  kind: 'gap', h: 70, tag: 'REF', receptacle: true, d: 28.5,
-    upper: [{ code: 'W362424', h: 24, at: 72 }] },
-  { kind: 'space', w: 0.5, h: 96, filler: { h: 24, at: 72 } },
+    upper: [{ code: 'RW3721', w: 37, dx: -0.5, h: 20.6875, at: 72.3125, d: 24 }, { riser: true, w: 37, dx: -0.5, h: 3, at: 93, d: 24 }] },
+  { kind: 'space', w: 0.5, h: 96 },
   { code: 'REP2496-1.5', w: 1.5, kind: 'panel', h: 96 },
-  { code: 'UT362484ROT4', w: 36,  kind: 'pantry', h: 84, upper: [{ code: 'W361224', h: 12, at: 84, glass: true }, { light: 'UCB133SNWH', w: 33, h: 1.1, at: 94.275, d: 24 }] },
+  { code: 'UT362493ROT4', w: 36,  kind: 'pantry', h: 93, upper: [{ riser: true, h: 3, at: 93, d: 24, side: true }] },
   { code: 'B33',     w: 33,  kind: 'oven', receptacle: true,
-    upper: [{ light: 'UCB133SNWH', w: 33, h: 1.1, at: 52.9 }, { code: 'W3330', h: 30, at: 54 }, { code: 'W3312', h: 12, at: 84, glass: true }, { light: 'UCB124SNWH', w: 24, h: 1.1, at: 94.275 }] },
+    upper: [{ light: 'UCB133SNWH', w: 33, h: 1.1, at: 52.9 }, { code: 'W3327', h: 27, at: 54 }, { code: 'W3312', h: 12, at: 81, glass: true }, { riser: true, h: 3, at: 93 }, { light: 'UCB124SNWH', w: 24, h: 1.1, at: 91.275 }] },
   { code: 'MWB27',   w: 27,  kind: 'microwave', receptacle: true,
-    upper: [{ appliance: 'toaster oven', w: 21.5, h: 12.7, at: 35.75 }, { light: 'UCB124SNWH', w: 24, h: 1.1, at: 52.9 }, { code: 'W2730', h: 30, at: 54 }, { code: 'W2712', h: 12, at: 84, glass: true }, { light: 'UCB124SNWH', w: 24, h: 1.1, at: 94.275 }] },
+    upper: [{ appliance: 'toaster oven', w: 21.5, h: 12.7, at: 35.75 }, { light: 'UCB124SNWH', w: 24, h: 1.1, at: 52.9 }, { code: 'W2727', h: 27, at: 54 }, { code: 'W2712', h: 12, at: 81, glass: true }, { riser: true, h: 3, at: 93 }, { light: 'UCB124SNWH', w: 24, h: 1.1, at: 91.275 }] },
   { code: 'DB27-3',  w: 27,  kind: 'drawers', n: 3, receptacle: true,
-    upper: [{ appliance: 'air fryer', w: 11, h: 14.75, at: 35.75 }, { light: 'UCB124SNWH', w: 24, h: 1.1, at: 52.9 }, { code: 'W2730', h: 30, at: 54 }, { code: 'W2712', h: 12, at: 84, glass: true }, { light: 'UCB124SNWH', w: 24, h: 1.1, at: 94.275 }] },
+    upper: [{ appliance: 'air fryer', w: 11, h: 14.75, at: 35.75 }, { light: 'UCB124SNWH', w: 24, h: 1.1, at: 52.9 }, { code: 'W2727', h: 27, at: 54 }, { code: 'W2712', h: 12, at: 81, glass: true }, { riser: true, h: 3, at: 93 }, { light: 'UCB124SNWH', w: 24, h: 1.1, at: 91.275 }] },
   { code: 'DB27-3',  w: 27,  kind: 'drawers', n: 3, receptacle: true,
-    upper: [{ coffee: true, w: 8.5, h: 16.3, at: 35.75 }, { light: 'UCB124SNWH', w: 24, h: 1.1, at: 52.9 }, { code: 'W2730', h: 30, at: 54 }, { code: 'W2712', h: 12, at: 84, glass: true }, { light: 'UCB124SNWH', w: 24, h: 1.1, at: 94.275 }] },
+    upper: [{ coffee: true, w: 8.5, h: 16.3, at: 35.75 }, { light: 'UCB124SNWH', w: 24, h: 1.1, at: 52.9 }, { code: 'W2727', h: 27, at: 54 }, { code: 'W2712', h: 12, at: 81, glass: true }, { riser: true, h: 3, at: 93 }, { light: 'UCB124SNWH', w: 24, h: 1.1, at: 91.275 }] },
 ];
 
 const TOE = 4.5, BOX = 34.5, TOP = 1.25, CEILING = 96, OUTLET = 44; // OUTLET: center of a wall receptacle (assumed)
@@ -137,7 +137,6 @@ function side(run, flip, zBack, back = 0, walls = false) { // back: counter past
   const face = BOX - TOE;
   for (const c of run) {
     if (c.kind === 'space') {
-      if (c.filler) B(c.u, DEPTH - 0.75, c.filler.at, c.w, 0.75, c.filler.h, M.alabaster);
       continue;
     }
     const { u, w } = c;
@@ -157,7 +156,7 @@ function side(run, flip, zBack, back = 0, walls = false) { // back: counter past
       B(u, 0, 0, w, DEPTH + 0.75, c.h, M.alabaster);
     } else if (c.kind === 'pantry') {
       cabinet(u, w, c.h);
-      fronts(u, w, c.h, [{ h: 30, pair: true, pull: 'bottom' }, { h: c.h - TOE - 30, pair: true, pull: 'top' }]); // top doors match a 30" wall cabinet
+      fronts(u, w, c.h, [{ h: 39, pair: true, pull: 'bottom' }, { h: c.h - TOE - 39, pair: true, pull: 'top' }]); // top doors match a 39" wall cabinet
     } else if (c.sink) { // open above the bowl's bottom: sides and back only, so the bowl shows
       const y = BOX - c.sink.depth - 0.5;
       cabinet(u, w, y);
@@ -253,12 +252,16 @@ function side(run, flip, zBack, back = 0, walls = false) { // back: counter past
         group.add(pane);
         B(u + (w - x.chimney) / 2, COUNTER / 2 - x.chimneyD / 2, top, x.chimney, x.chimneyD, CEILING - top, M.steel);
       } else if (x.coffee || x.appliance) B(u + (w - x.w) / 2, 2, x.at, x.w, APPLIANCE, x.h, M.black);
-      else if (x.light) B(u + (w - x.w) / 2, (x.d || UPPER) - 4, x.at, x.w, 3.5, x.h, M.light); // light bar near the front edge of a cabinet x.d deep (3 1/2" wide, Nicor UCB sheet); under a cabinet, or inside a glass one under its top
-      else { // wall cabinet: depth from the code (W362424 is 24" deep), else 12"
-        const d = +(x.code.match(/^W\d{4}(\d\d)/) || [])[1] || UPPER;
+      else if (x.riser) { // riser molding to the ceiling, 3/4" thick, on the front of a cabinet x.d deep; side: a return past the 12" uppers on the right
+        const d = x.d || UPPER;
+        B(u + (x.dx || 0), d, x.at, x.w || w, 0.75, x.h, M.alabaster);
+        if (x.side) B(u + w, UPPER + 0.75, x.at, 0.75, d - UPPER, x.h, M.alabaster);
+      } else if (x.light) B(u + (w - x.w) / 2, (x.d || UPPER) - 4, x.at, x.w, 3.5, x.h, M.light); // light bar near the front edge of a cabinet x.d deep (3 1/2" wide, Nicor UCB sheet); under a cabinet, or inside a glass one under its top
+      else { // wall cabinet: x.d deep, else 12"; x.w wide from x.dx, else the item's width
+        const d = x.d || UPPER, cu = u + (x.dx || 0), cw = x.w || w;
         alabaster = true;
-        B(u, 0, x.at, w, d, x.h, M.alabaster);
-        fronts(u, w, x.at + x.h, [{ h: x.h, pair: true, pull: 'bottom', glass: x.glass }], d);
+        B(cu, 0, x.at, cw, d, x.h, M.alabaster);
+        fronts(cu, cw, x.at + x.h, [{ h: x.h, pair: true, pull: 'bottom', glass: x.glass }], d);
       }
     }
   }

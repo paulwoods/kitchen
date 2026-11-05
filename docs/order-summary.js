@@ -10,11 +10,8 @@ const orderSummary = [
   ['FP2496', 1, "wall: skin on the left REP's exposed side"],
   ['RW3721', 1, 'wall: over the fridge'],
   ['UT362493ROT4', 1, 'wall: pantry'],
-  ['B33 (OW-B33-FH)', 1, 'wall: oven base'],
-  ['W3327', 1, 'wall: over the oven'],
-  ['W3312 glass', 1, 'wall: over the W3327'],
-  ['MWB27', 1, 'wall: Toaster (microwave drawer base)'],
-  ['DB27-3', 2, 'wall: Air Fryer, Coffee'],
+  ['OVD3393', 1, 'wall: oven column, combination oven'],
+  ['DB27-3', 3, 'wall: Toaster, Air Fryer, Coffee'],
   ['W2727', 3, 'wall: over the Toaster, Air Fryer and Coffee'],
   ['W2712 glass', 3, 'wall: over the W2727s'],
 ];

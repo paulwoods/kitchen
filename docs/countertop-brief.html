@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="../nav.js" defer></script>
+<title>Countertop brief · Galley Kitchen</title>
+<style>
+  body { margin: 24px; max-width: 1100px; background: #fbfaf5; color: #223; font-family: system-ui, sans-serif; line-height: 1.5; }
+  h1 { margin: 0 0 4px; } h2 { margin: 28px 0 4px; font-size: 1.25em; } a { color: #2a5d9f; }
+  table { border-collapse: collapse; margin-top: 12px; background: #fff; }
+  th, td { border: 1px solid #ccd; padding: 8px 10px; text-align: left; vertical-align: top; }
+  th { background: #eef2f7; } .note { color: #667; }
+  .map { overflow-x: auto; margin-top: 12px; background: #fff; border: 1px solid #ccd; }
+  .map svg { display: block; width: 100%; min-width: 760px; }
+  .map text { font-size: 2.6px; fill: #223; paint-order: stroke; stroke: #fff; stroke-width: 0.5px; }
+  .map text.zone { fill: #1f6b3a; font-weight: bold; } .map text.mid { text-anchor: middle; } .map text.seamtext { fill: #b3261e; }
+  .stone { fill: #e6e7e3; } .edge { fill: none; stroke: #223; stroke-width: 0.9; }
+  .seam { stroke: #b3261e; stroke-width: 0.7; stroke-dasharray: 2 1.2; }
+  .hidden { fill: none; stroke: #778; stroke-width: 0.25; stroke-dasharray: 1 1; }
+  .hole { fill: #fff; stroke: #223; stroke-width: 0.3; } .bracket { stroke: #e07000; stroke-width: 0.5; }
+  .seat { fill: none; stroke: #2a5d9f; stroke-width: 0.35; stroke-dasharray: 1 .8; } .dim { stroke: #667; stroke-width: 0.25; }
+  .splash { fill: #bbb; } .tick { stroke: #223; stroke-width: 0.5; } .tall { fill: #f4f4f1; stroke: #99a; stroke-width: 0.3; } .sidewall { fill: #99a; }
+  @media (max-width: 600px) { table, tbody, tr, td, th { display: block; } tr:first-child { display: none; } tr { margin-bottom: 12px; } td { border-top: 0; } td:first-child { border-top: 1px solid #ccd; font-weight: bold; } }
+</style>
+<h1>Countertop brief</h1>
+<p><a href="../index.html">index</a></p>
+<p class="note">Planning sheet, 2026-11-04, for the details to verify with a fabricator. Nothing is bought, sampled, measured on site or sent. Unknowns are marked TBD. Sizes and decisions come from <a href="countertop-backsplash.html">Countertop and backsplash</a>, which stays the record; its full question list is <a href="countertop-backsplash.html#questions">there</a>, and the three below are the focused version.</p>
+
+<h2 id="spec">Proposed specification</h2>
+<table>
+<tr><th>Detail</th><th>Proposed</th><th>Status</th></tr>
+<tr><td>Leading candidate</td><td><a href="https://shop.go-granite.com/products/luce-di-luna-quartzite-3cm">Luce di Luna quartzite</a>, Go-Granite</td><td>Proposed. The owner's pick (2026-11-02); not bought</td></tr>
+<tr><td>Alternative</td><td>Soapstone, candidate TBD</td><td>Compared and not chosen (2026-11-02); no product or slab identified</td></tr>
+<tr><td>Thickness</td><td>3 cm (1.25"), set directly on the cabinets with no subtop, for a 35.75" counter</td><td>Proposed; fabricator to confirm</td></tr>
+<tr><td>Finish</td><td>Polished</td><td>Proposed; fabricator to confirm</td></tr>
+<tr><td>Edge</td><td>Eased</td><td>Proposed; fabricator to confirm</td></tr>
+<tr><td>Slab size</td><td>Nominal 126" &times; 63", estimated two slabs. Actual size TBD</td><td>Pending; slabs often arrive under nominal</td></tr>
+<tr><td>Fabricator</td><td><a href="https://www.thestumblestone.us/">The Stumble Stone</a>, Dallas (tentative)</td><td>Not contacted; customer-supplied slabs not confirmed</td></tr>
+<tr><td>Actual-slab inspection</td><td>Photos and approval of the actual slabs</td><td><b>Pending.</b> Only the listing photo so far</td></tr>
+<tr><td>Material identification</td><td>Etch and stain test on a sample of the exact stone</td><td><b>Pending.</b> No evidence; stones sold as quartzite vary</td></tr>
+<tr><td>Care guidance</td><td>TBD, from the supplier or fabricator</td><td><b>Pending.</b> None supplied</td></tr>
+<tr><td>Sample comparison</td><td>Stone with Colonial Maple Haze and Alabaster (<a href="countertop.md">finish test</a>)</td><td><b>Pending.</b> No samples in hand</td></tr>
+</table>
+
+<h2 id="map">Fabrication map</h2>
+<p class="note">To scale, from above, arranged as in the <a href="../drawings/sketch-top.html">Top view</a>: the island at the top and the wall run below it, reading from its Coffee end. The two runs are three stone pieces. Every seam, support and vein decision here is a proposal: <b>the fabricator must establish the actual seam and support proposal.</b></p>
+<div class="map">
+<svg viewBox="0 0 225 165" role="img" aria-label="Plan of the island and wall counters with work areas, the proposed seam, exposed edges, overhang brackets, seats, cutouts, backsplash and aisle dimensions">
+<g transform="translate(14 44)">
+  <!-- Coordinates are inches: x from the island's spices end, y from the island cabinet backs. -->
+  <text class="mid" x="42" y="-37">guest side</text>
+  <circle class="seat" cx="14" cy="-27" r="6"/><circle class="seat" cx="42" cy="-27" r="6"/><circle class="seat" cx="70" cy="-27" r="6"/>
+  <text x="79" y="-26">3 seats, about 28" apart; stools TBD</text>
+
+  <!-- Island: two pieces -->
+  <rect class="stone" x="-1" y="-19.5" width="85" height="44.5"/>
+  <rect class="stone" x="84" y="-5.5" width="109" height="30.5"/>
+  <rect class="hidden" x="0" y="-4.5" width="192" height="4.5"/>
+  <line class="hidden" x1="0" y1="24" x2="192" y2="24"/>
+  <g class="bracket">
+    <line x1="4" y1="0" x2="4" y2="-16.5"/><line x1="16.67" y1="0" x2="16.67" y2="-16.5"/><line x1="29.33" y1="0" x2="29.33" y2="-16.5"/><line x1="42" y1="0" x2="42" y2="-16.5"/><line x1="54.67" y1="0" x2="54.67" y2="-16.5"/><line x1="67.33" y1="0" x2="67.33" y2="-16.5"/><line x1="80" y1="0" x2="80" y2="-16.5"/>
+  </g>
+  <text x="1" y="-17">15" seating overhang past the back wall, 7 brackets (not approved)</text>
+  <rect class="hole" x="27.56" y="0.5" width="28.875" height="20"/>
+  <text class="mid" x="42" y="10">cooktop cutout</text><text class="mid" x="42" y="13.5">28 7/8" &times; 20"</text>
+  <rect class="hole" x="106.25" y="4" width="33.5" height="19"/>
+  <text class="mid" x="123" y="13">undermount sink</text><text class="mid" x="123" y="16.5">33 1/2" &times; 19" outer</text>
+  <circle class="hole" cx="123" cy="3" r="0.7"/><circle class="hole" cx="119" cy="3" r="0.6"/>
+  <text x="125" y="2.5">faucet 1 3/8", button 1 1/4"</text>
+  <path class="edge" d="M-1,-19.5 H84 V-5.5 H193 V25 H-1 Z"/>
+  <line class="seam" x1="84" y1="-5.5" x2="84" y2="25"/>
+  <text class="seamtext" x="86" y="-8">proposed seam; prep spans it</text>
+  <text x="62" y="9"><tspan font-weight="bold">Piece 1</tspan></text><text x="62" y="12.5">85" &times; 44 1/2"</text>
+  <text x="150" y="9"><tspan font-weight="bold">Piece 2</tspan></text><text x="150" y="12.5">109" &times; 30 1/2"</text>
+  <text x="150" y="19">dishwasher gap below</text>
+
+  <!-- Work areas -->
+  <text class="zone mid" x="12" y="29">landing</text><text class="zone mid" x="42" y="29">cooktop</text><text class="zone mid" x="81" y="29">prep</text>
+  <text class="zone mid" x="123" y="29">sink</text><text class="zone mid" x="156" y="29">dish unload</text><text class="zone mid" x="180" y="29">fridge loading</text>
+  <text class="zone mid" x="13.5" y="68">coffee</text><text class="zone mid" x="54" y="68">oven landing</text>
+
+  <!-- Aisle -->
+  <line class="dim" x1="70" y1="25" x2="70" y2="71"/>
+  <text x="71.5" y="45">46" counter edge to counter edge</text>
+  <text x="71.5" y="48.5">(48" between cabinet faces)</text>
+  <line class="dim" x1="170" y1="25" x2="170" y2="65.2"/>
+  <text x="171.5" y="45">40.2" to the</text><text x="171.5" y="48.5">fridge handles</text>
+
+  <!-- Wall run -->
+  <rect class="sidewall" x="-4.5" y="72" width="4.5" height="24"/>
+  <rect class="stone" x="0" y="71" width="81" height="25"/>
+  <line class="edge" x1="0" y1="71" x2="81" y2="71"/>
+  <line class="hidden" x1="0" y1="72" x2="81" y2="72"/>
+  <text x="40.5" y="83"><tspan font-weight="bold">Piece 3</tspan></text><text x="40.5" y="86.5">81" &times; 25"</text>
+  <text x="2" y="80">butts the side wall</text>
+  <rect class="tall" x="81" y="72" width="33" height="24"/><text class="mid" x="97.5" y="83">OVD3393;</text><text class="mid" x="97.5" y="86.5">counter butts it</text>
+  <rect class="tall" x="114" y="72" width="36" height="24"/><text class="mid" x="132" y="85">pantry</text>
+  <rect class="tall" x="152" y="67.5" width="36" height="28.5"/><text class="mid" x="170" y="83">fridge</text>
+  <rect class="splash" x="0" y="96" width="81" height="2"/>
+  <line class="tick" x1="27" y1="95.5" x2="27" y2="98.5"/><line class="tick" x1="54" y1="95.5" x2="54" y2="98.5"/>
+  <text x="0" y="103">backsplash, 81" &times; 18 1/4" tall, 3 pieces seamed on the cabinet dividers; a receptacle cutout in each</text>
+
+  <!-- Key -->
+  <line class="edge" x1="0" y1="110" x2="9" y2="110"/><text x="11" y="111">exposed edge</text>
+  <line class="seam" x1="46" y1="110" x2="55" y2="110"/><text x="57" y="111">proposed seam</text>
+  <line class="bracket" x1="92" y1="110" x2="101" y2="110"/><text x="103" y="111">proposed bracket</text>
+  <line class="hidden" x1="142" y1="110" x2="151" y2="110"/><text x="153" y="111">under the stone</text>
+</g>
+</svg>
+</div>
+
+<table>
+<tr><th>On the map</th><th>Plan</th><th>Still TBD</th></tr>
+<tr><td>Seam</td><td>Island, between plates and trash, where the 15" overhang ends. It runs through the prep area (plates and trash)</td><td>Final location, vein match, and whether slab size, transport or access moves it. Fabricator</td></tr>
+<tr><td>Exposed edges</td><td>Island: all the way around except the seam, including the 14" step where the overhang ends. Wall: the front edge only</td><td>Edge detail at the step</td></tr>
+<tr><td>Overhangs</td><td>Island: 1" at the aisle, 1" at each end, 1" past the back wall behind the sink piece, 15" behind the cooktop piece. Wall: 1" at the aisle, none at either end</td><td>Approved support for the 15" stretch; whether the back wall can carry it (contractor or engineer)</td></tr>
+<tr><td>Seating</td><td>Three stools along the 84" stretch</td><td>Stools; room behind them; knees and plugs at the receptacles behind spices and plates, centered at 29"</td></tr>
+<tr><td>Backsplash</td><td>Wall run only; none on the island</td><td>Yield and vein match on the actual slabs</td></tr>
+<tr><td>Bookshelf</td><td>No bookshelf appears in the current plan</td><td>Location, size and how it meets the counter</td></tr>
+</table>
+
+<h2 id="questions">Three focused questions</h2>
+<p class="note">For the stone supplier and fabricator. Status is one of drafted, sent or answered; nothing has been sent. The owner is who sends and chases the question. No coordinator or general contractor is assigned (<a href="issues.html#open">Issues</a>), so that is the homeowner for now.</p>
+<table>
+<tr><th>Question</th><th>Owner</th><th>Evidence requested</th><th>Status</th></tr>
+<tr><td>1. For the actual slab and proposed thickness, what edge, cutout, finish, and care details do you recommend, and what documentation supports them?</td><td>Homeowner; answered by the fabricator (tentatively The Stumble Stone) and Go-Granite</td><td>Photos of the actual slabs; material documentation and an etch and stain test on the exact stone; written care instructions; edge and sink-reveal details for 3 cm</td><td>Drafted</td></tr>
+<tr><td>2. Can you provide a proposed seam and veining layout based on slab size, cutouts, transport, and installation access?</td><td>Homeowner; answered by the fabricator</td><td>A layout drawing on the measured slabs, showing the three pieces, three backsplash pieces, seams and vein match; confirmed slab count; any limit from transport or access</td><td>Drafted</td></tr>
+<tr><td>3. What cabinet preparation and support are required at spans, cutouts, and overhangs, and who coordinates approval with the cabinet supplier?</td><td>Homeowner, until a coordinator is named; answered by the fabricator, with the cabinet supplier and a contractor or engineer</td><td>Written support requirements at the dishwasher gap, sink and cooktop with no subtop; approval or changes to the bracket layout for seating loads; the cabinet supplier's approval; the back wall's anchoring confirmed</td><td>Drafted</td></tr>
+</table>
+
+<h2 id="protect">Protect the working kitchen</h2>
+<p><b>Requirement for the fabricator and installer:</b> finished projections and supports must preserve the selected 48" working aisle, appliance access and the guest connection. Any change to the planned stone edges, brackets or supports that affects these comes back for approval before fabrication.</p>
+<table>
+<tr><th>Measure</th><th>As planned</th></tr>
+<tr><td>Cabinet face to cabinet face (how the 48" aisle is measured)</td><td>48"</td></tr>
+<tr><td>Island counter edge to wall counter edge</td><td>46"; each counter has a 1" nosing</td></tr>
+<tr><td>Island counter edge to OVD3393 and pantry faces</td><td>47"</td></tr>
+<tr><td>Island counter edge to fridge doors / handles</td><td>42 1/2" / 40.2"</td></tr>
+<tr><td>Door and pull projection into the aisle</td><td>TBD</td></tr>
+<tr><td>Open appliance doors, from the <a href="appliances.html">Appliances</a> page</td><td>Fridge doors leave about 28 1/2" of the 48"; the dishwasher door leaves about 23"</td></tr>
+<tr><td>Guest connection</td><td>Island counter at 35.75" with no raised backsplash; brackets hidden under the stone; the three seats kept open</td></tr>
+</table>
+<p class="note"><b>Provisional until resolved:</b> island depth (44 1/2" and 30 1/2", pending support approval), seating (stools and spacing) and any bookshelf detail (not in the plan).</p>
+
+<h2 id="brief">The brief</h2>
+<p><b>Define the Details to Verify.</b> Spend about 10 minutes with paper or a document. No purchases, supplier replies, or new measurements are required; use TBD wherever information is missing.</p>
+<p><b>Write the Proposed Specification.</b> Start with leading candidate: Luce di Luna quartzite; alternative: soapstone; proposed thickness: 3 centimeters, carried from your existing pages. Add finish and edge as proposed or TBD. Identify actual-slab inspection, material identification, care guidance, and sample comparison as pending unless you now have evidence.</p>
+<p><b>Map the Fabrication Decisions.</b> Sketch two rectangles representing the galley's counter runs. Label prep, sink, cooktop, and landing areas, then mark any proposed seams, exposed edges, backsplash, overhangs, seating, or bookshelf interfaces. Label unknown dimensions TBD and note that the fabricator must establish the actual seam and support proposal.</p>
+<p><b>Prepare Three Focused Questions.</b></p>
+<ol>
+  <li>For the actual slab and proposed thickness, what edge, cutout, finish, and care details do you recommend, and what documentation supports them?</li>
+  <li>Can you provide a proposed seam and veining layout based on slab size, cutouts, transport, and installation access?</li>
+  <li>What cabinet preparation and support are required at spans, cutouts, and overhangs, and who coordinates approval with the cabinet supplier?</li>
+</ol>
+<p><b>Protect the Working Kitchen.</b> Add a note requiring finished projections and supports to preserve your selected 48-inch working aisle, appliance access, and guest connection. Keep island depth, seating, and bookshelf details provisional wherever they remain unresolved. For each question, record an owner, evidence requested, and actual status: drafted, sent, or answered.</p>

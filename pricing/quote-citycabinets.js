@@ -15,17 +15,14 @@ const lines = [
   ['RW3721', 'W2D', 1, 971.95, 639.95, 0, 'wall: over the fridge, panel to panel, 37" × 20 3/4" × 24" (figured from the option prices, read 2026-11-03)'],
   ['UT362493ROT4 lower', 'T2D', 1, 2537.95, 1640.95, 0, 'wall: pantry, 36" × 54" × 24", 2 doors over 4 roll-outs'],
   ['UT362493ROT4 upper', 'W2D', 1, 978.95, 646.95, 0, 'wall: pantry, 36" × 39" × 24", 2 doors over shelves, set on the T2D (93" total; figured from the option prices, read 2026-11-03)'],
-  ['UT362493ROT4 end panel', 'TFE', 1, 539.95, 299.95, 0, 'wall: pantry, right side, counter to 93", 57 1/4" × 24 5/8" (no charge for the height, read 2026-11-03)'],
-  ['B33 (OW-B33-FH)', 'BWALLOVEN', 1, 792.95, 466.95, 0, 'wall: oven base, open case with an adjustable top rail'],
-  ['W3327', 'W2D', 1, 831.95, 499.95, 0, 'wall: over the oven'],
-  ['W3312 glass', 'W2DGLASS', 1, 1304.95, 748.95, 0, 'wall: over the W3327, glass not included'],
-  ['MWB27', 'B1DRAPPLIANCECASE', 1, 901.95, 533.95, 0, 'wall: Toaster, 16" opening for the microwave drawer over 1 drawer'],
-  ['DB27-3', 'B3DR', 2, 1495.95, 891.95, 0, 'wall: Air Fryer, Coffee'],
+  ['OVD3393', 'TAPPLIANCECASE', 1, 1433.95, 929.95, 0, 'wall: oven column, open case, 33" × 84" × 24": 84" is the tallest offered, with no back, doors or drawer (figured from the option prices, read 2026-11-04)'],
+  ['OVD3393 end panel', 'TFE', 1, 539.95, 299.95, 0, 'wall: oven column, right side, counter to 93", 57 1/4" × 24 5/8" (price read 2026-11-03)'],
+  ['DB27-3', 'B3DR', 3, 1495.95, 891.95, 0, 'wall: Toaster, Air Fryer, Coffee'],
   ['W2727', 'W2D', 3, 801.95, 469.95, 0, 'wall: over the Toaster, Air Fryer and Coffee'],
   ['W2712 glass', 'W2DGLASS', 3, 1274.95, 718.95, 0, 'wall: over the W2727s, glass not included'],
 ];
 // 'planned / code' lines whose size (W × H × D, as supplied) differs from the plan's in cabinets.html (comparison.html reads this too)
 // The pantry is split in two but adds up to the planned size, so it is not listed.
-const resized = [];
+const resized = ['OVD3393 / TAPPLIANCECASE'];
 quotes.push({ url: 'quote-citycabinets.html', label: 'City', rank: 3, lines, resized });
 }

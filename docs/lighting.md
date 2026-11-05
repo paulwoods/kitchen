@@ -27,7 +27,7 @@ Drawn on the [Top view](../drawings/sketch-top.html): a 74" person at prep (plat
 
 | Question | Affected groups and fixtures |
 |---|---|
-| Which exact dimmer and driver combinations support smooth dimming for these fixtures? | UC: Nicor UCB133SNWH ×1, UCB124SNWH ×3 (TRIAC or ELV, to 5%; Nicor lists the Lutron PD-5NE-WH-C and TGCL-153P)<br>T: TBD · A: TBD · X: TBD |
+| Which exact dimmer and driver combinations support smooth dimming for these fixtures? | UC: Nicor UCB124SNWH ×3 (TRIAC or ELV, to 5%; Nicor lists the Lutron PD-5NE-WH-C and TGCL-153P)<br>T: TBD · A: TBD · X: TBD |
 | What supported multi-location arrangement gives control at both ends of the galley? | T: TBD · A: TBD · X: TBD · UC: Nicor UCB (Caséta dimmer at the Coffee end, Pico at the fridge end, see [Electrical](electrical.html)) |
 | Which hood-light controls and dimming functions does the manufacturer permit? | Hood: Proline PLFI 544-42 (120 V hardwired; lights on its touch panel) |
 
@@ -40,7 +40,7 @@ Handoff sheet, 2026-11-01. "Drafted" means the questions below are written; noth
 | T task | Bright light on the island prep and sink surfaces | Fixture TBD; driver TBD | Compare 3000K, 3500K and 4000K; final choice pending | Dim on its own; control from both ends of the galley desired (proposed: Caséta PD-5NE at the Coffee end, Pico on the FP2496 skin) | Compatible fixture, driver and dimmer; stable low end and no flicker; driver access; feed (no row in Electrical yet); beam and output | Electrician | drafted |
 | A ambient | General light in the aisle | Fixture TBD; driver TBD | 3000K starting point, if the fixture offers it | Dim on its own; both ends desired (proposed as for T) | Compatible fixture, driver and dimmer; stable low end and no flicker; driver access; feed (no row in Electrical yet); beam and output | Electrician | drafted |
 | X toe-kick accent | Low glow at the floor (the same dimmer also runs the glass cabinet bars) | Toe-kick tape: 24 V, product TBD; two drivers TBD. Glass cabinets: Nicor UCB124SNWH ×4 | 3000K tape; bars selectable, set to match | Dim as one group; both ends desired (proposed as for T) | Tape driver and bars on one dimmer; total load; stable low end and no flicker; reachable driver locations | Electrician | drafted |
-| UC under-cabinet | Light on the wall-side counter | Nicor UCB133SNWH ×1, UCB124SNWH ×3 (direct-wire 120 V; no separate driver listed) | Selectable 2700K–5000K; 3000K starting point, final choice pending comparison | Dim on its own, to 5% per Nicor; both ends desired (proposed as for T) | Electrician confirms the bars on the PD-5NE (on Nicor's dimmer list) with a Pico; stable low end and no flicker | Electrician | drafted |
+| UC under-cabinet | Light on the wall-side counter | Nicor UCB124SNWH ×3 (direct-wire 120 V; no separate driver listed) | Selectable 2700K–5000K; 3000K starting point, final choice pending comparison | Dim on its own, to 5% per Nicor; both ends desired (proposed as for T) | Electrician confirms the bars on the PD-5NE (on Nicor's dimmer list) with a Pico; stable low end and no flicker | Electrician | drafted |
 | Hood lights | Light on the cooktop | Proline PLFI 544-42, 4 LED lights; lamp and driver not published | 2800–3500K **as reported** (Proline says this of all its hoods; the spec sheet says only "LED"). If adjustable, the setting nearest 3000K | Unknown: whether they dim and how they are controlled. Not assumed to share an external dimmer | Written reply from Proline, or documentation for this model | Proline (hood supplier) | drafted |
 
 ### To the electrician

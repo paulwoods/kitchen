@@ -82,6 +82,20 @@ function sketch(title, run, opts = {}) {
       cabinet(x, c.w, c.h);
       const upper = 39, lower = c.h - TOE - upper; // top doors match a 39" wall cabinet
       fronts(x, c.w, FLOOR - c.h, [{ h: upper, pair: true, pull: 'bottom' }, { h: lower, pair: true }]);
+    } else if (c.kind === 'oven') { // OVD3393 (cabinets.com cut-out sheet): 22 3/8" door pair at the top, 7 1/16" drawer over the toe kick
+      cabinet(x, c.w, c.h);
+      fronts(x, c.w, FLOOR - c.h, [{ h: 22.375, pair: true, pull: 'bottom' }]);
+      fronts(x, c.w, FLOOR - 11.5625, [{ h: 7.0625 }]);
+      const ow = 29.75, ox = x + (c.w - ow) / 2, top = FLOOR - 61, low = FLOOR - 38.625; // Bosch HBL87M53UC: 29 3/4" x 49" face from 12" to 61" off the floor (position assumed), 26 5/8" oven under the microwave
+      tag(c.name || 'oven', c.off);
+      rect(ox, top, ow, 22.375, 'oven');
+      rect(ox + 8, top + 0.75, ow - 16, 2, 'window'); // control panel, size assumed
+      line(ox + 3, top + 4.5, ox + ow - 3, top + 4.5, 'pull');
+      rect(ox + 3, top + 6, ow - 6, 12, 'window'); // drop-down doors, window sizes assumed
+      rect(ox, low, ow, 26.625, 'oven');
+      line(ox + 3, low + 3.5, ox + ow - 3, low + 3.5, 'pull');
+      rect(ox + 3, low + 6, ow - 6, 17.5, 'window');
+      ap = '';
     } else {
       cabinet(x, c.w, BOX);
       if (c.kind === 'drawers') {
@@ -90,21 +104,6 @@ function sketch(title, run, opts = {}) {
       } else if (c.kind === 'door') fronts(x, c.w, FLOOR - BOX, [{ h: face, pull: 'top' }]);
       else if (c.kind === 'sink') fronts(x, c.w, FLOOR - BOX, [{ h: 6 }, { h: face - 6, pair: true }]); // false front over doors
       else if (c.kind === 'base') fronts(x, c.w, FLOOR - BOX, [{ h: 6 }, { h: face - 6, pull: 'top' }]); // drawer over one door
-      else if (c.kind === 'oven') { // 29" oven face from 5" to 34" off the floor
-        const ow = Math.min(29.75, c.w - 0.25), ox = x + (c.w - ow) / 2;
-        tag(c.name || 'oven', c.off);
-        rect(ox, FLOOR - 34, ow, 29, 'oven');
-        rect(ox + 3, FLOOR - 28, ow - 6, 18, 'window');
-        line(ox + 3, FLOOR - 31.5, ox + ow - 3, FLOOR - 31.5, 'pull');
-        ap = '';
-      } else if (c.kind === 'microwave') { // Bosch HMD8454UC microwave drawer: 23 7/8" x 16 5/16" face from 17.75" to 7/16" under the counter (34 1/16"), one drawer below (like the cabinets.com MBC27)
-        fronts(x, c.w, FLOOR - 17.75, [{ h: 13.25 }]);
-        const mw = 23.875, mx = x + (c.w - mw) / 2, top = FLOOR - 34.0625;
-        tag('microwave', c.off);
-        rect(mx, top, mw, 16.3125, 'oven');
-        rect(mx + 0.5, top + 0.5, mw - 1, 1.6875, 'window'); // tilt-out control strip; the drawer opens itself, no handle
-        ap = '';
-      }
       if (c.falseTop) text(x + c.w / 2 + 5, FLOOR - BOX + 3.3, 'false front', 'code start'); // top row is a fixed front, labeled right of its pull
     }
     // Things hung above this item. Cabinet: { code, h, at: bottom off the floor, glass, w, dx: wider than the item, from its left end }; hood: { hood: true, w, h, at, chimney }; coffee maker: { coffee: true, w, h, at }; other appliance: { appliance, w, h, at, dx }; light bar: { light, w, h, at, inside }.

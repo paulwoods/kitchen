@@ -11,7 +11,7 @@ Heat and scratch notes are general knowledge about the material, not supplier in
 | Soapstone (not chosen): candidate TBD | Generally tolerates heat well. Generally soft enough to scratch in everyday use, by an amount that varies with the stone. | Does this stone need sealing? Is oiling or waxing optional, and how does the color change with and without it? Can scratches be sanded or oiled out, and by whom? | Not answered; not chosen | Whether a slab reaches the island pieces (below); hardness of the exact stone; whether it can carry the 15" overhang; the color and veining of the actual slab |
 | Luce di Luna quartzite, 3 cm, Go-Granite (the pick) | Generally tolerates heat well. Generally much harder and more scratch resistant than soapstone, again varying with the stone. | Does this stone need sealing, how often and with what? Does it stain or etch? Stones sold as quartzite can vary, so has this one been tested? | Not stated; chosen anyway | Photos and approval of the actual slabs (the listing photo is only representative); etch and stain test on a sample of the exact stone; the fabricator's layout on the nominal 126" × 63" slab |
 
-Pieces in the current plan: island 85" × 44 1/2" (with the cooktop) and 109" × 30 1/2" (with the sink), wall run 114" × 25". All three fit the nominal 126" × 63" slab, so the estimate is two slabs: the 85" piece on one, the 109" and 114" pieces on the other. That is before seam, vein matching and the fabricator's layout.
+Pieces in the current plan: island 85" × 44 1/2" (with the cooktop) and 109" × 30 1/2" (with the sink), wall run 81" × 25". All three fit the nominal 126" × 63" slab, so the estimate is two slabs: the 85" piece on one, the 109" and 81" pieces on the other. That is before seam, vein matching and the fabricator's layout.
 
 ## Plan the finish test
 
@@ -45,7 +45,7 @@ The Nicor bars can be set to all three color temperatures, but none is on hand, 
 ### Questions for a stone supplier or fabricator
 
 1. Care and wear: how does Luce di Luna scratch, stain and etch in daily kitchen use, and what care do you recommend?
-2. Availability and pricing: do you have two matching slabs of Luce di Luna that can yield 85" × 44 1/2", 109" × 30 1/2" and 114" × 25" in 3 cm, and what is the delivered price, and the fabricated and installed price, for that scope?
+2. Availability and pricing: do you have two matching slabs of Luce di Luna that can yield 85" × 44 1/2", 109" × 30 1/2" and 81" × 25" in 3 cm, and what is the delivered price, and the fabricated and installed price, for that scope?
 3. Fabrication: can you fabricate and install Luce di Luna in 3 cm with no subtop, with the expected island seam between plates and trash, the cooktop cutout, an undermount sink cutout, a 1 3/8" faucet hole and a 1 1/4" air button hole, the dishwasher gap, an eased edge, and a 15" seating overhang on seven 16" flat brackets about 13" apart, starting about 3/8" behind the cooktop's back edge?
 
 ### Separate questions

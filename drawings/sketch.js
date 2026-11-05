@@ -39,7 +39,7 @@ function sketch(title, run, opts = {}) {
       } else {
         rect(x + 0.25, y, w - 0.5, r.h - 0.5, 'front' + paint);
         const py = r.pull === 'top' ? y + 3 : y + r.h / 2;
-        if (r.one) { const oy = r.pull === 'top' ? y + 2 : y + r.h - 10.5; line(x + w - 1.75, oy, x + w - 1.75, oy + 8, 'pull'); } // one hinged door: pull on its right (wall cabinets' hinge side assumed)
+        if (r.one) { const oy = r.pull === 'top' ? y + 2 : y + r.h - 10.5; const ox = r.left ? x + 1.75 : x + w - 1.75; line(ox, oy, ox, oy + 8, 'pull'); } // one hinged door: pull on its right, or its left with `left` (wall cabinets' hinge side assumed)
         else line(mid - 4, py, mid + 4, py, 'pull');
       }
       y += r.h;
@@ -137,7 +137,7 @@ function sketch(title, run, opts = {}) {
       const top = FLOOR - u.at - u.h;
       paint = ' alabaster';
       rect(x + (u.dx || 0), top, u.w || c.w, u.h, 'box' + paint);
-      fronts(x + (u.dx || 0), u.w || c.w, top, [u.one ? { h: u.h, one: true } : { h: u.h, pair: true, pull: 'bottom' }]);
+      fronts(x + (u.dx || 0), u.w || c.w, top, [u.one ? { h: u.h, one: true, left: u.left } : { h: u.h, pair: true, pull: 'bottom' }]);
       if (u.glass && u.one) rect(x + 2, top + 2, c.w - 4, u.h - 4.5, 'glass');
       else if (u.glass) for (const gx of [x + 2, x + c.w / 2 + 1.875]) rect(gx, top + 2, c.w / 2 - 3.875, u.h - 4.5, 'glass');
     }
@@ -168,8 +168,8 @@ function sketch(title, run, opts = {}) {
       line(l, t, r, t, cls); line(r, t, r, t + c.bowl.right, cls);
       line(r, t + c.bowl.right, l, t + c.bowl.left, cls); line(l, t + c.bowl.left, l, t, cls);
     }
-    if (c.receptacle) { // duplex receptacle centered on the cabinet (assumed): a vertical 2.75" x 4.5" plate centered at OUTLET on the wall
-      const r = RECEPTACLE, px = x + (c.w - r.w) / 2, top = FLOOR - r.at - r.h / 2;
+    if (c.receptacle) { // duplex receptacle centered on the cabinet (assumed): a vertical 2.75" x 4.5" plate centered at OUTLET, or `receptacleAt`, on the wall
+      const r = { ...RECEPTACLE, at: c.receptacleAt || RECEPTACLE.at }, px = x + (c.w - r.w) / 2, top = FLOOR - r.at - r.h / 2;
       const behind = (c.upper || []).find(u => { // a countertop appliance stands in front of it: dashed
         const ax = x + (u.dx ?? (c.w - u.w) / 2);
         return (u.appliance || u.coffee) && ax <= px && ax + u.w >= px + r.w && u.at <= r.at - r.h / 2 && u.at + u.h >= r.at + r.h / 2;
@@ -226,7 +226,8 @@ function sketch(title, run, opts = {}) {
   const mark = (at, label) => marks.set(at, [...new Set([...(marks.get(at) || []), label])]);
   mark(TOE, 'toe kick');
   mark(BOX + TOP, 'counter');
-  if (run.some(c => c.receptacle)) mark(RECEPTACLE.at, 'receptacles');
+  if (run.some(c => c.receptacle && !c.receptacleAt)) mark(RECEPTACLE.at, 'receptacles');
+  for (const c of run) if (c.receptacleAt) mark(c.receptacleAt, 'fridge receptacle');
   for (const c of run) if (c.faucet) mark(BOX + TOP + c.faucet.h, 'faucet');
   for (const u of run.flatMap(c => c.upper || [])) {
     if (u.hood) mark(u.at, 'hood');

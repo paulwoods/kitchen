@@ -22,7 +22,8 @@ sketch('Island front', [
   { name: 'sink',      code: 'SB42',    w: 42, kind: 'sink', falseTop: true, airSwitch: { dx: 17, back: 3 },
     inside: [{ label: '120v', w: 2.75, h: 4.5, at: 9, dx: 3 },
               { label: 'air sw', w: 4.375, h: 4.375, at: 9, dx: 8, within: true }, // STS-OO power module, plugged into the 120v, the disposal plugs into it
-              { label: 'disposal', w: 8.5, h: 12.25, at: 18.5, dx: 11.3125, within: true }], // InSinkErator 81138K: 12 1/4" tall under the drain (width assumed)
+              { label: 'disposal', w: 8.5, h: 12.25, at: 18.5, dx: 11.3125, within: true }, // InSinkErator 81138K: 12 1/4" tall under the drain (width assumed)
+              { label: '120v', w: 2.75, h: 4.5, at: 29, dx: 21 }], // GFCI on the island's back wall, behind the cabinet (height assumed)
     bowl: { w: 31.875, left: 9.875, right: 9.25 }, // Ruvati RVH6222ST bowl, drain on the left, 6 1/4" in from the bowl's left wall
     faucet: { h: 22.4375, reach: 9.5, back: 3 } }, // Kohler K-R30937-BMB, 3" from the cabinet backs; InSinkErator STS-OO button 4" left of it
   { name: 'dishwasher', code: '24" gap', w: 24, kind: 'gap', tag: 'DW', dishwasher: true,

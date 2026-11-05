@@ -3,16 +3,17 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="nav.js" defer></script>
+<link rel="stylesheet" href="theme.css">
 <title>Galley Kitchen</title>
 <style>
-  body { margin: 24px; font-size: 110%; background: #fbfaf5; color: #223; font-family: system-ui, sans-serif; line-height: 1.5; }
+  body { margin: 24px; font-size: 110%; background: var(--paper); color: var(--ink); font-family: system-ui, sans-serif; line-height: 1.5; }
   h1 { margin: 0 0 4px; } h2 { margin: 28px 0 4px; font-size: 1.25em; } p { margin: 0; }
-  ul { margin: 8px 0 0; } li { margin: 6px 0; } a { color: #2a5d9f; } li a { padding: 3px 0; }
-  .sub, li span { color: #667; }
+  ul { margin: 8px 0 0; } li { margin: 6px 0; } a { color: var(--link); } li a { padding: 3px 0; }
+  .sub, li span { color: var(--muted); }
   li span::before { content: "· "; content: "· " / ""; }
   .columns { margin-top: 28px; columns: 3 320px; column-gap: 32px; } section { break-inside: avoid; padding-bottom: 28px; } section h2 { margin-top: 0; }
   .title { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px 24px; }
-  .status { padding: 8px 12px; background: #fff; border: 1px solid #ccd; }
+  .status { padding: 8px 12px; background: var(--sheet); border: 1px solid var(--rule); }
 </style>
 <main>
 <div class="title">

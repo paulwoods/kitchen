@@ -3,6 +3,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="../nav.js" defer></script>
+<link rel="stylesheet" href="../theme-light.css">
 <script src="sketch.js"></script>
 <body>
 <script>
@@ -48,13 +49,13 @@ plan('Top view', island, wall, { extra: ({ out, text, ix, iy, wx, wy }) => {
   wal(mid(Wl.Coffee), COUNTER + 6, 'coffee', 'zone');
   wal((mid(Wl.Toaster) + mid(Wl['Air Fryer'])) / 2, COUNTER + 6, 'oven landing', 'zone');
   for (const c of wall) if ((c.upper || []).some(x => x.code === 'W2127')) {
-    wal(mid(c), 5, 'wall cabinet', 'code');
+    wal(mid(c), 5, 'wall cabinet', 'code on');
     wal(mid(c), 10, 'UC', 'lamp l-UC'); // under-cabinet light, near the front
   }
   // Three counter stools at the seating overhang, 28" apart along the 84" stretch, tucked in 3 1/2" from the back wall; 16" round seats (stools not chosen, size assumed).
   for (const u of [14, 42, 70]) {
     out.push(`<circle class="hidden" cx="${ix(u)}" cy="${iy(-16)}" r="8"/>`);
-    isl(u, -16, 'stool', 'code');
+    isl(u, -16, 'stool', 'code on');
   }
   // Lights in island [u, v]: T over the island counter, A down the middle of the aisle between each pair of opposite centers.
   const T = [mid(I.spices), I.trash.u, mid(I.sink), I['cabinet a'].u].map(u => [u, 18]);
@@ -95,15 +96,15 @@ plan('Top view', island, wall, { extra: ({ out, text, ix, iy, wx, wy }) => {
   for (const c of island) if (c.kind !== 'gap') isl(mid(c), COUNTER + 2.5, 'X', 'lamp l-X');
   for (const c of wall) if (!['gap', 'panel'].includes(c.kind)) wal(mid(c), COUNTER + 2.5, 'X', 'lamp l-X');
   // X: Nicor bars inside the glass cabinets at the top of the wall run (2026-10-31).
-  for (const c of wall) if ((c.upper || []).some(x => / glass$/.test(x.code))) { wal(mid(c), 16, 'X', 'lamp l-X'); wal(mid(c), 19.5, 'glass cabinet', 'code'); }
+  for (const c of wall) if ((c.upper || []).some(x => / glass$/.test(x.code))) { wal(mid(c), 16, 'X', 'lamp l-X'); wal(mid(c), 19.5, 'glass cabinet', 'code on'); }
 } });
 document.querySelector('svg').insertAdjacentHTML('beforebegin', `<p class="lights"><label><input type="checkbox" data-light="T"> <b class="legend">T</b> task light (pendant; shadows figured from the ceiling)</label><label><input type="checkbox" data-light="A"> <b class="legend">A</b> ambient light</label>
   <label><input type="checkbox" data-light="X"> <b class="legend">X</b> accent light (toe kick, inside the glass cabinets)</label><label><input type="checkbox" data-light="UC"> <b class="legend">UC</b> under-cabinet light</label><label><input type="checkbox" data-light="people"> 74" people</label></p>
-  <p><b style="color: #1f6b3a">green</b>: work areas ·
+  <p><b style="color: var(--green)">green</b>: work areas ·
   gray: shadow each light (at the 96" ceiling) casts on the counter from a 74" person (checked: light on)</p>
-  <style>.legend { color: #e07000; } .lights label { display: block; } .zone, .lamp { paint-order: stroke; stroke: #fff; stroke-width: 0.6; } .shadow { fill: #000; fill-opacity: 0.15; } .person { fill: #445; fill-opacity: 0.85; } .head { fill: #223; }
+  <style>.legend { color: #e07000; } .lights label { display: block; } .zone, .lamp { paint-order: stroke; stroke: var(--sheet); stroke-width: 0.6; } .shadow { fill: #000; fill-opacity: 0.15; } .person { fill: var(--muted); fill-opacity: 0.85; } .head { fill: var(--ink); }
   svg .off, svg:has(.person.off) .shadow { display: none; }
-  .ray { stroke: #e07000; stroke-width: 0.5; } .ray.guest { stroke: #1f6b3a; }</style>
+  .ray { stroke: #e07000; stroke-width: 0.5; } .ray.guest { stroke: var(--green); }</style>
   <p>Arrows: the two lights over each working position, aimed at the head (74"). Prep: T over the counter ahead, A in the aisle behind; their coverage overlaps on the counter. <a href="../docs/lighting.html">Lighting scenes</a></p>`);
 // A light turned off hides its marks, arrows and shadows; people turned off hide themselves and all the shadows.
 for (const box of document.querySelectorAll('[data-light]')) {

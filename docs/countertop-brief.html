@@ -3,24 +3,25 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="../nav.js" defer></script>
+<link rel="stylesheet" href="../theme.css">
 <title>Countertop brief · Galley Kitchen</title>
 <style>
-  body { margin: 24px; max-width: 1100px; background: #fbfaf5; color: #223; font-family: system-ui, sans-serif; line-height: 1.5; }
-  h1 { margin: 0 0 4px; } h2 { margin: 28px 0 4px; font-size: 1.25em; } a { color: #2a5d9f; }
-  table { border-collapse: collapse; margin-top: 12px; background: #fff; }
-  th, td { border: 1px solid #ccd; padding: 8px 10px; text-align: left; vertical-align: top; }
-  th { background: #eef2f7; } .note { color: #667; }
-  .map { overflow-x: auto; margin-top: 12px; background: #fff; border: 1px solid #ccd; }
+  body { margin: 24px; background: var(--paper); color: var(--ink); font-family: system-ui, sans-serif; line-height: 1.5; }
+  h1 { margin: 0 0 4px; } h2 { margin: 28px 0 4px; font-size: 1.25em; } a { color: var(--link); }
+  table { border-collapse: collapse; margin-top: 12px; background: var(--sheet); width: 100%; }
+  th, td { border: 1px solid var(--rule); padding: 8px 10px; text-align: left; vertical-align: top; }
+  th { background: var(--head); } .note { color: var(--muted); }
+  .map { overflow-x: auto; margin-top: 12px; background: var(--sheet); border: 1px solid var(--rule); }
   .map svg { display: block; width: 100%; min-width: 760px; }
-  .map text { font-size: 2.6px; fill: #223; paint-order: stroke; stroke: #fff; stroke-width: 0.5px; }
-  .map text.zone { fill: #1f6b3a; font-weight: bold; } .map text.mid { text-anchor: middle; } .map text.seamtext { fill: #b3261e; }
+  .map text { font-size: 2.6px; fill: var(--ink); paint-order: stroke; stroke: var(--sheet); stroke-width: 0.5px; }
+  .map text.on { fill: #223; stroke: #fff; } .map text.zone { fill: var(--green); font-weight: bold; } .map text.mid { text-anchor: middle; } .map text.seamtext { fill: var(--red); }
   .stone { fill: #e6e7e3; } .edge { fill: none; stroke: #223; stroke-width: 0.9; }
   .seam { stroke: #b3261e; stroke-width: 0.7; stroke-dasharray: 2 1.2; }
   .hidden { fill: none; stroke: #778; stroke-width: 0.25; stroke-dasharray: 1 1; }
-  .hole { fill: #fff; stroke: #223; stroke-width: 0.3; } .bracket { stroke: #e07000; stroke-width: 0.5; }
-  .seat { fill: none; stroke: #2a5d9f; stroke-width: 0.35; stroke-dasharray: 1 .8; } .dim { stroke: #667; stroke-width: 0.25; }
+  .hole { fill: var(--sheet); stroke: #223; stroke-width: 0.3; } .bracket { stroke: #e07000; stroke-width: 0.5; }
+  .seat { fill: none; stroke: var(--link); stroke-width: 0.35; stroke-dasharray: 1 .8; } .dim { stroke: var(--muted); stroke-width: 0.25; }
   .splash { fill: #bbb; } .tick { stroke: #223; stroke-width: 0.5; } .tall { fill: #f4f4f1; stroke: #99a; stroke-width: 0.3; } .sidewall { fill: #99a; }
-  @media (max-width: 600px) { table, tbody, tr, td, th { display: block; } tr:first-child { display: none; } tr { margin-bottom: 12px; } td { border-top: 0; } td:first-child { border-top: 1px solid #ccd; font-weight: bold; } }
+  @media (max-width: 600px) { table, tbody, tr, td, th { display: block; } tr:first-child { display: none; } tr { margin-bottom: 12px; } td { border-top: 0; } td:first-child { border-top: 1px solid var(--rule); font-weight: bold; } }
 </style>
 <h1>Countertop brief</h1>
 <p><a href="../index.html">index</a></p>
@@ -60,19 +61,19 @@
   <g class="bracket">
     <line x1="4" y1="0" x2="4" y2="-16.5"/><line x1="16.67" y1="0" x2="16.67" y2="-16.5"/><line x1="29.33" y1="0" x2="29.33" y2="-16.5"/><line x1="42" y1="0" x2="42" y2="-16.5"/><line x1="54.67" y1="0" x2="54.67" y2="-16.5"/><line x1="67.33" y1="0" x2="67.33" y2="-16.5"/><line x1="80" y1="0" x2="80" y2="-16.5"/>
   </g>
-  <text x="1" y="-17">15" seating overhang past the back wall, 7 brackets (not approved)</text>
+  <text class="on" x="1" y="-17">15" seating overhang past the back wall, 7 brackets (not approved)</text>
   <rect class="hole" x="27.56" y="0.5" width="28.875" height="20"/>
   <text class="mid" x="42" y="10">cooktop cutout</text><text class="mid" x="42" y="13.5">28 7/8" &times; 20"</text>
   <rect class="hole" x="106.25" y="4" width="33.5" height="19"/>
   <text class="mid" x="123" y="13">undermount sink</text><text class="mid" x="123" y="16.5">33 1/2" &times; 19" outer</text>
   <circle class="hole" cx="123" cy="3" r="0.7"/><circle class="hole" cx="119" cy="3" r="0.6"/>
-  <text x="125" y="2.5">faucet 1 3/8", button 1 1/4"</text>
+  <text class="on" x="125" y="2.5">faucet 1 3/8", button 1 1/4"</text>
   <path class="edge" d="M-1,-19.5 H84 V-5.5 H193 V25 H-1 Z"/>
   <line class="seam" x1="84" y1="-5.5" x2="84" y2="25"/>
   <text class="seamtext" x="86" y="-8">proposed seam; prep spans it</text>
-  <text x="62" y="9"><tspan font-weight="bold">Piece 1</tspan></text><text x="62" y="12.5">85" &times; 44 1/2"</text>
-  <text x="150" y="9"><tspan font-weight="bold">Piece 2</tspan></text><text x="150" y="12.5">109" &times; 30 1/2"</text>
-  <text x="150" y="19">dishwasher gap below</text>
+  <text class="on" x="62" y="9"><tspan font-weight="bold">Piece 1</tspan></text><text class="on" x="62" y="12.5">85" &times; 44 1/2"</text>
+  <text class="on" x="150" y="9"><tspan font-weight="bold">Piece 2</tspan></text><text class="on" x="150" y="12.5">109" &times; 30 1/2"</text>
+  <text class="on" x="150" y="19">dishwasher gap below</text>
 
   <!-- Work areas -->
   <text class="zone mid" x="12" y="29">landing</text><text class="zone mid" x="42" y="29">cooktop</text><text class="zone mid" x="81" y="29">prep</text>
@@ -91,17 +92,17 @@
   <rect class="stone" x="0" y="71" width="84" height="25"/>
   <line class="edge" x1="0" y1="71" x2="84" y2="71"/>
   <line class="hidden" x1="0" y1="72" x2="84" y2="72"/>
-  <text x="42" y="83"><tspan font-weight="bold">Piece 3</tspan></text><text x="42" y="86.5">84" &times; 25"</text>
-  <text x="2" y="80">butts the side wall</text>
-  <rect class="tall" x="84" y="72" width="33" height="24"/><text class="mid" x="100.5" y="83">OVD3393;</text><text class="mid" x="100.5" y="86.5">counter butts it</text>
-  <rect class="tall" x="117" y="72" width="36" height="24"/><text class="mid" x="135" y="85">pantry</text>
-  <rect class="tall" x="155" y="67.5" width="36" height="28.5"/><text class="mid" x="173" y="83">fridge</text>
+  <text class="on" x="42" y="83"><tspan font-weight="bold">Piece 3</tspan></text><text class="on" x="42" y="86.5">84" &times; 25"</text>
+  <text class="on" x="2" y="80">butts the side wall</text>
+  <rect class="tall" x="84" y="72" width="33" height="24"/><text class="on mid" x="100.5" y="83">OVD3393;</text><text class="on mid" x="100.5" y="86.5">counter butts it</text>
+  <rect class="tall" x="117" y="72" width="36" height="24"/><text class="on mid" x="135" y="85">pantry</text>
+  <rect class="tall" x="155" y="67.5" width="36" height="28.5"/><text class="on mid" x="173" y="83">fridge</text>
   <rect class="splash" x="0" y="96" width="84" height="2"/>
   <line class="tick" x1="21" y1="95.5" x2="21" y2="98.5"/><line class="tick" x1="42" y1="95.5" x2="42" y2="98.5"/><line class="tick" x1="63" y1="95.5" x2="63" y2="98.5"/>
   <text x="0" y="103">backsplash, 84" &times; 18 1/4" tall, 4 pieces seamed on the cabinet dividers; a receptacle cutout in each</text>
 
   <!-- Key -->
-  <line class="edge" x1="0" y1="110" x2="9" y2="110"/><text x="11" y="111">exposed edge</text>
+  <rect class="stone" x="0" y="108" width="9" height="4"/><line class="edge" x1="0" y1="110" x2="9" y2="110"/><text x="11" y="111">exposed edge</text>
   <line class="seam" x1="46" y1="110" x2="55" y2="110"/><text x="57" y="111">proposed seam</text>
   <line class="bracket" x1="92" y1="110" x2="101" y2="110"/><text x="103" y="111">proposed bracket</text>
   <line class="hidden" x1="142" y1="110" x2="151" y2="110"/><text x="153" y="111">under the stone</text>

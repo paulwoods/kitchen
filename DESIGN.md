@@ -2,15 +2,15 @@
 name: Galley Kitchen
 description: The plan for one galley kitchen remodel, on graph paper, in inches.
 colors:
-  link-blue: "#2a5d9f"
-  ink: "#223"
-  slate: "#667"
-  paper: "#fbfaf5"
-  sheet: "#fff"
-  rule: "#ccd"
-  header-mist: "#eef2f7"
-  grid-blue: "#bcd3ea"
-  grid-bold: "#8fb2d6"
+  link-blue: "#8ab4f8"
+  ink: "#e4e6eb"
+  slate: "#a0a6b2"
+  paper: "#16181d"
+  sheet: "#22252c"
+  rule: "#3a3f4a"
+  header-mist: "#2c313b"
+  grid-blue: "#3a4d66"
+  grid-bold: "#5b7aa0"
   maple: "#f3ead9"
   front-cream: "#fffdf7"
   riser-sand: "#e4dccb"
@@ -67,12 +67,12 @@ components:
 
 **Creative North Star: "The Graph-Paper Plan"**
 
-A homeowner's careful plan, drawn on graph paper and made exact. Every page reads like a sheet pulled from the same folder: warm off-white paper, dark ink, one blue for links, and drawings ruled in pale blue squares. The site is quiet and technical. The numbers do the talking; color, type and space stay out of their way.
+A homeowner's careful plan, drawn on graph paper and made exact. Every page reads like a sheet pulled from the same folder: a dark page, light ink, one blue for links, and drawings ruled in dim blue squares. The three sketch pages, and every page when printed, use warm off-white paper and dark ink, with drawings ruled in pale blue. The site is quiet and technical. The numbers do the talking; color, type and space stay out of their way.
 
-Density is moderate. Documentation pages are plain text, lists and bordered tables at a comfortable reading width. Sketches are scaled drawings where one SVG unit is one inch, so every shape is a real measurement. Nothing is decorative: if a color appears, it stands for a material, a state or a link.
+Density is moderate. Documentation pages are plain text, lists and bordered tables at the full page width. Sketches are scaled drawings where one SVG unit is one inch, so every shape is a real measurement. Nothing is decorative: if a color appears, it stands for a material, a state or a link.
 
 **Key Characteristics:**
-- Warm paper background, dark blue-black ink, one link blue.
+- Near-black background, light ink, one link blue; the light paper set when printed.
 - System font only, default browser hierarchy, no web fonts.
 - Flat surfaces with square corners and thin 1px rules.
 - Drawings on a 6" grid with a bolder line every 30", measured in inches.
@@ -80,13 +80,13 @@ Density is moderate. Documentation pages are plain text, lists and bordered tabl
 
 ## Colors
 
-A near-monochrome paper-and-ink palette with one functional blue, plus a small set of muted material colors used only inside drawings.
+A near-monochrome palette with one functional blue, plus a small set of muted material colors used only inside drawings. The neutrals, blue and grid are dark on screen (the values above, in `theme.css`) and light on the sketch pages and in print (`theme-light.css`). Material colors do not change between the two; a label on a light material keeps dark ink.
 
 ### Primary
 - **Drafting Blue** (link-blue): every link and nothing else. It marks where you can go, not what matters.
 
 ### Neutral
-- **Ink** (ink): all body text, headings, outlines in drawings, and the dark strokes of the plan.
+- **Ink** (ink): all body text, headings, and the floor line of the plan. Outlines on light materials stay a fixed dark ink.
 - **Pencil Gray** (slate): secondary text: subtitles, captions, dimensions and ruler labels.
 - **Plan Paper** (paper): the page background on every page.
 - **Clean Sheet** (sheet): table bodies and the sketch sheet, a step brighter than the page.
@@ -119,7 +119,7 @@ A near-monochrome paper-and-ink palette with one functional blue, plus a small s
 ### Hierarchy
 - **Headline** (700, 2em): the page title, one per page.
 - **Title** (700, 1.25em): section headings, a 1.25× step over body.
-- **Body** (400, 16px, line-height 1.5): text, list items and table cells. Reading pages cap at 760px; table pages at 1100px.
+- **Body** (400, 16px, line-height 1.5): text, list items and table cells.
 - **Label** (400, 2.2px in drawing units, about 11px on screen): cabinet codes in sketches. Names are bold at 2.4px, dimensions 2px in Pencil Gray.
 
 ### Named Rules
@@ -171,7 +171,7 @@ Square corners everywhere. Tables use 1px Hairline borders with collapsed edges.
 - **Do** keep every page on Plan Paper with Ink text and the system font.
 - **Do** give every drawing element its material color and every measurement in inches.
 - **Do** mark hidden items with dashed lines and upper cabinets in plan with dotted lines.
-- **Do** put new documentation in plain lists or Hairline tables at 760px / 1100px width.
+- **Do** put new documentation in plain lists or Hairline tables at full page width.
 
 ### Don't:
 - **Don't** use Drafting Blue for anything but links.

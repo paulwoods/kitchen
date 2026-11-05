@@ -105,7 +105,7 @@ function sketch(title, run, opts = {}) {
       } else if (c.kind === 'door') fronts(x, c.w, FLOOR - BOX, [{ h: face, pull: 'top', one: c.one }]);
       else if (c.kind === 'sink') fronts(x, c.w, FLOOR - BOX, [{ h: 6 }, { h: face - 6, pair: true }]); // false front over doors
       else if (c.kind === 'base') fronts(x, c.w, FLOOR - BOX, [{ h: 6 }, { h: face - 6, pull: 'top' }]); // drawer over one door
-      if (c.falseTop) text(x + c.w / 2 + 5, FLOOR - BOX + 3.3, 'false front', 'code start'); // top row is a fixed front, labeled right of its pull
+      if (c.falseTop) text(x + c.w / 2 + 5, FLOOR - BOX + 3.3, 'false front', 'code start on'); // top row is a fixed front, labeled right of its pull
     }
     // Things hung above this item. Cabinet: { code, h, at: bottom off the floor, glass, w, dx: wider than the item, from its left end }; hood: { hood: true, w, h, at, chimney }; coffee maker: { coffee: true, w, h, at }; other appliance: { appliance, w, h, at, dx }; light bar: { light, w, h, at, inside }.
     for (const u of c.upper || []) {
@@ -116,25 +116,25 @@ function sketch(title, run, opts = {}) {
         const cx = x + (c.w - u.w) / 2, top = FLOOR - u.at - u.h;
         rect(cx, top, u.w, u.h, 'oven');
         rect(cx + 1.5, top + u.h - 7, u.w - 3, 6, 'glass'); // carafe
-        text(cx + u.w / 2, top + 3, 'coffee', 'code');
+        text(cx + u.w / 2, top + 3, 'coffee', 'code on');
         continue;
       }
       if (u.appliance) { // plain appliance box: { appliance: label, w, h, at: bottom off the floor, dx: offset from the left (default centered) }
         const ax = x + (u.dx ?? (c.w - u.w) / 2), top = FLOOR - u.at - u.h;
         rect(ax, top, u.w, u.h, 'oven');
-        text(ax + u.w / 2, top + u.h / 2 + 0.8, u.appliance, 'code');
+        text(ax + u.w / 2, top + u.h / 2 + 0.8, u.appliance, 'code on');
         continue;
       }
       if (u.hood) { // island hood, centered: { hood: true, w, h: canopy height, at: canopy bottom off the floor, chimney: width }; chimney runs to the ceiling
         const top = FLOOR - u.at - u.h;
         rect(x + (c.w - u.chimney) / 2, FLOOR - CEILING, u.chimney, CEILING - u.at - u.h, 'oven');
         rect(x + (c.w - u.w) / 2, top, u.w, u.h, 'oven');
-        text(x + c.w / 2, top - 2, 'hood', 'code');
+        text(x + c.w / 2, top - 2, 'hood', 'code on');
         continue;
       }
       if (u.pendant) { // pendant light hung from the ceiling: { pendant: true, w, h, at: shade bottom off the floor, dx: its center from the item's left end }; canopy and cap sizes as in model.html (assumed)
         const px = x + u.dx, top = FLOOR - u.at - u.h;
-        line(px, FLOOR - CEILING, px, top, 'coil');
+        line(px, FLOOR - CEILING, px, top, 'cord');
         rect(px - 2.5, FLOOR - CEILING, 5, 1, 'cooktop');
         rect(px - 1.25, top - 1, 2.5, 1, 'cooktop');
         rect(px - u.w / 2, top, u.w, u.h, 'glass');
@@ -206,8 +206,8 @@ function sketch(title, run, opts = {}) {
     for (const b of c.inside || []) { // hidden inside the cabinet, dashed: { label, w, h, at: center off the floor, dx: center from the item's left end, within: label inside the box }
       const side = Math.sign(c.w / 2 - b.dx), top = FLOOR - b.at - b.h / 2; // the label runs from the box's outer edge toward the cabinet's middle (centered when it's in the middle)
       rect(x + b.dx - b.w / 2, top, b.w, b.h, 'hidden');
-      if (b.within) text(x + b.dx, top + b.h / 2 + 0.5, b.label, 'dim'); // label inside the box
-      else text(x + b.dx - side * b.w / 2, top - 1, b.label, `dim ${['end', '', 'start'][side + 1]}`);
+      if (b.within) text(x + b.dx, top + b.h / 2 + 0.5, b.label, 'dim on'); // label inside the box
+      else text(x + b.dx - side * b.w / 2, top - 1, b.label, `dim on ${['end', '', 'start'][side + 1]}`);
     }
     const dy = 6 * (c.drop || 0);
     if (c.name) text(x + c.w / 2, FLOOR + 5 + dy, c.name, 'name');
@@ -331,7 +331,7 @@ function plan(title, island, wall, opts = {}) {
       if (c.kind === 'gap') { // c.d: how far the appliance stands from the wall (default flush with the cabinets)
         box(c.u, 0, c.w, c.d || DEPTH, c.h ? 'oven' : 'gap');
         const [tx, ty] = mid((c.d || DEPTH) / 2);
-        text(tx, ty + 1, c.tag, 'gaplabel');
+        text(tx, ty + 1, c.tag, 'gaplabel on');
       } else box(c.u, 0, c.w, DEPTH, c.h ? 'box alabaster' : 'hidden'); // base cabinets sit under the counter
       if (c.cooktop) { // Bosch NIT8061UC: 31" x 21 1/4", centered along the cabinet, 2" back from centered on the counter
         const cu = c.u + (c.w - 31) / 2, cv = (COUNTER - 21.25) / 2 - 2; // 2" back from centered on the 25" counter (2026-10-27)
@@ -397,39 +397,39 @@ function page(title, view, W, H, oy, out, axes) {
   document.title = `${title} · Galley Kitchen`;
   document.body.innerHTML = `
     <style>
-      body { margin: 24px; background: #fbfaf5; color: #223; font-family: system-ui, sans-serif; }
-      h1 { margin: 0; } p { margin: 4px 0 16px; color: #667; } a { color: #2a5d9f; }
-      svg { max-width: 100%; height: auto; background: #fff; box-shadow: 0 1px 4px #0002; cursor: crosshair; touch-action: pinch-zoom; user-select: none; -webkit-user-select: none; }
-      .readout { min-height: 1.5em; font-variant-numeric: tabular-nums; } .readout b { color: #223; }
+      body { margin: 24px; background: var(--paper); color: var(--ink); font-family: system-ui, sans-serif; }
+      h1 { margin: 0; } p { margin: 4px 0 16px; color: var(--muted); } a { color: var(--link); }
+      svg { width: 100%; height: auto; background: var(--sheet); box-shadow: 0 1px 4px #0002; cursor: crosshair; touch-action: pinch-zoom; user-select: none; -webkit-user-select: none; }
+      .readout { min-height: 1.5em; font-variant-numeric: tabular-nums; } .readout b { color: var(--ink); }
       button { font: inherit; margin-left: 8px; padding: 0 8px; }
-      .grid { fill: none; stroke: #bcd3ea; stroke-width: 0.1; } .ft { stroke: #8fb2d6; stroke-width: 0.2; }
+      .grid { fill: none; stroke: var(--grid); stroke-width: 0.1; } .ft { stroke: var(--grid-bold); stroke-width: 0.2; }
       .box { fill: #bec6bd; stroke: #223; stroke-width: 0.3; }
       .front { fill: #bec6bd; stroke: #223; stroke-width: 0.2; } /* Colonial Maple Haze */
       .alabaster { fill: #ebeae6; } /* Colonial Maple Alabaster: the tall items and upper cabinets */
       .toe { fill: #556; } .counter { fill: #8a8f99; stroke: #223; stroke-width: 0.2; }
       .roomwall { fill: #e4dccb; stroke: #223; stroke-width: 0.25; }
-      .cooktop { fill: #111; } .burner { fill: none; stroke: #667; stroke-width: 0.3; }
+      .cooktop { fill: #111; stroke: var(--muted); stroke-width: 0.1; } .burner { fill: none; stroke: #667; stroke-width: 0.3; }
       .top { fill: #e9eaed; } .hidden { fill: none; stroke: #223; stroke-width: 0.2; stroke-dasharray: 1 0.6; }
       .faucet { fill: #2b2b2b; stroke: #b08d57; stroke-width: 0.2; } .spout { stroke: #2b2b2b; stroke-width: 1.375; }
-      .brass { fill: #b08d57; stroke: #223; stroke-width: 0.1; } .coil { stroke: #2b2b2b; stroke-width: 0.2; }
+      .brass { fill: #b08d57; stroke: #223; stroke-width: 0.1; } .coil { stroke: #2b2b2b; stroke-width: 0.2; } .cord { stroke: var(--muted); stroke-width: 0.2; }
       .sinkbowl { fill: #c9ccd2; stroke: #223; stroke-width: 0.3; }
       .upper { fill: none; stroke: #223; stroke-width: 0.3; stroke-dasharray: 0.01 0.8; stroke-linecap: round; } .pull { stroke: #2b2b2b; stroke-width: 0.4; stroke-linecap: round; }
       .oven { fill: #c9ccd2; stroke: #223; stroke-width: 0.25; } .window { fill: #3a3f4a; }
       .glass { fill: #dbe9f2; stroke: #223; stroke-width: 0.15; }
       .light { fill: #fff6d8; stroke: #223; stroke-width: 0.15; } .chrome { fill: #c9ccd2; stroke: #223; stroke-width: 0.1; } .button { fill: #fff; stroke: #223; stroke-width: 0.15; } .plate { fill: #fff; stroke: #223; stroke-width: 0.15; } .outlet { fill: #fffdf7; stroke: #223; stroke-width: 0.1; }
       .gap { fill: none; stroke: #223; stroke-width: 0.25; stroke-dasharray: 1.5 1; }
-      .floor { stroke: #223; stroke-width: 0.4; } .tick, .dimline { stroke: #667; stroke-width: 0.15; }
-      text { text-anchor: middle; font-size: 2.4px; fill: #223; }
-      .volts { font-size: 1.6px; paint-order: stroke; stroke: #fff; stroke-width: 0.5; } /* halo: readable over appliances */
-      .start { text-anchor: start; } .end { text-anchor: end; } .name { font-weight: 700; } .code { font-size: 2.2px; } .dim { font-size: 2px; fill: #667; }
-      .zone { fill: #1f6b3a; font-weight: 700; } .lamp { fill: #e07000; font-weight: 700; font-size: 3px; } /* sketch-top.html */
-      .gaplabel { font-size: 3px; fill: #667; } .ruler { text-anchor: start; }
+      .floor { stroke: var(--ink); stroke-width: 0.4; } .tick, .dimline { stroke: var(--muted); stroke-width: 0.15; }
+      text { text-anchor: middle; font-size: 2.4px; fill: var(--ink); paint-order: stroke; stroke: var(--sheet); stroke-width: 0.4; } /* halo: labels cross both the sheet and light cabinets */
+      .volts { font-size: 1.6px; stroke-width: 0.5; } text.on, text.volts { fill: #223; stroke: #fff; } /* on a light material, not the sheet */
+      .start { text-anchor: start; } .end { text-anchor: end; } .name { font-weight: 700; } .code { font-size: 2.2px; } .dim { font-size: 2px; fill: var(--muted); }
+      .zone { fill: var(--green); font-weight: 700; } .lamp { fill: #e07000; font-weight: 700; font-size: 3px; } /* sketch-top.html */
+      .gaplabel { font-size: 3px; fill: var(--muted); } .ruler { text-anchor: start; }
       .tapes { pointer-events: none; } .tape .blade { pointer-events: visiblePainted; cursor: pointer; }
       .blade { fill: #f5c400; fill-opacity: 0.85; } .tick-mark { stroke: #223; stroke-width: 1px; vector-effect: non-scaling-stroke; }
-      .hook { fill: #223; } .chip { fill: #223; } .chip-text { fill: #fffdf7; font-weight: 700; font-variant-numeric: tabular-nums; }
+      .hook { fill: #223; } .chip { fill: #223; } .chip-text { fill: #fffdf7; stroke: none; font-weight: 700; font-variant-numeric: tabular-nums; }
       .chip-text.sub { font-weight: 400; }
-      .snapped { stroke: #223; stroke-width: 2.5px; vector-effect: non-scaling-stroke; }
-      .snap-pt { fill: none; stroke: #223; stroke-width: 1.5px; vector-effect: non-scaling-stroke; }
+      .snapped { stroke: var(--ink); stroke-width: 2.5px; vector-effect: non-scaling-stroke; }
+      .snap-pt { fill: none; stroke: var(--ink); stroke-width: 1.5px; vector-effect: non-scaling-stroke; }
     </style>
     <h1>${title}</h1>
     <p><a href="../index.html">index</a></p>

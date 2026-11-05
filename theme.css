@@ -1,0 +1,10 @@
+/* Dark page colors on screen; printing falls back to the light set. The sketches load theme-light.css instead. */
+@import url(theme-light.css);
+@media screen {
+  :root {
+    color-scheme: dark;
+    --paper: #16181d; --sheet: #22252c; --ink: #e4e6eb; --muted: #a0a6b2; --rule: #3a3f4a;
+    --head: #2c313b; --band: #272b33; --link: #8ab4f8; --red: #ff8a80; --green: #6fcf97;
+    --grid: #3a4d66; --grid-bold: #5b7aa0;
+  }
+}

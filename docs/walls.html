@@ -3,17 +3,18 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="../nav.js" defer></script>
+<link rel="stylesheet" href="../theme.css">
 <title>Walls · Galley Kitchen</title>
 <style>
-  body { margin: 24px; max-width: 1100px; background: #fbfaf5; color: #223; font-family: system-ui, sans-serif; line-height: 1.5; }
-  h1 { margin: 0 0 4px; } h2 { margin: 28px 0 4px; font-size: 1.25em; } h3 { margin: 20px 0 0; font-size: 1em; } p { margin: 8px 0; } p.sub { margin: 0; color: #667; } a { color: #2a5d9f; }
+  body { margin: 24px; background: var(--paper); color: var(--ink); font-family: system-ui, sans-serif; line-height: 1.5; }
+  h1 { margin: 0 0 4px; } h2 { margin: 28px 0 4px; font-size: 1.25em; } h3 { margin: 20px 0 0; font-size: 1em; } p { margin: 8px 0; } p.sub { margin: 0; color: var(--muted); } a { color: var(--link); }
   li { margin: 6px 0; }
-  table { border-collapse: collapse; margin-top: 12px; background: #fff; width: 100%; }
-  th, td { border: 1px solid #ccd; padding: 8px 10px; text-align: left; vertical-align: top; }
-  th { background: #eef2f7; }
+  table { border-collapse: collapse; margin-top: 12px; background: var(--sheet); width: 100%; }
+  th, td { border: 1px solid var(--rule); padding: 8px 10px; text-align: left; vertical-align: top; }
+  th { background: var(--head); }
   @media (max-width: 600px) { /* phones: each row stacks */
     table, tbody, tr, td { display: block; } tr:first-child { display: none; }
-    tr { border: 1px solid #ccd; border-top: 0; padding: 8px 10px; } tr:nth-child(2) { border-top: 1px solid #ccd; }
+    tr { border: 1px solid var(--rule); border-top: 0; padding: 8px 10px; } tr:nth-child(2) { border-top: 1px solid var(--rule); }
     td { border: 0; padding: 0; } td:first-child { font-weight: 600; } td + td { margin-top: 4px; }
   }
 </style>

@@ -14,8 +14,8 @@ const url = href => new URL(href, root).href;
 const here = location.href.split('#')[0].replace(/\/$/, '/index.html');
 const nav = document.createElement('nav');
 nav.innerHTML = `<style>
-  nav.links { display: flex; flex-wrap: wrap; gap: 4px 16px; margin: 0 0 16px; padding-bottom: 8px; border-bottom: 1px solid #ccd; font: 15px/1.5 system-ui, sans-serif; }
-  nav.links a { color: #2a5d9f; } nav.links b { color: #223; } nav.links span { color: #ccd; }
+  nav.links { display: flex; flex-wrap: wrap; gap: 4px 16px; margin: 0 0 16px; padding-bottom: 8px; border-bottom: 1px solid var(--rule); font: 15px/1.5 system-ui, sans-serif; }
+  nav.links a { color: var(--link); } nav.links b { color: var(--ink); } nav.links span { color: var(--rule); }
 </style>` + groups.map(g => g.map(([href, label]) => url(href) === here ? `<b>${label}</b>` : `<a href="${url(href)}">${label}</a>`).join('')).join('<span>|</span>');
 nav.className = 'links';
 (document.querySelector('header') ?? document.body).prepend(nav);

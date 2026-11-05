@@ -20,15 +20,15 @@ Drawn on the [Top view](../drawings/sketch-top.html): a 74" person at prep (plat
 - Compare 3000K and 3500K where the products support them; keep 4000K as an option for the T over the island counter. Status: **planned, not physically tested** (no fixtures or samples yet).
 - Nicor UCB bars: selectable 2700K–5000K, so 3000K, 3500K and 4000K are all available. Set them all the same.
 - Hood (Proline PLFI 544-42): 2800–3500K reported, and Proline says this of all its hoods, not this model. Whether it is adjustable, and how (touch panel, fixed, switch), is **to be verified** with Proline.
-- T and A fixtures: TBD, so their color options are unknown.
+- T: Effimero pendants, so the color depends on the 40 W bulb, not chosen. A: Halo wafers, selectable 2700K–5000K.
 - Later: look at Colonial Maple Haze, Colonial Maple Alabaster and quartzite samples together under the chosen settings.
 
 ## Electrician questions
 
 | Question | Affected groups and fixtures |
 |---|---|
-| Which exact dimmer and driver combinations support smooth dimming for these fixtures? | UC: Nicor UCB124SNWH ×3 (TRIAC or ELV, to 5%; Nicor lists the Lutron PD-5NE-WH-C and TGCL-153P)<br>T: TBD · A: TBD · X: TBD |
-| What supported multi-location arrangement gives control at both ends of the galley? | T: TBD · A: TBD · X: TBD · UC: Nicor UCB (Caséta dimmer at the Coffee end, Pico at the fridge end, see [Electrical](electrical.html)) |
+| Which exact dimmer and driver combinations support smooth dimming for these fixtures? | UC: Nicor UCB124SNWH ×3 (TRIAC or ELV, to 5%; Nicor lists the Lutron PD-5NE-WH-C and TGCL-153P)<br>A: Halo HLB6099FS1EMWR ×3 (phase-cut, to 5%) on the PD-5NE, which the owner says it works with<br>T: Effimero pendant ×4, dimmable per the listing; bulb to be checked against the PD-5NE · X: TBD |
+| What supported multi-location arrangement gives control at both ends of the galley? | A: Halo HLB6099FS1EMWR (Caséta dimmer at the Coffee end, Pico at the fridge end) · T: Effimero pendants (the same) · X: TBD · UC: Nicor UCB (Caséta dimmer at the Coffee end, Pico at the fridge end, see [Electrical](electrical.html)) |
 | Which hood-light controls and dimming functions does the manufacturer permit? | Hood: Proline PLFI 544-42 (120 V hardwired; lights on its touch panel) |
 
 ## Coordination table
@@ -37,8 +37,8 @@ Handoff sheet, 2026-11-01. "Drafted" means the questions below are written; noth
 
 | Group | Intended job | Exact fixture / driver | Proposed color setting | Desired dimming / control | Evidence needed | Person responsible | Actual status |
 |---|---|---|---|---|---|---|---|
-| T task | Bright light on the island prep and sink surfaces | Fixture TBD; driver TBD | Compare 3000K, 3500K and 4000K; final choice pending | Dim on its own; control from both ends of the galley desired (proposed: Caséta PD-5NE at the Coffee end, Pico on the FP2496 skin) | Compatible fixture, driver and dimmer; stable low end and no flicker; driver access; feed (no row in Electrical yet); beam and output | Electrician | drafted |
-| A ambient | General light in the aisle | Fixture TBD; driver TBD | 3000K starting point, if the fixture offers it | Dim on its own; both ends desired (proposed as for T) | Compatible fixture, driver and dimmer; stable low end and no flicker; driver access; feed (no row in Electrical yet); beam and output | Electrician | drafted |
+| T task | Bright light on the island prep and sink surfaces | Effimero pendant ×4, bottom at 74" (2026-11-04); 40 W E26 bulb | Compare 3000K, 3500K and 4000K; set by the bulb, final choice pending | Dim on its own; control from both ends of the galley desired (proposed: Caséta PD-5NE at the Coffee end, Pico on the FP2496 skin) | Dimmable 40 W E26 bulb on the PD-5NE with a Pico; stable low end and no flicker; beam and output | Electrician | drafted |
+| A ambient | General light in the aisle | Halo HLB6099FS1EMWR ×3 (2026-11-04); remote driver / junction box included | 3000K starting point; selectable 2700K–5000K | Dim on its own, to 5% per Halo; both ends desired (proposed as for T) | Stable low end and no flicker on the PD-5NE with a Pico; beam and output | Electrician | drafted |
 | X toe-kick accent | Low glow at the floor (the same dimmer also runs the glass cabinet bars) | Toe-kick tape: 24 V, product TBD; two drivers TBD. Glass cabinets: Nicor UCB124SNWH ×4 | 3000K tape; bars selectable, set to match | Dim as one group; both ends desired (proposed as for T) | Tape driver and bars on one dimmer; total load; stable low end and no flicker; reachable driver locations | Electrician | drafted |
 | UC under-cabinet | Light on the wall-side counter | Nicor UCB124SNWH ×3 (direct-wire 120 V; no separate driver listed) | Selectable 2700K–5000K; 3000K starting point, final choice pending comparison | Dim on its own, to 5% per Nicor; both ends desired (proposed as for T) | Electrician confirms the bars on the PD-5NE (on Nicor's dimmer list) with a Pico; stable low end and no flicker | Electrician | drafted |
 | Hood lights | Light on the cooktop | Proline PLFI 544-42, 4 LED lights; lamp and driver not published | 2800–3500K **as reported** (Proline says this of all its hoods; the spec sheet says only "LED"). If adjustable, the setting nearest 3000K | Unknown: whether they dim and how they are controlled. Not assumed to share an external dimmer | Written reply from Proline, or documentation for this model | Proline (hood supplier) | drafted |

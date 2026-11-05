@@ -33,7 +33,7 @@ Compare them together, with the samples staying in the same positions throughout
 | 3500K | pending | pending |
 | 4000K | pending | pending |
 
-The Nicor bars can be set to all three color temperatures, but none is on hand, and the T and A fixtures are TBD. Mark the color temperature rows "not available" if no suitable light can be found.
+The Nicor bars can be set to all three color temperatures, but none is on hand, the A fixture (Halo, selectable 2700K–5000K) isn't on hand either, and the T pendants' bulbs aren't chosen. Mark the color temperature rows "not available" if no suitable light can be found.
 
 ## Decision and evidence
 

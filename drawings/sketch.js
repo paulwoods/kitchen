@@ -132,6 +132,15 @@ function sketch(title, run, opts = {}) {
         text(x + c.w / 2, top - 2, 'hood', 'code');
         continue;
       }
+      if (u.pendant) { // pendant light hung from the ceiling: { pendant: true, w, h, at: shade bottom off the floor, dx: its center from the item's left end }; canopy and cap sizes as in model.html (assumed)
+        const px = x + u.dx, top = FLOOR - u.at - u.h;
+        line(px, FLOOR - CEILING, px, top, 'coil');
+        rect(px - 2.5, FLOOR - CEILING, 5, 1, 'cooktop');
+        rect(px - 1.25, top - 1, 2.5, 1, 'cooktop');
+        rect(px - u.w / 2, top, u.w, u.h, 'glass');
+        text(px, FLOOR - u.at + 2.5, 'pendant', 'code');
+        continue;
+      }
       if (u.riser) { rect(x + (u.dx || 0), FLOOR - u.at - u.h, u.w || c.w, u.h, 'front alabaster'); continue; } // riser molding to the ceiling: { riser: true, h, at, w, dx }
       if (u.light) { rect(x + (c.w - u.w) / 2, FLOOR - u.at - u.h, u.w, u.h, u.inside ? 'hidden' : 'light'); continue; } // light bar, centered: { light: model, w, h, at: bottom off the floor, inside: in a cabinet, behind its door (dashed) }
       const top = FLOOR - u.at - u.h;
@@ -231,6 +240,7 @@ function sketch(title, run, opts = {}) {
   for (const c of run) if (c.faucet) mark(BOX + TOP + c.faucet.h, 'faucet');
   for (const u of run.flatMap(c => c.upper || [])) {
     if (u.hood) mark(u.at, 'hood');
+    else if (u.pendant) mark(u.at, 'pendants');
     else if (u.code) mark(u.at + u.h, 'uppers');
   }
   mark(CEILING, 'ceiling');

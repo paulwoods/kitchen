@@ -42,7 +42,7 @@ const wall = [
   { code: 'FP2496',  w: 0.25, kind: 'panel', h: 96 }, // skin on the REP's exposed left side, 1/4" thick (assumed)
   { code: 'REP2496-1.5', w: 1.5, kind: 'panel', h: 96 },
   { kind: 'space', w: 0.5, h: 96 }, // 1/2" clear between the panel and the fridge
-  { code: '36" gap', w: 36,  kind: 'gap', h: 70, tag: 'REF', receptacle: true, receptacleAt: 12, d: 28.5,
+  { code: '36" gap', w: 36,  kind: 'gap', h: 70, tag: 'REF', receptacle: true, receptacleAt: 12, d: 28.5, waterBox: { w: 5, h: 6, at: 12, dx: 29 },
     upper: [{ code: 'RW3721', w: 37, dx: -0.5, h: 20.6875, at: 72.3125, d: 24 }, { riser: true, w: 37, dx: -0.5, h: 3, at: 93, d: 24 }] },
   { kind: 'space', w: 0.5, h: 96 },
   { code: 'REP2496-1.5', w: 1.5, kind: 'panel', h: 96 },
@@ -189,6 +189,7 @@ function side(run, flip, zBack, back = 0, walls = false) { // back: counter past
     if (c.receptacle) { // vertical duplex plate (assumed) at OUTLET, or `receptacleAt`, on the wall
       B(u + (w - 2.75) / 2, 0, (c.receptacleAt || OUTLET) - 2.25, 2.75, 0.25, 4.5, M.plate);
     }
+    if (c.waterBox) B(u + c.waterBox.dx - c.waterBox.w / 2, 0, c.waterBox.at - c.waterBox.h / 2, c.waterBox.w, 0.25, c.waterBox.h, M.plate); // recessed ice maker outlet box on the wall (size and spot assumed)
     if (c.backReceptacle) { // vertical duplex plate on the island's back wall, centered at 29" (height assumed)
       B(u + (w - 2.75) / 2, -4.75, 29 - 2.25, 2.75, 0.25, 4.5, M.plate);
     }

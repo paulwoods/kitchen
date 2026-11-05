@@ -360,7 +360,8 @@ const show = (name) => {
   back.visible = hide !== 'wall';
 };
 document.querySelectorAll('[data-view]').forEach(b => b.onclick = () => show(b.dataset.view));
-show('end');
+const start = location.hash.slice(1); // index.html links straight to a view: model.html#island
+show(Object.hasOwn(views, start) ? start : 'end');
 
 const resize = () => {
   const w = document.documentElement.clientWidth, h = document.documentElement.clientHeight - document.querySelector('header').offsetHeight;

@@ -5,57 +5,80 @@
 <script src="nav.js" defer></script>
 <title>Galley Kitchen</title>
 <style>
-  body { margin: 24px; max-width: 760px; background: #fbfaf5; color: #223; font-family: system-ui, sans-serif; line-height: 1.5; }
+  body { margin: 24px; font-size: 110%; background: #fbfaf5; color: #223; font-family: system-ui, sans-serif; line-height: 1.5; }
   h1 { margin: 0 0 4px; } h2 { margin: 28px 0 4px; font-size: 1.25em; } p { margin: 0; }
   ul { margin: 8px 0 0; } li { margin: 6px 0; } a { color: #2a5d9f; } li a { padding: 3px 0; }
-  .sub, .note, li span { color: #667; }
+  .sub, li span { color: #667; }
   li span::before { content: "· "; content: "· " / ""; }
-  .status { margin-top: 16px; padding: 8px 12px; background: #fff; border: 1px solid #ccd; }
+  .columns { margin-top: 28px; columns: 3 320px; column-gap: 32px; } section { break-inside: avoid; padding-bottom: 28px; } section h2 { margin-top: 0; }
+  .title { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px 24px; }
+  .status { padding: 8px 12px; background: #fff; border: 1px solid #ccd; }
 </style>
 <main>
+<div class="title">
 <h1>Galley Kitchen</h1>
-<p class="sub">Plan as of <span data-date>2026-11-04</span></p>
 <p class="status"><a href="docs/issues.html#open"><b data-open>13 open issues</b></a> · <span data-resolved>106</span> resolved</p>
+</div>
+<p class="sub">Plan as of <span data-date>2026-11-04</span></p>
 
-<h2>Drawings and model</h2>
-<p class="note">On graph paper: 1 square = 6", bold line every 30". Drag on a drawing to measure it.</p>
+<div class="columns">
+<section>
+<h2>Model</h2>
 <ul>
-  <li><a href="drawings/sketch-top.html">Top view</a> <span>plan of both runs, depths from the wall, 48" aisle, stools, work areas and task, ambient, toe-kick and under-cabinet lights</span></li>
-  <li><a href="drawings/sketch-island-front.html">Island front</a> <span>cabinets, cooktop, sink, hood</span></li>
-  <li><a href="drawings/sketch-wall-front.html">Wall front</a> <span>fridge, pantry, oven, wall cabinets, receptacles</span></li>
   <li><a href="drawings/model.html">3D model</a> <span>orbit the whole galley (needs internet)</span></li>
+  <li><a href="drawings/model.html#island">Island</a> <span>facing the island, wall run hidden</span></li>
+  <li><a href="drawings/model.html#wall">Wall</a> <span>facing the wall run, island hidden</span></li>
+  <li><a href="drawings/model.html#top">Top</a> <span>looking down on both runs</span></li>
+  <li><a href="drawings/model.html#end">End</a> <span>down the aisle from above, the view the model opens on</span></li>
 </ul>
+</section>
 
+<section>
+<h2>Sketches</h2>
+<ul>
+  <li><a href="drawings/sketch-top.html">Top view</a> <span>both runs from above: depths, 48" aisle, stools, work areas, lights</span></li>
+  <li><a href="drawings/sketch-island-front.html">Island front</a> <span>island from the aisle: cabinets, cooktop, sink, hood, pendants</span></li>
+  <li><a href="drawings/sketch-wall-front.html">Wall front</a> <span>wall run from the aisle: fridge, pantry, oven, uppers, receptacles</span></li>
+</ul>
+</section>
+
+<section>
 <h2>Documentation</h2>
 <ul>
-  <li><a href="docs/issues.html">Issues</a> <span>what is still open, and every resolved decision</span></li>
-  <li><a href="docs/cabinets.html">Cabinets</a> <span>every cabinet and panel per run, and the order summary</span></li>
-  <li><a href="docs/appliances.html">Appliances</a> <span>model numbers, spec-sheet sizes and install gotchas</span></li>
-  <li><a href="docs/electrical.html">Electrical</a> <span>circuit, voltage and connection for each appliance</span></li>
-  <li><a href="docs/countertop-backsplash.html">Countertop and backsplash</a> <span>the three countertops and the backsplash with sizes and square feet, what is left over, decisions made and the questions still open</span></li>
-  <li><a href="docs/countertop-brief.html">Countertop brief</a> <span>proposed specification, fabrication map and three focused questions for the fabricator, each with its owner, evidence requested and status</span></li>
-  <li><a href="docs/lighting.html">Lighting scenes</a> <span>scene by scene light groups, provisional color settings, electrician questions and a coordination table (refinement sheet, not tested)</span></li>
-  <li><a href="docs/trade-sequence.html">Trade sequence</a> <span>draft order of work from demolition to move-in, by trade, with what must be true before moving on</span></li>
+  <li><a href="docs/issues.html">Issues</a> <span>what is still open, and every decision made</span></li>
+  <li><a href="docs/cabinets.html">Cabinets</a> <span>every cabinet and panel by run, plus the order summary</span></li>
+  <li><a href="docs/appliances.html">Appliances</a> <span>models, spec-sheet sizes and install gotchas</span></li>
+  <li><a href="docs/electrical.html">Electrical</a> <span>circuit, voltage and connection per appliance</span></li>
+  <li><a href="docs/countertop-backsplash.html">Countertop and backsplash</a> <span>sizes, square feet, leftovers, open questions</span></li>
+  <li><a href="docs/countertop-brief.html">Countertop brief</a> <span>proposed spec, fabrication map, three questions for the fabricator</span></li>
+  <li><a href="docs/lighting.html">Lighting scenes</a> <span>light groups and color settings per scene (provisional, not tested)</span></li>
+  <li><a href="docs/trade-sequence.html">Trade sequence</a> <span>draft order of work by trade, demolition to move-in</span></li>
   <li><a href="docs/review1.html">Review 1</a> <span>design review and suggestions, 2026-10-25</span></li>
 </ul>
+</section>
 
+<section>
 <h2>Pricing</h2>
 <ul>
-  <li><a href="pricing/price.html">Price</a> <span>the whole kitchen: Colonial cabinets, appliances, and the stone, labor and other lines still to bid</span></li>
-  <li><a href="pricing/comparison.html">Comparison</a> <span>every quote side by side, one row per planned cabinet, with each vendor's price and differences from the plan</span></li>
-  <li><a href="pricing/quote-cabinets-colonial.html">Quote: Colonial</a> <span>cabinets.com Colonial Maple Haze and Alabaster, the planned cabinets, itemized from web prices, $22,565.66 regular, $14,667.68 sale</span></li>
-  <li><a href="pricing/quote-cabinets-monaco.html">Quote: Monaco</a> <span>cabinets.com Monaco Maple Naval, itemized from web prices, $22,398.08 regular, $14,798.78 sale</span></li>
-  <li><a href="pricing/quote-citycabinets.html">Quote: City</a> <span>citycabinets.com, frameless, ready to assemble, built to size, slab paint-grade fronts (raw), itemized from web prices, $27,937.60 retail, $17,041.60 sale, $16,189.52 after its 5% order discount</span></li>
+  <li><a href="pricing/price.html">Price</a> <span>whole kitchen: Colonial cabinets, appliances, and lines still to bid</span></li>
+  <li><a href="pricing/comparison.html">Comparison</a> <span>every quote side by side, one row per planned cabinet</span></li>
+  <li><a href="pricing/quote-cabinets-colonial.html">Quote: Colonial</a> <span>the planned cabinets, cabinets.com: $14,667.68 sale, $22,565.66 regular</span></li>
+  <li><a href="pricing/quote-cabinets-monaco.html">Quote: Monaco</a> <span>Maple Naval, cabinets.com: $14,798.78 sale, $22,398.08 regular</span></li>
+  <li><a href="pricing/quote-citycabinets.html">Quote: City</a> <span>frameless, raw slab fronts: $16,189.52 after 5% off, $27,937.60 retail</span></li>
 </ul>
+</section>
 
+<section>
 <h2>For the trades</h2>
 <ul>
-  <li>General contractor (the owner) <span><a href="docs/trade-sequence.html">Trade sequence</a>, then <a href="docs/issues.html#open">Issues</a> for what is still open</span></li>
-  <li>Cabinet maker <span><a href="docs/cabinets.html#order-summary">order summary</a>, the <a href="docs/cabinets.html#island">island</a> and <a href="docs/cabinets.html#wall">wall</a> tables, both front elevations</span></li>
-  <li>Electrician <span><a href="docs/electrical.html">Electrical</a>, then <a href="docs/appliances.html">Appliances</a> for the oven and cooktop junction boxes, GFCI outlets (on the wall run and the island's back wall), under-cabinet light feeds and the sink base receptacle for the disposal air switch; the slab is trenched about 60" for the island wires</span></li>
-  <li>Plumber <span><a href="docs/appliances.html">Appliances</a>: sink, faucet, disposal, dishwasher drain loop, fridge water line and ice maker outlet box</span></li>
-  <li>Countertop <span><a href="drawings/sketch-top.html">Top view</a> for depths and positions, <a href="docs/appliances.html">Appliances</a> for the sink and cooktop cutouts and the 1 1/4" disposal button hole, <a href="docs/cabinets.html#island">Cabinets</a> for the island overhang brackets to approve, <a href="pricing/price.html">Price</a> for the stone and pieces</span></li>
+  <li>General contractor (the owner) <span><a href="docs/trade-sequence.html">Trade sequence</a>, then <a href="docs/issues.html#open">open Issues</a></span></li>
+  <li>Cabinet maker <span><a href="docs/cabinets.html#order-summary">order summary</a>, <a href="docs/cabinets.html#island">island</a> and <a href="docs/cabinets.html#wall">wall</a> tables, both front sketches</span></li>
+  <li>Electrician <span><a href="docs/electrical.html">Electrical</a>, then <a href="docs/appliances.html">Appliances</a> for junction boxes and light feeds</span></li>
+  <li>Plumber <span><a href="docs/appliances.html">Appliances</a>: sink, disposal, dishwasher drain, fridge and ice maker water</span></li>
+  <li>Countertop <span><a href="drawings/sketch-top.html">Top view</a> for depths, <a href="docs/appliances.html">Appliances</a> for cutouts, <a href="docs/cabinets.html#island">Cabinets</a> for brackets, <a href="pricing/price.html">Price</a></span></li>
 </ul>
+</section>
+</div>
 </main>
 <script>
   // Counts come from issues.html: open items in an <ol> right after h2#open, resolved items after h2#resolved.

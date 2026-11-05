@@ -1,9 +1,10 @@
-// Row of links across the top of every page: Drawings and model, Documentation, then Pricing (same as index.html).
+// Row of links across the top of every page: Model, Sketches, Documentation, then Pricing (same as index.html).
 // Loaded with defer, so it runs after sketch.js has rebuilt the body. On model.html it goes inside the header,
 // which the canvas subtracts from the window height.
 const groups = [
   [['index.html', 'Index']],
-  [['drawings/sketch-top.html', 'Top view'], ['drawings/sketch-island-front.html', 'Island front'], ['drawings/sketch-wall-front.html', 'Wall front'], ['drawings/model.html', '3D model']],
+  [['drawings/model.html', '3D model']],
+  [['drawings/sketch-top.html', 'Top view'], ['drawings/sketch-island-front.html', 'Island front'], ['drawings/sketch-wall-front.html', 'Wall front']],
   [['docs/issues.html', 'Issues'], ['docs/cabinets.html', 'Cabinets'], ['docs/appliances.html', 'Appliances'], ['docs/electrical.html', 'Electrical'], ['docs/countertop-backsplash.html', 'Countertop and backsplash'], ['docs/countertop-brief.html', 'Countertop brief'], ['docs/lighting.html', 'Lighting scenes'], ['docs/trade-sequence.html', 'Trade sequence'], ['docs/review1.html', 'Review 1']],
   [['pricing/price.html', 'Price'], ['pricing/comparison.html', 'Comparison'], ['pricing/quote-cabinets-colonial.html', 'Quote: Colonial'], ['pricing/quote-cabinets-monaco.html', 'Quote: Monaco'], ['pricing/quote-citycabinets.html', 'Quote: City']],
 ];

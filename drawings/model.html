@@ -49,12 +49,14 @@ const wall = [
   { code: 'UT362493ROT4', w: 36,  kind: 'pantry', h: 93, upper: [{ riser: true, h: 3, at: 93, d: 24 }] },
   { code: 'OVD3393', w: 33,  kind: 'oven', h: 93,
     upper: [{ riser: true, h: 3, at: 93, d: 24, side: true }] },
-  { code: 'DB27-3',  w: 27,  kind: 'drawers', n: 3, receptacle: true,
-    upper: [{ appliance: 'toaster oven', w: 21.5, h: 12.7, at: 35.75 }, { light: 'UCB124SNWH', w: 24, h: 1.1, at: 52.9 }, { code: 'W2727', h: 27, at: 54 }, { code: 'W2712', h: 12, at: 81, glass: true }, { riser: true, h: 3, at: 93 }, { light: 'UCB124SNWH', w: 24, h: 1.1, at: 91.275 }] },
-  { code: 'DB27-3',  w: 27,  kind: 'drawers', n: 3, receptacle: true,
-    upper: [{ appliance: 'air fryer', w: 11, h: 14.75, at: 35.75 }, { light: 'UCB124SNWH', w: 24, h: 1.1, at: 52.9 }, { code: 'W2727', h: 27, at: 54 }, { code: 'W2712', h: 12, at: 81, glass: true }, { riser: true, h: 3, at: 93 }, { light: 'UCB124SNWH', w: 24, h: 1.1, at: 91.275 }] },
-  { code: 'DB27-3',  w: 27,  kind: 'drawers', n: 3, receptacle: true,
-    upper: [{ coffee: true, w: 8.5, h: 16.3, at: 35.75 }, { light: 'UCB124SNWH', w: 24, h: 1.1, at: 52.9 }, { code: 'W2727', h: 27, at: 54 }, { code: 'W2712', h: 12, at: 81, glass: true }, { riser: true, h: 3, at: 93 }, { light: 'UCB124SNWH', w: 24, h: 1.1, at: 91.275 }] },
+  { code: 'B21-FH',  w: 21,  kind: 'door', one: true, receptacle: true,
+    upper: [{ light: 'UCB118SNWH', w: 18, h: 1.1, at: 52.9 }, { code: 'W2127', one: true, h: 27, at: 54 }, { code: 'W2112', one: true, h: 12, at: 81, glass: true }, { riser: true, h: 3, at: 93 }, { light: 'UCB118SNWH', w: 18, h: 1.1, at: 91.275 }] },
+  { code: 'DB21-3',  w: 21,  kind: 'drawers', n: 3, receptacle: true,
+    upper: [{ appliance: 'toaster oven', w: 21.5, h: 12.7, at: 35.75 }, { light: 'UCB118SNWH', w: 18, h: 1.1, at: 52.9 }, { code: 'W2127', one: true, h: 27, at: 54 }, { code: 'W2112', one: true, h: 12, at: 81, glass: true }, { riser: true, h: 3, at: 93 }, { light: 'UCB118SNWH', w: 18, h: 1.1, at: 91.275 }] },
+  { code: 'DB21-3',  w: 21,  kind: 'drawers', n: 3, receptacle: true,
+    upper: [{ appliance: 'air fryer', w: 11, h: 14.75, at: 35.75 }, { light: 'UCB118SNWH', w: 18, h: 1.1, at: 52.9 }, { code: 'W2127', one: true, h: 27, at: 54 }, { code: 'W2112', one: true, h: 12, at: 81, glass: true }, { riser: true, h: 3, at: 93 }, { light: 'UCB118SNWH', w: 18, h: 1.1, at: 91.275 }] },
+  { code: 'DB21-3',  w: 21,  kind: 'drawers', n: 3, receptacle: true,
+    upper: [{ coffee: true, w: 8.5, h: 16.3, at: 35.75 }, { light: 'UCB118SNWH', w: 18, h: 1.1, at: 52.9 }, { code: 'W2127', one: true, h: 27, at: 54 }, { code: 'W2112', one: true, h: 12, at: 81, glass: true }, { riser: true, h: 3, at: 93 }, { light: 'UCB118SNWH', w: 18, h: 1.1, at: 91.275 }] },
 ];
 
 const TOE = 4.5, BOX = 34.5, TOP = 1.25, CEILING = 96, OUTLET = 44; // OUTLET: center of a wall receptacle (assumed)
@@ -123,7 +125,8 @@ function side(run, flip, zBack, back = 0, walls = false) { // back: counter past
         for (const px of [u + w / 2 - 1.75, u + w / 2 + 1.25]) B(px, v + 0.75, py, 0.5, 0.75, 8, M.pull); // Berenson 9020-4055-P, 8" long
       } else {
         door(u + 0.125, w - 0.25);
-        B(u + w / 2 - 4, v + 0.75, r.pull === 'top' ? y - 3 : y - r.h / 2, 8, 0.75, 0.5, M.pull);
+        if (r.one) B(u + w - 2, v + 0.75, r.pull === 'top' ? y - 10 : y - r.h + 2, 0.5, 0.75, 8, M.pull); // one hinged door: pull on its right (wall cabinets' hinge side assumed)
+        else B(u + w / 2 - 4, v + 0.75, r.pull === 'top' ? y - 3 : y - r.h / 2, 8, 0.75, 0.5, M.pull);
       }
       y -= r.h;
     }
@@ -180,7 +183,7 @@ function side(run, flip, zBack, back = 0, walls = false) { // back: counter past
       if (c.kind === 'drawers') {
         const rest = (face - 6) / (c.n - 1);
         fronts(u, w, BOX, [{ h: 6 }, ...Array(c.n - 2).fill({ h: rest }), { h: rest, pull: 'top' }]);
-      } else if (c.kind === 'door') fronts(u, w, BOX, [{ h: face, pull: 'top' }]);
+      } else if (c.kind === 'door') fronts(u, w, BOX, [{ h: face, pull: 'top', one: c.one }]);
       else if (c.kind === 'base') fronts(u, w, BOX, [{ h: 6 }, { h: face - 6, pull: 'top' }]);
     }
     if (c.receptacle) { // vertical duplex plate (assumed) at OUTLET on the wall
@@ -262,7 +265,7 @@ function side(run, flip, zBack, back = 0, walls = false) { // back: counter past
         const d = x.d || UPPER, cu = u + (x.dx || 0), cw = x.w || w;
         alabaster = true;
         B(cu, 0, x.at, cw, d, x.h, M.alabaster);
-        fronts(cu, cw, x.at + x.h, [{ h: x.h, pair: true, pull: 'bottom', glass: x.glass }], d);
+        fronts(cu, cw, x.at + x.h, [{ h: x.h, pair: !x.one, one: x.one, pull: 'bottom', glass: x.glass }], d);
       }
     }
   }

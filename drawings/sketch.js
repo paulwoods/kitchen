@@ -39,7 +39,8 @@ function sketch(title, run, opts = {}) {
       } else {
         rect(x + 0.25, y, w - 0.5, r.h - 0.5, 'front' + paint);
         const py = r.pull === 'top' ? y + 3 : y + r.h / 2;
-        line(mid - 4, py, mid + 4, py, 'pull');
+        if (r.one) { const oy = r.pull === 'top' ? y + 2 : y + r.h - 10.5; line(x + w - 1.75, oy, x + w - 1.75, oy + 8, 'pull'); } // one hinged door: pull on its right (wall cabinets' hinge side assumed)
+        else line(mid - 4, py, mid + 4, py, 'pull');
       }
       y += r.h;
     }
@@ -101,7 +102,7 @@ function sketch(title, run, opts = {}) {
       if (c.kind === 'drawers') {
         const rest = (face - 6) / (c.n - 1);
         fronts(x, c.w, FLOOR - BOX, [{ h: 6 }, ...Array(c.n - 2).fill({ h: rest }), { h: rest, pull: 'top' }]);
-      } else if (c.kind === 'door') fronts(x, c.w, FLOOR - BOX, [{ h: face, pull: 'top' }]);
+      } else if (c.kind === 'door') fronts(x, c.w, FLOOR - BOX, [{ h: face, pull: 'top', one: c.one }]);
       else if (c.kind === 'sink') fronts(x, c.w, FLOOR - BOX, [{ h: 6 }, { h: face - 6, pair: true }]); // false front over doors
       else if (c.kind === 'base') fronts(x, c.w, FLOOR - BOX, [{ h: 6 }, { h: face - 6, pull: 'top' }]); // drawer over one door
       if (c.falseTop) text(x + c.w / 2 + 5, FLOOR - BOX + 3.3, 'false front', 'code start'); // top row is a fixed front, labeled right of its pull
@@ -136,8 +137,9 @@ function sketch(title, run, opts = {}) {
       const top = FLOOR - u.at - u.h;
       paint = ' alabaster';
       rect(x + (u.dx || 0), top, u.w || c.w, u.h, 'box' + paint);
-      fronts(x + (u.dx || 0), u.w || c.w, top, [{ h: u.h, pair: true, pull: 'bottom' }]);
-      if (u.glass) for (const gx of [x + 2, x + c.w / 2 + 1.875]) rect(gx, top + 2, c.w / 2 - 3.875, u.h - 4.5, 'glass');
+      fronts(x + (u.dx || 0), u.w || c.w, top, [u.one ? { h: u.h, one: true } : { h: u.h, pair: true, pull: 'bottom' }]);
+      if (u.glass && u.one) rect(x + 2, top + 2, c.w - 4, u.h - 4.5, 'glass');
+      else if (u.glass) for (const gx of [x + 2, x + c.w / 2 + 1.875]) rect(gx, top + 2, c.w / 2 - 3.875, u.h - 4.5, 'glass');
     }
     ap = '';
     // Upper cabinet codes in the margin above the ceiling, top cabinet first, the lowest nearest the drawing.
@@ -274,7 +276,8 @@ function plan(title, island, wall, opts = {}) {
   const len = run => run.reduce((s, c) => s + c.w, 0);
   const total = Math.max(len(island), len(wall));
   const across = 2 * DEPTH + AISLE; // wall to the island's back
-  const WALLY = MARGIN + 39.75 + across, H = WALLY + WALL + 24;
+  const low = 6 * Math.max(0, ...wall.map(c => c.drop || 0)); // `drop: n` as in sketch(); only the wall run's labels have room below them
+  const WALLY = MARGIN + 39.75 + across, H = WALLY + WALL + 24 + low;
   const W = MARGIN * 2 + total + 40; // + the Picos and the ruler
   const out = [];
   const rect = (x, y, w, h, cls = '') => out.push(`<rect x="${x}" y="${y}" width="${w}" height="${h}" class="${cls}"/>`);
@@ -338,15 +341,17 @@ function plan(title, island, wall, opts = {}) {
       const ups = c.upper || [], ud = Math.max(0, ...ups.map(x => x.d || 12));
       if (ud) box(c.u + (ups[0].dx || 0), 0, ups[0].w || c.w, ud, 'upper');
       const [tx] = mid(0);
-      if (c.name) text(tx, labelY + 5, c.name, 'name');
-      text(tx, labelY + 8.5, c.code, 'code');
-      text(tx, labelY + 11.5, `${c.w}"`, 'dim');
+      const dy = 6 * (c.drop || 0);
+      if (c.name) text(tx, labelY + 5 + dy, c.name, 'name');
+      text(tx, labelY + 8.5 + dy, c.code, 'code');
+      text(tx, labelY + 11.5 + dy, `${c.w}"`, 'dim');
       line(P(c.u, 0)[0], labelY + 1, P(c.u, 0)[0], labelY + 12, 'tick');
     }
     const [x0] = P(0, 0), [x1] = P(len(run), 0);
     line(x1, labelY + 1, x1, labelY + 12, 'tick');
-    line(x0, labelY + 15, x1, labelY + 15, 'dimline');
-    text((x0 + x1) / 2, labelY + 18.5, `${len(run)}"`, 'dim');
+    const low = 6 * Math.max(0, ...run.map(c => c.drop || 0));
+    line(x0, labelY + 15 + low, x1, labelY + 15 + low, 'dimline');
+    text((x0 + x1) / 2, labelY + 18.5 + low, `${len(run)}"`, 'dim');
   };
 
   rect(MARGIN, WALLY, len(wall), WALL, 'roomwall'); // the room wall behind the wall run

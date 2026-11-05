@@ -12,14 +12,15 @@ const lines = [
   ['B24-2', 'B24-SINGLE', 1, 737.29, 479.24, 0, 'island: cabinet a, 1 door, 1 drawer'],
   ['B24-2 finished sides', 'Matching Finished Sides', 1, 110.59, 71.89, 0, 'island: cabinet a, the right side shows'],
   ['FP2496', 'FP2496', 1, 167.58, 108.93, 0, "wall: skin on the left REP's exposed side, 1/4\" × 96\" × 24\""],
-  ['REP2496-1.5', 'REP2496-1.5', 2, 340.50, 221.33, 0, 'wall: each side of the fridge, refrigerator return panel, 1.5" × 96" × 24"'],
-  ['RW3721', 'RW3721', 1, 701.04, 455.68, 0, 'wall: over the fridge, panel to panel, 37" × 20 11/16" × 24" (read 2026-11-03)'],
-  ['UT362493ROT4', 'UT362493-ROT/4', 1, 3003.21, 1952.09, 0, 'wall: pantry, 36" × 93" × 24", 4 doors, 4 roll-out trays below, 3 shelves above (read 2026-11-03)'],
-  ['OVD3393', 'OVD3393', 1, 1746.48, 1135.21, 0, 'wall: oven column, 33" × 93" × 24", 2 butt doors, 1 drawer, combination oven (read 2026-11-04, no sale; sale 35% off assumed)'],
-  ['OVD3393 finished sides', 'Matching Finished Sides', 1, 349.30, 227.05, 0, 'wall: oven column, the right side shows above the counter (20% of the price, both sides only, read 2026-11-04; sale 35% off assumed)'],
-  ['DB27-3', 'DB27-3', 3, 1403.92, 912.55, 0, 'wall: Toaster, Air Fryer, Coffee'],
-  ['W2727', 'W2727', 3, 531.22, 345.29, 0, 'wall: over the Toaster, Air Fryer and Coffee (read 2026-11-03)'],
-  ['W2712 glass', 'W2712', 3, 531.98, 345.78, 0, 'wall: over the W2727s, $354.65 + $177.33 glass prep; sale $230.52 + $115.26'],
+  ['REP2496-1.5', 'REP2496-1.5', 2, 340.50, 221.33, 0, 'wall: each side of the Fridge, refrigerator return panel, 1.5" × 96" × 24"'],
+  ['RW3721', 'RW3721', 1, 701.04, 455.68, 0, 'wall: over the Fridge, panel to panel, 37" × 20 11/16" × 24" (read 2026-11-03)'],
+  ['UT362493ROT4', 'UT362493-ROT/4', 1, 3003.21, 1952.09, 0, 'wall: Pantry, 36" × 93" × 24", 4 doors, 4 roll-out trays below, 3 shelves above (read 2026-11-03)'],
+  ['OVD3393', 'OVD3393', 1, 1746.48, 1135.21, 0, 'wall: Oven column, 33" × 93" × 24", 2 butt doors, 1 drawer, combination oven (read 2026-11-04, no sale; sale 35% off assumed)'],
+  ['OVD3393 finished sides', 'Matching Finished Sides', 1, 349.30, 227.05, 0, 'wall: Oven column, the right side shows above the counter (20% of the price, both sides only, read 2026-11-04; sale 35% off assumed)'],
+  ['B21-FH', 'B21-FH', 1, 526.92, 342.50, 0, 'wall: Garage, Haze, 1 door, 1 shelf (read 2026-11-04, no sale; sale 35% off assumed)'],
+  ['DB21-3', 'DB21-3', 3, 1195.85, 777.30, 0, 'wall: Toaster, Air Fryer, Coffee (read 2026-11-04, no sale; sale 35% off assumed)'],
+  ['W2127', 'W2127', 4, 519.25, 337.51, 0, 'wall: over the Garage, Toaster, Air Fryer and Coffee, 1 door (read 2026-11-04, no sale; sale 35% off assumed)'],
+  ['W2112 glass', 'W2112', 4, 514.34, 334.32, 0, 'wall: over the W2127s, 1 door, $342.89 + $171.45 glass prep; sale $222.88 + $111.44 (read 2026-11-04, no sale; sale 35% off assumed)'],
 ];
 // 'planned / code' lines whose size (W × H × D, as supplied) differs from the plan's in cabinets.html (comparison.html reads this too)
 const resized = [];

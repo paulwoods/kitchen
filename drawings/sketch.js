@@ -282,11 +282,11 @@ function sketch(title, run, opts = {}) {
 // Draws the galley in plan (top view): the island at the top, facing down across the aisle,
 // and the wall run at the bottom, facing up (so it reads right to left). The wall run's right end lines up with the island's left end.
 // Depths are measured from the wall; grid lines from the island's left end and the wall.
-const DEPTH = 24, COUNTER = 25, AISLE = 48, WALL = 4.5; // cabinet box, countertop (1" over the fronts), aisle between cabinet fronts, room wall (2x4 studs, 1/2" drywall each side)
+const DEPTH = 24, FRONT = 0.75, COUNTER = 25.75, AISLE = 48, WALL = 4.5; // cabinet box, door and drawer fronts (assumed), countertop (1" past the fronts, 2026-11-05), aisle between the fronts, room wall (2x4 studs, 1/2" drywall each side)
 function plan(title, island, wall, opts = {}) {
   const len = run => run.reduce((s, c) => s + c.w, 0);
   const total = Math.max(len(island), len(wall));
-  const across = 2 * DEPTH + AISLE; // wall to the island's back
+  const across = 2 * (DEPTH + FRONT) + AISLE; // wall to the island's back
   const low = 6 * Math.max(0, ...wall.map(c => c.drop || 0)); // `drop: n` as in sketch(); only the wall run's labels have room below them
   const WALLY = MARGIN + 39.75 + across, H = WALLY + WALL + 24 + low;
   const W = MARGIN * 2 + total + 40; // + the Picos and the ruler
@@ -300,7 +300,7 @@ function plan(title, island, wall, opts = {}) {
   // labelY: where the labels go, on the page.
   const side = (run, flip, labelY, back = 0, walls = false) => { // back: counter past the cabinet backs (an item's own `back` wins); walls: a side wall at the counter's end, so no overhang
     const n = len(run); // the wall run is flipped about its own length, so its right end meets the island's left end
-    const P = (u, v) => flip ? [MARGIN + n - u, WALLY - v] : [MARGIN + u, WALLY - 2 * DEPTH - AISLE + v];
+    const P = (u, v) => flip ? [MARGIN + n - u, WALLY - v] : [MARGIN + u, WALLY - across + v];
     const box = (u, v, w, h, cls) => {
       const [x1, y1] = P(u, v), [x2, y2] = P(u + w, v + h);
       rect(Math.min(x1, x2), Math.min(y1, y2), Math.abs(x2 - x1), Math.abs(y2 - y1), cls);
@@ -334,14 +334,14 @@ function plan(title, island, wall, opts = {}) {
         text(tx, ty + 1, c.tag, 'gaplabel on');
       } else box(c.u, 0, c.w, DEPTH, c.h ? 'box alabaster' : 'hidden'); // base cabinets sit under the counter
       if (c.cooktop) { // Bosch NIT8061UC: 31" x 21 1/4", centered along the cabinet, 2" back from centered on the counter
-        const cu = c.u + (c.w - 31) / 2, cv = (COUNTER - 21.25) / 2 - 2; // 2" back from centered on the 25" counter (2026-10-27)
+        const cu = c.u + (c.w - 31) / 2, cv = 10.5 - 21.25 / 2; // centered 10 1/2" from the cabinet backs: 2" back from centered on the 25" counter (2026-10-27), kept when it grew to 25 3/4" (2026-11-05)
         box(cu, cv, 31, 21.25, 'cooktop');
         for (const [du, dv] of [[8, 6], [23, 6], [8, 15.25], [23, 15.25]]) circle(P(cu + du, cv + dv), 4, 'burner');
       }
       if (c.receptacle) box(c.u + (c.w - 2.75) / 2, 0, 2.75, 0.25, 'plate'); // on the wall face, over the counter
       if (c.backReceptacle) box(c.u + (c.w - 2.75) / 2, -WALL - 0.25, 2.75, 0.25, 'plate'); // vertical plate on the island's back wall
       if (c.airSwitch) circle(P(c.u + c.airSwitch.dx, c.airSwitch.back), 0.875, 'button'); // STS-OO disposal button
-      if (c.kind === 'sink') box(c.u + (c.w - 33.5) / 2, COUNTER - 21, 33.5, 19, 'sinkbowl'); // Ruvati RVH6222ST: 33.5" x 19" outer, 2" from the counter front
+      if (c.kind === 'sink') box(c.u + (c.w - 33.5) / 2, 4, 33.5, 19, 'sinkbowl'); // Ruvati RVH6222ST: 33.5" x 19" outer, 4"–23" from the cabinet backs, 2 3/4" from the counter front
       if (c.faucet) { // hole c.faucet.back in front of the cabinet backs, spout reaching c.faucet.reach toward the front
         const [x1, y1] = mid(c.faucet.back), [x2, y2] = mid(c.faucet.back + c.faucet.reach);
         line(x1, y1, x2, y2, 'spout');
@@ -379,13 +379,13 @@ function plan(title, island, wall, opts = {}) {
 
   // Depth ruler on the right, from the wall.
   const rx = MARGIN + Math.max(len(island), len(wall) + 3) + 7; // clear of the Picos
-  const marks = [[0, 'wall'], [DEPTH, 'wall cabinet fronts'], [DEPTH + AISLE, 'island cabinet fronts'], [across, 'island cabinet backs'], [across + WALL, 'island back wall']];
+  const marks = [[0, 'wall'], [DEPTH + FRONT, 'wall cabinet fronts'], [DEPTH + FRONT + AISLE, 'island cabinet fronts'], [across, 'island cabinet backs'], [across + WALL, 'island back wall']];
   line(rx, WALLY, rx, WALLY - across - WALL, 'dimline');
   for (const [m, label] of marks) {
     line(rx - 1, WALLY - m, rx + 1, WALLY - m, 'tick');
     text(rx + 1.5, WALLY - m + 0.7, `${m}" ${label}`, 'dim ruler');
   }
-  text(rx + 1.5, WALLY - DEPTH - AISLE / 2 + 0.7, `${AISLE}" aisle`, 'dim ruler');
+  text(rx + 1.5, WALLY - DEPTH - FRONT - AISLE / 2 + 0.7, `${AISLE}" aisle`, 'dim ruler');
   // opts.extra: draws more on top (out: raw svg strings), given page x of an island or wall u and page y of an island or wall v (as in side()).
   opts.extra?.({ out, text, ix: u => MARGIN + u, iy: v => WALLY - across + v, wx: u => MARGIN + len(wall) - u, wy: v => WALLY - v });
   page(title, 'Plan of both runs', W, H, WALLY, out, ["from the island's left end", 'from the wall']);

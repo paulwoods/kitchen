@@ -34,7 +34,7 @@ const island = [
   { code: 'DB24-3',  w: 24, kind: 'drawers', n: 3, back: 19.5, backReceptacle: true },
   { code: 'TRB18FH', w: 18, kind: 'door', backReceptacle: true },
   { code: 'SB42',    w: 42, kind: 'sink', backReceptacle: true, airSwitch: { dx: 17, back: 3 },
-    sink: { w: 31.875, d: 17.375, v: 4.8125, depth: 9.875, ledge: 0.6875, drain: 11.3125 }, // Ruvati RVH6222ST bowl opening (centered in its 33.5" x 19" outline, 2" from the counter front), drain 6 1/4" in from the left wall
+    sink: { w: 31.875, d: 17.375, v: 4.8125, depth: 9.875, ledge: 0.6875, drain: 11.3125 }, // Ruvati RVH6222ST bowl opening (centered in its 33.5" x 19" outline, 2 3/4" from the counter front), drain 6 1/4" in from the left wall
     faucet: { h: 22.4375, reach: 9.5, back: 3 } }, // Kohler K-R30937-BMB
   { code: '24" gap', w: 24, kind: 'gap', tag: 'DW', backReceptacle: true },
   { code: 'B24-2',   w: 24, kind: 'base', backReceptacle: true },
@@ -61,10 +61,10 @@ const wall = [
 ];
 
 const TOE = 4.5, BOX = 34.5, TOP = 1.25, CEILING = 96, OUTLET = 44; // OUTLET: center of a wall receptacle (assumed)
-const DEPTH = 24, COUNTER = 25, AISLE = 48, UPPER = 12, APPLIANCE = 14, HOOD = 23.625; // appliance depth assumed; hood depth per the Proline sheet
+const DEPTH = 24, FRONT = 0.75, COUNTER = 25.75, AISLE = 48, UPPER = 12, APPLIANCE = 14, HOOD = 23.625; // door fronts assumed, counter 1" past them (2026-11-05), aisle between the fronts; appliance depth assumed; hood depth per the Proline sheet
 const len = run => run.reduce((s, c) => s + c.w, 0);
 const total = Math.max(len(island), len(wall));
-const ZWALL = 2 * DEPTH + AISLE; // the island's back is at z = 0, the room wall at ZWALL
+const ZWALL = 2 * (DEPTH + FRONT) + AISLE; // the island's back is at z = 0, the room wall at ZWALL
 
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(getComputedStyle(document.documentElement).getPropertyValue('--paper').trim());
@@ -200,7 +200,7 @@ function side(run, flip, zBack, back = 0, walls = false) { // back: counter past
       rod(p(BOX + TOP + 0.25), p(BOX + TOP + 0.75), 0.6, M.plate);
     }
     if (c.cooktop) { // Bosch NIT8061UC: black glass, four zones, touch-control strip at the front (layout as in the top view)
-      const cu = u + (w - 31) / 2, cv = (COUNTER - 21.25) / 2 - 2, // 2" back from centered on the 25" counter (2026-10-27)
+      const cu = u + (w - 31) / 2, cv = 10.5 - 21.25 / 2, // centered 10 1/2" from the cabinet backs: 2" back from centered on the 25" counter (2026-10-27), kept at 25 3/4" (2026-11-05)
         y = BOX + TOP + 0.25;
       B(cu, cv, BOX + TOP, 31, 21.25, 0.25, M.black);
       for (const [du, dv] of [[8, 6], [23, 6], [8, 15.25], [23, 15.25]]) ring(P(cu + du, cv + dv, y + 0.02), 4, M.ring);
@@ -244,7 +244,7 @@ function side(run, flip, zBack, back = 0, walls = false) { // back: counter past
     base = false;
     for (const x of c.upper || []) {
       if (x.hood) { // curved glass canopy over a steel body (filter, 4 lights, touch panel in front), chimney to the ceiling
-        const top = x.at + x.h, bw = 21, bd = 17, bu = u + (w - bw) / 2, bv = COUNTER / 2 - bd / 2; // body size assumed
+        const top = x.at + x.h, bw = 21, bd = 17, bu = u + (w - bw) / 2, bv = 12.5 - bd / 2; // body size assumed; centered 12 1/2" from the cabinet backs, as on the 25" counter
         B(bu, bv, x.at, bw, bd, x.h, M.steel);
         B(bu + 3, bv + 3, x.at - 0.05, bw - 6, bd - 6, 0.05, M.drain); // mesh filter
         for (const [lu, lv] of [[1.5, 1.5], [bw - 1.5, 1.5], [1.5, bd - 1.5], [bw - 1.5, bd - 1.5]]) rod(P(bu + lu, bv + lv, x.at - 0.1), P(bu + lu, bv + lv, x.at), 0.75, M.light);
@@ -254,9 +254,9 @@ function side(run, flip, zBack, back = 0, walls = false) { // back: counter past
         const pane = new THREE.Mesh(glass, M.hoodGlass);
         pane.add(new THREE.LineSegments(new THREE.EdgesGeometry(glass), edges));
         pane.rotation.x = -Math.PI / 2;
-        pane.position.set(...P(u + w / 2, COUNTER / 2, top));
+        pane.position.set(...P(u + w / 2, 12.5, top));
         group.add(pane);
-        B(u + (w - x.chimney) / 2, COUNTER / 2 - x.chimneyD / 2, top, x.chimney, x.chimneyD, CEILING - top, M.steel);
+        B(u + (w - x.chimney) / 2, 12.5 - x.chimneyD / 2, top, x.chimney, x.chimneyD, CEILING - top, M.steel);
       } else if (x.coffee || x.appliance) B(u + (w - x.w) / 2, 2, x.at, x.w, APPLIANCE, x.h, M.black);
       else if (x.riser) { // riser molding to the ceiling, 3/4" thick, on the front of a cabinet x.d deep; side: a return past the 12" uppers on the right
         const d = x.d || UPPER;

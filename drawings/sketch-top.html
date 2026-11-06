@@ -60,11 +60,11 @@ plan('Top view', island, wall, { extra: ({ out, text, ix, iy, wx, wy }) => {
   // Lights in island [u, v]: T over the island counter, A down the middle of the aisle between each pair of opposite centers.
   const T = [mid(I.spices), I.trash.u, mid(I.sink), I['cabinet a'].u].map(u => [u, 18]);
   const A = [['cooktop', 'Air Fryer'], ['trash', 'Oven'], ['dishwasher', 'Fridge']]
-    .map(([a, b]) => [(ix(mid(I[a])) + wx(mid(Wl[b]))) / 2 - ix(0), DEPTH + AISLE / 2]);
+    .map(([a, b]) => [(ix(mid(I[a])) + wx(mid(Wl[b]))) / 2 - ix(0), DEPTH + FRONT + AISLE / 2]);
   // People 74" tall facing the island, belly 3" off the counter front, seen from above. Each light (at the 96" ceiling, assumed)
   // throws the body's slices (waist at the counter, shoulders, head) onto the counter; the shadow is their hull, clipped to the counter.
   const people = [mid(I.plates, I.trash), mid(I.sink)];
-  const slices = u => [[7, 5, 33, TOP + BOX], [9.5, 5.5, 33, 61], [3.25, 4, 32, 74]] // rx, ry, center v, height (assumed proportions)
+  const slices = u => [[7, 5, COUNTER + 8, TOP + BOX], [9.5, 5.5, COUNTER + 8, 61], [3.25, 4, COUNTER + 7, 74]] // rx, ry, center v, height (assumed proportions)
     .flatMap(([rx, ry, v, h]) => Array.from({ length: 16 }, (_, k) => [u + rx * Math.cos(k * Math.PI / 8), v + ry * Math.sin(k * Math.PI / 8), h]));
   const onCounter = ([lu, lv], [u, v, h]) => { const t = (CEILING - TOP - BOX) / (CEILING - h); return [lu + (u - lu) * t, lv + (v - lv) * t]; };
   const hull = ps => { // monotone chain
@@ -81,13 +81,13 @@ plan('Top view', island, wall, { extra: ({ out, text, ix, iy, wx, wy }) => {
   for (const u of people) for (const [L, k] of [...T.map(L => [L, 'T']), ...A.map(L => [L, 'A'])]) // class l-T / l-A: hidden with its light
     out.push(`<polygon class="shadow l-${k}" clip-path="url(#counter)" points="${hull(slices(u).map(p => onCounter(L, p))).map(([u, v]) => `${ix(u)},${iy(v)}`).join(' ')}"/>`);
   for (const u of people) {
-    out.unshift(`<ellipse class="person l-people" cx="${ix(u)}" cy="${iy(33)}" rx="9.5" ry="5.5"/><ellipse class="person head l-people" cx="${ix(u)}" cy="${iy(32)}" rx="3.25" ry="4"/>`);
+    out.unshift(`<ellipse class="person l-people" cx="${ix(u)}" cy="${iy(COUNTER + 8)}" rx="9.5" ry="5.5"/><ellipse class="person head l-people" cx="${ix(u)}" cy="${iy(COUNTER + 7)}" rx="3.25" ry="4"/>`);
     isl(u, 41, '74" person', 'code l-people');
   }
   // Refinement sheet (2026-10-31): arrows from the two lights each working position relies on (the T over its counter, the A behind) to the head.
   out.push('<marker id="arrow" viewBox="0 0 6 6" refX="5" refY="3" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#e07000"/></marker>');
   const ray = ([u0, v0], [u1, v1], cls) => out.push(`<line class="ray ${cls}" x1="${ix(u0)}" y1="${iy(v0)}" x2="${ix(u1)}" y2="${iy(v1)}" marker-end="url(#arrow)"/>`);
-  for (const [u, t, a] of [[people[0], T[1], A[1]], [people[1], T[2], A[1]]]) { ray([t[0], t[1] + 2], [u, 29], 'l-T'); ray([a[0], a[1] - 2], [u, 36], 'l-A'); }
+  for (const [u, t, a] of [[people[0], T[1], A[1]], [people[1], T[2], A[1]]]) { ray([t[0], t[1] + 2], [u, COUNTER + 4], 'l-T'); ray([a[0], a[1] - 2], [u, COUNTER + 11], 'l-A'); }
   out.push(`<line class="ray guest" x1="${ix(168)}" y1="8" x2="${ix(168)}" y2="${iy(-12)}" marker-end="url(#arrow)"/>`);
   text(ix(150), 6, 'guest view: exposed LEDs, hood glare, fixture in the sightline?', 'code');
   for (const [u, v] of T) isl(u, v, 'T', 'lamp l-T');

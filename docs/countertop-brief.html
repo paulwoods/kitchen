@@ -54,8 +54,8 @@
   <text x="79" y="-26">3 seats, about 28" apart; stools TBD</text>
 
   <!-- Island: two pieces -->
-  <rect class="stone" x="-1" y="-19.5" width="85" height="44.5"/>
-  <rect class="stone" x="84" y="-5.5" width="109" height="30.5"/>
+  <rect class="stone" x="-1" y="-19.5" width="85" height="45.25"/>
+  <rect class="stone" x="84" y="-5.5" width="109" height="31.25"/>
   <rect class="hidden" x="0" y="-4.5" width="192" height="4.5"/>
   <line class="hidden" x1="0" y1="24" x2="192" y2="24"/>
   <g class="bracket">
@@ -68,11 +68,11 @@
   <text class="mid" x="123" y="13">undermount sink</text><text class="mid" x="123" y="16.5">33 1/2" &times; 19" outer</text>
   <circle class="hole" cx="123" cy="3" r="0.7"/><circle class="hole" cx="119" cy="3" r="0.6"/>
   <text class="on" x="125" y="2.5">faucet 1 3/8", button 1 1/4"</text>
-  <path class="edge" d="M-1,-19.5 H84 V-5.5 H193 V25 H-1 Z"/>
-  <line class="seam" x1="84" y1="-5.5" x2="84" y2="25"/>
+  <path class="edge" d="M-1,-19.5 H84 V-5.5 H193 V25.75 H-1 Z"/>
+  <line class="seam" x1="84" y1="-5.5" x2="84" y2="25.75"/>
   <text class="seamtext" x="86" y="-8">proposed seam; prep spans it</text>
-  <text class="on" x="62" y="9"><tspan font-weight="bold">Piece 1</tspan></text><text class="on" x="62" y="12.5">85" &times; 44 1/2"</text>
-  <text class="on" x="150" y="9"><tspan font-weight="bold">Piece 2</tspan></text><text class="on" x="150" y="12.5">109" &times; 30 1/2"</text>
+  <text class="on" x="62" y="9"><tspan font-weight="bold">Piece 1</tspan></text><text class="on" x="62" y="12.5">85" &times; 45 1/4"</text>
+  <text class="on" x="150" y="9"><tspan font-weight="bold">Piece 2</tspan></text><text class="on" x="150" y="12.5">109" &times; 31 1/4"</text>
   <text class="on" x="150" y="19">dishwasher gap below</text>
 
   <!-- Work areas -->
@@ -81,18 +81,19 @@
   <text class="zone mid" x="10.5" y="68">coffee</text><text class="zone mid" x="42" y="68">oven landing</text>
 
   <!-- Aisle -->
-  <line class="dim" x1="70" y1="25" x2="70" y2="71"/>
+  <line class="dim" x1="70" y1="25.75" x2="70" y2="71.75"/>
   <text x="71.5" y="45">46" counter edge to counter edge</text>
-  <text x="71.5" y="48.5">(48" between cabinet faces)</text>
-  <line class="dim" x1="173" y1="25" x2="173" y2="65.2"/>
-  <text x="174.5" y="45">40.2" to the</text><text x="174.5" y="48.5">fridge handles</text>
+  <text x="71.5" y="48.5">(48" between the door faces)</text>
+  <line class="dim" x1="173" y1="25.75" x2="173" y2="66.7"/>
+  <text x="174.5" y="45">41" to the</text><text x="174.5" y="48.5">fridge handles</text>
 
-  <!-- Wall run -->
+  <!-- Wall run: 1 1/2" farther out since the fronts moved to the aisle line (2026-11-05) -->
+  <g transform="translate(0 1.5)">
   <rect class="sidewall" x="-4.5" y="72" width="4.5" height="24"/>
-  <rect class="stone" x="0" y="71" width="84" height="25"/>
-  <line class="edge" x1="0" y1="71" x2="84" y2="71"/>
+  <rect class="stone" x="0" y="70.25" width="84" height="25.75"/>
+  <line class="edge" x1="0" y1="70.25" x2="84" y2="70.25"/>
   <line class="hidden" x1="0" y1="72" x2="84" y2="72"/>
-  <text class="on" x="42" y="83"><tspan font-weight="bold">Piece 3</tspan></text><text class="on" x="42" y="86.5">84" &times; 25"</text>
+  <text class="on" x="42" y="83"><tspan font-weight="bold">Piece 3</tspan></text><text class="on" x="42" y="86.5">84" &times; 25 3/4"</text>
   <text class="on" x="2" y="80">butts the side wall</text>
   <rect class="tall" x="84" y="72" width="33" height="24"/><text class="on mid" x="100.5" y="83">OVD3393;</text><text class="on mid" x="100.5" y="86.5">counter butts it</text>
   <rect class="tall" x="117" y="72" width="36" height="24"/><text class="on mid" x="135" y="85">pantry</text>
@@ -100,6 +101,8 @@
   <rect class="splash" x="0" y="96" width="84" height="2"/>
   <line class="tick" x1="21" y1="95.5" x2="21" y2="98.5"/><line class="tick" x1="42" y1="95.5" x2="42" y2="98.5"/><line class="tick" x1="63" y1="95.5" x2="63" y2="98.5"/>
   <text x="0" y="103">backsplash, 84" &times; 18 1/4" tall, 4 pieces seamed on the cabinet dividers; a receptacle cutout in each</text>
+
+  </g>
 
   <!-- Key -->
   <rect class="stone" x="0" y="108" width="9" height="4"/><line class="edge" x1="0" y1="110" x2="9" y2="110"/><text x="11" y="111">exposed edge</text>
@@ -133,15 +136,15 @@
 <p><b>Requirement for the fabricator and installer:</b> finished projections and supports must preserve the selected 48" working aisle, appliance access and the guest connection. Any change to the planned stone edges, brackets or supports that affects these comes back for approval before fabrication.</p>
 <table>
 <tr><th>Measure</th><th>As planned</th></tr>
-<tr><td>Cabinet face to cabinet face (how the 48" aisle is measured)</td><td>48"</td></tr>
-<tr><td>Island counter edge to wall counter edge</td><td>46"; each counter has a 1" nosing</td></tr>
+<tr><td>Door face to door face (how the 48" aisle is measured; 49 1/2" between the cabinet boxes, since 2026-11-05)</td><td>48"</td></tr>
+<tr><td>Island counter edge to wall counter edge</td><td>46"; each counter runs 1" past the 3/4" door and drawer fronts</td></tr>
 <tr><td>Island counter edge to OVD3393 and pantry faces</td><td>47"</td></tr>
-<tr><td>Island counter edge to fridge doors / handles</td><td>42 1/2" / 40.2"</td></tr>
+<tr><td>Island counter edge to fridge doors / handles</td><td>43 1/4" / 41"</td></tr>
 <tr><td>Door and pull projection into the aisle</td><td>TBD</td></tr>
-<tr><td>Open appliance doors, from the <a href="appliances.html">Appliances</a> page</td><td>Fridge doors leave about 28 1/2" of the 48"; the dishwasher door leaves about 23"</td></tr>
+<tr><td>Open appliance doors, from the <a href="appliances.html">Appliances</a> page</td><td>Fridge doors leave about 29 1/4" to the island's fronts; the dishwasher door leaves about 23"</td></tr>
 <tr><td>Guest connection</td><td>Island counter at 35.75" with no raised backsplash; brackets hidden under the stone; the three seats kept open</td></tr>
 </table>
-<p class="note"><b>Provisional until resolved:</b> island depth (44 1/2" and 30 1/2", pending support approval), seating (stools and spacing) and any bookshelf detail (not in the plan).</p>
+<p class="note"><b>Provisional until resolved:</b> island depth (45 1/4" and 31 1/4", pending support approval), seating (stools and spacing) and any bookshelf detail (not in the plan).</p>
 
 <h2 id="brief">The brief</h2>
 <p><b>Define the Details to Verify.</b> Spend about 10 minutes with paper or a document. No purchases, supplier replies, or new measurements are required; use TBD wherever information is missing.</p>

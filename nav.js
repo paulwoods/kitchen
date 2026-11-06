@@ -5,7 +5,7 @@ const groups = [
   [['index.html', 'Index']],
   [['drawings/model.html', '3D model']],
   [['drawings/sketch-top.html', 'Top view'], ['drawings/sketch-island-front.html', 'Island front'], ['drawings/sketch-wall-front.html', 'Wall front']],
-  [['docs/issues.html', 'Issues'], ['docs/cabinets.html', 'Cabinets'], ['docs/appliances.html', 'Appliances'], ['docs/electrical.html', 'Electrical'], ['docs/walls.html', 'Walls'], ['docs/countertop-backsplash.html', 'Countertop and backsplash'], ['docs/countertop-brief.html', 'Countertop brief'], ['docs/lighting.html', 'Lighting scenes'], ['docs/trade-sequence.html', 'Trade sequence'], ['docs/review1.html', 'Review 1']],
+  [['docs/issues.html', 'Issues'], ['docs/cabinets.html', 'Cabinets'], ['docs/appliances.html', 'Appliances'], ['docs/electrical.html', 'Electrical'], ['docs/walls.html', 'Walls'], ['docs/countertop-backsplash.html', 'Countertop and backsplash'], ['docs/countertop-brief.html', 'Countertop brief'], ['docs/addendum.html', 'Countertop addendum'], ['docs/lighting.html', 'Lighting scenes'], ['docs/trade-sequence.html', 'Trade sequence'], ['docs/review1.html', 'Review 1']],
   [['pricing/price.html', 'Price'], ['pricing/comparison.html', 'Comparison'], ['pricing/quote-cabinets-colonial.html', 'Quote: Colonial'], ['pricing/quote-cabinets-monaco.html', 'Quote: Monaco'], ['pricing/quote-citycabinets.html', 'Quote: City']],
 ];
 // Links are relative to this script's folder (the site root), so pages in subfolders load it as ../nav.js.

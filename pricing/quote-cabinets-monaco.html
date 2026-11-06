@@ -21,8 +21,8 @@
     td:not(:last-child) { display: inline; font-weight: 600; } td:not(:last-child):not(:nth-last-child(2))::after { content: " · "; font-weight: 400; color: var(--muted); }
   }
 </style>
-<h1>Quote: Cabinets.com Monaco Maple Naval</h1>
-<p class="sub"><a href="https://www.cabinets.com/kitchen-cabinets/cordova-collection/monaco-maple-naval">cabinets.com, Cordova collection</a> · frameless, assembled · web prices read 2026-10-26 · <a href="../index.html">index</a></p>
+<h1>Quote: Monaco</h1>
+<p class="sub">Monaco Maple Naval · <a href="https://www.cabinets.com/kitchen-cabinets/cordova-collection/monaco-maple-naval">cabinets.com, Cordova collection</a> · frameless, assembled · web prices read 2026-10-26 · <a href="../index.html">index</a></p>
 
 <p class="total">Regular <b data-regular></b> · Sale <b data-sale></b></p>
 
@@ -61,6 +61,7 @@ Where cabinets.com has no exact match, the nearest item is used and the differen
   <li>Oven column: the OVD3393 is priced as planned, 33" × 93" × 24", two butt doors over one large opening, one drawer below (read 2026-11-04). The listing showed no sale; the sale column takes 35% off. The opening is made to be modified on site for the appliances, and trim may be extra.</li>
   <li>Over the fridge: the RW3721 is 37" × 20 11/16" × 24", panel to panel (read 2026-11-03).</li>
   <li>Cabinet A: B24-SINGLE (one door, one drawer), the B24 has two doors.</li>
+  <li><b>Missing:</b> the FP2496 skin on the left REP's exposed side isn't in this quote and isn't priced, so the total is short by it (Colonial lists it at $167.58, $108.93 sale).</li>
 </ul>
 
 <script src="quote-cabinets-monaco.js"></script>
@@ -73,7 +74,7 @@ for (const [plan, code, qty, r, s, g, notes] of lines) {
   const rq = (r + g) * qty, sq = (s + g) * qty; reg += rq; sale += sq;
   const price = p => g ? `${$(p)} + ${$(g)}` : $(p);
   const fits = !resized.includes(plan + ' / ' + code);
-  table.insertAdjacentHTML('beforeend', `<tr><td title="${fits ? 'size matches the plan' : 'size differs from the plan'}">${fits ? '✅' : '⚠️'}</td><td>${plan}</td><td>${code}</td><td class="n">${qty}</td><td class="n">${price(r)}</td><td class="n">${price(s)}</td><td class="n">${$(rq)}</td><td class="n">${$(sq)}</td><td>${notes}</td></tr>`);
+  table.insertAdjacentHTML('beforeend', `<tr><td title="${!qty ? 'missing from this quote' : fits ? 'size matches the plan' : 'size differs from the plan'}">${!qty ? '❌' : fits ? '✅' : '⚠️'}</td><td>${plan}</td><td>${code}</td><td class="n">${qty}</td><td class="n">${price(r)}</td><td class="n">${price(s)}</td><td class="n">${$(rq)}</td><td class="n">${$(sq)}</td><td>${notes}</td></tr>`);
 }
 table.insertAdjacentHTML('beforeend', `<tr class="total"><td></td><td>total</td><td></td><td class="n">${lines.reduce((n, l) => n + l[2], 0)}</td><td></td><td></td><td class="n">${$(reg)}</td><td class="n">${$(sale)}</td><td>before tax and shipping</td></tr>`);
 document.querySelector('[data-regular]').textContent = $(reg);

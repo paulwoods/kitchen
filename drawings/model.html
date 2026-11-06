@@ -14,7 +14,7 @@
 <header>
   <h1>3D model</h1>
   <p><a href="../index.html">index</a> · drag to orbit, right-drag to pan, scroll to zoom</p>
-  <p><button data-view="end">End</button><button data-view="island">Island</button><button data-view="wall">Wall</button><button data-view="top">Top</button></p>
+  <p><button data-view="end">End</button><button data-view="island">Island</button><button data-view="wall">Wall</button><button data-view="top">Top</button><label><input type="checkbox" id="small"> toaster, air fryer, coffee</label></p>
 </header>
 <script type="importmap">
   { "imports": {
@@ -257,7 +257,11 @@ function side(run, flip, zBack, back = 0, walls = false) { // back: counter past
         pane.position.set(...P(u + w / 2, 12.5, top));
         group.add(pane);
         B(u + (w - x.chimney) / 2, 12.5 - x.chimneyD / 2, top, x.chimney, x.chimneyD, CEILING - top, M.steel);
-      } else if (x.coffee || x.appliance) B(u + (w - x.w) / 2, 2, x.at, x.w, APPLIANCE, x.h, M.black);
+      } else if (x.coffee || x.appliance) { // into `small`, shown by its checkbox
+        const g = group; group = small;
+        B(u + (w - x.w) / 2, 2, x.at, x.w, APPLIANCE, x.h, M.black);
+        group = g;
+      }
       else if (x.riser) { // riser molding to the ceiling, 3/4" thick, on the front of a cabinet x.d deep; side: a return past the 12" uppers on the right
         const d = x.d || UPPER;
         B(u + (x.dx || 0), d, x.at, x.w || w, 0.75, x.h, M.alabaster);
@@ -299,6 +303,9 @@ function side(run, flip, zBack, back = 0, walls = false) { // back: counter past
 
 const runs = { island: new THREE.Group(), wall: new THREE.Group() };
 scene.add(runs.island, runs.wall);
+const small = new THREE.Group(); // countertop appliances, hidden until checked
+small.visible = false;
+runs.wall.add(small);
 group = runs.island;
 side(island, false, 0, 5.5); // counter 5 1/2" past the cabinet backs (the back wall, then 1"), 19 1/2" behind items with back: 19.5
 cube(0, 0, -4.5, island.reduce((s, c) => s + c.w, 0), BOX, 4.5, M.base); // the island's back wall (2x4 studs, 1/2" drywall each side), floor to the counter's underside, painted Haze
@@ -360,6 +367,7 @@ const show = (name) => {
   for (const r in runs) runs[r].visible = r !== hide;
   back.visible = hide !== 'wall';
 };
+document.getElementById('small').onchange = e => small.visible = e.target.checked;
 document.querySelectorAll('[data-view]').forEach(b => b.onclick = () => show(b.dataset.view));
 const start = location.hash.slice(1); // index.html links straight to a view: model.html#island
 show(Object.hasOwn(views, start) ? start : 'end');

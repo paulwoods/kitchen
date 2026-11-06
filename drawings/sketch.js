@@ -91,10 +91,10 @@ function sketch(title, run, opts = {}) {
       tag(c.name || 'oven', c.off);
       rect(ox, top, ow, 22.375, 'oven');
       rect(ox + 8, top + 0.75, ow - 16, 2, 'window'); // control panel, size assumed
-      line(ox + 3, top + 4.5, ox + ow - 3, top + 4.5, 'pull');
+      line(ox + 3, top + 4.5, ox + ow - 3, top + 4.5, 'handle');
       rect(ox + 3, top + 6, ow - 6, 12, 'window'); // drop-down doors, window sizes assumed
       rect(ox, low, ow, 26.625, 'oven');
-      line(ox + 3, low + 3.5, ox + ow - 3, low + 3.5, 'pull');
+      line(ox + 3, low + 3.5, ox + ow - 3, low + 3.5, 'handle');
       rect(ox + 3, low + 6, ow - 6, 17.5, 'window');
       ap = '';
     } else {
@@ -413,7 +413,7 @@ function page(title, view, W, H, oy, out, axes) {
       .faucet { fill: #2b2b2b; stroke: #b08d57; stroke-width: 0.2; } .spout { stroke: #2b2b2b; stroke-width: 1.375; }
       .brass { fill: #b08d57; stroke: #223; stroke-width: 0.1; } .coil { stroke: #2b2b2b; stroke-width: 0.2; } .cord { stroke: var(--muted); stroke-width: 0.2; }
       .sinkbowl { fill: #c9ccd2; stroke: #223; stroke-width: 0.3; }
-      .upper { fill: none; stroke: #223; stroke-width: 0.3; stroke-dasharray: 0.01 0.8; stroke-linecap: round; } .pull { stroke: #2b2b2b; stroke-width: 0.4; stroke-linecap: round; }
+      .upper { fill: none; stroke: #223; stroke-width: 0.3; stroke-dasharray: 0.01 0.8; stroke-linecap: round; } .pull { stroke: #e07000; stroke-width: 0.4; stroke-linecap: round; } .handle { stroke: #2b2b2b; stroke-width: 0.4; stroke-linecap: round; } /* cabinet pulls orange on the sketches (2026-11-05); the oven's handles stay black */
       .oven { fill: #c9ccd2; stroke: #223; stroke-width: 0.25; } .window { fill: #3a3f4a; }
       .glass { fill: #dbe9f2; stroke: #223; stroke-width: 0.15; }
       .light { fill: #fff6d8; stroke: #223; stroke-width: 0.15; } .chrome { fill: #c9ccd2; stroke: #223; stroke-width: 0.1; } .button { fill: #fff; stroke: #223; stroke-width: 0.15; } .plate { fill: #fff; stroke: #223; stroke-width: 0.15; } .outlet { fill: #fffdf7; stroke: #223; stroke-width: 0.1; }

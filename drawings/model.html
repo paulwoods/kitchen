@@ -244,7 +244,7 @@ function side(run, flip, zBack, back = 0, walls = false) { // back: counter past
     base = false;
     for (const x of c.upper || []) {
       if (x.hood) { // curved glass canopy over a steel body (filter, 4 lights, touch panel in front), chimney to the ceiling
-        const top = x.at + x.h, bw = 21, bd = 17, bu = u + (w - bw) / 2, bv = 12.5 - bd / 2; // body size assumed; centered 12 1/2" from the cabinet backs, as on the 25" counter
+        const top = x.at + x.h, bw = 21, bd = 17, bu = u + (w - bw) / 2, bv = 10.5 - bd / 2; // body size assumed; centered over the cooktop, 10 1/2" from the cabinet backs (2026-11-05)
         B(bu, bv, x.at, bw, bd, x.h, M.steel);
         B(bu + 3, bv + 3, x.at - 0.05, bw - 6, bd - 6, 0.05, M.drain); // mesh filter
         for (const [lu, lv] of [[1.5, 1.5], [bw - 1.5, 1.5], [1.5, bd - 1.5], [bw - 1.5, bd - 1.5]]) rod(P(bu + lu, bv + lv, x.at - 0.1), P(bu + lu, bv + lv, x.at), 0.75, M.light);
@@ -254,9 +254,9 @@ function side(run, flip, zBack, back = 0, walls = false) { // back: counter past
         const pane = new THREE.Mesh(glass, M.hoodGlass);
         pane.add(new THREE.LineSegments(new THREE.EdgesGeometry(glass), edges));
         pane.rotation.x = -Math.PI / 2;
-        pane.position.set(...P(u + w / 2, 12.5, top));
+        pane.position.set(...P(u + w / 2, 10.5, top));
         group.add(pane);
-        B(u + (w - x.chimney) / 2, 12.5 - x.chimneyD / 2, top, x.chimney, x.chimneyD, CEILING - top, M.steel);
+        B(u + (w - x.chimney) / 2, 10.5 - x.chimneyD / 2, top, x.chimney, x.chimneyD, CEILING - top, M.steel);
       } else if (x.coffee || x.appliance) { // into `small`, shown by its checkbox
         const g = group; group = small;
         B(u + (w - x.w) / 2, 2, x.at, x.w, APPLIANCE, x.h, M.black);

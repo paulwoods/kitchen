@@ -280,43 +280,37 @@ function sketch(title, run, opts = {}) {
   return svg;
 }
 
-// Draws the galley in plan (top view): the island at the top, facing down across the aisle,
-// and the wall run at the bottom, facing up (so it reads right to left). The wall run's right end lines up with the island's left end.
-// Depths are measured from the wall; grid lines from the island's left end and the wall.
+// Draws one run in plan (top view), as if standing in the aisle looking down: the cabinet backs at the top, the fronts facing down,
+// left to right as in the run's front sketch. It runs to just past the middle of the aisle. Depths are measured from the cabinet backs.
+// opts.island: the island, with its back wall and the counter strip behind it; else the wall run, with the room wall behind it
+// and the stud wall at its right (Coffee) end.
 const { depth: DEPTH, front: FRONT, counter: COUNTER, aisle: AISLE, wall: WALL } = DIMS; // from ../kitchen.js
-function plan(title, island, wall, opts = {}) {
-  const len = run => run.reduce((s, c) => s + c.w, 0);
-  const total = Math.max(len(island), len(wall));
-  const across = 2 * (DEPTH + FRONT) + AISLE; // wall to the island's back
-  const low = 6 * Math.max(0, ...wall.map(c => c.drop || 0)); // `drop: n` as in sketch(); only the wall run's labels have room below them
-  const WALLY = MARGIN + 39.75 + across, H = WALLY + WALL + 24 + low;
-  const W = MARGIN * 2 + total + 40; // + the Picos and the ruler
+function plan(title, run, opts = {}) {
+  const n = run.reduce((s, c) => s + c.w, 0), isl = opts.island;
+  const low = 6 * Math.max(0, ...run.map(c => c.drop || 0)); // `drop: n` as in sketch()
+  const MID = DEPTH + FRONT + AISLE / 2; // the cabinet backs to the middle of the aisle
+  const BACKY = MARGIN + 20 + low + (isl ? 19.75 : WALL), H = BACKY + MID + 12;
+  const W = MARGIN * 2 + n + 40; // + the side wall, the dimmers and the ruler
   const out = [];
   const rect = (x, y, w, h, cls = '') => out.push(`<rect x="${x}" y="${y}" width="${w}" height="${h}" class="${cls}"/>`);
   const line = (x1, y1, x2, y2, cls = '') => out.push(`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" class="${cls}"/>`);
   const text = (x, y, s, cls = '') => out.push(`<text x="${x}" y="${y}" class="${cls}">${s}</text>`);
   const circle = ([cx, cy], r, cls) => out.push(`<circle cx="${cx}" cy="${cy}" r="${r}" class="${cls}"/>`);
+  // u along the run from its left end, v from the cabinet backs toward the aisle.
+  const P = (u, v) => [MARGIN + u, BACKY + v];
+  const box = (u, v, w, h, cls) => rect(...P(u, v), w, h, cls);
+  const back = isl ? DIMS.islandBack : 0, walls = !isl; // back: counter past the cabinet backs (an item's own `back` wins); walls: a side wall at the counter's end, so no overhang
+  let u = 0;
+  for (const c of run) { c.u = u; u += c.w; }
 
-  // One run in its own coordinates: u along the run from its left end, v from the cabinet backs toward the aisle.
-  // labelY: where the labels go, on the page.
-  const side = (run, flip, labelY, back = 0, walls = false) => { // back: counter past the cabinet backs (an item's own `back` wins); walls: a side wall at the counter's end, so no overhang
-    const n = len(run); // the wall run is flipped about its own length, so its right end meets the island's left end
-    const P = (u, v) => flip ? [MARGIN + n - u, WALLY - v] : [MARGIN + u, WALLY - across + v];
-    const box = (u, v, w, h, cls) => {
-      const [x1, y1] = P(u, v), [x2, y2] = P(u + w, v + h);
-      rect(Math.min(x1, x2), Math.min(y1, y2), Math.abs(x2 - x1), Math.abs(y2 - y1), cls);
-    };
-    let u = 0;
-    for (const c of run) { c.u = u; u += c.w; }
-
-    // Countertop over each stretch of base-height items; 1" overhang only at the ends of the run.
-    run.forEach((c, i) => {
-      if (c.h || (i > 0 && !run[i - 1].h)) return;
-      let j = i;
-      while (j + 1 < run.length && !run[j + 1].h) j++;
-      const o = walls ? 0 : 1;
-      const l = c.u - (i === 0 ? o : 0), r = run[j].u + run[j].w + (j === run.length - 1 ? o : 0);
-      box(l, 0, r - l, COUNTER, 'counter top');
+  // Countertop over each stretch of base-height items; 1" overhang only at the ends of the run.
+  run.forEach((c, i) => {
+    if (c.h || (i > 0 && !run[i - 1].h)) return;
+    let j = i;
+    while (j + 1 < run.length && !run[j + 1].h) j++;
+    const o = walls ? 0 : 1;
+    const l = c.u - (i === 0 ? o : 0), r = run[j].u + run[j].w + (j === run.length - 1 ? o : 0);
+    box(l, 0, r - l, COUNTER, 'counter top');
     for (let k = i; k <= j; k++) { // counter behind the cabinet backs: c.back, else the run's back; neighbors with the same depth share a piece
       const d = run[k].back ?? back;
       if (!d || (k > i && (run[k - 1].back ?? back) === d)) continue;
@@ -325,80 +319,79 @@ function plan(title, island, wall, opts = {}) {
       const bl = k === i ? l : run[k].u, br = m === j ? r : run[m].u + run[m].w;
       box(bl, -d, br - bl, d, 'counter top');
     }
-    });
-    for (const c of run) {
-      if (c.kind === 'space') continue;
-      const mid = (v) => P(c.u + c.w / 2, v);
-      if (c.kind === 'gap') { // c.d: how far the appliance stands from the wall (default flush with the cabinets)
-        box(c.u, 0, c.w, c.d || DEPTH, c.h ? 'oven' : 'gap');
-        const [tx, ty] = mid((c.d || DEPTH) / 2);
-        text(tx, ty + 1, c.tag, 'gaplabel on');
-      } else box(c.u, 0, c.w, DEPTH, c.h ? 'box alabaster' : 'hidden'); // base cabinets sit under the counter
-      if (c.cooktop) { // Bosch NIT8061UC: 31" x 21 1/4", centered along the cabinet, 2" back from centered on the counter
-        const cu = c.u + (c.w - 31) / 2, cv = DIMS.cooktopV - 21.25 / 2; // centered 10 1/2" from the cabinet backs: 2" back from centered on the 25" counter (2026-10-27), kept when it grew to 25 3/4" (2026-11-05)
-        box(cu, cv, 31, 21.25, 'cooktop');
-        for (const [du, dv] of [[8, 6], [23, 6], [8, 15.25], [23, 15.25]]) circle(P(cu + du, cv + dv), 4, 'burner');
-      }
-      if (c.receptacle) box(c.u + (c.w - 2.75) / 2, 0, 2.75, 0.25, 'plate'); // on the wall face, over the counter
-      if (c.backReceptacle) box(c.u + (c.w - 2.75) / 2, -WALL - 0.25, 2.75, 0.25, 'plate'); // vertical plate on the island's back wall
-      if (c.airSwitch) circle(P(c.u + c.airSwitch.dx, c.airSwitch.back), 0.875, 'button'); // STS-OO disposal button
-      if (c.kind === 'sink') box(c.u + (c.w - 33.5) / 2, 4, 33.5, 19, 'sinkbowl'); // Ruvati RVH6222ST: 33.5" x 19" outer, 4"–23" from the cabinet backs, 2 3/4" from the counter front
-      if (c.faucet) { // hole c.faucet.back in front of the cabinet backs, spout reaching c.faucet.reach toward the front
-        const [x1, y1] = mid(c.faucet.back), [x2, y2] = mid(c.faucet.back + c.faucet.reach);
-        line(x1, y1, x2, y2, 'spout');
-        circle([x1, y1], 1.25, 'faucet');
-        circle([x2, y2], 0.65, 'brass');
-      }
-      // Upper cabinets, dotted: x.d deep, else 12"; x.w wide from x.dx, else the item's width.
-      const ups = (c.upper || []).filter(x => x.code), ud = Math.max(0, ...ups.map(x => x.d || 12));
-      if (ud) box(c.u + (ups[0].dx || 0), 0, ups[0].w || c.w, ud, 'upper');
-      const [tx] = mid(0);
-      const dy = 6 * (c.drop || 0);
-      if (c.name) text(tx, labelY + 5 + dy, c.name, 'name');
-      text(tx, labelY + 8.5 + dy, c.code, 'code');
-      text(tx, labelY + 11.5 + dy, `${c.w}"`, 'dim');
-      line(P(c.u, 0)[0], labelY + 1, P(c.u, 0)[0], labelY + 12, 'tick');
+  });
+  const labelY = MARGIN - 2;
+  for (const c of run) {
+    if (c.kind === 'space') continue;
+    const mid = (v) => P(c.u + c.w / 2, v);
+    if (c.kind === 'gap') { // c.d: how far the appliance stands from the wall (default flush with the cabinets)
+      box(c.u, 0, c.w, c.d || DEPTH, c.h ? 'oven' : 'gap');
+      const [tx, ty] = mid((c.d || DEPTH) / 2);
+      text(tx, ty + 1, c.tag, 'gaplabel on');
+    } else box(c.u, 0, c.w, DEPTH, c.h ? 'box alabaster' : 'hidden'); // base cabinets sit under the counter
+    if (c.cooktop) { // Bosch NIT8061UC: 31" x 21 1/4", centered along the cabinet, 2" back from centered on the counter
+      const cu = c.u + (c.w - 31) / 2, cv = DIMS.cooktopV - 21.25 / 2; // centered 10 1/2" from the cabinet backs: 2" back from centered on the 25" counter (2026-10-27), kept when it grew to 25 3/4" (2026-11-05)
+      box(cu, cv, 31, 21.25, 'cooktop');
+      for (const [du, dv] of [[8, 6], [23, 6], [8, 15.25], [23, 15.25]]) circle(P(cu + du, cv + dv), 4, 'burner');
     }
-    const [x0] = P(0, 0), [x1] = P(len(run), 0);
-    line(x1, labelY + 1, x1, labelY + 12, 'tick');
-    const low = 6 * Math.max(0, ...run.map(c => c.drop || 0));
-    line(x0, labelY + 15 + low, x1, labelY + 15 + low, 'dimline');
-    text((x0 + x1) / 2, labelY + 18.5 + low, `${len(run)}"`, 'dim');
-  };
+    if (c.receptacle) box(c.u + (c.w - 2.75) / 2, 0, 2.75, 0.25, 'plate'); // on the wall face, over the counter
+    if (c.backReceptacle) box(c.u + (c.w - 2.75) / 2, -WALL - 0.25, 2.75, 0.25, 'plate'); // vertical plate on the island's back wall
+    if (c.airSwitch) circle(P(c.u + c.airSwitch.dx, c.airSwitch.back), 0.875, 'button'); // STS-OO disposal button
+    if (c.kind === 'sink') box(c.u + (c.w - 33.5) / 2, 4, 33.5, 19, 'sinkbowl'); // Ruvati RVH6222ST: 33.5" x 19" outer, 4"–23" from the cabinet backs, 2 3/4" from the counter front
+    if (c.faucet) { // hole c.faucet.back in front of the cabinet backs, spout reaching c.faucet.reach toward the front
+      const [x1, y1] = mid(c.faucet.back), [x2, y2] = mid(c.faucet.back + c.faucet.reach);
+      line(x1, y1, x2, y2, 'spout');
+      circle([x1, y1], 1.25, 'faucet');
+      circle([x2, y2], 0.65, 'brass');
+    }
+    // Upper cabinets, dotted: x.d deep, else 12"; x.w wide from x.dx, else the item's width.
+    const ups = (c.upper || []).filter(x => x.code), ud = Math.max(0, ...ups.map(x => x.d || 12));
+    if (ud) box(c.u + (ups[0].dx || 0), 0, ups[0].w || c.w, ud, 'upper');
+    const [tx] = mid(0);
+    const dy = 6 * (c.drop || 0);
+    if (c.name) text(tx, labelY + 5 + dy, c.name, 'name');
+    text(tx, labelY + 8.5 + dy, c.code, 'code');
+    text(tx, labelY + 11.5 + dy, `${c.w}"`, 'dim');
+    line(P(c.u, 0)[0], labelY + 1, P(c.u, 0)[0], labelY + 12, 'tick');
+  }
+  const [x0] = P(0, 0), [x1] = P(n, 0);
+  line(x1, labelY + 1, x1, labelY + 12, 'tick');
+  line(x0, labelY + 15 + low, x1, labelY + 15 + low, 'dimline');
+  text((x0 + x1) / 2, labelY + 18.5 + low, `${n}"`, 'dim');
 
-  rect(MARGIN, WALLY, len(wall), WALL, 'roomwall'); // the room wall behind the wall run
-  side(island, false, MARGIN - 2, DIMS.islandBack); // labels above the island, clear of the aisle; counter 5 1/2" past the cabinet backs: the back wall, then 1" (19 1/2" where an item says back: 19.5)
-  rect(MARGIN, WALLY - across - WALL, len(island), WALL, 'hidden'); // the island's back wall (2x4 studs, 1/2" drywall each side), under the counter
-  side(wall, true, WALLY + WALL, 0, true);
-  rect(MARGIN - WALL, WALLY - DEPTH, WALL, DEPTH + WALL, 'roomwall'); // stud wall at the Coffee end of the wall run, as deep as the cabinets
-  // Lighting controls, 4-gang plates (8.19" wide, assumed) centered on the 24" depth at 48": Caseta dimmers on the side wall's outside face by Coffee, Picos on the FP2496 skin by the fridge.
-  for (const [x, label] of [[MARGIN - WALL - 0.25, '4 dimmers'], [MARGIN + len(wall), '4 Picos']]) {
-    rect(x, WALLY - DEPTH / 2 - 4.1, 0.25, 8.19, 'plate');
-    const tx = x < MARGIN ? x - 1 : x + 3; // label runs along the wall, outside it (rotated glyphs sit left of tx)
-    out.push(`<text x="${tx}" y="${WALLY - DEPTH / 2}" class="dim" transform="rotate(-90 ${tx} ${WALLY - DEPTH / 2})">${label}</text>`);
+  if (isl) rect(MARGIN, BACKY - WALL, n, WALL, 'hidden'); // the island's back wall (2x4 studs, 1/2" drywall each side), under the counter
+  else {
+    rect(MARGIN, BACKY - WALL, n + WALL, WALL, 'roomwall'); // the room wall behind the wall run
+    rect(MARGIN + n, BACKY, WALL, DEPTH, 'roomwall'); // stud wall at the Coffee end, as deep as the cabinets
+    // Lighting controls, 4-gang plates (8.19" wide, assumed) centered on the 24" depth at 48": Caseta dimmers on the side wall's outside face by Coffee, Picos on the FP2496 skin by the fridge.
+    for (const [x, label] of [[MARGIN + n + WALL, '4 dimmers'], [MARGIN - 0.25, '4 Picos']]) {
+      rect(x, BACKY + DEPTH / 2 - 4.1, 0.25, 8.19, 'plate');
+      const tx = x < MARGIN ? x - 1 : x + 3; // label runs along the wall, outside it (rotated glyphs sit left of tx)
+      out.push(`<text x="${tx}" y="${BACKY + DEPTH / 2}" class="dim" transform="rotate(-90 ${tx} ${BACKY + DEPTH / 2})">${label}</text>`);
+    }
   }
 
-  // Depth ruler on the right, from the wall.
-  const rx = MARGIN + Math.max(len(island), len(wall) + 3) + 7; // clear of the Picos
-  const marks = [[0, 'wall'], [DEPTH + FRONT, 'wall cabinet fronts'], [DEPTH + FRONT + AISLE, 'island cabinet fronts'], [across, 'island cabinet backs'], [across + WALL, 'island back wall']];
-  line(rx, WALLY, rx, WALLY - across - WALL, 'dimline');
+  // Depth ruler on the right, from the cabinet backs.
+  const rx = MARGIN + n + (isl ? 7 : WALL + 10); // clear of the side wall and the dimmers
+  const marks = [[0, isl ? 'cabinet backs' : 'wall'], [DEPTH + FRONT, 'cabinet fronts'], [MID, `middle of the ${AISLE}" aisle`]];
+  line(rx, BACKY - (isl ? WALL : 0), rx, BACKY + MID, 'dimline');
+  if (isl) { line(rx - 1, BACKY - WALL, rx + 1, BACKY - WALL, 'tick'); text(rx + 1.5, BACKY - WALL + 0.7, `back wall, ${WALL}" behind`, 'dim ruler'); }
   for (const [m, label] of marks) {
-    line(rx - 1, WALLY - m, rx + 1, WALLY - m, 'tick');
-    text(rx + 1.5, WALLY - m + 0.7, `${m}" ${label}`, 'dim ruler');
+    line(rx - 1, BACKY + m, rx + 1, BACKY + m, 'tick');
+    text(rx + 1.5, BACKY + m + 0.7, `${m}" ${label}`, 'dim ruler');
   }
-  text(rx + 1.5, WALLY - DEPTH - FRONT - AISLE / 2 + 0.7, `${AISLE}" aisle`, 'dim ruler');
-  // opts.extra: draws more on top (out: raw svg strings), given page x of an island or wall u and page y of an island or wall v (as in side()).
-  opts.extra?.({ out, text, ix: u => MARGIN + u, iy: v => WALLY - across + v, wx: u => MARGIN + len(wall) - u, wy: v => WALLY - v });
-  return page(title, 'Plan of both runs', W, H, WALLY, out, ["from the island's left end", 'from the wall']);
+  // opts.extra: draws more on top (out: raw svg strings), given the page x of a u and the page y of a v (as in P).
+  opts.extra?.({ out, text, x: u => P(u, 0)[0], y: v => P(0, v)[1] });
+  return page(title, `Plan of the ${isl ? 'island' : 'wall run'}`, W, H, BACKY, out, ['from the left end', isl ? 'from the cabinet backs' : 'from the wall', -1]);
 }
 
-// Adds a drawing to the page as a <section> (id: the title's first word, e.g. #wall), on graph paper with bold lines every BOLD" from (MARGIN, oy).
+// Adds a drawing to the page as a <section> (id: the title, e.g. #wall-front), on graph paper with bold lines every BOLD" from (MARGIN, oy).
 // axes: how to say x (from MARGIN) and y (up from oy) in the tape measure's readout. Returns the svg.
 function page(title, view, W, H, oy, out, axes) {
   const n = document.querySelectorAll('section.sketch').length; // keeps the pattern ids apart when a page has several drawings
   const section = document.createElement('section');
   section.className = 'sketch';
-  section.id = title.split(' ')[0].toLowerCase();
+  section.id = title.toLowerCase().replace(/ /g, '-'); // 'Wall front' → #wall-front
   section.innerHTML = (n ? '' : `
     <style>
       body { margin: 24px; background: var(--paper); color: var(--ink); font-family: system-ui, sans-serif; }
@@ -426,7 +419,7 @@ function page(title, view, W, H, oy, out, axes) {
       text { text-anchor: middle; font-size: 2.4px; fill: var(--ink); paint-order: stroke; stroke: var(--sheet); stroke-width: 0.4; } /* halo: labels cross both the sheet and light cabinets */
       .volts { font-size: 1.6px; stroke-width: 0.5; } text.on, text.volts { fill: #223; stroke: #fff; } /* on a light material, not the sheet */
       .start { text-anchor: start; } .end { text-anchor: end; } .name { font-weight: 700; } .code { font-size: 2.2px; } .dim { font-size: 2px; fill: var(--muted); }
-      .zone { fill: var(--green); font-weight: 700; } .lamp { fill: #e07000; font-weight: 700; font-size: 3px; } /* the top view */
+      .zone { fill: var(--green); font-weight: 700; } .lamp { fill: #e07000; font-weight: 700; font-size: 3px; } /* the top views */
       .gaplabel { font-size: 3px; fill: var(--muted); } .ruler { text-anchor: start; }
       .tapes { pointer-events: none; } .tape .blade { pointer-events: visiblePainted; cursor: pointer; }
       .blade { fill: #f5c400; fill-opacity: 0.85; } .tick-mark { stroke: #223; stroke-width: 1px; vector-effect: non-scaling-stroke; }
@@ -458,7 +451,7 @@ function page(title, view, W, H, oy, out, axes) {
 
 // Tape measure: drag on the drawing to measure. Ends snap to the nearest rect or line edge within 8 screen px,
 // else to 1/8"; a drag within ~8° of level or plumb locks to it (Shift always locks). Tap a tape to remove it, Esc clears.
-function tape(svg, oy, [xLabel, yLabel]) {
+function tape(svg, oy, [xLabel, yLabel, sy = 1]) { // sy: -1 when y is measured down from oy
   const g = svg.querySelector('.tapes'), readout = svg.parentNode.querySelector('.readout-text'), clear = svg.parentNode.querySelector('.clear');
   const hint = readout.textContent;
   // Edges: vertical { at: x, from: y1, to: y2 } and horizontal { at: y, from: x1, to: x2 }.
@@ -499,10 +492,10 @@ function tape(svg, oy, [xLabel, yLabel]) {
     const exact = Math.abs(Math.abs(v) - s / 16) < 0.001;
     return `${exact ? '' : '≈ '}${v < 0 && s ? '−' : ''}${whole || !n ? whole : ''}${n ? `${whole ? ' ' : ''}${n}/${d}` : ''}"`;
   };
-  const where = p => `${fmt(p.x - MARGIN)} ${xLabel} · ${fmt(oy - p.y)} ${yLabel}`;
+  const where = p => `${fmt(p.x - MARGIN)} ${xLabel} · ${fmt(sy * (oy - p.y))} ${yLabel}`;
   const size = ({ a, b }) => {
     const dx = Math.abs(b.x - a.x), dy = Math.abs(b.y - a.y);
-    return [fmt(Math.hypot(dx, dy)), dx && dy ? `${fmt(dx)} across · ${fmt(dy)} ${yLabel === 'from the wall' ? 'deep' : 'up'}` : ''];
+    return [fmt(Math.hypot(dx, dy)), dx && dy ? `${fmt(dx)} across · ${fmt(dy)} ${sy < 0 ? 'deep' : 'up'}` : ''];
   };
 
   const tapes = [];

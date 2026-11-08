@@ -24,7 +24,7 @@ It is the plan for this one kitchen, not a general kitchen-design tool: real mod
 
 - Opened locally from the project folder or `python3 -m http.server`; not published.
 - Read on a computer while planning, and handed to trades as a reference for quoting and building.
-- Pages: `index.html`; in `drawings/`, sketches (`sketches.html`: wall front, wall top, island front, island top); 3D model (`model.html`); in `docs/`, documentation (`issues.html`, `selections.html`, `cabinets.html`, `electrical.html`); in `pricing/`, the price, comparison and quote pages.
+- Pages: `index.html`; in `drawings/`, sketches (`sketches.html`: wall front, wall top, island front, island top); 3D model (`model.html`); in `docs/`, documentation (`selections.html`, `cabinets.html`, `electrical.html`); in `pricing/`, the price, comparison and quote pages.
 - Sketches are drawn on graph paper by `sketch.js` (1 square = 6", bold line every 30").
 
 ## Capabilities and Constraints
@@ -39,7 +39,7 @@ It is the plan for this one kitchen, not a general kitchen-design tool: real mod
 - Model numbers and spec-sheet dimensions of the appliances, lights and devices in `selections.html`.
 - Electrical requirements in `electrical.html`.
 - Cabinet list and order summary in `cabinets.html`.
-- Dated decisions and resolved / open inconsistencies in `issues.html`.
+- Dated decisions and open items on the page they concern: its Open list (`#open`) and Decision log (`#log`).
 - No photos of the existing room, contractor quotes or final cabinet-maker drawings are in the repo; do not invent them.
 
 ## Product Principles

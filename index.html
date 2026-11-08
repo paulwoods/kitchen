@@ -18,9 +18,9 @@
 <main>
 <div class="title">
 <h1>Galley Kitchen</h1>
-<p class="status"><a href="docs/issues.html#open"><b data-open>15 open issues</b></a> · <span data-resolved>115</span> resolved</p>
+<p class="status"><a href="#open"><b data-open>23 open items</b></a></p>
 </div>
-<p class="sub">Plan as of <span data-date>2026-11-06</span></p>
+<p class="sub">Plan as of <span data-date>2026-11-07</span></p>
 
 <div class="columns">
 <section>
@@ -71,16 +71,24 @@
 </section>
 
 <section>
-<h2>Issues</h2>
+<h2 id="open">Open items</h2>
 <ul>
-  <li><a href="docs/issues.html">Issues</a> <span>what is still open, and every decision made</span></li>
+  <li data-p="docs/cabinets.html"><a href="docs/cabinets.html#open">Cabinets</a> <span>1</span></li>
+  <li data-p="docs/selections.html"><a href="docs/selections.html#open">Selections</a> <span>2</span></li>
+  <li data-p="docs/countertop.html"><a href="docs/countertop.html#open">Countertop</a> <span>3</span></li>
+  <li data-p="docs/lighting.html"><a href="docs/lighting.html#open">Lighting</a> <span>1</span></li>
+  <li data-p="docs/electrical.html"><a href="docs/electrical.html#open">Electrical</a> <span>2</span></li>
+  <li data-p="docs/walls.html"><a href="docs/walls.html#open">Walls</a> <span>8</span></li>
+  <li data-p="docs/sequence.html"><a href="docs/sequence.html#open">Sequence</a> <span>5</span></li>
+  <li data-p="pricing/price.html"><a href="pricing/price.html#open">Price</a> <span>1</span></li>
 </ul>
+<p class="sub">Nothing is ordered or cut while any page has open items. Settled decisions are in each page's Decision log.</p>
 </section>
 
 <section>
 <h2>For the trades</h2>
 <ul>
-  <li>General contractor (the owner) <span><a href="docs/sequence.html">Sequence</a>, then <a href="docs/issues.html#open">open Issues</a></span></li>
+  <li>General contractor (the owner) <span><a href="docs/sequence.html">Sequence</a>, then the <a href="#open">open items</a></span></li>
   <li>Cabinet maker <span><a href="docs/cabinets.html#order-summary">order summary</a>, <a href="docs/cabinets.html#island">island</a> and <a href="docs/cabinets.html#wall">wall</a> tables, both front sketches</span></li>
   <li>Electrician <span><a href="docs/electrical.html">Electrical</a>, then <a href="docs/selections.html">Selections</a> for junction boxes and light feeds</span></li>
   <li>Plumber <span><a href="docs/selections.html">Selections</a>: sink, disposal, dishwasher drain, fridge and ice maker water</span></li>
@@ -90,15 +98,18 @@
 </div>
 </main>
 <script>
-  // Counts come from issues.html: open items in an <ol> right after h2#open, resolved items after h2#resolved.
+  // Each page lists its open items in an <ol> right after h2#open; the latest date in any of them is "Plan as of".
   // Opened straight from the folder (file:), fetch fails and the typed text above stays.
-  fetch('docs/issues.html').then(r => r.text()).then(html => {
-    const doc = new DOMParser().parseFromString(html, 'text/html');
-    const items = id => { const list = doc.getElementById(id)?.nextElementSibling; return ['OL', 'UL'].includes(list?.tagName) ? list.children.length : null; };
-    const open = doc.getElementById('open') ? items('open') ?? 0 : null, resolved = items('resolved');
-    if (open === null || resolved === null) return;
-    document.querySelector('[data-open]').textContent = `${open} open issue${open === 1 ? '' : 's'}`;
-    document.querySelector('[data-resolved]').textContent = resolved;
-    document.querySelector('[data-date]').textContent = html.match(/\d{4}-\d{2}-\d{2}/g).sort().pop();
+  const rows = [...document.querySelectorAll('[data-p]')];
+  Promise.all(rows.map(li => fetch(li.dataset.p).then(r => r.text()))).then(pages => {
+    let total = 0, dates = [];
+    pages.forEach((html, k) => {
+      const list = new DOMParser().parseFromString(html, 'text/html').getElementById('open')?.nextElementSibling;
+      const n = list?.tagName === 'OL' ? list.children.length : 0;
+      rows[k].querySelector('span').textContent = n; total += n;
+      dates.push(...(html.match(/\d{4}-\d{2}-\d{2}/g) ?? []));
+    });
+    document.querySelector('[data-open]').textContent = `${total} open item${total === 1 ? '' : 's'}`;
+    document.querySelector('[data-date]').textContent = dates.sort().pop();
   }).catch(() => {});
 </script>

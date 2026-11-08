@@ -20,3 +20,17 @@ nav.innerHTML = `<style>
 nav.className = 'links';
 (document.querySelector('header') ?? document.body).prepend(nav);
 document.head.insertAdjacentHTML('beforeend', `<link rel="icon" href="${url('favicon.svg')}" type="image/svg+xml">`);
+
+// Numbers from kitchen.js: <span data-k="counter + seat">45 1/4</span> shows DIMS.counter + DIMS.seat as inches (the typed text is the fallback).
+// Loads kitchen.js when the page hasn't already.
+const fillDims = () => {
+  const val = k => new Function(...Object.keys(DIMS), 'return ' + k)(...Object.values(DIMS));
+  for (const e of document.querySelectorAll('[data-k]')) e.textContent = inch(val(e.dataset.k));
+};
+if (document.querySelector('[data-k]')) {
+  if (typeof DIMS === 'undefined') {
+    const s = document.createElement('script');
+    s.src = url('kitchen.js'); s.onload = fillDims;
+    document.head.append(s);
+  } else fillDims();
+}

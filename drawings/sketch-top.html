@@ -50,7 +50,7 @@ plan('Top view', island, wall, { extra: ({ out, text, ix, iy, wx, wy }) => {
     }
     return h;
   };
-  out.push(`<clipPath id="counter"><rect x="${ix(-1)}" y="${iy(-19.5)}" width="${island.reduce((s, c) => s + c.w, 2)}" height="${COUNTER + 19.5}"/></clipPath>`);
+  out.push(`<clipPath id="counter"><rect x="${ix(-1)}" y="${iy(-DIMS.seat)}" width="${island.reduce((s, c) => s + c.w, 2)}" height="${COUNTER + 19.5}"/></clipPath>`);
   for (const u of people) for (const [L, k] of [...T.map(L => [L, 'T']), ...A.map(L => [L, 'A'])]) // class l-T / l-A: hidden with its light
     out.push(`<polygon class="shadow l-${k}" clip-path="url(#counter)" points="${hull(slices(u).map(p => onCounter(L, p))).map(([u, v]) => `${ix(u)},${iy(v)}`).join(' ')}"/>`);
   for (const u of people) {

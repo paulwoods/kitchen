@@ -12,7 +12,8 @@ Store all project memories in this file (not in ~/.claude memory).
 
 - Folders (2026-10-31): `index.html`, `nav.js`, `kitchen.js` and `favicon.svg` stay at the root; `drawings/` holds the sketches, `sketch.js` and `model.html`; `docs/` the documentation pages; `pricing/` the price, comparison and quote pages with their `quote-*.js` data files; `cabinets/` (vendor notes) and `manuals/` (PDFs). Pages in a folder link with relative paths (`../index.html`, `../docs/cabinets.html`) and load `../nav.js`, which builds its links from its own location. File names below are given without their folder.
 - Galley kitchen with two sides: **island** and **wall**.
-- Where things are recorded: sizes, positions and models in `cabinets.html`, `appliances.html` and `electrical.html`; decisions and their history in `issues.html`; assumptions in those pages or in a comment beside the value in the drawing code. Add new detail there, not here.
+- Where things are recorded: current sizes and the runs in `kitchen.js` (`DIMS`, `RUNS`), the one source; descriptions, models and installation detail in `cabinets.html` (via each item's `note`), `appliances.html` and `electrical.html`; decisions and their history in `issues.html`; assumptions in a comment beside the value. Add new detail there, not here.
+- A number in a text page that comes from `kitchen.js` is written `<span data-k="counter">25 3/4</span>"` (`<tspan>` inside an SVG): `nav.js` loads `kitchen.js` if needed and replaces the text with the value, as a fraction. `data-k` takes an expression of `DIMS` names (`counter + seat`), so derived numbers follow too. Change the value in `kitchen.js`, never the span text. `issues.html` is a dated log and keeps its numbers as typed.
 
 ### Keeping pages in step
 
@@ -36,7 +37,7 @@ Store all project memories in this file (not in ~/.claude memory).
 
 - Show all dimensions in inches only (never feet).
 - Only label a cabinet with a name when the user gives one.
-- Default sizes: cabinets 34.5" tall, toe kick 4.5" tall and 3" deep, 3 cm (1.25") quartzite countertop (35.75" counter height), 96" ceiling, 1" counter overhang at each end.
+- Default sizes are `DIMS` in `kitchen.js` (cabinet height, toe kick, countertop, depths, aisle, ceiling, the island's counter strips, the cooktop center); the drawing code reads them from there. 1" counter overhang at each end.
 - Front sketches (`sketch.js`, `sketch()`): graph paper, 1 square = 6", bold line every 30", measured from the left end of the run and the floor. Upper cabinet codes go in the margin above the ceiling, the top cabinet first; a ruler is on the right. Every sketch has a tape measure (`tape()`, set up by `page()`).
 - `sketch-top.html` (`plan(title, island, wall)` in `sketch.js`): island at the top facing down, wall run at the bottom facing up, flipped about its own length so it reads right to left and its Coffee end lines up with the island's spices end, also in `model.html`. 48" aisle between the door and drawer faces (3/4" in front of the 24" boxes, `FRONT`), depths measured from the wall. Upper cabinets are dotted (`d` deep, else 12"). Countertop appliances are not drawn.
 - `sketch-top.html` also passes `opts.extra` to `plan()` for the work areas and lights (a callback `plan()` hands `text` and page-coordinate helpers `ix`/`iy`/`wx`/`wy`). Light groups: T task, A ambient, X accent (toe kick and glass cabinets), UC under-cabinet; each has a legend checkbox, off by default, that hides its marks, arrows and shadows; a `people` checkbox, also off by default, hides the 74" people and all the shadows (class `l-T` etc.).

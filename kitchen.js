@@ -1,19 +1,37 @@
+// The kitchen, one source for the drawings and the docs. Inches. A plain script (not a module) so the pages still work when opened from the folder.
+// Text pages show these values with <span data-k="name or expression">fallback</span> (nav.js fills them in, e.g. data-k="counter + seat").
+const DIMS = {
+  toe: 4.5,        // toe kick height (3" deep)
+  box: 34.5,       // base cabinet height
+  top: 1.25,       // 3 cm quartzite countertop
+  depth: 24,       // base cabinet box
+  front: 0.75,     // door and drawer fronts (assumed)
+  counter: 25.75,  // countertop depth, 1" past the fronts (2026-11-05)
+  aisle: 48,       // between the door and drawer faces
+  ceiling: 96,
+  wall: 4.5,       // stud walls: 2x4 studs, 1/2" drywall each side (the island's back wall, the side wall, the room wall as drawn)
+  seat: 19.5,      // island counter past the cabinet backs behind spices, cooktop and plates (the seating overhang)
+  islandBack: 5.5, // island counter past the cabinet backs elsewhere: the back wall, then 1"
+  cooktopV: 10.5,  // cooktop and hood centers from the island cabinet backs (2026-11-05)
+  outlet: 44,      // center of a wall receptacle off the floor (assumed)
+};
+DIMS.counterH = DIMS.box + DIMS.top; // counter height
+
 // The two runs, the one source for every drawing (sketch-island-front.html, sketch-wall-front.html, sketch-top.html, model.html).
-// Left to right as seen from the aisle, inches. Each view draws the fields it needs and ignores the rest; fields are listed in CLAUDE.md.
-// A plain script (not a module) so the pages still work when opened from the folder.
+// Left to right as seen from the aisle. Each view draws the fields it needs and ignores the rest; fields are listed in CLAUDE.md.
 const RUNS = {
   island: [
     { note: `Three-drawer base: 6" top drawer over two equal deep drawers. 1" counter overhang at the left end of the island.`,
-      name: 'spices',    code: 'DB24-3',  w: 24, kind: 'drawers', n: 3, back: 19.5, backReceptacle: true,
+      name: 'spices',    code: 'DB24-3',  w: 24, kind: 'drawers', n: 3, back: DIMS.seat, backReceptacle: true,
       inside: [{ label: '120v', w: 2.75, h: 4.5, at: 29, dx: 12 }], // GFCI on the island's back wall, behind the cabinet (height assumed)
       upper: [ { pendant: true, w: 5, h: 11, at: 74, dx: 12 } ] }, // Effimero, at a T mark on the top view
     { note: `Three-drawer base under the Bosch NIT8061UC induction cooktop (decided 2026-10-24). The cooktop body drops 4 1/8" below the counter and needs a 1" air gap, which takes the top drawer's space: the top drawer is a false front (fixed, no drawer box; decided 2026-10-25). The cooktop's junction box (240 V 30 A, hardwired) goes in the back wall behind the cabinet, 3" from its left side at 25.75", through a cutout in the cabinet back (2026-11-02); its cover is reached by taking out the middle drawer.`,
-      name: 'cooktop',   code: 'DB36-3',  w: 36, kind: 'drawers', n: 3, cooktop: true, falseTop: true, back: 19.5,
+      name: 'cooktop',   code: 'DB36-3',  w: 36, kind: 'drawers', n: 3, cooktop: true, falseTop: true, back: DIMS.seat,
       inside: [{ label: 'j box', w: 4, h: 4, at: 25.75, dx: 3 }, // in the island's back wall, through a cutout in the cabinet back
                 { label: '', w: 28.875, h: 4.125, at: 32.4375, dx: 18 }], // NIT8061UC body: cutout width, 4 1/8" below the counter
       upper: [ { hood: true, w: 41.5, h: 2, at: 66.1875, chimney: 13.375, chimneyD: 10.625 } ] }, // Proline PLFI 544-42
     { note: `Three-drawer base, same as spices.`,
-      name: 'plates',    code: 'DB24-3',  w: 24, kind: 'drawers', n: 3, back: 19.5, backReceptacle: true,
+      name: 'plates',    code: 'DB24-3',  w: 24, kind: 'drawers', n: 3, back: DIMS.seat, backReceptacle: true,
       inside: [{ label: '120v', w: 2.75, h: 4.5, at: 29, dx: 12 }] }, // GFCI on the island's back wall, behind the cabinet (height assumed)
     { note: `Trash pull-out with a full-height door. Across the aisle from the oven door. A 120 V receptacle goes in the back wall behind the cabinet, centered 21" off the floor, through a cutout in the cabinet back (2026-11-02).`,
       name: 'trash',     code: 'TRB18FH', w: 18, kind: 'door', backReceptacle: true,
@@ -64,13 +82,13 @@ const RUNS = {
       upper: [{ light: 'UCB118SNWH', w: 18, h: 1.1, at: 52.9 }, { note: `Wall cabinet, one door, 54"–81". 18.25" clear above the counter.`, code: 'W2127', one: true, h: 27, at: 54 }, { note: `Glass-door wall cabinet, one door, 81"–93".`, code: 'W2112 glass', one: true, h: 12, at: 81, glass: true }, { riser: true, h: 3, at: 93 }, { light: 'UCB118SNWH', w: 18, h: 1.1, at: 91.275, inside: true }] },
     { note: `Three-drawer base. The 21.5" wide toaster oven sits on the counter above it, 1/4" past the cabinet on each side.`,
       name: 'Toaster',   code: 'DB21-3',  w: 21,  kind: 'drawers', n: 3, receptacle: true,
-      upper: [{ off: true, appliance: 'toaster oven', w: 21.5, h: 12.7, at: 35.75 }, { light: 'UCB118SNWH', w: 18, h: 1.1, at: 52.9 }, { note: `Wall cabinet, one door, 54"–81", hinged on the right with its pull on the left (2026-11-04).`, code: 'W2127', one: true, left: true, h: 27, at: 54 }, { note: `Glass-door wall cabinet, one door, 81"–93", hinged on the right with its pull on the left (2026-11-04).`, code: 'W2112 glass', one: true, left: true, h: 12, at: 81, glass: true }, { riser: true, h: 3, at: 93 }, { light: 'UCB118SNWH', w: 18, h: 1.1, at: 91.275, inside: true }] },
+      upper: [{ off: true, appliance: 'toaster oven', w: 21.5, h: 12.7, at: DIMS.counterH }, { light: 'UCB118SNWH', w: 18, h: 1.1, at: 52.9 }, { note: `Wall cabinet, one door, 54"–81", hinged on the right with its pull on the left (2026-11-04).`, code: 'W2127', one: true, left: true, h: 27, at: 54 }, { note: `Glass-door wall cabinet, one door, 81"–93", hinged on the right with its pull on the left (2026-11-04).`, code: 'W2112 glass', one: true, left: true, h: 12, at: 81, glass: true }, { riser: true, h: 3, at: 93 }, { light: 'UCB118SNWH', w: 18, h: 1.1, at: 91.275, inside: true }] },
     { note: `Three-drawer base. The Ninja Air Fryer XL sits on the counter above it.`,
       name: 'Air Fryer', code: 'DB21-3',  w: 21,  kind: 'drawers', n: 3, receptacle: true,
-      upper: [{ off: true, appliance: 'air fryer', w: 11, h: 14.75, at: 35.75 }, { light: 'UCB118SNWH', w: 18, h: 1.1, at: 52.9 }, { note: `Wall cabinet, one door, 54"–81".`, code: 'W2127', one: true, h: 27, at: 54 }, { note: `Glass-door wall cabinet, one door, 81"–93".`, code: 'W2112 glass', one: true, h: 12, at: 81, glass: true }, { riser: true, h: 3, at: 93 }, { light: 'UCB118SNWH', w: 18, h: 1.1, at: 91.275, inside: true }] },
+      upper: [{ off: true, appliance: 'air fryer', w: 11, h: 14.75, at: DIMS.counterH }, { light: 'UCB118SNWH', w: 18, h: 1.1, at: 52.9 }, { note: `Wall cabinet, one door, 54"–81".`, code: 'W2127', one: true, h: 27, at: 54 }, { note: `Glass-door wall cabinet, one door, 81"–93".`, code: 'W2112 glass', one: true, h: 12, at: 81, glass: true }, { riser: true, h: 3, at: 93 }, { light: 'UCB118SNWH', w: 18, h: 1.1, at: 91.275, inside: true }] },
     { note: `Three-drawer base. The Breville BDC650BSS coffee maker sits on the counter above it. The counter stops at the side wall at the right end of the run (no overhang, 2026-10-31).`,
       name: 'Coffee',    code: 'DB21-3',  w: 21,  kind: 'drawers', n: 3, receptacle: true,
-      upper: [{ off: true, coffee: true, w: 8.5, h: 16.3, at: 35.75 }, { light: 'UCB118SNWH', w: 18, h: 1.1, at: 52.9 }, { note: `Wall cabinet, one door, 54"–81", hinged on the right with its pull on the left (2026-11-04).`, code: 'W2127', one: true, left: true, h: 27, at: 54 }, { note: `Glass-door wall cabinet, one door, 81"–93", hinged on the right with its pull on the left (2026-11-04).`, code: 'W2112 glass', one: true, left: true, h: 12, at: 81, glass: true }, { riser: true, h: 3, at: 93 }, { light: 'UCB118SNWH', w: 18, h: 1.1, at: 91.275, inside: true }] },
+      upper: [{ off: true, coffee: true, w: 8.5, h: 16.3, at: DIMS.counterH }, { light: 'UCB118SNWH', w: 18, h: 1.1, at: 52.9 }, { note: `Wall cabinet, one door, 54"–81", hinged on the right with its pull on the left (2026-11-04).`, code: 'W2127', one: true, left: true, h: 27, at: 54 }, { note: `Glass-door wall cabinet, one door, 81"–93", hinged on the right with its pull on the left (2026-11-04).`, code: 'W2112 glass', one: true, left: true, h: 12, at: 81, glass: true }, { riser: true, h: 3, at: 93 }, { light: 'UCB118SNWH', w: 18, h: 1.1, at: 91.275, inside: true }] },
   ],
 };
 
@@ -102,3 +120,6 @@ const orderSummary = (() => {
     return [code, labels.length, `${run}: ${list}`];
   });
 })();
+
+DIMS.islandLen = RUNS.island.reduce((s, c) => s + c.w, 0);
+DIMS.wallLen = RUNS.wall.reduce((s, c) => s + c.w, 0);

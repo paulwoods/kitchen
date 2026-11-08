@@ -1,8 +1,8 @@
 // Draws a run of cabinets in front elevation on graph paper.
 // All units are inches; one grid square = 6".
 const SQ = 6, BOLD = 30, PX = 5;      // inches per square, per bold line (from the run's left end and the floor), screen px per inch
-const TOE = 4.5, BOX = 34.5, TOP = 1.25; // toe kick, cabinet height, 3 cm countertop
-const MARGIN = 12, CEILING = 96, OUTLET = 44; // OUTLET: center of a wall receptacle off the floor (assumed)
+const { toe: TOE, box: BOX, top: TOP, ceiling: CEILING, outlet: OUTLET } = DIMS; // from ../kitchen.js
+const MARGIN = 12;
 
 // Duplex receptacle plate on the wall, vertical, centered at OUTLET.
 const RECEPTACLE = { w: 2.75, h: 4.5, at: OUTLET };
@@ -282,7 +282,7 @@ function sketch(title, run, opts = {}) {
 // Draws the galley in plan (top view): the island at the top, facing down across the aisle,
 // and the wall run at the bottom, facing up (so it reads right to left). The wall run's right end lines up with the island's left end.
 // Depths are measured from the wall; grid lines from the island's left end and the wall.
-const DEPTH = 24, FRONT = 0.75, COUNTER = 25.75, AISLE = 48, WALL = 4.5; // cabinet box, door and drawer fronts (assumed), countertop (1" past the fronts, 2026-11-05), aisle between the fronts, room wall (2x4 studs, 1/2" drywall each side)
+const { depth: DEPTH, front: FRONT, counter: COUNTER, aisle: AISLE, wall: WALL } = DIMS; // from ../kitchen.js
 function plan(title, island, wall, opts = {}) {
   const len = run => run.reduce((s, c) => s + c.w, 0);
   const total = Math.max(len(island), len(wall));
@@ -334,7 +334,7 @@ function plan(title, island, wall, opts = {}) {
         text(tx, ty + 1, c.tag, 'gaplabel on');
       } else box(c.u, 0, c.w, DEPTH, c.h ? 'box alabaster' : 'hidden'); // base cabinets sit under the counter
       if (c.cooktop) { // Bosch NIT8061UC: 31" x 21 1/4", centered along the cabinet, 2" back from centered on the counter
-        const cu = c.u + (c.w - 31) / 2, cv = 10.5 - 21.25 / 2; // centered 10 1/2" from the cabinet backs: 2" back from centered on the 25" counter (2026-10-27), kept when it grew to 25 3/4" (2026-11-05)
+        const cu = c.u + (c.w - 31) / 2, cv = DIMS.cooktopV - 21.25 / 2; // centered 10 1/2" from the cabinet backs: 2" back from centered on the 25" counter (2026-10-27), kept when it grew to 25 3/4" (2026-11-05)
         box(cu, cv, 31, 21.25, 'cooktop');
         for (const [du, dv] of [[8, 6], [23, 6], [8, 15.25], [23, 15.25]]) circle(P(cu + du, cv + dv), 4, 'burner');
       }
@@ -366,7 +366,7 @@ function plan(title, island, wall, opts = {}) {
   };
 
   rect(MARGIN, WALLY, len(wall), WALL, 'roomwall'); // the room wall behind the wall run
-  side(island, false, MARGIN - 2, 5.5); // labels above the island, clear of the aisle; counter 5 1/2" past the cabinet backs: the back wall, then 1" (19 1/2" where an item says back: 19.5)
+  side(island, false, MARGIN - 2, DIMS.islandBack); // labels above the island, clear of the aisle; counter 5 1/2" past the cabinet backs: the back wall, then 1" (19 1/2" where an item says back: 19.5)
   rect(MARGIN, WALLY - across - WALL, len(island), WALL, 'hidden'); // the island's back wall (2x4 studs, 1/2" drywall each side), under the counter
   side(wall, true, WALLY + WALL, 0, true);
   rect(MARGIN - WALL, WALLY - DEPTH, WALL, DEPTH + WALL, 'roomwall'); // stud wall at the Coffee end of the wall run, as deep as the cabinets

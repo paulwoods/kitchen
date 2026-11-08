@@ -29,8 +29,8 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
 const { island, wall } = RUNS; // the runs, from ../kitchen.js
 
-const TOE = 4.5, BOX = 34.5, TOP = 1.25, CEILING = 96, OUTLET = 44; // OUTLET: center of a wall receptacle (assumed)
-const DEPTH = 24, FRONT = 0.75, COUNTER = 25.75, AISLE = 48, UPPER = 12, APPLIANCE = 14, HOOD = 23.625; // door fronts assumed, counter 1" past them (2026-11-05), aisle between the fronts; appliance depth assumed; hood depth per the Proline sheet
+const { toe: TOE, box: BOX, top: TOP, ceiling: CEILING, outlet: OUTLET, depth: DEPTH, front: FRONT, counter: COUNTER, aisle: AISLE, cooktopV: CV } = DIMS; // from ../kitchen.js
+const UPPER = 12, APPLIANCE = 14, HOOD = 23.625; // wall cabinet depth; appliance depth assumed; hood depth per the Proline sheet
 const len = run => run.reduce((s, c) => s + c.w, 0);
 const total = Math.max(len(island), len(wall));
 const ZWALL = 2 * (DEPTH + FRONT) + AISLE; // the island's back is at z = 0, the room wall at ZWALL
@@ -170,7 +170,7 @@ function side(run, flip, zBack, back = 0, walls = false) { // back: counter past
       rod(p(BOX + TOP + 0.25), p(BOX + TOP + 0.75), 0.6, M.plate);
     }
     if (c.cooktop) { // Bosch NIT8061UC: black glass, four zones, touch-control strip at the front (layout as in the top view)
-      const cu = u + (w - 31) / 2, cv = 10.5 - 21.25 / 2, // centered 10 1/2" from the cabinet backs: 2" back from centered on the 25" counter (2026-10-27), kept at 25 3/4" (2026-11-05)
+      const cu = u + (w - 31) / 2, cv = CV - 21.25 / 2, // centered 10 1/2" from the cabinet backs: 2" back from centered on the 25" counter (2026-10-27), kept at 25 3/4" (2026-11-05)
         y = BOX + TOP + 0.25;
       B(cu, cv, BOX + TOP, 31, 21.25, 0.25, M.black);
       for (const [du, dv] of [[8, 6], [23, 6], [8, 15.25], [23, 15.25]]) ring(P(cu + du, cv + dv, y + 0.02), 4, M.ring);
@@ -215,7 +215,7 @@ function side(run, flip, zBack, back = 0, walls = false) { // back: counter past
     for (const x of c.upper || []) {
       if (x.pendant) continue; // drawn with the island, below
       if (x.hood) { // curved glass canopy over a steel body (filter, 4 lights, touch panel in front), chimney to the ceiling
-        const top = x.at + x.h, bw = 21, bd = 17, bu = u + (w - bw) / 2, bv = 10.5 - bd / 2; // body size assumed; centered over the cooktop, 10 1/2" from the cabinet backs (2026-11-05)
+        const top = x.at + x.h, bw = 21, bd = 17, bu = u + (w - bw) / 2, bv = CV - bd / 2; // body size assumed; centered over the cooktop, 10 1/2" from the cabinet backs (2026-11-05)
         B(bu, bv, x.at, bw, bd, x.h, M.steel);
         B(bu + 3, bv + 3, x.at - 0.05, bw - 6, bd - 6, 0.05, M.drain); // mesh filter
         for (const [lu, lv] of [[1.5, 1.5], [bw - 1.5, 1.5], [1.5, bd - 1.5], [bw - 1.5, bd - 1.5]]) rod(P(bu + lu, bv + lv, x.at - 0.1), P(bu + lu, bv + lv, x.at), 0.75, M.light);
@@ -225,9 +225,9 @@ function side(run, flip, zBack, back = 0, walls = false) { // back: counter past
         const pane = new THREE.Mesh(glass, M.hoodGlass);
         pane.add(new THREE.LineSegments(new THREE.EdgesGeometry(glass), edges));
         pane.rotation.x = -Math.PI / 2;
-        pane.position.set(...P(u + w / 2, 10.5, top));
+        pane.position.set(...P(u + w / 2, CV, top));
         group.add(pane);
-        B(u + (w - x.chimney) / 2, 10.5 - x.chimneyD / 2, top, x.chimney, x.chimneyD, CEILING - top, M.steel);
+        B(u + (w - x.chimney) / 2, CV - x.chimneyD / 2, top, x.chimney, x.chimneyD, CEILING - top, M.steel);
       } else if (x.coffee || x.appliance) { // into `small`, shown by its checkbox
         const g = group; group = small;
         B(u + (w - x.w) / 2, 2, x.at, x.w, APPLIANCE, x.h, M.black);
@@ -278,7 +278,7 @@ const small = new THREE.Group(); // countertop appliances, hidden until checked
 small.visible = false;
 runs.wall.add(small);
 group = runs.island;
-side(island, false, 0, 5.5); // counter 5 1/2" past the cabinet backs (the back wall, then 1"), 19 1/2" behind items with back: 19.5
+side(island, false, 0, DIMS.islandBack); // counter 5 1/2" past the cabinet backs (the back wall, then 1"), 19 1/2" behind items with back: 19.5
 cube(0, 0, -4.5, island.reduce((s, c) => s + c.w, 0), BOX, 4.5, M.base); // the island's back wall (2x4 studs, 1/2" drywall each side), floor to the counter's underside, painted Haze
 for (const x of [14, 42, 70]) { // three counter stools at the seating overhang, 28" apart, tucked in 3 1/2" from the back wall; 16" round seat 25" high (stools not chosen, size assumed)
   const z = -16;

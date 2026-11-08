@@ -18,7 +18,7 @@ const DIMS = {
 };
 DIMS.counterH = DIMS.box + DIMS.top; // counter height
 
-// The two runs, the one source for every drawing (sketch-island-front.html, sketch-wall-front.html, sketch-top.html, model.html).
+// The two runs, the one source for every drawing (the three sketches in sketches.html, and model.html).
 // Left to right as seen from the aisle. Each view draws the fields it needs and ignores the rest; fields are listed in CLAUDE.md.
 const RUNS = {
   island: [

@@ -1,10 +1,10 @@
 // Row of links across the top of every page: Model, Sketches, Documentation, then Pricing (same as index.html).
-// Loaded with defer, so it runs after sketch.js has rebuilt the body. On model.html it goes inside the header,
+// Loaded with defer, so it runs after sketch.js has added the drawings. On model.html it goes inside the header,
 // which the canvas subtracts from the window height.
 const groups = [
   [['index.html', 'Index']],
   [['drawings/model.html', '3D model']],
-  [['drawings/sketch-top.html', 'Top view'], ['drawings/sketch-island-front.html', 'Island front'], ['drawings/sketch-wall-front.html', 'Wall front']],
+  [['drawings/sketches.html', 'Sketches']],
   [['docs/issues.html', 'Issues'], ['docs/cabinets.html', 'Cabinets'], ['docs/appliances.html', 'Appliances'], ['docs/electrical.html', 'Electrical'], ['docs/walls.html', 'Walls'], ['docs/countertop.html', 'Countertop'], ['docs/backsplash.html', 'Backsplash'], ['docs/lighting.html', 'Lighting'], ['docs/sequence.html', 'Sequence']],
   [['pricing/price.html', 'Price'], ['pricing/comparison.html', 'Comparison'], ['pricing/quote-cabinets-colonial.html', 'Quote: Colonial'], ['pricing/quote-cabinets-monaco.html', 'Quote: Monaco'], ['pricing/quote-citycabinets.html', 'Quote: City']],
 ];

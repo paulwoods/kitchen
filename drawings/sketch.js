@@ -259,9 +259,9 @@ function sketch(title, run, opts = {}) {
   }
   line(0, FLOOR, W, FLOOR, 'floor');
 
-  page(title, 'Front elevation', W, H, FLOOR, out, ['from the left end', 'off the floor']);
-  if (!apps.length) return;
-  const svg = document.querySelector('svg'), p = document.createElement('p');
+  const svg = page(title, 'Front elevation', W, H, FLOOR, out, ['from the left end', 'off the floor']);
+  if (!apps.length) return svg;
+  const p = document.createElement('p');
   p.innerHTML = `<label><input type="checkbox" checked> <b>all appliances</b></label>` +
     apps.map((a, i) => ` <label><input type="checkbox"${a.off ? '' : ' checked'} data-i="${i}"> ${a.label}</label>`).join('');
   svg.before(p);
@@ -277,6 +277,7 @@ function sketch(title, run, opts = {}) {
   for (const b of boxes) b.onchange = show;
   all.onchange = () => { for (const b of boxes) b.checked = all.checked; show(); };
   show();
+  return svg;
 }
 
 // Draws the galley in plan (top view): the island at the top, facing down across the aisle,
@@ -388,17 +389,20 @@ function plan(title, island, wall, opts = {}) {
   text(rx + 1.5, WALLY - DEPTH - FRONT - AISLE / 2 + 0.7, `${AISLE}" aisle`, 'dim ruler');
   // opts.extra: draws more on top (out: raw svg strings), given page x of an island or wall u and page y of an island or wall v (as in side()).
   opts.extra?.({ out, text, ix: u => MARGIN + u, iy: v => WALLY - across + v, wx: u => MARGIN + len(wall) - u, wy: v => WALLY - v });
-  page(title, 'Plan of both runs', W, H, WALLY, out, ["from the island's left end", 'from the wall']);
+  return page(title, 'Plan of both runs', W, H, WALLY, out, ["from the island's left end", 'from the wall']);
 }
 
-// Wraps a drawing in the page: graph paper with bold lines every BOLD" from (MARGIN, oy).
-// axes: how to say x (from MARGIN) and y (up from oy) in the tape measure's readout.
+// Adds a drawing to the page as a <section> (id: the title's first word, e.g. #wall), on graph paper with bold lines every BOLD" from (MARGIN, oy).
+// axes: how to say x (from MARGIN) and y (up from oy) in the tape measure's readout. Returns the svg.
 function page(title, view, W, H, oy, out, axes) {
-  document.title = `${title} · Galley Kitchen`;
-  document.body.innerHTML = `
+  const n = document.querySelectorAll('section.sketch').length; // keeps the pattern ids apart when a page has several drawings
+  const section = document.createElement('section');
+  section.className = 'sketch';
+  section.id = title.split(' ')[0].toLowerCase();
+  section.innerHTML = (n ? '' : `
     <style>
       body { margin: 24px; background: var(--paper); color: var(--ink); font-family: system-ui, sans-serif; }
-      h1 { margin: 0; } p { margin: 4px 0 16px; color: var(--muted); } a { color: var(--link); }
+      h1, h2 { margin: 0; } section.sketch { margin-top: 32px; } p { margin: 4px 0 16px; color: var(--muted); } a { color: var(--link); }
       svg { width: 100%; height: auto; background: var(--sheet); box-shadow: 0 1px 4px #0002; cursor: crosshair; touch-action: pinch-zoom; user-select: none; -webkit-user-select: none; }
       .readout { min-height: 1.5em; font-variant-numeric: tabular-nums; } .readout b { color: var(--ink); }
       button { font: inherit; margin-left: 8px; padding: 0 8px; }
@@ -422,7 +426,7 @@ function page(title, view, W, H, oy, out, axes) {
       text { text-anchor: middle; font-size: 2.4px; fill: var(--ink); paint-order: stroke; stroke: var(--sheet); stroke-width: 0.4; } /* halo: labels cross both the sheet and light cabinets */
       .volts { font-size: 1.6px; stroke-width: 0.5; } text.on, text.volts { fill: #223; stroke: #fff; } /* on a light material, not the sheet */
       .start { text-anchor: start; } .end { text-anchor: end; } .name { font-weight: 700; } .code { font-size: 2.2px; } .dim { font-size: 2px; fill: var(--muted); }
-      .zone { fill: var(--green); font-weight: 700; } .lamp { fill: #e07000; font-weight: 700; font-size: 3px; } /* sketch-top.html */
+      .zone { fill: var(--green); font-weight: 700; } .lamp { fill: #e07000; font-weight: 700; font-size: 3px; } /* the top view */
       .gaplabel { font-size: 3px; fill: var(--muted); } .ruler { text-anchor: start; }
       .tapes { pointer-events: none; } .tape .blade { pointer-events: visiblePainted; cursor: pointer; }
       .blade { fill: #f5c400; fill-opacity: 0.85; } .tick-mark { stroke: #223; stroke-width: 1px; vector-effect: non-scaling-stroke; }
@@ -430,30 +434,32 @@ function page(title, view, W, H, oy, out, axes) {
       .chip-text.sub { font-weight: 400; }
       .snapped { stroke: var(--ink); stroke-width: 2.5px; vector-effect: non-scaling-stroke; }
       .snap-pt { fill: none; stroke: var(--ink); stroke-width: 1.5px; vector-effect: non-scaling-stroke; }
-    </style>
-    <h1>${title}</h1>
-    <p><a href="../index.html">index</a></p>
+    </style>`) + `
+    <h2>${title}</h2>
     <p>${view} · 1 square = 6" · bold line = ${BOLD}"</p>
-    <p class="readout"><span id="readout">Drag on the drawing to measure. It snaps to edges; Shift keeps it level or plumb.</span><button id="clear" hidden>Clear tapes</button></p>
+    <p class="readout"><span class="readout-text">Drag on the drawing to measure. It snaps to edges; Shift keeps it level or plumb.</span><button class="clear" hidden>Clear tapes</button></p>
     <svg viewBox="0 0 ${W} ${H}" width="${W * PX}" height="${H * PX}">
       <defs>
-        <pattern id="sq" width="${SQ}" height="${SQ}" patternUnits="userSpaceOnUse">
+        <pattern id="sq${n}" width="${SQ}" height="${SQ}" patternUnits="userSpaceOnUse">
           <path d="M ${SQ} 0 L 0 0 0 ${SQ}" class="grid"/></pattern>
-        <pattern id="ft" x="${MARGIN}" y="${oy}" width="${BOLD}" height="${BOLD}" patternUnits="userSpaceOnUse">
-          <rect width="${BOLD}" height="${BOLD}" fill="url(#sq)"/>
+        <pattern id="ft${n}" x="${MARGIN}" y="${oy}" width="${BOLD}" height="${BOLD}" patternUnits="userSpaceOnUse">
+          <rect width="${BOLD}" height="${BOLD}" fill="url(#sq${n})"/>
           <path d="M ${BOLD} 0 L 0 0 0 ${BOLD}" class="grid ft"/></pattern>
       </defs>
-      <rect width="${W}" height="${H}" fill="url(#ft)"/>
+      <rect width="${W}" height="${H}" fill="url(#ft${n})"/>
       ${out.join('\n')}
       <g class="tapes"></g>
     </svg>`;
-  tape(document.querySelector('svg'), oy, axes);
+  document.body.append(section);
+  const svg = section.querySelector('svg');
+  tape(svg, oy, axes);
+  return svg;
 }
 
 // Tape measure: drag on the drawing to measure. Ends snap to the nearest rect or line edge within 8 screen px,
 // else to 1/8"; a drag within ~8° of level or plumb locks to it (Shift always locks). Tap a tape to remove it, Esc clears.
 function tape(svg, oy, [xLabel, yLabel]) {
-  const g = svg.querySelector('.tapes'), readout = document.getElementById('readout'), clear = document.getElementById('clear');
+  const g = svg.querySelector('.tapes'), readout = svg.parentNode.querySelector('.readout-text'), clear = svg.parentNode.querySelector('.clear');
   const hint = readout.textContent;
   // Edges: vertical { at: x, from: y1, to: y2 } and horizontal { at: y, from: x1, to: x2 }.
   const vs = [], hs = [];

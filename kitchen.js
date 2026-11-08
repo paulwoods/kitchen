@@ -14,6 +14,7 @@ const DIMS = {
   islandBack: 5.5, // island counter past the cabinet backs elsewhere: the back wall, then 1"
   cooktopV: 10.5,  // cooktop and hood centers from the island cabinet backs (2026-11-05)
   outlet: 44,      // center of a wall receptacle off the floor (assumed)
+  stools: [14, 42, 70], // counter stool centers from the island's left end, behind spices, cooktop and plates
 };
 DIMS.counterH = DIMS.box + DIMS.top; // counter height
 

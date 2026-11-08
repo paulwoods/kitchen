@@ -280,7 +280,7 @@ runs.wall.add(small);
 group = runs.island;
 side(island, false, 0, DIMS.islandBack); // counter 5 1/2" past the cabinet backs (the back wall, then 1"), 19 1/2" behind items with back: 19.5
 cube(0, 0, -4.5, island.reduce((s, c) => s + c.w, 0), BOX, 4.5, M.base); // the island's back wall (2x4 studs, 1/2" drywall each side), floor to the counter's underside, painted Haze
-for (const x of [14, 42, 70]) { // three counter stools at the seating overhang, 28" apart, tucked in 3 1/2" from the back wall; 16" round seat 25" high (stools not chosen, size assumed)
+for (const x of DIMS.stools) { // three counter stools at the seating overhang, 28" apart, tucked in 3 1/2" from the back wall; 16" round seat 25" high (stools not chosen, size assumed)
   const z = -16;
   rod([x, 24, z], [x, 25.5, z], 8, M.black);
   for (const [dx, dz] of [[1, 1], [1, -1], [-1, 1], [-1, -1]]) rod([x + 6 * dx, 0, z + 6 * dz], [x + 4 * dx, 24, z + 4 * dz], 0.5, M.pull);

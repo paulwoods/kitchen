@@ -102,7 +102,7 @@ const inch = x => {
   return (w ? w + ' ' : '') + a + '/' + b;
 };
 
-// What to order, [code, qty, where], shown by docs/cabinets.html and priced in pricing/comparison.html.
+// What to order, [code, qty, where], shown by docs/cabinets.html, whose run tables price each item from the quotes.
 // Every coded item and wall cabinet; a gap is ordered only when it says what (`orders`). `role` replaces the name in "where".
 const orderSummary = (() => {
   const rows = new Map();

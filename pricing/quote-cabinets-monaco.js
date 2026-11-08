@@ -1,8 +1,8 @@
-// Monaco quote data, shown by quote-cabinets-monaco.html and comparison.html
+// Monaco quote data, shown in docs/cabinets.html (the run tables and #quote-monaco)
 var quotes = quotes || [];
 {
 // [planned, cabinets.com code, qty, regular, sale, glass add-on, notes]
-const glass = 129.81; // first glass-prep price read; each glass line now carries its own (comparison.html reads from this line on)
+const glass = 129.81; // first glass-prep price read; each glass line now carries its own
 const lines = [
   ['DB24-3', 'DB24-3', 2, 1282.45, 833.59, 0, 'island: spices, plates'],
   ['DB24-3 finished sides', 'Matching Finished Sides', 1, 128.25, 83.36, 0, 'island: spices, the left side shows'],
@@ -23,7 +23,7 @@ const lines = [
   ['W2127', 'W2127', 4, 519.25, 337.51, 0, 'wall: over the Garage, Toaster, Air Fryer and Coffee, 1 door (read 2026-11-04, no sale; sale 35% off assumed)'],
   ['W2112 glass', 'W2112', 4, 342.89, 222.88, 171.45, 'wall: over the W2127s, 1 door, + glass prep $171.45 (read 2026-11-04, no sale; sale 35% off assumed)'],
 ];
-// 'planned / code' lines whose size (W × H × D, as supplied) differs from the plan's in cabinets.html (comparison.html reads this too)
+// 'planned / code' lines whose size (W × H × D, as supplied) differs from the plan's in cabinets.html
 const resized = [];
-quotes.push({ url: 'quote-cabinets-monaco.html', label: 'Monaco', rank: 2, lines, resized });
+quotes.push({ id: 'monaco', label: 'Monaco', rank: 2, lines, resized });
 }

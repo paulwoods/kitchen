@@ -6,7 +6,7 @@ const groups = [
   [['drawings/model.html', '3D model']],
   [['drawings/sketches.html', 'Sketches']],
   [['docs/issues.html', 'Issues'], ['docs/cabinets.html', 'Cabinets'], ['docs/selections.html', 'Selections'], ['docs/electrical.html', 'Electrical'], ['docs/walls.html', 'Walls'], ['docs/countertop.html', 'Countertop'], ['docs/backsplash.html', 'Backsplash'], ['docs/lighting.html', 'Lighting'], ['docs/sequence.html', 'Sequence']],
-  [['pricing/price.html', 'Price'], ['pricing/comparison.html', 'Comparison'], ['pricing/quote-cabinets-colonial.html', 'Quote: Colonial'], ['pricing/quote-cabinets-monaco.html', 'Quote: Monaco'], ['pricing/quote-citycabinets.html', 'Quote: City']],
+  [['pricing/price.html', 'Price']],
 ];
 // Links are relative to this script's folder (the site root), so pages in subfolders load it as ../nav.js.
 const root = document.currentScript.src;

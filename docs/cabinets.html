@@ -11,8 +11,13 @@
   table { border-collapse: collapse; margin-top: 12px; background: var(--sheet); width: 100%; }
   th, td { border: 1px solid var(--rule); padding: 8px 10px; text-align: left; vertical-align: top; }
   th { background: var(--head); white-space: nowrap; } td:nth-child(-n+4) { white-space: nowrap; }
+  h3 { margin: 24px 0 0; } h4 { margin: 16px 0 0; } p.sub { margin: 0; color: var(--muted); } li { margin: 8px 0; }
+  p.total { margin: 12px 0; padding: 8px 12px; background: var(--sheet); border: 1px solid var(--rule); font-size: 1.15em; }
+  div.wrap { overflow-x: auto; } table.run { font-size: 14px; } table.run th { text-align: center; } table.run td.n { text-align: right; white-space: nowrap; }
+  table.run td.match { white-space: nowrap; } table.run td.qn { min-width: 220px; } table.run td:nth-child(5) { min-width: 320px; }
+  table.run tr.total td { font-weight: 600; background: var(--head); }
   @media (max-width: 600px) { /* phones: each row stacks, short fields on one line, notes below */
-    table, tbody, tr, td { display: block; } tr:first-child { display: none; }
+    table, tbody, tr, td { display: block; } tr:first-child, thead { display: none; }
     tr { border: 1px solid var(--rule); border-top: 0; padding: 8px 10px; } tr:nth-child(2) { border-top: 1px solid var(--rule); }
     td { border: 0; padding: 0; white-space: normal !important; min-width: 0 !important; } td:empty { display: none; }
     td:not(:last-child) { display: inline; font-weight: 600; } td:not(:last-child):not(:nth-last-child(2))::after { content: " · "; font-weight: 400; color: var(--muted); }
@@ -22,39 +27,209 @@
 <p><a href="../index.html">index</a></p>
 <p>Every cabinet and panel in the two runs, left to right as drawn in the sketches. Sizes are width × height × depth in inches; elevations are measured from the floor. Base cabinets are <span data-k="box">34 1/2</span>" tall with a toe kick <span data-k="toe">4 1/2</span>" tall and 3" deep, under a 3 cm (<span data-k="top">1 1/4</span>") quartzite counter at <span data-k="counterH">35 3/4</span>", <span data-k="counter">25 3/4</span>" deep: <span data-k="counter - depth - front">1</span>" past the door and drawer fronts, taken as <span data-k="front">3/4</span>" thick (assumed). Ceiling is <span data-k="ceiling">96</span>".</p>
 <p>Colors (decided 2026-11-01): the upper cabinets, the pantry, the OVD3393, and the REP panels and skin by the fridge are <a href="https://www.cabinets.com/kitchen-cabinets/cordova-collection/colonial-maple-alabaster">Colonial Maple Alabaster</a>, a soft off-white; everything else (the base cabinets, the dishwasher panel and the island's back wall) is <a href="https://www.cabinets.com/kitchen-cabinets/cordova-collection/colonial-maple-haze">Colonial Maple Haze</a>, soft with hints of gray (cabinets.com Cordova collection, a 2 1/4" five-piece door). Every pull, on both runs and the dishwasher panel, is a matte black <a href="https://www.cabinetparts.com/p/berenson-decorative-knobs-and-pulls-BE90204055P-p63758">Berenson 9020-4055-P</a>, 192 mm (7 9/16") centers, 8" long (2026-11-02). Drawn in those colors in the front sketches and <code>model.html</code>; the door's recessed panels are not drawn.</p>
+<p>Each run table also shows every <a href="#quotes">quote</a>, in rank order: for each cabinet the vendor's match (✅ the planned size, ⚠️ a different size, ❌ not supplied), its regular and sale price for that one cabinet (glass prep included), and the quote's notes. A total row ends each table.</p>
 <p>Depths not given by the cabinet code are the usual stock depths (24" base, 12" wall) and are not confirmed.</p>
 
 <h2 id="island">Island (<span data-len="island">192</span>")</h2>
-<table data-run="island">
-<tr><th>#</th><th>name</th><th>code</th><th>size W × H × D</th><th>notes</th></tr>
-</table>
+<div class="wrap"><table class="run" data-run="island"><thead></thead><tbody></tbody></table></div>
 <p>Back: a 2x4 stud wall with 1/2" drywall on both sides, <span data-k="wall">4 1/2</span>" thick, stands behind the island cabinets, <span data-k="islandLen">192</span>" long, from the floor to the countertop underside (<span data-k="box">34 1/2</span>"), its ends and back painted Colonial Maple Haze (decided 2026-11-02, replaced the 3/4" plywood; thickness and paint assumed). The countertop covers it: <span data-k="seat">19 1/2</span>" past the cabinet backs behind spices, cooktop and plates (a <span data-k="seat - wall">15</span>" overhang past the wall), <span data-k="islandBack">5 1/2</span>" behind the rest (a <span data-k="islandBack - wall">1</span>" overhang). The 15" overhang is for seating, with three stools, centered 14", 42" and 70" from the island's left end (2026-11-02; drawn 2026-11-04 with an assumed 16" round seat, 25" high, tucked in 3 1/2" from the wall). Seven Iron Supports 16" flat brackets hold it up: each set in a 1/2" channel in the top plate, from the cabinet side of the studs to 3" short of the counter's edge, about 4" in from each end of that stretch and about 13" apart (planned 2026-11-02; layout not yet approved). Six 120 V GFCI receptacles go in the wall, one centered behind each of spices, plates, trash, the sink, the dishwasher and cabinet a, vertical, centered at 29"; their boxes sit in the stud bays, clear of the cabinets. The wall also holds the cooktop's junction box and the trash cabinet's receptacle, which open the other way, through cutouts in those cabinet backs.</p>
 
 <h2 id="wall">Wall (<span data-len="wall">193 1/4</span>")</h2>
-<table data-run="wall">
-<tr><th>#</th><th>name</th><th>code</th><th>size W × H × D</th><th>notes</th></tr>
-</table>
+<div class="wrap"><table class="run" data-run="wall"><thead></thead><tbody></tbody></table></div>
 <p>Riser molding (decided 2026-11-03): SSM-4.50 in Colonial Maple Alabaster, 96" × 4 1/2" × 3/4", ripped to 3" and scribed to close the gap from the 93" cabinet tops to the <span data-k="ceiling">96</span>" ceiling. It runs 37" across the RW3721, 36" across the pantry, 33" across the OVD3393, about 12 3/4" back along its right side above the 12" deep uppers, and 84" across the uppers to the side wall, about 203" in all (runs assumed). That takes three sticks, with no seam in a run. The REP panels stay 96" and reach the ceiling. Bought separately, on the <a href="../pricing/price.html">Price</a> page.</p>
 
 <h2 id="order-summary">Order summary</h2>
 <table id="order">
 <tr><th>code</th><th>qty</th><th>where</th></tr>
 </table>
+<h2 id="quotes">Quotes</h2>
+<p>Each quote prices the <a href="#order-summary">order summary</a>; its lines are in the run tables above. Data in <code>pricing/quote-*.js</code>, one file per quote. Totals are before tax and shipping.</p>
+
+<section class="quote" id="quote-colonial">
+<h3>Colonial</h3>
+<p class="sub">Colonial Maple Haze and Alabaster · <a href="https://www.cabinets.com/kitchen-cabinets/cordova-collection/colonial-maple-haze">cabinets.com, Cordova collection</a> · frameless, assembled · web prices read 2026-11-02</p>
+
+<p class="total">Regular <b data-regular></b> · Sale <b data-sale></b></p>
+
+<p>Priced from the website against the <a href="#order-summary">order summary</a>, one line per cabinet. Tax, shipping and the glass itself are not included.
+Where cabinets.com has no exact match, the nearest item is used and the difference is noted.</p>
+
+<h4>Construction</h4>
+<p>What sets it apart: the same Cordova box, drawers and Blum hardware as Monaco, with a five-piece door in solid maple, factory painted: Haze, soft with hints of gray, on the base cabinets and dishwasher panel; Alabaster, a soft off-white, on the pantry, oven cabinet, upper cabinets and fridge panels. The two cost the same. Exposed sides cost extra.</p>
+<ul>
+  <li><b>Type:</b> frameless (full access), shipped assembled. All Cordova cabinets are made and assembled in the USA.</li>
+  <li><b>Box:</b> 5/8" plywood sides, top and bottom, UV finished, natural maple interior with edgebanding to match.</li>
+  <li><b>Back:</b> 1/4" UV finished birch, with 5/8" plywood hanging rails and stretchers (7/8" at the rails).</li>
+  <li><b>Doors and drawer fronts (Colonial):</b> 2 1/4" solid Northern hard rock maple stiles and rails, cope and stick, 3/16" MDF recessed center panel, subtle bevel detail; 3/4" solid maple drawer fronts.</li>
+  <li><b>Shelves:</b> 3/4" plywood, adjustable; half depth in base cabinets, full depth in wall cabinets.</li>
+  <li><b>Drawer boxes:</b> 5/8" solid maple, English dovetail, 1/4" plywood bottom captured on all four sides.</li>
+  <li><b>Drawer sizes inside</b> (cabinets.com <a href="https://www.cabinets.com/media/download/interior-drawer-box-dimensions.pdf">interior drawer box sheet</a>, frameless): 19 3/4" deep; 18 1/8" wide in a 21" base (assumed, same margin; the sheet was not re-read), 21 1/8" in a 24", 30 1/8" in a 33", 33 1/8" in a 36". In a 3-drawer base the top box is 3 1/4" tall and the two below are 5 1/4" (side heights as read off the sheet). The 4.3" spice jars do not stand upright in the top drawer.</li>
+  <li><b>Glides:</b> Blum full-extension undermount with integrated soft close (Blum Motion).</li>
+  <li><b>Hinges:</b> Blum, integrated soft close, 6-way cam adjustable.</li>
+  <li><b>Exposed sides:</b> unfinished. "Matching Finished Sides" is a paid option on each cabinet, both sides only: 10% of a base cabinet's price, 15% of a wall cabinet's (read 2026-11-01), 10% of the pantry's (read 2026-11-02), 20% of the OVD3393's (read 2026-11-04). It is priced on the three cabinets with an exposed side.</li>
+  <li><b>Toe kick and legs:</b> toe kick covers are sold separately: <a href="https://www.cabinets.com/tk8-frameless-colonial-maple-haze-base-toe-kick-cbc467.html">TK8</a> for frameless cabinets, 1/4" veneered MDF finished on one side, 96" × 4.375", $48.76, sale $31.69 (read 2026-11-02). They are priced on the <a href="../pricing/price.html">Price</a> page, not in this quote. Legs are not stated.</li>
+  <li><b>Riser molding:</b> sold separately: <a href="https://www.cabinets.com/riser-molding-4-12-colonial-maple-alabaster.html">SSM-4.50</a>, plywood core, veneered and finished to match on the face and one long edge, 96" × 4 1/2" × 3/4", $94.19, sale $61.22 (read 2026-11-03). It is priced on the <a href="../pricing/price.html">Price</a> page, not in this quote.</li>
+  <li><b>Certifications</b> (site-wide): CARB 2 compliant, KCMA quality tested.</li>
+  <li><b>Warranty:</b> not stated on the product or collection pages.</li>
+</ul>
+<p class="sub">From the <a href="https://www.cabinets.com/kitchen-cabinets/cordova-collection/colonial-maple-haze">Colonial Maple Haze</a> and <a href="https://www.cabinets.com/kitchen-cabinets/cordova-collection/colonial-maple-alabaster">Alabaster</a> pages and the product pages, read 2026-11-01; box, drawer and hardware details from the <a href="https://www.cabinets.com/catalog/category/view/s/cordova-collection/id/302">Cordova collection page</a>, read 2026-10-26.</p>
+
+<h4>Differences from the plan</h4>
+<ul>
+  <li>Painted sides: "Matching Finished Sides" on the spices (left side), Cabinet A (right side), and the OVD3393 (right side).</li>
+  <li>Glass doors are a custom option, "Prepared for Glass/Finished Interior", 50% of the cabinet's price: included in the W2112 lines at the regular and the sale price (read 2026-11-04). The glass is not included.</li>
+  <li>Wall cabinets: the B21-FH, DB21-3s, W2127s and W2112s are priced as planned (read 2026-11-04). The listings showed no sale; the sale column takes 35% off, as on the other cabinets.</li>
+  <li>Pantry: the UT362493ROT4 is priced as planned: 36" × 93" × 24", four doors, four roll-out trays below (5/8" solid maple dovetail, Blum undermount slides) and 3 shelves above (read 2026-11-03).</li>
+  <li>Oven column: the OVD3393 is priced as planned, 33" × 93" × 24", two butt doors over one large opening, one drawer below (read 2026-11-04). The listing showed no sale; the sale column takes 35% off, as on the other cabinets. The opening is made to be modified on site for the appliances, and trim may be extra (<a href="issues.html#open">Issues</a>).</li>
+  <li>Over the fridge: the RW3721 is 37" × 20 11/16" × 24", panel to panel (read 2026-11-03).</li>
+  <li>Cabinet A: B24-SINGLE (one door, one drawer), the B24 has two doors.</li>
+</ul>
+</section>
+
+<section class="quote" id="quote-monaco">
+<h3>Monaco</h3>
+<p class="sub">Monaco Maple Naval · <a href="https://www.cabinets.com/kitchen-cabinets/cordova-collection/monaco-maple-naval">cabinets.com, Cordova collection</a> · frameless, assembled · web prices read 2026-10-26</p>
+
+<p class="total">Regular <b data-regular></b> · Sale <b data-sale></b></p>
+
+<p>Priced from the website against the <a href="#order-summary">order summary</a>, one line per cabinet. Tax, shipping and the glass itself are not included.
+Where cabinets.com has no exact match, the nearest item is used and the difference is noted.</p>
+
+<h4>Construction</h4>
+<p>What sets it apart: assembled in the USA, solid maple dovetail drawers on Blum hardware, and the only factory-painted slab door of the quotes. The box is thinner than City's (5/8" sides against 3/4"), and exposed sides cost extra.</p>
+<ul>
+  <li><b>Type:</b> frameless (full access), shipped assembled. All Cordova cabinets are made and assembled in the USA.</li>
+  <li><b>Box:</b> 5/8" plywood sides, top and bottom, UV finished, natural maple interior with edgebanding to match.</li>
+  <li><b>Back:</b> 1/4" UV finished birch, with 5/8" plywood hanging rails and stretchers (7/8" at the rails).</li>
+  <li><b>Doors and drawer fronts (Monaco):</b> slab, 3/4" thick, painted solid HDF core. No solid wood in the fronts.</li>
+  <li><b>Shelves:</b> 3/4" plywood, adjustable; half depth in base cabinets, full depth in wall cabinets.</li>
+  <li><b>Drawer boxes:</b> 5/8" solid maple, English dovetail, 1/4" plywood bottom captured on all four sides.</li>
+  <li><b>Drawer sizes inside</b> (cabinets.com <a href="https://www.cabinets.com/media/download/interior-drawer-box-dimensions.pdf">interior drawer box sheet</a>, frameless): 19 3/4" deep; 18 1/8" wide in a 21" base (assumed, same margin; the sheet was not re-read), 21 1/8" in a 24", 30 1/8" in a 33", 33 1/8" in a 36". In a 3-drawer base the top box is 3 1/4" tall and the two below are 5 1/4" (side heights as read off the sheet). The 4.3" spice jars do not stand upright in the top drawer.</li>
+  <li><b>Glides:</b> Blum full-extension undermount with integrated soft close (Blum Motion).</li>
+  <li><b>Hinges:</b> Blum, integrated soft close, 6-way cam adjustable.</li>
+  <li><b>Exposed sides:</b> unfinished. "Matching Finished Sides" is a paid option on each cabinet, both sides only: 10% of a base cabinet's price, 15% of a wall cabinet's (read 2026-10-28). It is priced on the three cabinets with an exposed side.</li>
+  <li><b>Toe kick and legs:</b> not stated.</li>
+  <li><b>Certifications</b> (site-wide): CARB 2 compliant, KCMA quality tested.</li>
+  <li><b>Warranty:</b> not stated on the product or collection pages.</li>
+</ul>
+<p class="sub">From the <a href="https://www.cabinets.com/catalog/category/view/s/cordova-collection/id/302">Cordova collection page</a> and the product pages, read 2026-10-26.</p>
+
+<h4>Differences from the plan</h4>
+<ul>
+  <li>Painted sides: "Matching Finished Sides" on the spices (left side), Cabinet A (right side), and the OVD3393 (right side, 2026-11-04: the W2127 and W2112 beside it are 12" deep, so its side shows above the counter). The OVD3393's option is $349.30, 20% of its price (read 2026-11-04). The option finishes both sides, the only choice offered. The sale had ended when the option prices were read; the sale column takes 35% off, as on the cabinets.</li>
+  <li>Glass doors are a custom option, "Prepared for Glass/Finished Interior", $129.81 per cabinet when first read (off the W2715 page); it is priced per cabinet, read 2026-10-28: $171.45 on each W2112 (read 2026-11-04); the glass is not included. The add-on is counted at the same price in both columns (assumed).</li>
+  <li>Wall cabinets: the B21-FH, DB21-3s, W2127s and W2112s are priced as planned (read 2026-11-04). The listings showed no sale; the sale column takes 35% off, as on the other cabinets.</li>
+  <li>Pantry: the UT362493ROT4 is priced as planned: 36" × 93" × 24", four doors, four roll-out trays below (5/8" solid maple dovetail, Blum undermount slides) and 3 shelves above (read 2026-11-03).</li>
+  <li>Oven column: the OVD3393 is priced as planned, 33" × 93" × 24", two butt doors over one large opening, one drawer below (read 2026-11-04). The listing showed no sale; the sale column takes 35% off. The opening is made to be modified on site for the appliances, and trim may be extra.</li>
+  <li>Over the fridge: the RW3721 is 37" × 20 11/16" × 24", panel to panel (read 2026-11-03).</li>
+  <li>Cabinet A: B24-SINGLE (one door, one drawer), the B24 has two doors.</li>
+  <li><b>Missing:</b> the FP2496 skin on the left REP's exposed side isn't in this quote and isn't priced, so the total is short by it (Colonial lists it at $167.58, $108.93 sale).</li>
+</ul>
+</section>
+
+<section class="quote" id="quote-city">
+<h3>City</h3>
+<p class="sub">City Cabinets · <a href="https://www.citycabinets.com/">citycabinets.com</a> · frameless, ready to assemble, built to size · web prices read 2026-11-01</p>
+
+<p class="total">Retail <b data-regular></b> · Sale <b data-sale></b> · After the order discount <b data-off></b></p>
+
+<p>Priced from the website against the <a href="#order-summary">order summary</a>, one line per cabinet, each built to the planned size, by adding each option's listed price to the product page's base price.
+"Regular" is City's listed retail price; "sale" is the web price. Orders over $10,000 get 5% off the whole order (7.5% over $20,000, 10% over $30,000) and <a href="https://www.citycabinets.com/Shipping-Rates-s/58.htm">free shipping in the contiguous US</a>, so the last figure above is what you pay before tax. The prices in the run tables leave the discount out. The glass and on-site finishing are not included.</p>
+
+<p>Options on every cabinet that offers them (as on the <a href="https://www.citycabinets.com/product-p/b3dr.htm">B3DR</a>):
+34.50" high, 24" deep (12" on wall cabinets), slab plywood fronts, paint grade, standard drawer front heights, slab/flat top drawer and false fronts,
+raw/unfinished, 5/8" rubberwood drawer boxes (the only choice), standard toe kick.</p>
+
+<h4>Construction</h4>
+<p>What sets it apart: City looks like a sister line to Barker (its site links to Barker's sites and shares its page layouts; not stated outright), with a similar built-to-size approach (widths and heights in 1/4" steps, depths in 1" steps) and the same frameless, flat-packed design. Compared with Barker it has a birch box instead of maple and rubberwood drawers instead of hard maple. The fronts arrive raw, ready to paint on site, and exposed sides need separate end panels.</p>
+<ul>
+  <li><b>Type:</b> frameless, full overlay (European style), ready to assemble with confirmat screws. Construction holes show on the sides, top and bottom once assembled.</li>
+  <li><b>Box:</b> 3/4" plywood (11, 9 or 7 ply, depending on availability), real birch veneer with a baked-on UV clear finish, CARB2 compliant or better. Cut in Oregon from globally sourced material. Glass door cabinets have a raw interior in the door's wood instead, to finish on site.</li>
+  <li><b>Back:</b> not stated separately. A 36" wide tall cabinet's back comes in two pieces; the W2D's listing doesn't say.</li>
+  <li><b>Doors and drawer fronts (as quoted):</b> slab plywood, paint grade: real wood veneer over plywood with banded edges, vertical grain, not grain matched, sanded and raw. <a href="https://www.citycabinets.com/terms.php">City's terms</a> warn that grain and small defects will show through paint, and that seams at the banded edges are not covered by the warranty; they recommend a full painted or stained door instead. Standard drawer fronts: 5 7/8" top drawer, the lower drawers equal.</li>
+  <li><b>Glass doors:</b> priced with the Shaker Inset Panel frame, as a glass door needs a frame (the W1DGLASS page also lists slab plywood at +$30, which doesn't make sense with glass; ask). The glass is not included.</li>
+  <li><b>Shelves:</b> not stated. Roll-outs are rubberwood.</li>
+  <li><b>Drawer boxes:</b> 5/8" solid rubberwood, dovetailed, 1/4" bottom, clearcoated in a matte sheen, shipped assembled; the dovetail joints are left raw.</li>
+  <li><b>Drawer sizes inside:</b> not published. The cooktop base lets you pick the drawer box depth (12" to 21"); 21" is priced, to clear the cooktop body.</li>
+  <li><b>Glides:</b> Blum undermount, soft close, full extension. The product pages say Tandem at 100 lb; the home page says Movento at 125 lb. Ask which ships.</li>
+  <li><b>Hinges:</b> Blum Clip Top Blumotion, soft close, self closing.</li>
+  <li><b>Exposed sides:</b> not finished (construction holes show); City says to order finished end panels for them separately.</li>
+  <li><b>Toe kick:</b> 4" tall with a 3" recess, built into the case; toe skins are sold separately.</li>
+  <li><b>Factory finish (not quoted):</b> from primer only (+$75 on the B3DR) to paint (+$229 to +$273.80 on the B3DR); glass cabinets cost more (+$275 to +$721.80 on the W2DGLASS; the W1DGLASS not read).</li>
+  <li><b>Warranty</b> (<a href="https://www.citycabinets.com/terms.php">terms</a>): five-year limited, against defects in material and workmanship, to the original buyer, not transferable. A worn slide or hinge is replaced under a separate lifetime limited warranty. Not covered: warping or bowing of doors and panels over 24" wide or 80" tall (the 96" tall end panels), warp up to 1/4", drawer fronts over 42" wide, hidden faces, open joint lines. City may substitute hardware or plywood of similar or better quality without notice (for example Salice hinges for Blum).</li>
+</ul>
+<p class="sub">From the home page, each product page and the terms, read 2026-11-01.</p>
+
+<h4>Differences from the plan</h4>
+<ul>
+  <li>Toe kick: City's standard is 4" tall, not 4.5". The 34.50" height is assumed to include it; ask.</li>
+  <li>Cooktop base: the B2DR1FFCOOKTOP is a false front over two drawers, the DB36-3's layout as planned.</li>
+  <li>Pantry: City has no four-door tall cabinet (the T2D has one door pair), so it is built as two (read 2026-11-02): a 36" × 54" × 24" T2D (two doors over four roll-outs, +$300 of the price), which City says is made to stack, with a 36" × 39" × 24" W2D (two doors over shelves) set on top, 93" in all, split at 54" like the planned pantry. The T2D's doors get a mid rail; how that works on a slab front isn't stated, so ask. Its roll-outs are rubberwood.</li>
+  <li>Oven column: City has no match for the OVD3393. The closest is the <a href="https://www.citycabinets.com/product-p/tappliancecase.htm">TAPPLIANCECASE</a> (read 2026-11-04), priced at 33" × 84" × 24", the tallest offered: 9" short of the plan, with no back, doors or drawer, and an opening 31 1/2" wide and 78 1/2" tall. So the line is marked as a different size, and City's total is not like for like. A panel, doors and a way to close the top 9" would have to be sourced; ask City.</li>
+  <li>B21-FH: priced as a B1D, one door; the listing doesn't say whether its door runs the full height with no drawer rail, so ask. The wall cabinets over the Garage and the Toaster, Air Fryer and Coffee are one-door W1Ds and W1DGLASSes (read 2026-11-04).</li>
+  <li>Cabinet A: one drawer over one door, hinged on the left (assumed; same price either way).</li>
+  <li>Trash: the B0DPULLOUTTRASH is a full-height pull-out for two cans, 18" wide.</li>
+  <li>End panels (BFE, TFE): 3/4" slab, paint grade, raw; depths are 24 5/8" for the box plus the door. The panel on the oven column is 3/4" thick and takes that much from the Garage column beside it, so the B21-FH and uppers there would have to narrow to 20 1/4".</li>
+  <li>Over the fridge: the RW3721 is a W2D built 37" wide and 20 3/4" tall, the nearest 1/4" step to the plan's 20 11/16", with no fillers (read 2026-11-03).</li>
+  <li>Side walls: Coffee and the cabinets over it butt a stud wall, so they get no end panels (removed 2026-11-01).</li>
+  <li>Glass cabinets: a plain W1D with "Prep door for glass" (no charge listed) is $257 less per cabinet at sale, $1,028 over the four, and has the finished birch interior instead of a raw one. Not priced here.</li>
+  <li>Not priced: the FP2496 skin (City's thinnest end panel is 3/4"), toe skins, crown and the riser molding.</li>
+</ul>
+</section>
+
 <script src="../kitchen.js"></script>
+<script src="../pricing/quote-cabinets-colonial.js"></script>
+<script src="../pricing/quote-cabinets-monaco.js"></script>
+<script src="../pricing/quote-citycabinets.js"></script>
 <script>
-// The run tables and the order summary are built from ../kitchen.js (sizes from the item's fields, notes from its `note`).
+// The run tables and the order summary are built from ../kitchen.js (sizes from the item's fields, notes from its `note`);
+// the quote columns from ../pricing/quote-*.js, in rank order.
 const size = (x, c) => x.kind === 'space' ? inch(x.w) : [x.w ?? c.w, x.h || 34.5, x.d || (c ? 12 : 24)].map(inch).join(' × '); // base 34 1/2" tall, 24" deep; uppers 12" deep
 const tr = cells => `<tr><td>${cells.join('</td><td>')}</td></tr>`;
 const code = x => x.url ? `<a href="${x.url}">${x.code}</a>` : x.code;
+const $ = n => '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+quotes.sort((a, b) => a.rank - b.rank);
+// A quote line belongs to the order-summary code it starts with (the longest); an add-on line (finished sides, end panel, a pantry half)
+// goes only to the item its notes name.
+const key = planned => orderSummary.map(([c]) => c).filter(c => planned.startsWith(c)).sort((a, b) => b.length - a.length)[0];
+const quoteCells = (q, c, name, sums) => {
+  const ls = q.lines.filter(([planned, , qty, , , , notes]) => qty && key(planned) === c && (planned === c || notes.includes(name)));
+  if (!ls.length) {
+    const missing = q.lines.find(([planned]) => planned === c);
+    return [`<td class="match">❌ not supplied</td><td class="n"></td><td class="n"></td><td class="qn">${missing ? missing[6].replace(/^(island|wall): /, '') : ''}</td>`];
+  }
+  const each = ls.map(([, , , r, s, g]) => [r + g, s + g]);
+  for (const [r, s] of each) { sums.reg += r; sums.sale += s; }
+  return [`<td class="match">${ls.map(([planned, v]) => `${q.resized.includes(planned + ' / ' + v) ? '⚠️' : '✅'} ${v}`).join('<br>')}</td>` +
+    `<td class="n">${each.map(([r]) => $(r)).join('<br>')}</td><td class="n">${each.map(([, s]) => $(s)).join('<br>')}</td>` +
+    `<td class="qn">${ls.map(l => l[6].replace(/^(island|wall): /, '')).join('<br>')}</td>`];
+};
 for (const run of ['island', 'wall']) {
+  const table = document.querySelector(`table[data-run="${run}"]`), sums = quotes.map(() => ({ reg: 0, sale: 0 }));
+  table.tHead.innerHTML = `<tr><th colspan="5"></th>${quotes.map(q => `<th colspan="4"><a href="#quote-${q.id}">${q.label}</a></th>`).join('')}</tr>` +
+    `<tr><th>#</th><th>name</th><th>code</th><th>size W × H × D</th><th>notes</th>${quotes.map(() => '<th>match</th><th>regular</th><th>sale</th><th>notes</th>').join('')}</tr>`;
+  const row = (cells, x, name) => {
+    const c = x.kind === 'gap' ? x.orders : x.code;
+    return `<tr><td>${cells.join('</td><td>')}</td>${c && x.kind !== 'space' ? quotes.map((q, i) => quoteCells(q, c, name, sums[i])).join('') : '<td colspan="4"></td>'.repeat(quotes.length)}</tr>`;
+  };
   let html = '', i = 0;
   for (const c of RUNS[run]) {
-    html += tr([++i, c.name || '', c.kind === 'space' ? 'space' : code(c), size(c), c.note || '']);
+    html += row([++i, c.name || '', c.kind === 'space' ? 'space' : code(c), size(c), c.note || ''], c, c.name || c.role);
     let k = 0;
-    for (const u of c.upper || []) if (u.code) html += tr([i + 'abcdefgh'[k++], '', code(u), size(u, c), u.note || '']);
+    for (const u of c.upper || []) if (u.code) html += row([i + 'abcdefgh'[k++], '', code(u), size(u, c), u.note || ''], u, c.name);
   }
-  document.querySelector(`table[data-run="${run}"] tbody`).insertAdjacentHTML('beforeend', html);
+  html += `<tr class="total"><td></td><td>total</td><td></td><td></td><td>before tax and shipping</td>${sums.map(t => `<td></td><td class="n">${$(t.reg)}</td><td class="n">${$(t.sale)}</td><td></td>`).join('')}</tr>`;
+  table.tBodies[0].innerHTML = html;
   document.querySelector(`[data-len="${run}"]`).textContent = inch(RUNS[run].reduce((s, c) => s + c.w, 0));
 }
 document.querySelector('#order tbody').insertAdjacentHTML('beforeend', orderSummary.map(tr).join(''));
+// Each quote's totals, over all its lines.
+for (const q of quotes) {
+  const sec = document.getElementById('quote-' + q.id);
+  const reg = q.lines.reduce((n, [, , qty, r, , g]) => n + (r + g) * qty, 0), sale = q.lines.reduce((n, [, , qty, , s, g]) => n + (s + g) * qty, 0);
+  sec.querySelector('[data-regular]').textContent = $(reg);
+  sec.querySelector('[data-sale]').textContent = $(sale);
+  const off = sec.querySelector('[data-off]'); // City: 5% off over $10,000, 7.5% over $20,000, 10% over $30,000
+  if (off) off.textContent = $(sale * (sale > 30000 ? .9 : sale > 20000 ? .925 : sale > 10000 ? .95 : 1));
+}
 </script>

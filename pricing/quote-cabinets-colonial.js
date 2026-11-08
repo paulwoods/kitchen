@@ -1,4 +1,4 @@
-// Colonial quote data, shown by quote-cabinets-colonial.html and comparison.html
+// Colonial quote data, shown in docs/cabinets.html (the run tables and #quote-colonial)
 var quotes = quotes || [];
 {
 // [planned, cabinets.com code, qty, regular, sale, glass add-on, notes]
@@ -22,7 +22,7 @@ const lines = [
   ['W2127', 'W2127', 4, 519.25, 337.51, 0, 'wall: over the Garage, Toaster, Air Fryer and Coffee, 1 door (read 2026-11-04, no sale; sale 35% off assumed)'],
   ['W2112 glass', 'W2112', 4, 514.34, 334.32, 0, 'wall: over the W2127s, 1 door, $342.89 + $171.45 glass prep; sale $222.88 + $111.44 (read 2026-11-04, no sale; sale 35% off assumed)'],
 ];
-// 'planned / code' lines whose size (W × H × D, as supplied) differs from the plan's in cabinets.html (comparison.html reads this too)
+// 'planned / code' lines whose size (W × H × D, as supplied) differs from the plan's in cabinets.html
 const resized = [];
-quotes.push({ url: 'quote-cabinets-colonial.html', label: 'Colonial', rank: 1, lines, resized });
+quotes.push({ id: 'colonial', label: 'Colonial', rank: 1, lines, resized });
 }

@@ -1,4 +1,4 @@
-// City Cabinets quote data, shown by quote-citycabinets.html and comparison.html
+// City Cabinets quote data, shown in docs/cabinets.html (the run tables and #quote-city)
 var quotes = quotes || [];
 {
 // [planned, citycabinets.com code, qty, regular, sale, glass add-on, notes]
@@ -22,8 +22,8 @@ const lines = [
   ['W2127', 'W1D', 4, 581.95, 362.95, 0, 'wall: over the Garage, Toaster, Air Fryer and Coffee, 1 door (figured from the option prices, read 2026-11-04)'],
   ['W2112 glass', 'W1DGLASS', 4, 1013.95, 589.95, 0, 'wall: over the W2127s, 1 door, glass not included (figured from the option prices, read 2026-11-04)'],
 ];
-// 'planned / code' lines whose size (W × H × D, as supplied) differs from the plan's in cabinets.html (comparison.html reads this too)
+// 'planned / code' lines whose size (W × H × D, as supplied) differs from the plan's in cabinets.html
 // The pantry is split in two but adds up to the planned size, so it is not listed.
 const resized = ['OVD3393 / TAPPLIANCECASE'];
-quotes.push({ url: 'quote-citycabinets.html', label: 'City', rank: 3, lines, resized });
+quotes.push({ id: 'city', label: 'City', rank: 3, lines, resized });
 }

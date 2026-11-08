@@ -3,6 +3,6 @@
 :root {
   color-scheme: light;
   --paper: #fbfaf5; --sheet: #fff; --ink: #223; --muted: #667; --rule: #ccd;
-  --head: #eef2f7; --band: #f4f6f9; --link: #2a5d9f; --red: #a33; --green: #1f6b3a;
+  --head: #eef2f7; --band: #f4f6f9; --link: #2a5d9f; --red: #a33; --green: #1f6b3a; --yellow: #8a6d00;
   --grid: #bcd3ea; --grid-bold: #8fb2d6;
 }

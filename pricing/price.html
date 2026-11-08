@@ -11,7 +11,7 @@
   p.total { margin: 16px 0; padding: 8px 12px; background: var(--sheet); border: 1px solid var(--rule); font-size: 1.25em; }
   table { border-collapse: collapse; margin-top: 12px; background: var(--sheet); width: 100%; }
   th, td { border: 1px solid var(--rule); padding: 8px 10px; text-align: left; vertical-align: top; }
-  th { background: var(--head); white-space: nowrap; } td.n { text-align: right; white-space: nowrap; } span.tbd { color: var(--red); }
+  th { background: var(--head); white-space: nowrap; } td.n { text-align: right; white-space: nowrap; } span.tbd { color: var(--red); } span.est { color: var(--yellow); }
   tr.group td { font-weight: 600; background: var(--band); } tr.total td { font-weight: 600; background: var(--head); }
   @media (max-width: 600px) {
     table, tbody, tr, td { display: block; } tr:first-child { display: none; }
@@ -26,7 +26,7 @@
 <p class="total">Priced so far <b data-known></b> · <span data-tbd></span></p>
 
 <p>One line per thing to buy or hire. Cabinets are the <a href="../docs/cabinets.html#quote-colonial">Colonial quote</a>'s sale total (read from its data file, so it follows the Cabinets page).
-Appliance prices are one US retailer's web price each, read 2026-10-31; most were sale prices, so check before buying. Labor is <span class="tbd">TBD</span> until there's a bid; the notes say what each bid covers.</p>
+Appliance prices are one US retailer's web price each, read 2026-10-31; most were sale prices, so check before buying. Labor is <span class="tbd">TBD</span> until there's a bid; the notes say what each bid covers. A rough estimate follows each <span class="tbd">TBD</span> in <span class="est">yellow</span>, a guess until there's a price.</p>
 
 <table id="price">
 <tr><th>item</th><th>qty</th><th>each</th><th>total</th><th>notes</th></tr>
@@ -35,7 +35,8 @@ Appliance prices are one US retailer's web price each, read 2026-10-31; most wer
 <script src="quote-cabinets-colonial.js"></script>
 <script>
 const colonial = quotes[0].lines.reduce((n, [, , qty, , s, g]) => n + (s + g) * qty, 0);
-// [item, qty, each (null = TBD), notes]; a string alone starts a group
+// [item, qty, each (null = TBD), notes, estimate each for a TBD line]; a string alone starts a group.
+// Estimates (2026-11-07) are rough Plano, TX figures, not quotes: tax is 8.25% of the materials, contingency 10% of the rest.
 const rows = [
   'Cabinets',
   ['Colonial Maple Haze and Alabaster, cabinets.com (sale)', 1, colonial, 'Every cabinet, panel and finished side in the <a href="../docs/cabinets.html#order-summary">order summary</a>, shipped assembled. Tax and shipping not included; the glass for the glass doors not included.'],
@@ -44,7 +45,7 @@ const rows = [
   ['SSM-4.50 riser molding, Colonial Maple Alabaster (sale)', 3, 61.22, '<a href="https://www.cabinets.com/riser-molding-4-12-colonial-maple-alabaster.html">cabinets.com</a>, 96" × 4 1/2" × 3/4", read 2026-11-03. Ripped to 3" and scribed to the ceiling over the RW3721, the pantry, the OVD3393 and the uppers, about 203" in all with the OVD3393 return.'],
   ['Berenson 9020-4055-P cabinet pull, matte black', 42, 10.44, '<a href="https://www.cabinetparts.com/p/berenson-decorative-knobs-and-pulls-BE90204055P-p63758">Cabinet Parts</a>, Advantage One, 192 mm (7 9/16") centers, 8" long. 15 on the island, 27 on the wall run, including the cooktop and sink false fronts. Price from the owner, 2026-11-02.'],
   ['Dishwasher pull, Berenson 9020-4055-P', 1, 10.44, 'The same pull, for the SHV78CM3N panel (the panel itself, a BEPD decorative door, is in the Colonial quote; 11–18 lb as shipped).'],
-  ['Glass for the glass-door cabinets', 4, null, 'Four W2112s.'],
+  ['Glass for the glass-door cabinets', 4, null, 'Four W2112s.', 60],
   'Appliances',
   ['Bosch NIT8061UC 30" induction cooktop', 1, 2549, '<a href="https://www.bosch-home.com/us/en/mkt-product/cooking-baking/induction-electric-cooktops/induction-cooktops/NIT8061UC">Bosch</a>'],
   ['Bosch HBL87M53UC 30" microwave combination oven', 1, 5049, '<a href="https://www.bosch-home.com/us/en/product/cooking-baking/wall-ovens/combination-ovens/HBL87M53UC">Bosch</a> (out of stock there)'],
@@ -58,43 +59,44 @@ const rows = [
   ['Nicor UCB118SNWH 18" under-cabinet light', 8, 26.31, 'Elliott Electric, read 2026-11-04 (its pages also show $24.99; confirm); four under the W2127s, four inside the W2112s'],
   'Stone and floor',
   ['Luce di Luna quartzite slab, 3 cm, polished', 2, 4708, '<a href="https://shop.go-granite.com/products/luce-di-luna-quartzite-3cm">Go-Granite</a>, store price read 2026-11-02, nominal 126" × 63", priced at 55 sq ft a slab. Two slabs by size, an estimate before seam, vein matching and the fabricator\'s layout: the 85" × 45 1/4" island piece on one, the 109" × 31 1/4" island piece and the 84" × <span data-k="counter">25 3/4</span>" wall piece on the other (about 65 sq ft in all). Confirm the price; the listing photo is only representative, and Go-Granite sends photos of the actual slabs to approve.'],
-  ['Slab freight', 1, null, 'Go-Granite quotes it by ZIP code.'],
-  ['Countertop fabrication and installation', 1, null, 'Fabricator tentatively <a href="https://www.thestumblestone.us/">The Stumble Stone</a>, Dallas; not quoted. Island <span data-k="islandLen">192</span>" plus 1" overhangs × <span data-k="counter">25 3/4</span>" deep plus the strip past the cabinet backs; wall run 84" (Garage through Coffee; the fridge, panels, pantry and OVD3393 get no counter). Island seam expected between plates and trash. Sink and cooktop cutouts, 1 1/4" button hole. Eased edge. No subtop. Templating after the cabinets are in.'],
+  ['Slab freight', 1, null, 'Go-Granite quotes it by ZIP code.', 400],
+  ['Countertop fabrication and installation', 1, null, 'Fabricator tentatively <a href="https://www.thestumblestone.us/">The Stumble Stone</a>, Dallas; not quoted. Island <span data-k="islandLen">192</span>" plus 1" overhangs × <span data-k="counter">25 3/4</span>" deep plus the strip past the cabinet backs; wall run 84" (Garage through Coffee; the fridge, panels, pantry and OVD3393 get no counter). Island seam expected between plates and trash. Sink and cooktop cutouts, 1 1/4" button hole. Eased edge. No subtop. Templating after the cabinets are in.', 3000],
   ['Iron Supports hidden flat bracket, 16", matte black', 7, 35, '<a href="https://ironsupports.com/products/hidden-granite-countertop-flat-bracket">Iron Supports</a>, read 2026-11-02, 2.5" × 1/2" steel, rated 325 lb each on solid framing. Holds up the island seating overhang behind spices, cooktop and plates; layout not yet approved by the fabricator.'],
-  ['Flooring', 1, null, 'Not chosen.'],
-  ['Backsplash, wall run', 1, null, 'Stone from the two slabs, 84" × 18 1/4" in four pieces with receptacle cutouts; fabrication and installation TBD, and the fabricator confirms the yield. None on the island.'],
+  ['Flooring', 1, null, 'Not chosen.', 2500],
+  ['Backsplash, wall run', 1, null, 'Stone from the two slabs, 84" × 18 1/4" in four pieces with receptacle cutouts; fabrication and installation TBD, and the fabricator confirms the yield. None on the island.', 600],
   'Labor',
-  ['Demolition and haul-off', 1, null, 'Old cabinets, counters and appliances out; dumpster.'],
-  ['Load bearing wall beam replacement', 1, null, 'The load bearing wall where the island goes comes out and a beam takes its load: engineer\'s design, temporary shoring, removing the wall, beam and posts, any footings, and clearing whatever runs in the wall. Span, size and flush or dropped not known until the engineer has seen it (<a href="../docs/sequence.html#slab">Sequence</a>).'],
-  ['Cabinet installation', 1, null, 'Colonial ships assembled. Hang and level both runs, the pantry and the REP panels (the owner scribes, <a href="../docs/issues.html#resolved">Issues</a>); cut and fit the toe kick covers; rip the riser molding; cut the cooktop and trash cabinet backs for the boxes in the island back wall; cut and trim the OVD3393 opening for the combination oven, and support the shelf under it for 274 lb.'],
-  ['Electrical', 1, null, 'Per <a href="../docs/electrical.html">Electrical</a>: 30 A 240 V for the cooktop, 40 A 240 V for the combination oven (j box in the oven column, above the unit), circuits for the dishwasher, disposal, fridge and hood, GFCI receptacles on the wall and in the island back wall, the trash cabinet receptacle and the cooktop j box in that wall, the sink base receptacle, under-cabinet and glass cabinet light feeds, the four Caséta dimmers (Picos are battery), ceiling lights and the toe-kick drivers.'],
-  ['Slab trench', 1, null, 'About 60" of the slab, cut and patched, for the extra electrical wires to the island.'],
-  ['Plumbing', 1, null, 'Island sink drain with a loop vent or AAV, sink, faucet, disposal, dishwasher hookup and drain loop, fridge water line, PEX from the attic down to a recessed ice maker outlet box with its shutoff valve, insulated in the attic. Existing connections are close, so no trenching is expected.'],
-  ['Hood duct', 1, null, '6" round duct up through the ceiling and out; ceiling blocking for the hood.'],
-  ['Appliance installation', 1, null, 'Combination oven in the OVD3393, assembled on site, with trim around it, cooktop, dishwasher panel mounting, hood.'],
-  ['Island back wall', 1, null, '<span data-k="islandLen">192</span>" long, <span data-k="box">34 1/2</span>" tall, 2x4 studs fastened to the floor, 1/2" drywall on both sides and the ends, finished and painted Haze; boxes and feeds for the six receptacles, the trash cabinet receptacle and the cooktop junction box go in before the drywall. Anchored to the slab and tied to the cabinets; a double top plate with 1/2" channels for the seven overhang brackets, and a stud under each where the boxes allow.'],
-  ['Drywall patch and paint', 1, null, 'After the beam, electrical and duct work.'],
+  ['Demolition and haul-off', 1, null, 'Old cabinets, counters and appliances out; dumpster.', 1500],
+  ['Load bearing wall beam replacement', 1, null, 'The load bearing wall where the island goes comes out and a beam takes its load: engineer\'s design, temporary shoring, removing the wall, beam and posts, any footings, and clearing whatever runs in the wall. Span, size and flush or dropped not known until the engineer has seen it (<a href="../docs/sequence.html#slab">Sequence</a>).', 8000],
+  ['Cabinet installation', 1, null, 'Colonial ships assembled. Hang and level both runs, the pantry and the REP panels (the owner scribes, <a href="../docs/issues.html#resolved">Issues</a>); cut and fit the toe kick covers; rip the riser molding; cut the cooktop and trash cabinet backs for the boxes in the island back wall; cut and trim the OVD3393 opening for the combination oven, and support the shelf under it for 274 lb.', 3000],
+  ['Electrical', 1, null, 'Per <a href="../docs/electrical.html">Electrical</a>: 30 A 240 V for the cooktop, 40 A 240 V for the combination oven (j box in the oven column, above the unit), circuits for the dishwasher, disposal, fridge and hood, GFCI receptacles on the wall and in the island back wall, the trash cabinet receptacle and the cooktop j box in that wall, the sink base receptacle, under-cabinet and glass cabinet light feeds, the four Caséta dimmers (Picos are battery), ceiling lights and the toe-kick drivers.', 5000],
+  ['Slab trench', 1, null, 'About 60" of the slab, cut and patched, for the extra electrical wires to the island.', 1200],
+  ['Plumbing', 1, null, 'Island sink drain with a loop vent or AAV, sink, faucet, disposal, dishwasher hookup and drain loop, fridge water line, PEX from the attic down to a recessed ice maker outlet box with its shutoff valve, insulated in the attic. Existing connections are close, so no trenching is expected.', 2500],
+  ['Hood duct', 1, null, '6" round duct up through the ceiling and out; ceiling blocking for the hood.', 800],
+  ['Appliance installation', 1, null, 'Combination oven in the OVD3393, assembled on site, with trim around it, cooktop, dishwasher panel mounting, hood.', 800],
+  ['Island back wall', 1, null, '<span data-k="islandLen">192</span>" long, <span data-k="box">34 1/2</span>" tall, 2x4 studs fastened to the floor, 1/2" drywall on both sides and the ends, finished and painted Haze; boxes and feeds for the six receptacles, the trash cabinet receptacle and the cooktop junction box go in before the drywall. Anchored to the slab and tied to the cabinets; a double top plate with 1/2" channels for the seven overhang brackets, and a stud under each where the boxes allow.', 1500],
+  ['Drywall patch and paint', 1, null, 'After the beam, electrical and duct work.', 1200],
   'Other',
-  ['Toe-kick LED tape, channel and 2 drivers', 1, null, '321" of 24 V tape in channel under the cabinets with a toe kick, one dimmable driver per side (<a href="../docs/selections.html">Selections</a>); product not chosen.'],
-  ['Halo HLBC6LS9FSD2W1EMWR 6" canless downlight', 3, null, 'Ambient (A) lights on the <a href="../drawings/sketches.html#island-top">Island top</a>; chosen 2026-11-06 in place of the discontinued HLB6099FS1EMWR, no firm price yet.'],
+  ['Toe-kick LED tape, channel and 2 drivers', 1, null, '321" of 24 V tape in channel under the cabinets with a toe kick, one dimmable driver per side (<a href="../docs/selections.html">Selections</a>); product not chosen.', 250],
+  ['Halo HLBC6LS9FSD2W1EMWR 6" canless downlight', 3, null, 'Ambient (A) lights on the <a href="../drawings/sketches.html#island-top">Island top</a>; chosen 2026-11-06 in place of the discontinued HLB6099FS1EMWR, no firm price yet.', 35],
   ['Effimero matte black clear glass pendant, large', 4, 66.99, 'Task (T) lights on the <a href="../drawings/sketches.html#island-top">Island top</a>; chosen 2026-11-04, <a href="https://www.amazon.com/dp/B01288Z1K0">Amazon</a>, price from the owner. 40 W E26 bulbs not chosen or priced.'],
-  ['Counter stools', 3, null, 'For the <span data-k="seat - wall">15</span>" seating overhang at the <span data-k="counterH">35 3/4</span>" counter, about 28" each along the 84" stretch. Not chosen; counter height, about 25" to the seat (a 30" bar stool is too tall for this counter).'],
-  ['Permits', 1, null, 'City of Plano: building (the beam), electrical, plumbing and mechanical (hood duct).'],
-  ['Shipping and delivery', 1, null, 'Cabinets and appliances.'],
-  ['Sales tax', 1, null, 'On the materials.'],
-  ['Contingency', 1, null, 'Commonly 10–15% of the total for surprises behind the walls.'],
+  ['Counter stools', 3, null, 'For the <span data-k="seat - wall">15</span>" seating overhang at the <span data-k="counterH">35 3/4</span>" counter, about 28" each along the 84" stretch. Not chosen; counter height, about 25" to the seat (a 30" bar stool is too tall for this counter).', 150],
+  ['Permits', 1, null, 'City of Plano: building (the beam), electrical, plumbing and mechanical (hood duct).', 600],
+  ['Shipping and delivery', 1, null, 'Cabinets and appliances.', 500],
+  ['Sales tax', 1, null, 'On the materials.', 3400],
+  ['Contingency', 1, null, 'Commonly 10–15% of the total for surprises behind the walls.', 7700],
 ];
 const $ = n => '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 const tbd = '<span class="tbd">TBD</span>';
-let known = 0, open = 0, html = '';
+let known = 0, open = 0, guess = 0, html = '';
 for (const r of rows) {
   if (typeof r === 'string') { html += `<tr class="group"><td colspan="5">${r}</td></tr>`; continue; }
-  const [item, qty, each, notes] = r;
-  if (each == null) open++; else known += each * qty;
-  html += `<tr><td>${item}</td><td class="n">${qty}</td><td class="n">${each == null ? tbd : $(each)}</td><td class="n">${each == null ? tbd : $(each * qty)}</td><td>${notes}</td></tr>`;
+  const [item, qty, each, notes, est] = r;
+  if (each == null) { open++; guess += est * qty; } else known += each * qty;
+  const cell = n => each == null ? `${tbd} <span class="est">~${$(n)}</span>` : $(n);
+  html += `<tr><td>${item}</td><td class="n">${qty}</td><td class="n">${cell(each ?? est)}</td><td class="n">${cell((each ?? est) * qty)}</td><td>${notes}</td></tr>`;
 }
-html += `<tr class="total"><td>priced so far</td><td></td><td></td><td class="n">${$(known)}</td><td>${open} lines TBD</td></tr>`;
+html += `<tr class="total"><td>priced so far</td><td></td><td></td><td class="n">${$(known)}</td><td>${open} lines TBD, <span class="est">~${$(guess)} estimated, ~${$(known + guess)} in all</span></td></tr>`;
 document.querySelector('#price tbody').insertAdjacentHTML('beforeend', html);
 document.querySelector('[data-known]').textContent = $(known);
-document.querySelector('[data-tbd]').textContent = `${open} lines TBD`;
+document.querySelector('[data-tbd]').innerHTML = `${open} lines TBD · <span class="est">~${$(known + guess)} with estimates</span>`;
 </script>

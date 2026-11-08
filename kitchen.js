@@ -65,7 +65,7 @@ const RUNS = {
                          code: 'REP2496-1.5', w: 1.5, kind: 'panel', h: 96 },
     { note: `Clear space between the panel and the fridge, up to the RW3721 (2026-11-02).`,
       kind: 'space', w: 0.5, h: 96 }, // 1/2" clear between the panel and the fridge
-    { note: `Space for the Frigidaire PRFC2383AF (70" tall with hinges). The panels stand 37" apart with the spaces on either side. On the wall behind it: the receptacle and a recessed ice maker outlet box (<a href="appliances.html">Appliances</a>).`,
+    { note: `Space for the Frigidaire PRFC2383AF (70" tall with hinges). The panels stand 37" apart with the spaces on either side. On the wall behind it: the receptacle and a recessed ice maker outlet box (<a href="selections.html">Selections</a>).`,
       name: 'Fridge',    code: '36" gap', w: 36,  kind: 'gap', h: 70, tag: 'REF', fridge: true, receptacle: true, receptacleAt: 12, d: 28.5, // 28 1/2" deep with doors
       inside: [{ label: 'ice maker', w: 5, h: 6, at: 12, dx: 29 }], // recessed ice maker outlet box behind the fridge (size and spot assumed)
       upper: [{ note: `Over the fridge and the two spaces, panel to panel, 72 5/16"–93" (decided 2026-11-03; replaced the W362424 and its two fillers). 2 5/16" above the fridge, with riser molding above it to the ceiling. 24" deep to line up with the fridge. The panels have to stand exactly 37" apart at this height, with nothing to scribe.`, code: 'RW3721', w: 37, dx: -0.5, h: 20.6875, at: 72.3125, d: 24 }, { riser: true, w: 37, dx: -0.5, h: 3, at: 93, d: 24 }] },

@@ -4,39 +4,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="../nav.js" defer></script>
 <link rel="stylesheet" href="../theme-light.css">
+<script src="../kitchen.js"></script>
 <script src="sketch.js"></script>
 <body>
 <script>
-// Left to right as seen from the aisle, widths in inches (same runs as sketch-island-front.html and sketch-wall-front.html), with the work areas and the lights marked.
-const island = [
-  { name: 'spices',    code: 'DB24-3',  w: 24, kind: 'drawers', n: 3, back: 19.5, backReceptacle: true },
-  { name: 'cooktop',   code: 'DB36-3',  w: 36, kind: 'drawers', n: 3, cooktop: true, back: 19.5 },
-  { name: 'plates',    code: 'DB24-3',  w: 24, kind: 'drawers', n: 3, back: 19.5, backReceptacle: true },
-  { name: 'trash',     code: 'TRB18FH', w: 18, kind: 'door', backReceptacle: true },
-  { name: 'sink',      code: 'SB42',    w: 42, kind: 'sink', backReceptacle: true, airSwitch: { dx: 12.625, back: 2 },
-    faucet: { h: 22.4375, reach: 9.5, back: 2 } }, // Kohler K-R30937-BMB, 2" from the cabinet backs, centered between them and the sink's back edge at 4"
-  { name: 'dishwasher', code: '24" gap', w: 24, kind: 'gap', tag: 'DW', backReceptacle: true },
-  { name: 'cabinet a', code: 'B24-2',   w: 24, kind: 'base', backReceptacle: true },
-];
-const wall = [
-  {                    code: 'FP2496',  w: 0.25, kind: 'panel', h: 96, drop: 1 }, // skin on the REP's exposed left side, 1/4" thick (assumed)
-  {                    code: 'REP2496-1.5', w: 1.5, kind: 'panel', h: 96 },
-  { kind: 'space', w: 0.5, h: 96 }, // 1/2" clear between the panel and the fridge
-  { name: 'Fridge',    code: '36" gap', w: 36,  kind: 'gap', h: 70, tag: 'REF', receptacle: true, d: 28.5, // 28 1/2" deep with doors
-    upper: [{ code: 'RW3721', w: 37, dx: -0.5, d: 24 }] },
-  { kind: 'space', w: 0.5, h: 96 },
-  {                    code: 'REP2496-1.5', w: 1.5, kind: 'panel', h: 96 },
-  { name: 'Pantry',    code: 'UT362493ROT4', w: 36,  kind: 'pantry', h: 93 },
-  { name: 'Oven',      code: 'OVD3393', w: 33,  kind: 'oven', h: 93 },
-  { name: 'Garage',    code: 'B21-FH',  w: 21,  kind: 'door', receptacle: true,
-    upper: [{ code: 'W2127' }, { code: 'W2112 glass' }] },
-  { name: 'Toaster',   code: 'DB21-3',  w: 21,  kind: 'drawers', n: 3, receptacle: true,
-    upper: [{ code: 'W2127' }, { code: 'W2112 glass' }] },
-  { name: 'Air Fryer', code: 'DB21-3',  w: 21,  kind: 'drawers', n: 3, receptacle: true,
-    upper: [{ code: 'W2127' }, { code: 'W2112 glass' }] },
-  { name: 'Coffee',    code: 'DB21-3',  w: 21,  kind: 'drawers', n: 3, receptacle: true,
-    upper: [{ code: 'W2127' }, { code: 'W2112 glass' }] },
-];
+// The runs are in ../kitchen.js; this page marks the work areas and the lights.
+const { island, wall } = RUNS;
 const I = Object.fromEntries(island.map(c => [c.name, c])), Wl = Object.fromEntries(wall.filter(c => c.name).map(c => [c.name, c]));
 plan('Top view', island, wall, { extra: ({ out, text, ix, iy, wx, wy }) => {
   const mid = (a, b = a) => (a.u + b.u + b.w) / 2; // middle of a, or of a through b

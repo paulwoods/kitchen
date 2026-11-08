@@ -349,7 +349,7 @@ function plan(title, island, wall, opts = {}) {
         circle([x2, y2], 0.65, 'brass');
       }
       // Upper cabinets, dotted: x.d deep, else 12"; x.w wide from x.dx, else the item's width.
-      const ups = c.upper || [], ud = Math.max(0, ...ups.map(x => x.d || 12));
+      const ups = (c.upper || []).filter(x => x.code), ud = Math.max(0, ...ups.map(x => x.d || 12));
       if (ud) box(c.u + (ups[0].dx || 0), 0, ups[0].w || c.w, ud, 'upper');
       const [tx] = mid(0);
       const dy = 6 * (c.drop || 0);

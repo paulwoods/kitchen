@@ -4,29 +4,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="../nav.js" defer></script>
 <link rel="stylesheet" href="../theme-light.css">
+<script src="../kitchen.js"></script>
 <script src="sketch.js"></script>
 <body>
 <script>
-// Left to right, widths in inches. `h` marks a tall item (no countertop).
-sketch('Wall front', [
-  {                    code: 'FP2496',  w: 0.25, kind: 'panel', h: 96, drop: 1 }, // skin on the REP's exposed left side, 1/4" thick (assumed)
-  {                    code: 'REP2496-1.5', w: 1.5, kind: 'panel', h: 96 },
-  { kind: 'space', w: 0.5, h: 96 }, // 1/2" clear between the panel and the fridge
-  { name: 'Fridge',    code: '36" gap', w: 36,  kind: 'gap', h: 70, tag: 'REF', fridge: true, receptacle: true, receptacleAt: 12,
-    inside: [{ label: 'ice maker', w: 5, h: 6, at: 12, dx: 29 }], // recessed ice maker outlet box behind the fridge (size and spot assumed)
-    upper: [{ code: 'RW3721', w: 37, dx: -0.5, h: 20.6875, at: 72.3125, d: 24 }, { riser: true, w: 37, dx: -0.5, h: 3, at: 93, d: 24 }] },
-  { kind: 'space', w: 0.5, h: 96 },
-  {                    code: 'REP2496-1.5', w: 1.5, kind: 'panel', h: 96 },
-  { name: 'Pantry',    code: 'UT362493ROT4', w: 36,  kind: 'pantry', h: 93, upper: [{ riser: true, h: 3, at: 93, d: 24 }] },
-  { name: 'Oven',      code: 'OVD3393', w: 33,  kind: 'oven', h: 93, inside: [{ label: 'oven j box', w: 4, h: 4, at: 64, dx: 11 }],
-    upper: [{ riser: true, h: 3, at: 93, d: 24, side: true }] },
-  { name: 'Garage',    code: 'B21-FH',  w: 21,  kind: 'door', one: true, receptacle: true,
-    upper: [{ light: 'UCB118SNWH', w: 18, h: 1.1, at: 52.9 }, { code: 'W2127', one: true, h: 27, at: 54 }, { code: 'W2112 glass', one: true, h: 12, at: 81, glass: true }, { riser: true, h: 3, at: 93 }, { light: 'UCB118SNWH', w: 18, h: 1.1, at: 91.275, inside: true }] },
-  { name: 'Toaster',   code: 'DB21-3',  w: 21,  kind: 'drawers', n: 3, receptacle: true,
-    upper: [{ off: true, appliance: 'toaster oven', w: 21.5, h: 12.7, at: 35.75 }, { light: 'UCB118SNWH', w: 18, h: 1.1, at: 52.9 }, { code: 'W2127', one: true, left: true, h: 27, at: 54 }, { code: 'W2112 glass', one: true, left: true, h: 12, at: 81, glass: true }, { riser: true, h: 3, at: 93 }, { light: 'UCB118SNWH', w: 18, h: 1.1, at: 91.275, inside: true }] },
-  { name: 'Air Fryer', code: 'DB21-3',  w: 21,  kind: 'drawers', n: 3, receptacle: true,
-    upper: [{ off: true, appliance: 'air fryer', w: 11, h: 14.75, at: 35.75 }, { light: 'UCB118SNWH', w: 18, h: 1.1, at: 52.9 }, { code: 'W2127', one: true, h: 27, at: 54 }, { code: 'W2112 glass', one: true, h: 12, at: 81, glass: true }, { riser: true, h: 3, at: 93 }, { light: 'UCB118SNWH', w: 18, h: 1.1, at: 91.275, inside: true }] },
-  { name: 'Coffee',    code: 'DB21-3',  w: 21,  kind: 'drawers', n: 3, receptacle: true,
-    upper: [{ off: true, coffee: true, w: 8.5, h: 16.3, at: 35.75 }, { light: 'UCB118SNWH', w: 18, h: 1.1, at: 52.9 }, { code: 'W2127', one: true, left: true, h: 27, at: 54 }, { code: 'W2112 glass', one: true, left: true, h: 12, at: 81, glass: true }, { riser: true, h: 3, at: 93 }, { light: 'UCB118SNWH', w: 18, h: 1.1, at: 91.275, inside: true }] },
-], { toggles: true, walls: true }); // stud wall at the right end
+sketch('Wall front', RUNS.wall, { toggles: true, walls: true }); // the runs are in ../kitchen.js; stud wall at the right end
 </script>

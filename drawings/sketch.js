@@ -132,13 +132,12 @@ function sketch(title, run, opts = {}) {
         text(x + c.w / 2, top - 2, 'hood', 'code on');
         continue;
       }
-      if (u.pendant) { // pendant light hung from the ceiling: { pendant: true, w, h, at: shade bottom off the floor, dx: its center from the item's left end }; canopy and cap sizes as in model.html (assumed)
-        const px = x + u.dx, top = FLOOR - u.at - u.h;
-        line(px, FLOOR - CEILING, px, top, 'cord');
-        rect(px - 2.5, FLOOR - CEILING, 5, 1, 'cooktop');
-        rect(px - 1.25, top - 1, 2.5, 1, 'cooktop');
-        rect(px - u.w / 2, top, u.w, u.h, 'glass');
-        text(px, FLOOR - u.at + 2.5, 'pendant', 'code');
+      if (u.spot) { // ceiling spotlight aimed straight down: { spot: true, w, h: head size, at: head bottom off the floor, dx: its center from the item's left end }; canopy and stem sizes as in model.html (assumed)
+        const px = x + u.dx, top = FLOOR - u.at - u.h, ceil = FLOOR - CEILING;
+        rect(px - 0.5, ceil + 1, 1, top - ceil - 1, 'front alabaster');
+        rect(px - 2.5, ceil, 5, 1, 'front alabaster');
+        rect(px - u.w / 2, top, u.w, u.h, 'front alabaster');
+        text(px, FLOOR - u.at + 2.5, 'spot', 'code');
         continue;
       }
       if (u.riser) { rect(x + (u.dx || 0), FLOOR - u.at - u.h, u.w || c.w, u.h, 'front alabaster'); continue; } // riser molding to the ceiling: { riser: true, h, at, w, dx }
@@ -240,7 +239,7 @@ function sketch(title, run, opts = {}) {
   for (const c of run) if (c.faucet) mark(BOX + TOP + c.faucet.h, 'faucet');
   for (const u of run.flatMap(c => c.upper || [])) {
     if (u.hood) mark(u.at, 'hood');
-    else if (u.pendant) mark(u.at, 'pendants');
+    else if (u.spot) mark(u.at, 'spots');
     else if (u.code) mark(u.at + u.h, 'uppers');
   }
   mark(CEILING, 'ceiling');
@@ -409,8 +408,7 @@ function page(title, view, W, H, oy, out, axes) {
       .cooktop { fill: #111; stroke: var(--muted); stroke-width: 0.1; } .burner { fill: none; stroke: #667; stroke-width: 0.3; }
       .top { fill: #e9eaed; } .hidden { fill: none; stroke: #223; stroke-width: 0.2; stroke-dasharray: 1 0.6; }
       .faucet { fill: #2b2b2b; stroke: #b08d57; stroke-width: 0.2; } .spout { stroke: #2b2b2b; stroke-width: 1.375; }
-      .brass { fill: #b08d57; stroke: #223; stroke-width: 0.1; } .coil { stroke: #2b2b2b; stroke-width: 0.2; } .cord { stroke: var(--muted); stroke-width: 0.2; }
-      .sinkbowl { fill: #c9ccd2; stroke: #223; stroke-width: 0.3; }
+      .brass { fill: #b08d57; stroke: #223; stroke-width: 0.1; } .coil { stroke: #2b2b2b; stroke-width: 0.2; }      .sinkbowl { fill: #c9ccd2; stroke: #223; stroke-width: 0.3; }
       .upper { fill: none; stroke: #223; stroke-width: 0.3; stroke-dasharray: 0.01 0.8; stroke-linecap: round; } .pull { stroke: #e07000; stroke-width: 0.4; stroke-linecap: round; } .handle { stroke: #2b2b2b; stroke-width: 0.4; stroke-linecap: round; } /* cabinet pulls orange on the sketches (2026-11-05); the oven's handles stay black */
       .oven { fill: #c9ccd2; stroke: #223; stroke-width: 0.25; } .window { fill: #3a3f4a; }
       .glass { fill: #dbe9f2; stroke: #223; stroke-width: 0.15; }

@@ -213,7 +213,7 @@ function side(run, flip, zBack, back = 0, walls = false) { // back: counter past
     }
     base = false;
     for (const x of c.upper || []) {
-      if (x.pendant) continue; // drawn with the island, below
+      if (x.spot) continue; // drawn with the island, below
       if (x.hood) { // curved glass canopy over a steel body (filter, 4 lights, touch panel in front), chimney to the ceiling
         const top = x.at + x.h, bw = 21, bd = 17, bu = u + (w - bw) / 2, bv = CV - bd / 2; // body size assumed; centered over the cooktop, 10 1/2" from the cabinet backs (2026-11-05)
         B(bu, bv, x.at, bw, bd, x.h, M.steel);
@@ -285,16 +285,12 @@ for (const x of DIMS.stools) { // three counter stools at the seating overhang, 
   rod([x, 24, z], [x, 25.5, z], 8, M.black);
   for (const [dx, dz] of [[1, 1], [1, -1], [-1, 1], [-1, -1]]) rod([x + 6 * dx, 0, z + 6 * dz], [x + 4 * dx, 24, z + 4 * dz], 0.5, M.pull);
 }
-for (const x of island.flatMap(c => (c.upper || []).filter(p => p.pendant).map(p => c.u + p.dx))) { // Effimero pendants at the T marks on the top view, 18" from the cabinet backs: 5" x 11" clear glass shade, bottom at 74"; shade drawn as a plain cylinder; ceiling canopy, cap and bulb sizes assumed
+for (const [x, s] of island.flatMap(c => (c.upper || []).filter(p => p.spot).map(p => [c.u + p.dx, p]))) { // VANoopee ceiling spotlights at the T marks on the top view, 18" from the cabinet backs, aimed straight down; canopy and stem sizes assumed
   const z = 18;
-  rod([x, 95, z], [x, CEILING, z], 2.5, M.pull); // canopy
-  rod([x, 86, z], [x, 95, z], 0.1, M.pull); // cord
-  rod([x, 85, z], [x, 86, z], 1.25, M.pull); // cap
-  rod([x, 80, z], [x, 85, z], 0.75, M.pull); // socket
-  const bulb = new THREE.Mesh(new THREE.SphereGeometry(1.25, 16, 12), M.light);
-  bulb.position.set(x, 78.75, z);
-  group.add(bulb);
-  rod([x, 74, z], [x, 85, z], 2.5, M.hoodGlass); // shade
+  rod([x, 95, z], [x, CEILING, z], 2.5, M.alabaster); // canopy
+  rod([x, s.at + s.h, z], [x, 95, z], 0.5, M.alabaster); // stem
+  rod([x, s.at, z], [x, s.at + s.h, z], s.w / 2, M.alabaster); // head
+  rod([x, s.at - 0.05, z], [x, s.at, z], s.w / 2 - 0.4, M.light); // lens
 }
 group = runs.wall;
 side(wall, true, ZWALL, 0, true);

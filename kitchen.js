@@ -25,7 +25,7 @@ const RUNS = {
     { note: `Three-drawer base: 6" top drawer over two equal deep drawers. 1" counter overhang at the left end of the island.`,
       name: 'spices',    code: 'DB24-3',  w: 24, kind: 'drawers', n: 3, back: DIMS.seat, backReceptacle: true,
       inside: [{ label: '120v', w: 2.75, h: 4.5, at: 29, dx: 12 }], // GFCI on the island's back wall, behind the cabinet (height assumed)
-      upper: [ { pendant: true, w: 5, h: 11, at: 74, dx: 12 } ] }, // Effimero, at a T mark on the island top
+      upper: [ { spot: true, w: 3, h: 5.625, at: 87.875, dx: 12 } ] }, // VANoopee B0BRMX76K2 at a T mark on the island top, aimed straight down: head 2.99" x 5.60" per the listing; bottom 87 7/8" off the floor assumes a 1" canopy and 1 1/2" stem
     { note: `Three-drawer base under the Bosch NIT8061UC induction cooktop (decided 2026-10-24). The cooktop body drops 4 1/8" below the counter and needs a 1" air gap, which takes the top drawer's space: the top drawer is a false front (fixed, no drawer box; decided 2026-10-25). The cooktop's junction box (240 V 30 A, hardwired) goes in the back wall behind the cabinet, 3" from its left side at 25.75", through a cutout in the cabinet back (2026-11-02); its cover is reached by taking out the middle drawer.`,
       name: 'cooktop',   code: 'DB36-3',  w: 36, kind: 'drawers', n: 3, cooktop: true, falseTop: true, back: DIMS.seat,
       inside: [{ label: 'j box', w: 4, h: 4, at: 25.75, dx: 3 }, // in the island's back wall, through a cutout in the cabinet back
@@ -38,7 +38,7 @@ const RUNS = {
       name: 'trash',     code: 'TRB18FH', w: 18, kind: 'door', backReceptacle: true,
       inside: [{ label: '120v', w: 2.75, h: 4.5, at: 21, dx: 9 },
                 { label: '120v', w: 2.75, h: 4.5, at: 29, dx: 9 }], // both in the island's back wall: the first opens into the cabinet, the second faces away from the aisle
-      upper: [ { pendant: true, w: 5, h: 11, at: 74, dx: 0 } ] },
+      upper: [ { spot: true, w: 3, h: 5.625, at: 87.875, dx: 0 } ] },
     { note: `Sink base: false front over two doors. Holds the Ruvati RVH6222ST undermount sink (needs ≥ 36"), the InSinkErator disposal, the trap and the dishwasher drain loop. A 120 V receptacle goes inside at the bottom left, with the disposal air switch's power module plugged into it (2026-10-25). A 120 V GFCI goes in the back wall behind the cabinet, facing away from the aisle, centered at 29" (2026-11-04).`,
       name: 'sink',      code: 'SB42',    w: 42, kind: 'sink', falseTop: true, backReceptacle: true, airSwitch: { dx: 12.625, back: 2 },
       inside: [{ label: '120v', w: 2.75, h: 4.5, at: 9, dx: 3 },
@@ -49,14 +49,14 @@ const RUNS = {
       // (centered in its 33.5" x 19" outline, 2 3/4" from the counter front), ledge: workstation ledges, drain: from the item's left end, 6 1/4" in from the bowl's left wall
       bowl: { w: 31.875, left: 9.875, right: 9.25, d: 17.375, v: 4.8125, ledge: 0.6875, drain: 11.3125 },
       faucet: { h: 22.4375, reach: 9.5, back: 2 }, // Kohler K-R30937-BMB, 2" from the cabinet backs, centered between them and the sink's back edge at 4"; InSinkErator STS-OO button 8 3/8" left of it, centered between the sink's left edge and the faucet
-      upper: [ { pendant: true, w: 5, h: 11, at: 74, dx: 21 } ] },
+      upper: [ { spot: true, w: 3, h: 5.625, at: 87.875, dx: 21 } ] },
     { orders: 'DW panel', role: 'dishwasher front (Bosch SHV78CM3N, panel-ready)', note: `Opening for the Bosch SHV78CM3N panel-ready dishwasher (cutout 24 × 33 7/8 × 24). Not a cabinet, but the cabinet maker supplies its door panel; its pull is the Berenson 9020-4055-P.`,
       name: 'dishwasher', code: '24" gap', w: 24, kind: 'gap', tag: 'DW', dishwasher: true, backReceptacle: true,
       inside: [{ label: '120v', w: 2.75, h: 4.5, at: 29, dx: 12 }] }, // on the island's back wall, behind the dishwasher
     { note: `Base cabinet at the right end of the island; the only Cabinet A (decided 2026-10-24). One drawer over one door (confirmed 2026-10-24). 1" counter overhang at the right end.`,
       name: 'cabinet a', code: 'B24-2',   w: 24, kind: 'base', backReceptacle: true,
       inside: [{ label: '120v', w: 2.75, h: 4.5, at: 29, dx: 12 }], // on the island's back wall
-      upper: [ { pendant: true, w: 5, h: 11, at: 74, dx: 0 } ] },
+      upper: [ { spot: true, w: 3, h: 5.625, at: 87.875, dx: 0 } ] },
   ],
   wall: [ // `h` marks a tall item (no countertop)
     { role: "skin on the left REP's exposed side", note: `Skin panel on the left side of the REP2496-1.5, the run's exposed end (2026-10-28; 1/4" thick, assumed).`,

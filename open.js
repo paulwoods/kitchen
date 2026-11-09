@@ -4,7 +4,7 @@ const OPEN = {
   'docs/cabinets.html': 1,
   'docs/selections.html': 0,
   'docs/countertop.html': 3,
-  'docs/lighting.html': 1,
+  'docs/lighting.html': 0,
   'docs/electrical.html': 2,
   'docs/walls.html': 10,
   'docs/sequence.html': 5,

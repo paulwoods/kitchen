@@ -2,7 +2,7 @@
 // Served over http, nav.js and index.html count the pages themselves; keep these in step when an Open list changes.
 const OPEN = {
   'docs/cabinets.html': 1,
-  'docs/selections.html': 2,
+  'docs/selections.html': 0,
   'docs/countertop.html': 3,
   'docs/lighting.html': 1,
   'docs/electrical.html': 2,

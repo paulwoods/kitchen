@@ -9,7 +9,7 @@
 <script src="sketch.js"></script>
 <body>
 <h1>Sketches</h1>
-<p><a href="../index.html">index</a> · <a href="#wall-front">Wall front</a> · <a href="#wall-top">Wall top</a> · <a href="#island-front">Island front</a> · <a href="#island-top">Island top</a></p>
+<p><a href="../index.html">index</a> · <a href="#wall-front">Wall front</a> · <a href="#wall-top">Wall top</a> · <a href="#island-front">Island front</a> · <a href="#island-top">Island top</a> · <a href="#house">House</a></p>
 <script>
 // The runs are in ../kitchen.js. Each run's front, then its plan under it; the plans mark the work areas and the lights.
 const { island, wall } = RUNS;
@@ -106,5 +106,90 @@ for (const box of document.querySelectorAll('[data-light]')) {
     document.querySelectorAll(`svg .l-${k}`).forEach(el => el.classList.toggle('off', !box.checked));
   };
   box.onchange();
+}
+
+// House: the floor plan with the kitchen in place. Page x = OX + x, page y = OY + y, inches from the inside faces of the outer wall (left) and the top wall.
+{
+  const OX = 55, OY = 17;
+  // Traced from the floor plan drawing (since deleted), to the nearest 1/2". [x1, y1, x2, y2, marks across the wall along its length]
+  const WALLS = [
+    [-5, -5, 383.5, 0, [10, 81, 88, 150.5, 161, 231, 293.5, 342]],
+    [-5, -5, 0, 452.5, [80, 127, 225.5, 231, 302.5, 309.5]],
+    [-16, 225.5, -5, 309.5, [231, 302.5]],
+    [-5, 447, 247, 452.5],
+    [383.5, 0, 388.5, 143, [88, 134.5]],
+    [245.5, -5, 250.5, 143],
+    [250.5, 138, 343, 143],
+    [375, 138, 422.5, 143],
+    [455.5, 138, 583.5, 143, [530, 556.5]],
+    [460.5, 138, 466, 148],
+    [578.5, 138, 583.5, 454.5, [191, 239]],
+    [293.5, 449.5, 583.5, 454.5, [340.5, 410.5]],
+    [293.5, 330.5, 299, 454.5],
+    [465.5, 334, 471, 454.5],
+    [465.5, 287, 471, 310],
+    [299, 287, 583.5, 292],
+    [293.5, 182, 299, 296.5, [234.5, 270]],
+    [299, 182, 342.5, 187.5, [301.5, 323.5]],
+    [336.5, 187.5, 342.5, 287],
+    [364.5, 182, 379, 187.5],
+    [374, 187.5, 379, 223.5],
+    [374, 218, 461, 223.5],
+    [455.5, 182, 461, 287],
+    [460.5, 177, 466, 187.5],
+    [247, 417, 299, 422],
+    [241.5, 405.5, 247, 452.5],
+    [109, 429, 114, 447.5],
+  ];
+  // The existing kitchen walls: the 165", 106" and 136" walls with the 38" stubs as one outline, then the 65" wall, open at the outer wall.
+  const OLD_WALLS = 'M77 198.5H247.5V347H242V314.5H106V281.5H111V309.5H149V281.5H154V309.5H242V203.5H77Z M0 309.5H65V314.5H0';
+  const SPICES = 48 + 5.5, BACKS = 203.5; // the spices cabinet's left edge from the outer wall; the island's cabinet backs, on the kitchen face of the old 165" wall, from the top wall
+
+  const out = [`<style>
+    .house-wall { fill: var(--sheet); stroke: var(--ink); stroke-width: 0.6; } .house-mark { stroke: var(--ink); stroke-width: 0.4; }
+    .old-wall { fill: none; stroke: #ff4fa3; stroke-width: 0.75; stroke-dasharray: 3 2; }
+    .kit text, .kit .dimline, .kit .tick { display: none; }
+    .house-notes text { font-size: 4.4px; } .house-notes line { stroke: var(--ink); stroke-width: 0.4; }
+  </style>`];
+  for (const [x1, y1, x2, y2, marks = []] of WALLS) {
+    out.push(`<rect x="${OX + x1}" y="${OY + y1}" width="${x2 - x1}" height="${y2 - y1}" class="house-wall"/>`);
+    for (const m of marks) out.push(x2 - x1 > y2 - y1
+      ? `<line x1="${OX + m}" y1="${OY + y1}" x2="${OX + m}" y2="${OY + y2}" class="house-mark"/>`
+      : `<line x1="${OX + x1}" y1="${OY + m}" x2="${OX + x2}" y2="${OY + m}" class="house-mark"/>`);
+  }
+
+  const place = `translate(${OX + SPICES} ${OY + BACKS})`, n = wallLen, ZWALL = 2 * (DEPTH + FRONT) + AISLE; // ZWALL: the room wall's face from the island's cabinet backs
+  const islandShapes = plan('', island, { island: true, raw: true }), wallShapes = plan('', wall, { raw: true });
+  const stools = DIMS.stools.map(u => `<circle class="hidden" cx="${MARGIN + u}" cy="${islandShapes.oy - 16}" r="8"/>`);
+  out.push(`<g class="kit" transform="${place}">
+    <g transform="translate(${-MARGIN} ${-islandShapes.oy})">${islandShapes.out.join('')}${stools.join('')}</g>
+    <g transform="translate(${n} ${ZWALL}) rotate(180) translate(${-MARGIN} ${-wallShapes.oy})">${wallShapes.out.join('')}</g>
+  </g>`);
+  out.push(`<path d="${OLD_WALLS}" transform="translate(${OX} ${OY})" class="old-wall"/>`);
+
+  // Notes, in inches: x from the spices cabinet's left edge, y from the island's cabinet backs.
+  const notes = [];
+  const label = (x, y, s) => notes.push(`<text x="${x}" y="${y}">${s}</text>`);
+  const seg = (x1, y1, x2, y2) => notes.push(`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"/>`);
+  const dim = (x1, y1, x2, y2, s) => {
+    const [tx, ty] = x1 === x2 ? [2, 0] : [0, 2]; // end ticks, across the line
+    seg(x1, y1, x2, y2);
+    for (const [x, y] of [[x1, y1], [x2, y2]]) seg(x - tx, y - ty, x + tx, y + ty);
+    label((x1 + x2) / 2 + (x1 === x2 ? 8 : 0), (y1 + y2) / 2 + (x1 === x2 ? 1.5 : -1.5), s); // beside the line
+  };
+  for (const c of island) if (c.name) label(c.u + c.w / 2, COUNTER + 5, c.name);
+  for (const c of wall) if (c.name) label(n - c.u - c.w / 2, ZWALL - 32.5, c.name);
+  dim(-SPICES, 12, 0, 12, `${inch(SPICES)}"`);
+  dim(0, -28, DIMS.islandLen, -28, `${inch(DIMS.islandLen)}"`);
+  dim(0, ZWALL + WALL + 8, n, ZWALL + WALL + 8, `${inch(n)}"`);
+  dim(-SPICES, ZWALL + WALL + 8, -WALL, ZWALL + WALL + 8, `${inch(SPICES - WALL)}" opening`); // the 65" wall, opened from the outer wall to the side wall
+  label(85.5 - SPICES, ZWALL + WALL + 14, '41" doorway closed'); // 65" to 106" from the outer wall
+  dim(205, DEPTH + FRONT, 205, ZWALL - DEPTH - FRONT, `${inch(AISLE)}"`);
+  const DX = -SPICES - 43; // the 447" dimension, left of the bay
+  for (const y of [-BACKS, 447 - BACKS]) seg(DX - 2, y, -SPICES - 5, y); // extension lines to the outer wall
+  dim(DX, -BACKS, DX, 447 - BACKS, '447"');
+  out.push(`<g class="house-notes" transform="${place}">${notes.join('')}</g>`);
+
+  page('House', 'Floor plan with the kitchen in place; existing kitchen walls dashed pink', OX + 583.5 + 12, OY + 454.5 + 12, OY, out, ['from the outer wall', 'from the top wall', -1, OX]);
 }
 </script>

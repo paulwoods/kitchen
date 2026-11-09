@@ -120,7 +120,7 @@
 <h2 id="map">Fabrication map</h2>
 <p class="note">To scale, from above (the runs are drawn one at a time on the <a href="../drawings/sketches.html#island-top">Island top</a> and <a href="../drawings/sketches.html#wall-top">Wall top</a>): the island at the top and the wall run below it, reading from its Coffee end. The two runs are three stone pieces. Every seam, support and vein decision here is a proposal: <b>the fabricator must establish the actual seam and support proposal.</b></p>
 <div class="map">
-<svg viewBox="0 0 225 165" role="img" aria-label="Plan of the island and wall counters with work areas, the proposed seam, exposed edges, overhang brackets, seats, cutouts, backsplash and aisle dimensions">
+<svg viewBox="0 0 225 173.5" role="img" aria-label="Plan of the island and wall counters with work areas, the proposed seam, exposed edges, overhang brackets, seats, cutouts, backsplash and aisle dimensions">
 <g transform="translate(14 44)">
   <!-- Coordinates are inches: x from the island's spices end, y from the island cabinet backs. -->
   <text class="mid" x="42" y="-37">guest side</text>
@@ -152,17 +152,17 @@
   <!-- Work areas -->
   <text class="zone mid" x="12" y="29">landing</text><text class="zone mid" x="42" y="29">cooktop</text><text class="zone mid" x="81" y="29">prep</text>
   <text class="zone mid" x="123" y="29">sink</text><text class="zone mid" x="156" y="29">dish unload</text><text class="zone mid" x="180" y="29">fridge loading</text>
-  <text class="zone mid" x="10.5" y="68">coffee</text><text class="zone mid" x="42" y="68">oven landing</text>
+  <text class="zone mid" x="10.5" y="76.5">coffee</text><text class="zone mid" x="42" y="76.5">oven landing</text>
 
   <!-- Aisle -->
-  <line class="dim" x1="70" y1="25.75" x2="70" y2="71.75"/>
-  <text x="71.5" y="45">46" counter edge to counter edge</text>
+  <line class="dim" x1="70" y1="25.75" x2="70" y2="80.25"/>
+  <text x="71.5" y="45"><tspan data-k="aisle - 2 * (counter - depth - front)">54 1/2</tspan>" counter edge to counter edge</text>
   <text x="71.5" y="48.5">(<tspan data-k="aisle">48</tspan>" between the door faces)</text>
-  <line class="dim" x1="173" y1="25.75" x2="173" y2="66.7"/>
-  <text x="174.5" y="45">41" to the</text><text x="174.5" y="48.5">fridge handles</text>
+  <line class="dim" x1="173" y1="25.75" x2="173" y2="75.2"/>
+  <text x="174.5" y="45"><tspan data-k="aisle - 7">49 1/2</tspan>" to the</text><text x="174.5" y="48.5">fridge handles</text>
 
-  <!-- Wall run: 1 1/2" farther out since the fronts moved to the aisle line (2026-11-05) -->
-  <g transform="translate(0 1.5)">
+  <!-- Wall run: 1 1/2" farther out since the fronts moved to the aisle line (2026-11-05), 8 1/2" more for the wider aisle (2026-11-08) -->
+  <g transform="translate(0 10)">
   <rect class="sidewall" x="-4.5" y="72" width="4.5" height="24"/>
   <rect class="stone" x="0" y="70.25" width="84" height="25.75"/>
   <line class="edge" x1="0" y1="70.25" x2="84" y2="70.25"/>
@@ -179,10 +179,12 @@
   </g>
 
   <!-- Key -->
+  <g transform="translate(0 8.5)">
   <rect class="stone" x="0" y="108" width="9" height="4"/><line class="edge" x1="0" y1="110" x2="9" y2="110"/><text x="11" y="111">exposed edge</text>
   <line class="seam" x1="46" y1="110" x2="55" y2="110"/><text x="57" y="111">proposed seam</text>
   <line class="bracket" x1="92" y1="110" x2="101" y2="110"/><text x="103" y="111">proposed bracket</text>
   <line class="hidden" x1="142" y1="110" x2="151" y2="110"/><text x="153" y="111">under the stone</text>
+  </g>
 </g>
 </svg>
 </div>
@@ -203,16 +205,16 @@
 <table>
 <tr><th>Measure</th><th>As planned</th></tr>
 <tr><td>Door face to door face (how the <span data-k="aisle">48</span>" aisle is measured; <span data-k="aisle + 2 * front">49 1/2</span>" between the cabinet boxes, since 2026-11-05)</td><td><span data-k="aisle">48</span>"</td></tr>
-<tr><td>Island counter edge to wall counter edge</td><td>46"</td></tr>
+<tr><td>Island counter edge to wall counter edge</td><td><span data-k="aisle - 2 * (counter - depth - front)">54 1/2</span>"</td></tr>
 <tr><td>Countertop overhang past the door and drawer faces, each side of the aisle</td><td><span data-k="counter - depth - front">1</span>" (<span data-k="counter">25 3/4</span>" counter over <span data-k="depth">24</span>" boxes and <span data-k="front">3/4</span>" fronts; front thickness assumed)</td></tr>
-<tr><td>Island counter edge to OVD3393 and pantry faces</td><td>47"</td></tr>
-<tr><td>Island counter edge to fridge doors / handles</td><td>43 1/4" / 41"</td></tr>
+<tr><td>Island counter edge to OVD3393 and pantry faces</td><td><span data-k="aisle - (counter - depth - front)">55 1/2</span>"</td></tr>
+<tr><td>Island counter edge to fridge doors / handles</td><td><span data-k="aisle - 4.75">51 3/4</span>" / <span data-k="aisle - 7">49 1/2</span>"</td></tr>
 <tr><td>Door and pull projection into the aisle</td><td>TBD</td></tr>
-<tr><td>Open appliance doors, from the <a href="selections.html">Selections</a> page</td><td>Fridge doors leave about 29 1/4" to the island's fronts; the dishwasher door leaves about 23"</td></tr>
+<tr><td>Open appliance doors, from the <a href="selections.html">Selections</a> page</td><td>Fridge doors leave about <span data-k="aisle - 18.75">37 3/4</span>" to the island's fronts; the dishwasher door leaves about <span data-k="aisle - 25">31 1/2</span>"</td></tr>
 <tr><td>Guest connection</td><td>Island counter at <span data-k="counterH">35 3/4</span>" with no raised backsplash; brackets hidden under the stone; the three seats kept open</td></tr>
 </table>
 <p class="note"><b>Provisional until resolved:</b> island depth (45 1/4" and 31 1/4", pending support approval), seating (stools and spacing) and any bookshelf detail (not in the plan).</p>
-<p><b>What the <span data-k="aisle">48</span>" requirement means:</b> spacing between the cabinet door and drawer faces (from 2026-11-05; before that the plan measured between the cabinet boxes). The counters run 1" past those faces, so the clear space between finished surfaces is less: 46" counter to counter, and 41" at the fridge handles.</p>
+<p><b>What the <span data-k="aisle">48</span>" requirement means:</b> spacing between the cabinet door and drawer faces (from 2026-11-05; before that the plan measured between the cabinet boxes). The counters run 1" past those faces, so the clear space between finished surfaces is less: <span data-k="aisle - 2 * (counter - depth - front)">54 1/2</span>" counter to counter, and <span data-k="aisle - 7">49 1/2</span>" at the fridge handles.</p>
 
 <h3 id="request">Request for a coordinated check</h3>
 <blockquote>
@@ -257,6 +259,7 @@
 <h2 id="log">Decision log</h2>
 <p>Decisions that changed this page, newest first, moved from Issues (2026-11-07). Older entries may name parts since replaced; the tables above are current.</p>
 <ul>
+  <li>Aisle (decided 2026-11-08): 56 1/2" between the door and drawer faces, up from 48". The island stays and the wall run moves 8 1/2" away from it, so the wall behind the wall run is 106" from the island's cabinet backs. That leaves 54 1/2" counter to counter, 55 1/2" to the pantry and OVD3393, and about 49 1/2" at the fridge handles. Sketches, <code>model.html</code>, <code>c.html</code> and the clearances on this page, Pick, Selections and Sequence updated.</li>
   <li>Counter overhang at the aisle (decided 2026-11-05): the countertops go from 25" to 25 3/4" deep, so they run 1" past the 3/4" door and drawer fronts instead of 1/4" (front thickness assumed). The 48" aisle is now measured between those fronts, so the island sits 1 1/2" farther from the room wall: 49 1/2" between the cabinet boxes, still 46" counter to counter and 47" to the pantry and OVD3393, now 43 1/4" to the fridge doors and 41" to their handles. The cabinets, sink, cooktop, hood, faucet and button stay put from the cabinet backs, so the sink is 2 3/4" from the counter front and the cooktop has 1 1/2" of depth slack. Pieces: 85" × 45 1/4", 109" × 31 1/4" and 84" × 25 3/4", still two slabs; the band above the cooktop piece is now too short for a side wall backsplash. Sketches, <code>model.html</code>, Countertop and backsplash, the brief, the addendum, Appliances, Walls, the Trade sequence, <code>countertop.md</code> and the Price page updated.</li>
   <li>Countertop edge (decided 2026-11-03): eased edge on the countertops (<code>countertop.html#decisions</code>). The fabricator still has to confirm it.</li>
   <li>Island seating (decided 2026-11-02): the 15" overhang behind spices, cooktop and plates is for seating, with three stools, about 28" each along the 84" stretch; the stools aren't chosen. <code>cabinets.html</code>, the <a href="../pricing/price.html">Price</a> page and <code>countertop.md</code> updated.</li>

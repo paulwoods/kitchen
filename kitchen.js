@@ -7,7 +7,7 @@ const DIMS = {
   depth: 24,       // base cabinet box
   front: 0.75,     // door and drawer fronts (assumed)
   counter: 25.75,  // countertop depth, 1" past the fronts (2026-11-05)
-  aisle: 48,       // between the door and drawer faces
+  aisle: 56.5,     // between the door and drawer faces (2026-11-08: puts the wall behind the wall run on the line of the old kitchen wall)
   ceiling: 96,
   wall: 4.5,       // stud walls: 2x4 studs, 1/2" drywall each side (the island's back wall, the side wall, the room wall as drawn)
   seat: 19.5,      // island counter past the cabinet backs behind spices, cooktop and plates (the seating overhang)

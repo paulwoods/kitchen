@@ -382,11 +382,12 @@ function plan(title, run, opts = {}) {
   }
   // opts.extra: draws more on top (out: raw svg strings), given the page x of a u and the page y of a v (as in P).
   opts.extra?.({ out, text, x: u => P(u, 0)[0], y: v => P(0, v)[1] });
+  if (opts.raw) return { out, oy: BACKY }; // the shapes only, to place in another drawing (the House)
   return page(title, `Plan of the ${isl ? 'island' : 'wall run'}`, W, H, BACKY, out, ['from the left end', isl ? 'from the cabinet backs' : 'from the wall', -1]);
 }
 
 // Adds a drawing to the page as a <section> (id: the title, e.g. #wall-front), on graph paper with bold lines every BOLD" from (MARGIN, oy).
-// axes: how to say x (from MARGIN) and y (up from oy) in the tape measure's readout. Returns the svg.
+// axes: how to say x (from MARGIN, or from axes[3]) and y (up from oy) in the tape measure's readout. Returns the svg.
 function page(title, view, W, H, oy, out, axes) {
   const n = document.querySelectorAll('section.sketch').length; // keeps the pattern ids apart when a page has several drawings
   const section = document.createElement('section');
@@ -435,7 +436,7 @@ function page(title, view, W, H, oy, out, axes) {
       <defs>
         <pattern id="sq${n}" width="${SQ}" height="${SQ}" patternUnits="userSpaceOnUse">
           <path d="M ${SQ} 0 L 0 0 0 ${SQ}" class="grid"/></pattern>
-        <pattern id="ft${n}" x="${MARGIN}" y="${oy}" width="${BOLD}" height="${BOLD}" patternUnits="userSpaceOnUse">
+        <pattern id="ft${n}" x="${axes[3] ?? MARGIN}" y="${oy}" width="${BOLD}" height="${BOLD}" patternUnits="userSpaceOnUse">
           <rect width="${BOLD}" height="${BOLD}" fill="url(#sq${n})"/>
           <path d="M ${BOLD} 0 L 0 0 0 ${BOLD}" class="grid ft"/></pattern>
       </defs>
@@ -451,7 +452,7 @@ function page(title, view, W, H, oy, out, axes) {
 
 // Tape measure: drag on the drawing to measure. Ends snap to the nearest rect or line edge within 8 screen px,
 // else to 1/8"; a drag within ~8° of level or plumb locks to it (Shift always locks). Tap a tape to remove it, Esc clears.
-function tape(svg, oy, [xLabel, yLabel, sy = 1]) { // sy: -1 when y is measured down from oy
+function tape(svg, oy, [xLabel, yLabel, sy = 1, ox = MARGIN]) { // sy: -1 when y is measured down from oy; ox: where x is measured from
   const g = svg.querySelector('.tapes'), readout = svg.parentNode.querySelector('.readout-text'), clear = svg.parentNode.querySelector('.clear');
   const hint = readout.textContent;
   // Edges: vertical { at: x, from: y1, to: y2 } and horizontal { at: y, from: x1, to: x2 }.
@@ -492,7 +493,7 @@ function tape(svg, oy, [xLabel, yLabel, sy = 1]) { // sy: -1 when y is measured 
     const exact = Math.abs(Math.abs(v) - s / 16) < 0.001;
     return `${exact ? '' : '≈ '}${v < 0 && s ? '−' : ''}${whole || !n ? whole : ''}${n ? `${whole ? ' ' : ''}${n}/${d}` : ''}"`;
   };
-  const where = p => `${fmt(p.x - MARGIN)} ${xLabel} · ${fmt(sy * (oy - p.y))} ${yLabel}`;
+  const where = p => `${fmt(p.x - ox)} ${xLabel} · ${fmt(sy * (oy - p.y))} ${yLabel}`;
   const size = ({ a, b }) => {
     const dx = Math.abs(b.x - a.x), dy = Math.abs(b.y - a.y);
     return [fmt(Math.hypot(dx, dy)), dx && dy ? `${fmt(dx)} across · ${fmt(dy)} ${sy < 0 ? 'deep' : 'up'}` : ''];

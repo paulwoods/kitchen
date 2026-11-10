@@ -285,7 +285,7 @@ for (const x of DIMS.stools) { // three counter stools at the seating overhang, 
   rod([x, 24, z], [x, 25.5, z], 8, M.black);
   for (const [dx, dz] of [[1, 1], [1, -1], [-1, 1], [-1, -1]]) rod([x + 6 * dx, 0, z + 6 * dz], [x + 4 * dx, 24, z + 4 * dz], 0.5, M.pull);
 }
-for (const [x, s] of island.flatMap(c => (c.upper || []).filter(p => p.spot).map(p => [c.u + p.dx, p]))) { // VANoopee ceiling spotlights at the T marks on the top view, 18" from the cabinet backs, aimed straight down; canopy and stem sizes assumed
+for (const [x, s] of island.flatMap(c => (c.upper || []).filter(p => p.spot).map(p => [c.u + p.dx, p]))) { // VANoopee ceiling spotlights at the task light marks on the top view, 18" from the cabinet backs, aimed straight down; canopy and stem sizes assumed
   const z = 18;
   rod([x, 95, z], [x, CEILING, z], 2.5, M.alabaster); // canopy
   rod([x, s.at + s.h, z], [x, 95, z], 0.5, M.alabaster); // stem

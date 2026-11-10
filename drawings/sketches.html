@@ -20,8 +20,8 @@ const wallLen = wall.reduce((s, c) => s + c.w, 0);
 // A lights down the middle of the aisle, between each pair of opposite centers (the wall run faces the island, so its u runs the other way).
 const A = [['cooktop', 'Air Fryer'], ['trash', 'Oven'], ['dishwasher', 'Fridge']].map(([a, b]) => (mid(I[a]) + wallLen - mid(Wl[b])) / 2);
 const AISLE_MID = COUNTER + AISLE / 2;
-const legend = (svg, people) => svg.insertAdjacentHTML('beforebegin', `<p class="lights"><label><input type="checkbox" data-light="T"> <b class="legend">T</b> task light (ceiling spot; shadows figured from the ceiling)</label><label><input type="checkbox" data-light="A"> <b class="legend">A</b> ambient light</label>
-  <label><input type="checkbox" data-light="X"> <b class="legend">X</b> accent light (toe kick, inside the glass cabinets)</label><label><input type="checkbox" data-light="UC"> <b class="legend">UC</b> under-cabinet light</label>${people ? '<label><input type="checkbox" data-light="people"> 74" people</label>' : ''}</p>`);
+const legend = (svg, people) => svg.insertAdjacentHTML('beforebegin', `<p class="lights"><label><input type="checkbox" data-light="T"> <b class="legend">task</b> light (ceiling spot; shadows figured from the ceiling)</label><label><input type="checkbox" data-light="A"> <b class="legend">ambient</b> light</label>
+  <label><input type="checkbox" data-light="X"> <b class="legend">accent</b> light (toe kick, inside the glass cabinets)</label><label><input type="checkbox" data-light="UC"> <b class="legend">under-cabinet</b> light</label>${people ? '<label><input type="checkbox" data-light="people"> 74" people</label>' : ''}</p>`);
 
 sketch('Wall front', wall, { toggles: true, walls: true }); // stud wall at the right end
 const wallTop = plan('Wall top', wall, { extra: ({ text, x, y }) => {
@@ -30,13 +30,13 @@ const wallTop = plan('Wall top', wall, { extra: ({ text, x, y }) => {
   wal((mid(Wl.Toaster) + mid(Wl['Air Fryer'])) / 2, COUNTER + 6, 'oven landing', 'zone');
   for (const c of wall) if ((c.upper || []).some(x => x.code === 'W2127')) {
     wal(mid(c), 5, 'wall cabinet', 'code on');
-    wal(mid(c), 10, 'UC', 'lamp l-UC'); // under-cabinet light, near the front
+    wal(mid(c), 10, 'under-cabinet', 'lamp l-UC'); // under-cabinet light, near the front
   }
-  for (const u of A) wal(wallLen - u, AISLE_MID, 'A', 'lamp l-A');
+  for (const u of A) wal(wallLen - u, AISLE_MID, 'ambient', 'lamp l-A');
   // X: toe-kick lights in front of each cabinet (not the appliance gaps or panels).
-  for (const c of wall) if (!['gap', 'panel'].includes(c.kind)) wal(mid(c), COUNTER + 2.5, 'X', 'lamp l-X');
+  for (const c of wall) if (!['gap', 'panel'].includes(c.kind)) wal(mid(c), COUNTER + 2.5, 'accent', 'lamp l-X');
   // X: Nicor bars inside the glass cabinets at the top of the wall run (2026-10-31).
-  for (const c of wall) if ((c.upper || []).some(x => / glass$/.test(x.code))) { wal(mid(c), 16, 'X', 'lamp l-X'); wal(mid(c), 19.5, 'glass cabinet', 'code on'); }
+  for (const c of wall) if ((c.upper || []).some(x => / glass$/.test(x.code))) { wal(mid(c), 16, 'accent', 'lamp l-X'); wal(mid(c), 19.5, 'glass cabinet', 'code on'); }
 } });
 legend(wallTop);
 
@@ -85,10 +85,10 @@ const islandTop = plan('Island top', island, { island: true, extra: ({ out, text
   for (const [u, t, a] of [[people[0], T[1], AL[1]], [people[1], T[2], AL[1]]]) { ray([t[0], t[1] + 2], [u, COUNTER + 4], 'l-T'); ray([a[0], a[1] - 2], [u, COUNTER + 11], 'l-A'); }
   out.push(`<line class="ray guest" x1="${ix(168)}" y1="8" x2="${ix(168)}" y2="${iy(-12)}" marker-end="url(#arrow)"/>`);
   text(ix(150), 6, 'guest view: exposed LEDs, hood glare, fixture in the sightline?', 'code');
-  for (const [u, v] of T) isl(u, v, 'T', 'lamp l-T');
-  for (const [u, v] of AL) isl(u, v, 'A', 'lamp l-A');
+  for (const [u, v] of T) isl(u, v, 'task', 'lamp l-T');
+  for (const [u, v] of AL) isl(u, v, 'ambient', 'lamp l-A');
   // X: toe-kick lights in front of each cabinet (not the appliance gaps or panels).
-  for (const c of island) if (c.kind !== 'gap') isl(mid(c), COUNTER + 2.5, 'X', 'lamp l-X');
+  for (const c of island) if (c.kind !== 'gap') isl(mid(c), COUNTER + 2.5, 'accent', 'lamp l-X');
 } });
 legend(islandTop, true);
 islandTop.insertAdjacentHTML('beforebegin', `<p><b style="color: var(--green)">green</b>: work areas ·
@@ -96,7 +96,7 @@ islandTop.insertAdjacentHTML('beforebegin', `<p><b style="color: var(--green)">g
   <style>.legend { color: #e07000; } .lights label { display: block; } .zone, .lamp { paint-order: stroke; stroke: var(--sheet); stroke-width: 0.6; } .shadow { fill: #000; fill-opacity: 0.15; } .person { fill: var(--muted); fill-opacity: 0.85; } .head { fill: var(--ink); }
   svg .off, svg:has(.person.off) .shadow { display: none; }
   .ray { stroke: #e07000; stroke-width: 0.5; } .ray.guest { stroke: var(--green); }</style>
-  <p>Arrows: the two lights over each working position, aimed at the head (74"). Prep: T over the counter ahead, A in the aisle behind; their coverage overlaps on the counter. <a href="../docs/lighting.html">Lighting</a></p>`);
+  <p>Arrows: the two lights over each working position, aimed at the head (74"). Prep: task over the counter ahead, ambient in the aisle behind; their coverage overlaps on the counter. <a href="../docs/lighting.html">Lighting</a></p>`);
 // A light turned off hides its marks, arrows and shadows; people turned off hide themselves and all the shadows.
 // Each plan has its own checkboxes; a box sets its twin in the other plan.
 for (const box of document.querySelectorAll('[data-light]')) {

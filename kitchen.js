@@ -26,7 +26,7 @@ const RUNS = {
     { note: `Three-drawer base: 6" top drawer over two equal deep drawers. 1" counter overhang at the left end of the island.`,
       name: 'spices',    code: 'DB24-3',  w: 24, kind: 'drawers', n: 3, back: DIMS.seat, backReceptacle: true,
       inside: [{ label: '120v', w: 2.75, h: 4.5, at: 29, dx: 12 }], // GFCI on the island's back wall, behind the cabinet (height assumed)
-      upper: [ { spot: true, w: 3, h: 5.625, at: 87.875, dx: 12 } ] }, // VANoopee B0BRMX76K2 at a T mark on the island top, aimed straight down: head 2.99" x 5.60" per the listing; bottom 87 7/8" off the floor assumes a 1" canopy and 1 1/2" stem
+      upper: [ { spot: true, w: 3, h: 5.625, at: 87.875, dx: 12 } ] }, // VANoopee B0BRMX76K2 at a task light mark on the island top, aimed straight down: head 2.99" x 5.60" per the listing; bottom 87 7/8" off the floor assumes a 1" canopy and 1 1/2" stem
     { note: `Three-drawer base under the Bosch NIT8061UC induction cooktop (decided 2026-10-24). The cooktop body drops 4 1/8" below the counter and needs a 1" air gap, which takes the top drawer's space: the top drawer is a false front (fixed, no drawer box; decided 2026-10-25). The cooktop's junction box (240 V 30 A, hardwired) goes in the back wall behind the cabinet, 3" from its left side at 25.75", through a cutout in the cabinet back (2026-11-02); its cover is reached by taking out the middle drawer.`,
       name: 'cooktop',   code: 'DB36-3',  w: 36, kind: 'drawers', n: 3, cooktop: true, falseTop: true, back: DIMS.seat,
       inside: [{ label: 'j box', w: 4, h: 4, at: 25.75, dx: 3 }, // in the island's back wall, through a cutout in the cabinet back

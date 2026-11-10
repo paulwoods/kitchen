@@ -418,7 +418,7 @@ function page(title, view, W, H, oy, out, axes) {
       text { text-anchor: middle; font-size: 2.4px; fill: var(--ink); paint-order: stroke; stroke: var(--sheet); stroke-width: 0.4; } /* halo: labels cross both the sheet and light cabinets */
       .volts { font-size: 1.6px; stroke-width: 0.5; } text.on, text.volts { fill: #223; stroke: #fff; } /* on a light material, not the sheet */
       .start { text-anchor: start; } .end { text-anchor: end; } .name { font-weight: 700; } .code { font-size: 2.2px; } .dim { font-size: 2px; fill: var(--muted); }
-      .zone { fill: var(--green); font-weight: 700; } .lamp { fill: #e07000; font-weight: 700; font-size: 3px; } /* the top views */
+      .zone { fill: var(--green); font-weight: 700; } .lamp { fill: #e07000; font-weight: 700; font-size: 2.25px; } /* the top views */
       .gaplabel { font-size: 3px; fill: var(--muted); } .ruler { text-anchor: start; }
       .tapes { pointer-events: none; } .tape .blade { pointer-events: visiblePainted; cursor: pointer; }
       .blade { fill: #f5c400; fill-opacity: 0.85; } .tick-mark { stroke: #223; stroke-width: 1px; vector-effect: non-scaling-stroke; }

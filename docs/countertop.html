@@ -22,6 +22,7 @@
   .hidden { fill: none; stroke: #778; stroke-width: 0.25; stroke-dasharray: 1 1; }
   .hole { fill: var(--sheet); stroke: #223; stroke-width: 0.3; } .bracket { stroke: #e07000; stroke-width: 0.5; }
   .seat { fill: none; stroke: var(--link); stroke-width: 0.35; stroke-dasharray: 1 .8; } .dim { stroke: var(--muted); stroke-width: 0.25; }
+  .offcut { fill: #f7f7f4; stroke: #99a; stroke-width: 0.25; } .cut { stroke: #b3261e; stroke-width: 0.5; } .map text.cutn { fill: var(--red); font-weight: bold; }
   .splash { fill: #bbb; } .tick { stroke: #223; stroke-width: 0.5; } .tall { fill: #f4f4f1; stroke: #99a; stroke-width: 0.3; } .sidewall { fill: #99a; }
   @media (max-width: 600px) { table, tbody, tr, td, th { display: block; } tr:first-child { display: none; } tr { margin-bottom: 12px; } td { border-top: 0; } td:first-child { border-top: 1px solid var(--rule); font-weight: bold; } }
 </style>
@@ -48,6 +49,75 @@
 <tr><td>Second</td><td>The sink 109" &times; <span data-k="counter + islandBack">30 1/2</span>" and the wall 84" &times; <span data-k="counter">25</span>", nested across 55 1/2" of the 63" width</td><td>A 42" &times; 32 1/2" piece, a 17" &times; 30 1/2" end and an 84" &times; 7 1/2" strip</td><td>Yes &mdash; the fourth piece from the 42" &times; 32 1/2" piece</td></tr>
 </table>
 <p class="note">One 84" piece was ruled out: the only place long enough is the 85" &times; 18 1/2" band above the cooktop piece. With the 25" counter (2026-11-09) it is 1/4" taller than the 18 1/4" backsplash, too little to count on after edge trim, so the four pieces stand unless the fabricator says otherwise.</p>
+
+<h2 id="cutting">Cutting map</h2>
+<p class="note">Each slab to scale, nominal 126" &times; 63", with the saw cuts numbered in order: every cut runs straight through the piece it splits. Every piece keeps its long side along the slab, so the grain runs the same way. No kerf, edge trim or flaws allowed for, and the fabricator lays out the actual slabs; this only shows that the plan fits.</p>
+<div class="map">
+<svg viewBox="0 0 140 160" role="img" aria-label="Cutting map of the two slabs: the cooktop piece and three backsplash pieces on the first, the sink and wall pieces and the fourth backsplash piece on the second, with numbered cuts and offcuts">
+<g transform="translate(7 9)">
+  <text x="0" y="-5"><tspan font-weight="bold">First slab</tspan>: Piece 1 and backsplash pieces B1&ndash;B3</text>
+  <rect class="stone" x="0" y="0" width="85" height="44.5"/>
+  <rect class="hole" x="28.56" y="20" width="28.875" height="20"/>
+  <text class="on mid" x="42.5" y="9"><tspan font-weight="bold">Piece 1, the cooktop</tspan></text><text class="on mid" x="42.5" y="12.5">85" &times; 44 1/2"</text>
+  <text class="mid" x="43" y="31">cooktop cutout</text>
+  <rect class="offcut" x="0" y="44.5" width="85" height="18.5"/><text class="on mid" x="42.5" y="54.5">offcut, the band, 85" &times; 18 1/2"</text>
+  <rect class="stone" x="85" y="0" width="21" height="18.25"/><text class="on mid" x="95.5" y="8.2"><tspan font-weight="bold">B1</tspan></text><text class="on mid" x="95.5" y="11.7">21" &times; 18 1/4"</text>
+  <rect class="stone" x="85" y="18.25" width="21" height="18.25"/><text class="on mid" x="95.5" y="26.5"><tspan font-weight="bold">B2</tspan></text><text class="on mid" x="95.5" y="30">21" &times; 18 1/4"</text>
+  <rect class="stone" x="85" y="36.5" width="21" height="18.25"/><text class="on mid" x="95.5" y="44.7"><tspan font-weight="bold">B3</tspan></text><text class="on mid" x="95.5" y="48.2">21" &times; 18 1/4"</text>
+  <rect class="offcut" x="85" y="54.75" width="21" height="8.25"/><text class="on mid" x="95.5" y="59.7">21" &times; 8 1/4"</text>
+  <rect class="offcut" x="106" y="0" width="20" height="63"/><text class="on mid" x="116" y="31">offcut</text><text class="on mid" x="116" y="34.5">20" &times; 63"</text>
+  <rect class="edge" x="0" y="0" width="126" height="63"/>
+  <line class="cut" x1="85" y1="0" x2="85" y2="63"/><text class="cutn mid" x="85" y="-1">1</text>
+  <line class="cut" x1="0" y1="44.5" x2="85" y2="44.5"/><text class="cutn" x="-2.5" y="45.4">2</text>
+  <line class="cut" x1="106" y1="0" x2="106" y2="63"/><text class="cutn mid" x="106" y="-1">3</text>
+  <line class="cut" x1="85" y1="18.25" x2="106" y2="18.25"/><text class="cutn" x="106.8" y="19.1">4</text>
+  <line class="cut" x1="85" y1="36.5" x2="106" y2="36.5"/><text class="cutn" x="106.8" y="37.4">5</text>
+  <line class="cut" x1="85" y1="54.75" x2="106" y2="54.75"/><text class="cutn" x="106.8" y="55.6">6</text>
+</g>
+<g transform="translate(7 84)">
+  <text x="0" y="-5"><tspan font-weight="bold">Second slab</tspan>: Pieces 2 and 3 and backsplash piece B4</text>
+  <rect class="stone" x="0" y="0" width="109" height="30.5"/>
+  <rect class="hole" x="22.25" y="9.5" width="33.5" height="19"/><text class="mid" x="39" y="20">sink cutout</text>
+  <circle class="hole" cx="39" cy="7.5" r="0.7"/><circle class="hole" cx="30.625" cy="7.5" r="0.6"/>
+  <text class="on" x="41" y="8.3">faucet 1 3/8"</text><text class="on" style="text-anchor:end" x="28.8" y="8.3">button 1 1/4"</text>
+  <text class="on mid" x="82" y="13"><tspan font-weight="bold">Piece 2, the sink</tspan></text><text class="on mid" x="82" y="16.5">109" &times; 30 1/2"</text>
+  <rect class="offcut" x="109" y="0" width="17" height="30.5"/><text class="on mid" x="117.5" y="14">end</text><text class="on mid" x="117.5" y="17.5">17" &times; 30 1/2"</text>
+  <rect class="stone" x="0" y="30.5" width="84" height="25"/>
+  <text class="on mid" x="42" y="42"><tspan font-weight="bold">Piece 3, the wall</tspan></text><text class="on mid" x="42" y="45.5">84" &times; 25"</text>
+  <rect class="offcut" x="0" y="55.5" width="84" height="7.5"/><text class="on mid" x="42" y="60.2">strip, 84" &times; 7 1/2"</text>
+  <rect class="stone" x="84" y="30.5" width="21" height="18.25"/><text class="on mid" x="94.5" y="38.7"><tspan font-weight="bold">B4</tspan></text><text class="on mid" x="94.5" y="42.2">21" &times; 18 1/4"</text>
+  <rect class="offcut" x="84" y="48.75" width="21" height="14.25"/><text class="on mid" x="94.5" y="56.8">21" &times; 14 1/4"</text>
+  <rect class="offcut" x="105" y="30.5" width="21" height="32.5"/><text class="on mid" x="115.5" y="47.6">21" &times; 32 1/2"</text>
+  <rect class="edge" x="0" y="0" width="126" height="63"/>
+  <line class="cut" x1="0" y1="30.5" x2="126" y2="30.5"/><text class="cutn" x="-2.5" y="31.4">1</text>
+  <line class="cut" x1="109" y1="0" x2="109" y2="30.5"/><text class="cutn mid" x="109" y="-1">2</text>
+  <line class="cut" x1="84" y1="30.5" x2="84" y2="63"/><text class="cutn mid" x="84" y="66">3</text>
+  <line class="cut" x1="0" y1="55.5" x2="84" y2="55.5"/><text class="cutn" x="-2.5" y="56.4">4</text>
+  <line class="cut" x1="105" y1="30.5" x2="105" y2="63"/><text class="cutn mid" x="105" y="66">5</text>
+  <line class="cut" x1="84" y1="48.75" x2="105" y2="48.75"/><text class="cutn" x="85" y="51.6">6</text>
+</g>
+<g transform="translate(7 155)">
+  <rect class="stone" x="0" y="-2" width="9" height="4"/><text x="11" y="1">piece</text>
+  <rect class="offcut" x="30" y="-2" width="9" height="4"/><text x="41" y="1">offcut</text>
+  <line class="cut" x1="62" y1="0" x2="71" y2="0"/><text x="73" y="1">numbered cut, in order</text>
+  <rect class="stone" x="108" y="-2" width="9" height="4"/><rect class="hole" x="110" y="-1" width="5" height="2"/><text x="119" y="1">cutout</text>
+</g>
+</svg>
+</div>
+<table>
+<tr><th>Slab</th><th>Cut</th><th>Where</th><th>Splits</th></tr>
+<tr><td>First</td><td>1</td><td>Across the slab, 85" from the left end</td><td>85" &times; 63" from 41" &times; 63"</td></tr>
+<tr><td>First</td><td>2</td><td>Along the 85" part, 44 1/2" in</td><td>Piece 1 from the band</td></tr>
+<tr><td>First</td><td>3</td><td>Across the 41" part, 21" in</td><td>The 21" &times; 63" column from the 20" &times; 63" offcut</td></tr>
+<tr><td>First</td><td>4&ndash;6</td><td>Across the column at 18 1/4", 36 1/2" and 54 3/4"</td><td>B1, B2, B3 and a 21" &times; 8 1/4" offcut</td></tr>
+<tr><td>Second</td><td>1</td><td>Along the slab, 30 1/2" in</td><td>126" &times; 30 1/2" from 126" &times; 32 1/2"</td></tr>
+<tr><td>Second</td><td>2</td><td>Across the 30 1/2" part, 109" from the left end</td><td>Piece 2 from the 17" end</td></tr>
+<tr><td>Second</td><td>3</td><td>Across the 32 1/2" part, 84" from the left end</td><td>84" &times; 32 1/2" from 42" &times; 32 1/2"</td></tr>
+<tr><td>Second</td><td>4</td><td>Along the 84" part, 25" in</td><td>Piece 3 from the 7 1/2" strip</td></tr>
+<tr><td>Second</td><td>5</td><td>Across the 42" part, 21" in</td><td>21" &times; 32 1/2" offcut from the 21" column</td></tr>
+<tr><td>Second</td><td>6</td><td>Across the column, 18 1/4" in</td><td>B4 from a 21" &times; 14 1/4" offcut</td></tr>
+</table>
+<p class="note">The cooktop and sink cutouts and the faucet and air button holes are drawn where the <a href="#map">fabrication map</a> puts them. Not drawn: the receptacle cutouts in B1&ndash;B4.</p>
 
 <h2 id="leftovers">Leftovers</h2>
 <p class="note">The two slabs are 110.3 square feet and the countertops and backsplash use 74.6, leaving <b>35.7 square feet</b> on paper: 32% of the stone, about $3,050 of the $9,416. Plan on about 27 being usable after kerf, edge trim and flaws. This assumes the layout above, not the fabricator's own, and doesn't count the cooktop and sink cutouts. None of these uses is decided.</p>

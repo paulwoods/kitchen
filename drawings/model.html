@@ -33,7 +33,7 @@ const { toe: TOE, box: BOX, top: TOP, ceiling: CEILING, outlet: OUTLET, depth: D
 const UPPER = 12, APPLIANCE = 14, HOOD = 23.625; // wall cabinet depth; appliance depth assumed; hood depth per the Proline sheet
 const len = run => run.reduce((s, c) => s + c.w, 0);
 const total = Math.max(len(island), len(wall));
-const ZWALL = 2 * (DEPTH + FRONT) + AISLE; // the island's back is at z = 0, the room wall at ZWALL
+const ZWALL = 2 * COUNTER + AISLE; // the island's back is at z = 0, the room wall at ZWALL
 
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(getComputedStyle(document.documentElement).getPropertyValue('--paper').trim());

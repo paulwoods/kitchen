@@ -5,9 +5,9 @@ const DIMS = {
   box: 34.5,       // base cabinet height
   top: 1.25,       // 3 cm quartzite countertop
   depth: 24,       // base cabinet box
-  front: 0.75,     // door and drawer fronts (assumed)
-  counter: 25.75,  // countertop depth, 1" past the fronts (2026-11-05)
-  aisle: 56.5,     // between the door and drawer faces (2026-11-08: puts the wall behind the wall run on the line of the old kitchen wall)
+  front: 0.5,      // door and drawer fronts (owner, 2026-11-09)
+  counter: 25,     // countertop depth: 1" past the cabinet boxes, 1/2" past the fronts (2026-11-09)
+  aisle: 56,       // between the finished countertop edges, the required minimum (2026-11-09: keeps the wall behind the wall run on the line of the old kitchen wall; was 56 1/2" between the door and drawer faces from 2026-11-08)
   ceiling: 96,
   wall: 4.5,       // stud walls: 2x4 studs, 1/2" drywall each side (the island's back wall, the side wall, the room wall as drawn)
   seat: 19.5,      // island counter past the cabinet backs behind spices, cooktop and plates (the seating overhang)
@@ -17,6 +17,7 @@ const DIMS = {
   stools: [14, 42, 70], // counter stool centers from the island's left end, behind spices, cooktop and plates
 };
 DIMS.counterH = DIMS.box + DIMS.top; // counter height
+DIMS.faces = DIMS.aisle + 2 * (DIMS.counter - DIMS.depth - DIMS.front); // between the door and drawer faces across the aisle
 
 // The two runs, the one source for every drawing (the three sketches in sketches.html, and model.html).
 // Left to right as seen from the aisle. Each view draws the fields it needs and ignores the rest; fields are listed in CLAUDE.md.
@@ -46,7 +47,7 @@ const RUNS = {
                 { label: 'disposal', w: 8.5, h: 12.25, at: 18.5, dx: 11.3125, within: true }, // InSinkErator 81138K: 12 1/4" tall under the drain (width assumed)
                 { label: '120v', w: 2.75, h: 4.5, at: 29, dx: 21 }], // GFCI on the island's back wall, behind the cabinet (height assumed)
       // Ruvati RVH6222ST bowl opening: w wide, left/right deep below the counter at each end (sloped bottom), d front to back, v from the cabinet backs
-      // (centered in its 33.5" x 19" outline, 2 3/4" from the counter front), ledge: workstation ledges, drain: from the item's left end, 6 1/4" in from the bowl's left wall
+      // (centered in its 33.5" x 19" outline, 2" from the counter front), ledge: workstation ledges, drain: from the item's left end, 6 1/4" in from the bowl's left wall
       bowl: { w: 31.875, left: 9.875, right: 9.25, d: 17.375, v: 4.8125, ledge: 0.6875, drain: 11.3125 },
       faucet: { h: 22.4375, reach: 9.5, back: 2 }, // Kohler K-R30937-BMB, 2" from the cabinet backs, centered between them and the sink's back edge at 4"; InSinkErator STS-OO button 8 3/8" left of it, centered between the sink's left edge and the faucet
       upper: [ { spot: true, w: 3, h: 5.625, at: 87.875, dx: 21 } ] },

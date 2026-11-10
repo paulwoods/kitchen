@@ -19,7 +19,7 @@ const mid = (a, b = a) => (a.u + b.u + b.w) / 2; // middle of a, or of a through
 const wallLen = wall.reduce((s, c) => s + c.w, 0);
 // A lights down the middle of the aisle, between each pair of opposite centers (the wall run faces the island, so its u runs the other way).
 const A = [['cooktop', 'Air Fryer'], ['trash', 'Oven'], ['dishwasher', 'Fridge']].map(([a, b]) => (mid(I[a]) + wallLen - mid(Wl[b])) / 2);
-const AISLE_MID = DEPTH + FRONT + AISLE / 2;
+const AISLE_MID = COUNTER + AISLE / 2;
 const legend = (svg, people) => svg.insertAdjacentHTML('beforebegin', `<p class="lights"><label><input type="checkbox" data-light="T"> <b class="legend">T</b> task light (ceiling spot; shadows figured from the ceiling)</label><label><input type="checkbox" data-light="A"> <b class="legend">A</b> ambient light</label>
   <label><input type="checkbox" data-light="X"> <b class="legend">X</b> accent light (toe kick, inside the glass cabinets)</label><label><input type="checkbox" data-light="UC"> <b class="legend">UC</b> under-cabinet light</label>${people ? '<label><input type="checkbox" data-light="people"> 74" people</label>' : ''}</p>`);
 
@@ -158,7 +158,7 @@ for (const box of document.querySelectorAll('[data-light]')) {
       : `<line x1="${OX + x1}" y1="${OY + m}" x2="${OX + x2}" y2="${OY + m}" class="house-mark"/>`);
   }
 
-  const place = `translate(${OX + SPICES} ${OY + BACKS})`, n = wallLen, ZWALL = 2 * (DEPTH + FRONT) + AISLE; // ZWALL: the room wall's face from the island's cabinet backs
+  const place = `translate(${OX + SPICES} ${OY + BACKS})`, n = wallLen, ZWALL = 2 * COUNTER + AISLE; // ZWALL: the room wall's face from the island's cabinet backs
   const islandShapes = plan('', island, { island: true, raw: true }), wallShapes = plan('', wall, { raw: true });
   const stools = DIMS.stools.map(u => `<circle class="hidden" cx="${MARGIN + u}" cy="${islandShapes.oy - 16}" r="8"/>`);
   out.push(`<g class="kit" transform="${place}">
@@ -184,7 +184,7 @@ for (const box of document.querySelectorAll('[data-light]')) {
   dim(0, ZWALL + WALL + 8, n, ZWALL + WALL + 8, `${inch(n)}"`);
   dim(-SPICES, ZWALL + WALL + 8, -WALL, ZWALL + WALL + 8, `${inch(SPICES - WALL)}" opening`); // the 65" wall, opened from the outer wall to the side wall
   label(85.5 - SPICES, ZWALL + WALL + 14, '41" doorway closed'); // 65" to 106" from the outer wall
-  dim(205, DEPTH + FRONT, 205, ZWALL - DEPTH - FRONT, `${inch(AISLE)}"`);
+  dim(205, COUNTER, 205, ZWALL - COUNTER, `${inch(AISLE)}"`); // counter edge to counter edge
   const DX = -SPICES - 43; // the 447" dimension, left of the bay
   for (const y of [-BACKS, 447 - BACKS]) seg(DX - 2, y, -SPICES - 5, y); // extension lines to the outer wall
   dim(DX, -BACKS, DX, 447 - BACKS, '447"');

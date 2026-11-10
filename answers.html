@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="nav.js" defer></script>
+<link rel="stylesheet" href="theme.css">
+<title>Aisle Revision Note · Galley Kitchen</title>
+<style>
+  body { margin: 24px; background: var(--paper); color: var(--ink); font-family: system-ui, sans-serif; line-height: 1.5; max-width: 900px; }
+  h1 { margin: 0 0 4px; } h2 { margin: 28px 0 4px; font-size: 1.25em; } a { color: var(--link); }
+  table { border-collapse: collapse; margin-top: 12px; background: var(--sheet); width: 100%; }
+  th, td { border: 1px solid var(--rule); padding: 8px 10px; text-align: left; vertical-align: top; }
+  th { background: var(--head); } .note { color: var(--muted); }
+  blockquote { margin: 12px 0; padding: 8px 14px; border-left: 4px solid var(--rule); background: var(--sheet); }
+  @media (max-width: 600px) { table, tbody, tr, td, th { display: block; } tr:first-child { display: none; } tr { margin-bottom: 12px; } td { border-top: 0; } td:first-child { border-top: 1px solid var(--rule); font-weight: bold; } }
+</style>
+<h1>Aisle Revision Note</h1>
+<p><a href="index.html">index</a></p>
+<p class="note">Revision note, 2026-11-09. Numbers are typed as of this date (from <code>kitchen.js</code> and the pages named below) and don't update. Nothing in this note is approved, ordered or sent.</p>
+
+<h2 id="requirement">1. The finished requirement</h2>
+<blockquote><b>Required working aisle: 56 inches clear between opposing finished countertop edges.</b></blockquote>
+<ul>
+  <li><b>Affected aisle:</b> the one aisle of the galley, between the island's aisle-side counter edge (spices through Cabinet A) and the wall run's aisle-side counter edge (Garage through Coffee). It is shown on the floor plan (<a href="drawings/sketches.html#house">House sketch</a>) and on the <a href="drawings/sketches.html#island-top">Island top</a> and <a href="drawings/sketches.html#wall-top">Wall top</a>. Opposite the fridge, pantry and OVD3393 there is no wall counter, so there the requirement applies from the island counter edge to those fronts. That reading is an assumption; confirm it.</li>
+  <li><b>Superseded:</b> the older <b>48" cabinet-face spacing</b> (<a href="docs/selections.html#log">Selections log, 2026-10-24</a>; <a href="docs/countertop.html#log">Countertop log, 2026-11-05</a>) is superseded for this requirement. So is the 56 1/2" door-face spacing of 2026-11-08. Face spacing is no longer the requirement. It now follows from the counter-edge requirement (section 2).</li>
+  <li><b>The plan now (2026-11-09):</b> <b>56"</b> between the counter edges, exactly the requirement, with no margin. The wall behind the wall run stays where it was, 106" from the island's cabinet backs, on the line of the old kitchen wall (<a href="docs/countertop.html#log">Countertop</a> and <a href="docs/walls.html#log">Walls</a> Decision logs).</li>
+</ul>
+
+<h2 id="calc">2. Calculation</h2>
+<p>Required cabinet-face spacing = 56" + island counter projection + wall counter projection.</p>
+<table>
+<tr><th>Item</th><th>Value</th><th>Status</th></tr>
+<tr><td>Island counter projection past the door/drawer faces</td><td>1/2"</td><td>Owner, 2026-11-09: the counter edge sits 1" past the 24" boxes and the fronts are 1/2" thick, so the counter is 25" deep (<code>DIMS.counter</code>, <code>DIMS.front</code>). <b>To be confirmed</b> by the cabinet supplier (front thickness) and the fabricator (nosing).</td></tr>
+<tr><td>Wall counter projection past the faces</td><td>1/2"</td><td>Same: owner, to be confirmed.</td></tr>
+<tr><td>Resulting face spacing</td><td>56 + 1/2 + 1/2 = <b>57"</b> (boxes 58")</td><td>Follows from the projections above. It is not an approved installation dimension until they are confirmed.</td></tr>
+<tr><td>Margin</td><td>None</td><td>Every 1/8" of extra projection on either side takes the aisle below 56". The confirmed nosing must not exceed 1" past the boxes.</td></tr>
+</table>
+
+<p><b>Checked separately.</b> The counter-edge spacing doesn't give these clearances. They rest on the same projections:</p>
+<table>
+<tr><th>Point in the aisle</th><th>Plan (57" faces)</th></tr>
+<tr><td>Island counter edge to the pantry and OVD3393 fronts</td><td>56 1/2"</td></tr>
+<tr><td>Island counter edge to the fridge doors / handles</td><td>52 1/2" / 50 1/4" (below 56")</td></tr>
+<tr><td>Fridge doors open 90°, to the island fronts</td><td>about 38"</td></tr>
+<tr><td>Dishwasher door open, to the wall run's fronts</td><td>about 32"</td></tr>
+<tr><td>Oven door (HBL87M53UC), across from the trash pull-out</td><td>TBD</td></tr>
+<tr><td>Pulls (8", black) and door projection into the aisle</td><td>TBD</td></tr>
+</table>
+<p class="note">Still to decide: does the 56" also hold at the fridge? The fridge stands proud of the cabinets, so it can't with the wall where it is. Today the plan treats it as an appliance clearance, not part of the requirement.</p>
+
+<h2 id="docs">3. Affected documents</h2>
+<table>
+<tr><th>Document</th><th>Revision</th><th>What changed</th></tr>
+<tr><td>Floor plan: <a href="drawings/sketches.html#house">House sketch</a>, with the <a href="drawings/sketches.html#island-top">Island top</a>, <a href="drawings/sketches.html#wall-top">Wall top</a> and <a href="drawings/model.html">Model</a></td><td>Before: 2026-11-08 (House sketch added in 191a855; <code>sketches.html</code> last changed in cc39959). Revised 2026-11-09, not yet committed. Source: <code>kitchen.js</code> <code>DIMS.aisle</code> = 56 (counter edges), <code>DIMS.faces</code> = 57</td><td>The aisle is dimensioned between the counter edges and reads 56". The island and the room wall don't move.</td></tr>
+<tr><td>Countertop drawing: <a href="docs/countertop.html#map">Countertop</a> fabrication map, <a href="docs/countertop.html#protect">clearance table</a> and <a href="docs/countertop.html#request">coordinated check request</a></td><td>Before: plan sheet 2026-11-03, brief merged 2026-11-05, last changed 2026-11-08 (80fadf9). Revised 2026-11-09, not yet committed</td><td>The aisle dimension, the requirement sentence and the clearance table. The pieces are now 85" × 44 1/2", 109" × 30 1/2" and 84" × 25", and the slab layout and leftovers follow.</td></tr>
+<tr><td>Material schedule clearance note: <a href="docs/pick.html#holds">Pick, Installation hold points</a> (first hold, "The finished aisle")</td><td>Before: working schedule 2026-11-07, last changed 2026-11-08 (cc39959). Revised 2026-11-09, not yet committed</td><td>Restated as 56" clear between the counter edges</td></tr>
+</table>
+<p class="note">Also revised to match: <a href="docs/selections.html">Selections</a>, <a href="docs/sequence.html">Sequence</a>, <a href="docs/walls.html">Walls</a>, <a href="docs/cabinets.html">Cabinets</a>, <a href="docs/backsplash.html">Backsplash</a> and <a href="pricing/price.html">Price</a>.</p>
+
+<p><b>Coordination request</b> (to the general contractor, who is the homeowner per <a href="docs/sequence.html#log">Sequence</a>; the cabinet supplier; and the fabricator):</p>
+<blockquote>The aisle requirement is 56" clear between the opposing finished countertop edges. It replaces the 48" and 56 1/2" cabinet-face spacings. The plan meets it exactly: 1/2" door and drawer fronts, a 25" counter (1" past the boxes, 1/2" past the fronts), the fronts 57" apart and the boxes 58" apart, with the wall behind the wall run kept where it is. Please confirm the front thickness and the nosing together and send one consistent set of dimensions. There is no margin, so tell us if anything projects further. In the same review, check the appliance openings and door swings (fridge, dishwasher, OVD3393 and oven, pantry, trash pull-out), guest circulation behind the island and at the stools, the prep-zone connections between sink, cooktop and fridge, the utilities (island wall conduit from the slab trench, the sink drain and supplies, any beam posts) and the hood staying centered over the cooktop. If something doesn't work, say what you suggest and what it affects; moving the island is not the only option.</blockquote>
+<p><b>Status: drafted</b> (2026-11-09). Not sent, not answered. The <a href="docs/countertop.html#request">request on Countertop</a> is also still drafted.</p>
+
+<h2 id="holds">4. Other holds stay open</h2>
+<p>This clarification of the aisle approves none of these. Each stays pending its own review (<a href="docs/pick.html#holds">Pick</a>, <a href="docs/countertop.html#open">Countertop, Open</a>, <a href="docs/walls.html#open">Walls, Open</a>):</p>
+<ul>
+  <li>The proposed 15" seating overhang behind spices, cooktop and plates: engineer and fabricator.</li>
+  <li>The seven Iron Supports bracket arrangement in the island back wall's top plate: engineer and fabricator, before framing.</li>
+  <li>Setting the stone directly on the cabinets, with no subtop: fabricator and cabinet supplier.</li>
+  <li>The proposed island seam between plates and trash, through the prep area: fabricator, at the template.</li>
+</ul>

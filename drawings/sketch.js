@@ -287,7 +287,7 @@ const { depth: DEPTH, front: FRONT, counter: COUNTER, aisle: AISLE, wall: WALL }
 function plan(title, run, opts = {}) {
   const n = run.reduce((s, c) => s + c.w, 0), isl = opts.island;
   const low = 6 * Math.max(0, ...run.map(c => c.drop || 0)); // `drop: n` as in sketch()
-  const MID = DEPTH + FRONT + AISLE / 2; // the cabinet backs to the middle of the aisle
+  const MID = COUNTER + AISLE / 2; // the cabinet backs to the middle of the aisle
   const BACKY = MARGIN + 20 + low + (isl ? 19.75 : WALL), H = BACKY + MID + 12;
   const W = MARGIN * 2 + n + 40; // + the side wall, the dimmers and the ruler
   const out = [];
@@ -336,7 +336,7 @@ function plan(title, run, opts = {}) {
     if (c.receptacle) box(c.u + (c.w - 2.75) / 2, 0, 2.75, 0.25, 'plate'); // on the wall face, over the counter
     if (c.backReceptacle) box(c.u + (c.w - 2.75) / 2, -WALL - 0.25, 2.75, 0.25, 'plate'); // vertical plate on the island's back wall
     if (c.airSwitch) circle(P(c.u + c.airSwitch.dx, c.airSwitch.back), 0.875, 'button'); // STS-OO disposal button
-    if (c.kind === 'sink') box(c.u + (c.w - 33.5) / 2, 4, 33.5, 19, 'sinkbowl'); // Ruvati RVH6222ST: 33.5" x 19" outer, 4"–23" from the cabinet backs, 2 3/4" from the counter front
+    if (c.kind === 'sink') box(c.u + (c.w - 33.5) / 2, 4, 33.5, 19, 'sinkbowl'); // Ruvati RVH6222ST: 33.5" x 19" outer, 4"–23" from the cabinet backs, 2" from the counter front
     if (c.faucet) { // hole c.faucet.back in front of the cabinet backs, spout reaching c.faucet.reach toward the front
       const [x1, y1] = mid(c.faucet.back), [x2, y2] = mid(c.faucet.back + c.faucet.reach);
       line(x1, y1, x2, y2, 'spout');

@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="../nav.js" defer></script>
+<link rel="stylesheet" href="../theme.css">
+<title>Permits · Galley Kitchen</title>
+<style>
+  body { margin: 24px; background: var(--paper); color: var(--ink); font-family: system-ui, sans-serif; line-height: 1.5; }
+  h1 { margin: 0 0 4px; } h2 { margin: 28px 0 4px; font-size: 1.25em; } h3 { margin: 20px 0 4px; font-size: 1.05em; } li { margin: 4px 0; } p { margin: 8px 0; } p.sub { margin: 0; color: var(--muted); } a { color: var(--link); }
+  .note { color: var(--muted); }
+  table { border-collapse: collapse; margin-top: 12px; background: var(--sheet); width: 100%; }
+  th, td { border: 1px solid var(--rule); padding: 8px 10px; text-align: left; vertical-align: top; }
+  th { background: var(--head); } th + th { width: 45%; }
+  @media (max-width: 600px) { /* phones: each row stacks */
+    table, tbody, tr, td { display: block; } tr:first-child { display: none; }
+    tr { border: 1px solid var(--rule); border-top: 0; padding: 8px 10px; } tr:nth-child(2) { border-top: 1px solid var(--rule); }
+    td { border: 0; padding: 0; } td:first-child { font-weight: 600; } td + td { margin-top: 4px; }
+  }
+</style>
+<h1>Permits</h1>
+<p class="sub">City of Plano permits and fees, read 2026-11-10 · <a href="../index.html">index</a></p>
+
+<p>City of Plano Building Inspections, 1520 K Ave, Suite 140, Plano, TX 75074 · 972-941-7140 · <a href="mailto:buildingpermits@plano.gov">buildingpermits@plano.gov</a>. Permits are applied for and inspections scheduled in <a href="https://trakit.plano.gov/etrakit_prod/">eTRAKiT</a>.</p>
+
+<h2 id="which">Which permit</h2>
+<p><b>The full Residential Addition / Alteration permit, not the simple kitchen remodel one.</b> Plano's <a href="https://content.civicplus.com/api/assets/tx-plano/cfb45e20-1eb1-48d5-9013-762cddaa9a27?cache=1800">Bathroom / Kitchen Remodel Scope of Work Permit</a> excludes "the removal of any bearing wall or partition" and any change to load-bearing floor, wall, ceiling or roof elements, and this job takes out a load bearing wall for the island (<a href="sequence.html">Sequence</a>, steps 11 to 13).</p>
+<p>For that permit, the city's <a href="https://content.civicplus.com/api/assets/42683585-b821-4c26-ac7f-1411fd0249f1?version=0&amp;q=e4510d68-ca1e-f654-b22d-cc5e6cf98109">Additions / Alterations checklist</a> and <a href="https://content.civicplus.com/api/assets/tx-plano/ed8a9281-4c9b-49d7-8415-944fc1768562?cache=1800">Customer's Guide</a> ask for:</p>
+<ul>
+  <li>The <a href="https://content.civicplus.com/api/assets/tx-plano/eb31973e-4572-4c37-af4c-e0973b45dcd4?cache=1800">Residential Permit Application</a>, which names the owner and lists the general, electrical, plumbing and mechanical contractors and the trash hauler on one form.</li>
+  <li>Two copies of construction documents, drawn to scale and dimensioned: floor plans showing the existing and adjoining rooms, framing details, the engineer's structural drawings for the beam and its posts and footings, and electrical and plumbing plans (outlet spacing and lighting; these may be on the floor plan).</li>
+  <li>The plan review fee and a deposit of 65% of the building permit fee, paid up front. The rest is paid before the permit is issued.</li>
+</ul>
+<p>Residential plan review takes about 5 working days per round of comments. A permit lapses if work doesn't start within 180 days of issue, or stops for 180 days. Every permit needs a final inspection.</p>
+
+<h2 id="needed">Permits needed</h2>
+<p class="note">Built from the plan and the city's forms, not confirmed with the city. "Owner" is you, running the job as your own general contractor (<a href="sequence.html#log">Sequence</a>, 2026-11-04).</p>
+<table>
+<tr><th>Permit</th><th>Covers</th><th>Who gets it</th></tr>
+<tr><td>Building: Residential Addition / Alteration</td><td>Removing the load bearing wall and setting the beam, posts and any footings; the slab trench; the Coffee side wall, the island wall, the 41" doorway and the 49" opening in the 65" wall; the cabinets and counters as part of the remodel. Inspections: footings before the pour, the beam before it is covered, framing, final.</td><td><b>Owner.</b> Unless the load bearing wall company pulls it: <a href="contractors.html#wall">DFW Wall Removal</a> does, Load Bearing Wall Pros leaves it to you. If the wall company pulls a permit for the beam alone, you still need this one for the rest.</td></tr>
+<tr><td>Electrical</td><td>The island conduit under the slab, every new circuit and box, the hood, lights and appliances. Inspections: underground before backfill, rough, final.</td><td><b>Electrician.</b> Listed on the application as the electrical contractor; Texas requires a licensed electrician, who must be registered with Plano.</td></tr>
+<tr><td>Plumbing</td><td>The island sink drain and AAV, supply lines, dishwasher, disposal and the ice maker line. Inspections: rough, final.</td><td><b>Plumber.</b> Listed as the plumbing contractor; Texas requires a licensed plumber. Ask the city whether it allows the AAV at the island sink.</td></tr>
+<tr><td>Mechanical</td><td>The 6" hood duct through the ceiling to the outside. Inspections: rough, final.</td><td><b>HVAC contractor.</b> Listed as the mechanical contractor; Texas requires a licensed air conditioning and refrigeration contractor.</td></tr>
+<tr><td>Trash hauler</td><td>The demolition debris and dumpster.</td><td><b>Hauler.</b> Not a permit, but the application asks for one, and Plano registers solid waste contractors.</td></tr>
+<tr><td>Demolition</td><td>Probably not needed: the $100 residential demolition permit is meant for taking down a structure, and the interior tear-out is part of the building permit.</td><td>Confirm with the city.</td></tr>
+</table>
+<p class="note">No permit is listed for the cabinets, countertops, backsplash, painting or a floor laid over the slab. Texas lets a homeowner do some electrical and plumbing work on their own homestead, but Plano may still require a licensed trade on the permit. Ask the city before planning to do any of it yourself (<a href="sequence.html">Sequence</a>, step 4).</p>
+
+<h2 id="area">Square footage</h2>
+<p>The fee schedule doesn't say what area the $0.48 per square foot applies to for an alteration. The application has a separate "Square Footage" box under "Complete this Section for Alterations/Additions", apart from the house's total, which suggests the area of the work: the kitchen, not the house. Only a new house is clearly charged on its full area ("under roof"). This is a reading of the forms, so confirm it with the city.</p>
+<p>The fee is small either way. A 200 sq ft kitchen comes to $96 for the building permit, plus $45 plan review and $45 each for electrical, plumbing and mechanical (each is $0.01 per sq ft with a $45 minimum): <b>about $276</b>, before any re-inspections. Charged on a 2,500 sq ft house, the building permit alone would be $1,200. The 200 sq ft is a placeholder, since the room hasn't been measured.</p>
+
+<h2 id="fees">Fees</h2>
+<p>From the <a href="https://www.plano.gov/asset/465fd3b7-2f75-4bb6-9044-6a62da9fd3ba">Building Inspections Fee Schedule</a> (Ordinance No. 2025-11-4, effective January 2, 2026), linked from the city's <a href="https://www.plano.gov/building-inspections">Building Inspections</a> page; see also <a href="https://www.plano.gov/273/Residential-Permits">Residential Permits</a>. Only the residential and general fees are copied here. Commercial, pool, sign and other fees are in the PDF.</p>
+
+<h3 id="residential">Residential addition or alteration</h3>
+<p class="note">The fees for an addition, alteration or backyard cottage. The lines add together; each trade line applies only where that trade is part of the work.</p>
+<table>
+<tr><th>Item</th><th>Fee</th></tr>
+<tr><td>Minimum fee</td><td>$40.00</td></tr>
+<tr><td>Building permit (if applicable)</td><td>$0.48 / sq ft</td></tr>
+<tr><td>Plan review</td><td>$45.00</td></tr>
+<tr><td>Electrical (if applicable)</td><td>$0.01 / sq ft, minimum $45.00</td></tr>
+<tr><td>Plumbing (if applicable)</td><td>$0.01 / sq ft, minimum $45.00</td></tr>
+<tr><td>Mechanical (if applicable)</td><td>$0.01 / sq ft, minimum $45.00</td></tr>
+</table>
+
+<h3 id="trades">Trade permits and inspections</h3>
+<table>
+<tr><th>Item</th><th>Fee</th></tr>
+<tr><td>Simple trade permit (electrical, mechanical or plumbing), residential, each</td><td>$85.00</td></tr>
+<tr><td>Re-inspection, first</td><td>$75.00</td></tr>
+<tr><td>Re-inspection, second</td><td>$100.00</td></tr>
+<tr><td>Re-inspection, third</td><td>$125.00</td></tr>
+<tr><td>Re-inspection, each after that</td><td>$150.00</td></tr>
+<tr><td>Same-day inspection, per trade</td><td>$150.00</td></tr>
+<tr><td>Inspection after hours or on a Saturday</td><td>$200.00</td></tr>
+</table>
+<p class="note">Re-inspection fees must be paid before any final inspection can be scheduled.</p>
+
+<h3 id="other">Other residential and general fees</h3>
+<table>
+<tr><th>Item</th><th>Fee</th></tr>
+<tr><td>Demolition permit, residential</td><td>$100.00</td></tr>
+<tr><td>Windows</td><td>$40.00, plus $10.00 per window element (maximum $100.00)</td></tr>
+<tr><td>Re-roof, residential</td><td>$75.00</td></tr>
+<tr><td>Photovoltaic, residential</td><td>$150.00</td></tr>
+<tr><td>Accessory structure (under 400 sq ft)</td><td>$75.00</td></tr>
+<tr><td>Foundation permit</td><td>$100.00</td></tr>
+<tr><td>Fence or retaining wall, residential</td><td>$75.00 ($65.00 permit plus $10.00 day laborer fee)</td></tr>
+<tr><td>Outdoor fireplace</td><td>$75.00</td></tr>
+<tr><td>Addendum or plan redraw</td><td>$40.00 / hour (1 hour minimum)</td></tr>
+<tr><td>Express permit (building permit only)</td><td>$100.00 per $1,000 of valuation, $100.00 minimum</td></tr>
+<tr><td>Plan review deposit (applied to the total permit fee, non-refundable)</td><td>65% of the building permit fee</td></tr>
+<tr><td>Reprint of a C.O. or permit placard</td><td>$20.00</td></tr>
+<tr><td>Water estimate fee (if applicable)</td><td>$40.00</td></tr>
+<tr><td>Appeal to the Building Standards Commission, residential homestead</td><td>$75.00</td></tr>
+<tr><td>General contractor registration, annual</td><td>$100.00</td></tr>
+</table>
+
+<h3 id="valuation">Fees by valuation (Table 1)</h3>
+<p class="note">For fees the schedule bases on the project's valuation. Round the multiplier to the nearest dollar, and count any part of a step ("or fraction thereof") as a whole step.</p>
+<table>
+<tr><th>Valuation</th><th>Fee</th></tr>
+<tr><td>$1 to $500</td><td>$24</td></tr>
+<tr><td>$501 to $2,000</td><td>$24 for the first $500, plus $3.00 for each additional $100 or fraction</td></tr>
+<tr><td>$2,001 to $25,000</td><td>$130 for the first $2,000, plus $9.99 for each additional $1,000 or fraction</td></tr>
+<tr><td>$25,001 to $50,000</td><td>$360 for the first $25,000, plus $8.13 for each additional $1,000 or fraction</td></tr>
+<tr><td>$50,001 to $100,000</td><td>$563 for the first $50,000, plus $4.54 for each additional $1,000 or fraction</td></tr>
+<tr><td>$100,001 to $500,000</td><td>$790 for the first $100,000, plus $3.43 for each additional $1,000 or fraction</td></tr>
+<tr><td>$500,001 and over</td><td>$5.25 per $1,000 of valuation</td></tr>
+</table>

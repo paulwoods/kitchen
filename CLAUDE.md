@@ -4,7 +4,7 @@ Store all project memories in this file (not in ~/.claude memory).
 
 ## Workflow
 
-- After every change, reload and check the affected pages in a browser (screenshot). Playwright blocks `file:`, so serve the folder with `python3 -m http.server` and delete `.playwright-mcp/` afterwards.
+- After every change, reload and check the affected pages in a browser (screenshot). Playwright blocks `file:`, so serve the folder with `python3 -m http.server` and delete `.playwright-mcp/` afterwards. Size the browser to the full monitor first (`browser_resize` to 2560 × 1440, the screen's size).
 
 - Git: work on the `develop` branch (do not rename to `main`). Remote `origin` is `git@github.com:paulwoods/kitchen.git` (SSH; HTTPS has no credentials).
 

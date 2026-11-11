@@ -7,6 +7,7 @@ const OPEN = {
   'docs/lighting.html': 0,
   'docs/electrical.html': 3,
   'docs/walls.html': 11,
+  'docs/dumpster.html': 1,
   'docs/sequence.html': 1,
   'pricing/price.html': 1,
 };

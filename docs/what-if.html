@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="../nav.js" defer></script>
+<link rel="stylesheet" href="../theme.css">
+<title>What If · Galley Kitchen</title>
+<style>
+  body { margin: 24px; background: var(--paper); color: var(--ink); font-family: system-ui, sans-serif; line-height: 1.5; }
+  h1 { margin: 0 0 4px; } h2 { margin: 28px 0 4px; font-size: 1.25em; } a { color: var(--link); }
+  table { border-collapse: collapse; margin-top: 12px; background: var(--sheet); width: 100%; }
+  th, td { border: 1px solid var(--rule); padding: 8px 10px; text-align: left; vertical-align: top; }
+  th { background: var(--head); } .note { color: var(--muted); } tr.total td { font-weight: bold; background: var(--band); }
+  .map { overflow-x: auto; margin-top: 12px; background: var(--sheet); border: 1px solid var(--rule); }
+  .map svg { display: block; width: 100%; min-width: 760px; }
+  .map text { font-size: 2.6px; fill: var(--ink); paint-order: stroke; stroke: var(--sheet); stroke-width: 0.5px; }
+  .map text.on { fill: #223; stroke: #fff; } .map text.mid { text-anchor: middle; } .map text.cutn { fill: var(--red); font-weight: bold; }
+  .stone { fill: none; stroke: #fff; stroke-width: 0.4; } .legend .stone { fill: #e6e7e3; } .edge { fill: none; stroke: #223; stroke-width: 0.9; }
+  .hole { fill: var(--sheet); stroke: #223; stroke-width: 0.3; }
+  .offcut { fill: #fff; fill-opacity: 0.7; stroke: #99a; stroke-width: 0.25; } .cut { stroke: #b3261e; stroke-width: 0.5; }
+  .trim { fill: #e8a59c; fill-opacity: 0.8; stroke: none; }
+  .book { stroke: var(--link); stroke-width: 0.5; stroke-dasharray: 1.5 1; }
+  @media (max-width: 600px) { table, tbody, tr, td, th { display: block; } tr:first-child { display: none; } tr { margin-bottom: 12px; } td { border-top: 0; } td:first-child { border-top: 1px solid var(--rule); font-weight: bold; } }
+</style>
+<h1>What If</h1>
+<p><a href="../index.html">index</a></p>
+<p class="note">What-if sheet, 2026-11-10: the <a href="countertop.html#cutting">cutting map</a> redone for two <b>book-matched slabs of 132" &times; 79"</b> instead of the planned 126" &times; 63": the <a href="https://capstone806.slabware.com/FullInventory.aspx?S=J4iC9Uy7NvDfM6BrHQ3gMC4cBEZsC3hKs5Z59S+rjmuzDQ4EXHe+O14BhVsf2AVym40BTNaKmoUS0HPGQhl9kak/Rt1FmEzngOaUFJ4LnIDQuSkDZalO430OLlZlfPCnB0N0URnStpd3873V3GvaOm3OBnynG9cKqPCPc7ljGuG2dX5l8P/+G+TCLwFVrK41U+sFFGE7n41BuJ0roEamAweBR85fumCXrs7JdmQevcqfL8m6w70XT6ugB80DB5QKwmOX4dtcJR1Pk7gA50AjUavLPFMtcC9U/18Skb+gM7KY8TfH8OBESiX1uENZylWLap7LoEZJFUINAot0Bfv/NIstoYDeWNqaP5OFi1SxenzIxDTlHDlnAhmmTmcQCs5xKFk+x3JDPKTtZsM3QXYXWEBDtv4RHzja/D7fvFLIQW01iFFx898khmp4r9puOkjHFX0BRip5tdKf9os3nZrgtw==">Ebano quartzite at Capstone</a>, with <b>1" burned off every side</b> in case the edges are chipped or cracked, leaving 130" &times; 77" of each. Same pieces as the <a href="countertop.html#slabs">Countertop</a> page: the cooktop 85" &times; <span data-k="counter + seat">44 1/2</span>", the sink 109" &times; <span data-k="counter + islandBack">30 1/2</span>", the wall 84" &times; <span data-k="counter">25</span>" and the backsplash, here one 84" &times; 18 1/4" piece instead of the four 21" pieces planned there. Added here: a 76" &times; 22" bathroom vanity top from the band above the cooktop piece. Nothing here is decided.</p>
+
+<h2 id="cutting">Cutting map</h2>
+<p class="note">Book-matched slabs open like a book: the second is the mirror of the first across the edge they share (dashed blue). The cooktop piece sits at the bottom right of the first slab and the sink piece at the bottom left of the second, so their ends meet at that edge and the veins mirror across the island seam between plates and trash. Both lose the same 1" there, so they still mirror. Both pieces keep their front (aisle) edge along the slab's bottom edge. The wall piece and the backsplash share the second slab, the backsplash directly above the counter it stands on, so the veins run on up it. The backgrounds are photos of the two slabs, the pieces clear and the offcuts faded. To scale; the trim (pink) comes off first, then the saw cuts in the numbered order. No kerf or flaws allowed for.</p>
+<div class="map">
+<svg viewBox="0 0 146 200" role="img" aria-label="Cutting map of two book-matched 132 by 79 inch slabs with 1 inch trimmed off every side: the cooktop piece at the bottom right of the first with a bathroom vanity top above it, the sink piece at the bottom left of the second with the wall piece and the one-piece backsplash above it">
+<g transform="translate(7 9)">
+  <text x="0" y="-5"><tspan font-weight="bold">First slab</tspan>: Piece 1, the cooktop, and the vanity top</text>
+  <image href="what-if-slab1.jpg" x="0" y="0" width="132" height="79" preserveAspectRatio="none"/>
+  <path class="trim" fill-rule="evenodd" d="M0 0h132v79h-132z M1 1v77h130v-77z"/>
+  <g transform="translate(1 1)">
+    <rect class="offcut" x="0" y="0" width="45" height="77"/><text class="on mid" x="22.5" y="37">offcut</text><text class="on mid" x="22.5" y="40.5">45" &times; 77"</text>
+    <rect class="stone" x="45" y="0" width="76" height="22"/><text class="on mid" x="83" y="10"><tspan font-weight="bold">Vanity top, bathroom</tspan></text><text class="on mid" x="83" y="13.5">76" &times; 22"</text>
+    <rect class="offcut" x="121" y="0" width="9" height="22"/><text class="on mid" x="125.5" y="10">9" &times;</text><text class="on mid" x="125.5" y="13.5">22"</text>
+    <rect class="offcut" x="45" y="22" width="85" height="10.5"/><text class="on mid" x="87.5" y="28.2">strip, 85" &times; 10 1/2"</text>
+    <rect class="stone" x="45" y="32.5" width="85" height="44.5"/>
+    <rect class="hole" x="73.56" y="52.5" width="28.875" height="20"/><text class="mid" x="88" y="63.5">cooktop cutout</text>
+    <text class="on mid" x="87.5" y="41.5"><tspan font-weight="bold">Piece 1, the cooktop</tspan></text><text class="on mid" x="87.5" y="45">85" &times; 44 1/2"</text>
+    <line class="cut" x1="45" y1="0" x2="45" y2="77"/><text class="cutn mid" x="45" y="-2">1</text>
+    <line class="cut" x1="45" y1="32.5" x2="130" y2="32.5"/><text class="cutn" x="132" y="33.4">2</text>
+    <line class="cut" x1="45" y1="22" x2="130" y2="22"/><text class="cutn" x="132" y="22.9">3</text>
+    <line class="cut" x1="121" y1="0" x2="121" y2="22"/><text class="cutn mid" x="121" y="-2">4</text>
+    <text class="mid" x="87.5" y="81.5">front edge, to the aisle; the right end meets the sink piece</text>
+  </g>
+  <rect class="edge" x="0" y="0" width="132" height="79"/>
+  <line class="book" x1="132" y1="-3" x2="132" y2="82"/>
+</g>
+<g transform="translate(7 108)">
+  <text x="0" y="-5"><tspan font-weight="bold">Second slab</tspan>: Pieces 2 and 3 and the backsplash</text>
+  <image href="what-if-slab2.jpg" x="0" y="0" width="132" height="79" preserveAspectRatio="none"/>
+  <path class="trim" fill-rule="evenodd" d="M0 0h132v79h-132z M1 1v77h130v-77z"/>
+  <g transform="translate(1 1)">
+    <rect class="offcut" x="0" y="0" width="84" height="3.25"/><text class="on mid" x="42" y="2.5">strip, 84" &times; 3 1/4"</text>
+    <rect class="stone" x="0" y="3.25" width="84" height="18.25"/><text class="on mid" x="42" y="11.5"><tspan font-weight="bold">Backsplash</tspan></text><text class="on mid" x="42" y="15">84" &times; 18 1/4", Garage to Coffee</text>
+    <rect class="stone" x="0" y="21.5" width="84" height="25"/>
+    <text class="on mid" x="42" y="33"><tspan font-weight="bold">Piece 3, the wall</tspan></text><text class="on mid" x="42" y="36.5">84" &times; 25"</text>
+    <rect class="offcut" x="84" y="0" width="46" height="46.5"/><text class="on mid" x="107" y="22">offcut</text><text class="on mid" x="107" y="25.5">46" &times; 46 1/2"</text>
+    <rect class="stone" x="0" y="46.5" width="109" height="30.5"/>
+    <rect class="hole" x="22.25" y="56" width="33.5" height="19"/><text class="mid" x="39" y="66.5">sink cutout</text>
+    <circle class="hole" cx="39" cy="54" r="0.7"/><circle class="hole" cx="30.625" cy="54" r="0.6"/>
+    <text class="on" x="41" y="54.8">faucet 1 3/8"</text><text class="on" style="text-anchor:end" x="28.8" y="54.8">button 1 1/4"</text>
+    <text class="on mid" x="82" y="60"><tspan font-weight="bold">Piece 2, the sink</tspan></text><text class="on mid" x="82" y="63.5">109" &times; 30 1/2"</text>
+    <rect class="offcut" x="109" y="46.5" width="21" height="30.5"/><text class="on mid" x="119.5" y="60.5">end</text><text class="on mid" x="119.5" y="64">21" &times; 30 1/2"</text>
+    <line class="cut" x1="0" y1="46.5" x2="130" y2="46.5"/><text class="cutn" x="132" y="47.4">1</text>
+    <line class="cut" x1="109" y1="46.5" x2="109" y2="77"/><text class="cutn mid" x="109" y="81">2</text>
+    <line class="cut" x1="84" y1="0" x2="84" y2="46.5"/><text class="cutn mid" x="84" y="-2">3</text>
+    <line class="cut" x1="0" y1="21.5" x2="84" y2="21.5"/><text class="cutn" x="-3.5" y="22.4">4</text>
+    <line class="cut" x1="0" y1="3.25" x2="84" y2="3.25"/><text class="cutn" x="-3.5" y="4.1">5</text>
+    <text class="mid" x="54.5" y="81.5">front edge, to the aisle; the left end meets the cooktop piece</text>
+  </g>
+  <rect class="edge" x="0" y="0" width="132" height="79"/>
+  <line class="book" x1="0" y1="-3" x2="0" y2="82"/>
+</g>
+<g class="legend" transform="translate(7 196)">
+  <rect class="stone" x="0" y="-2" width="9" height="4"/><text x="11" y="1">piece</text>
+  <rect class="offcut" x="22" y="-2" width="9" height="4"/><text x="33" y="1">offcut</text>
+  <rect class="trim" x="46" y="-2" width="9" height="4"/><text x="57" y="1">1" trim</text>
+  <line class="cut" x1="72" y1="0" x2="81" y2="0"/><text x="83" y="1">numbered cut</text>
+  <line class="book" x1="104" y1="0" x2="113" y2="0"/><text x="115" y="1">book-match edge</text>
+</g>
+</svg>
+</div>
+<table>
+<tr><th>Slab</th><th>Cut</th><th>Where</th><th>Splits</th></tr>
+<tr><td>Both</td><td>Trim</td><td>1" in from every edge</td><td>130" &times; 77" from the chipped or cracked border</td></tr>
+<tr><td>First</td><td>1</td><td>Across, 45" from the trimmed left edge</td><td>45" &times; 77" offcut from 85" &times; 77"</td></tr>
+<tr><td>First</td><td>2</td><td>Along the 85" part, 32 1/2" from the trimmed top</td><td>The 85" &times; 32 1/2" band from Piece 1</td></tr>
+<tr><td>First</td><td>3</td><td>Along the band, 22" from the top</td><td>85" &times; 22" from the 85" &times; 10 1/2" strip</td></tr>
+<tr><td>First</td><td>4</td><td>Across the 22" part, 76" from its left end</td><td>The vanity top from a 9" &times; 22" end</td></tr>
+<tr><td>Second</td><td>1</td><td>Along, 46 1/2" from the trimmed top</td><td>130" &times; 46 1/2" from 130" &times; 30 1/2"</td></tr>
+<tr><td>Second</td><td>2</td><td>Across the 30 1/2" part, 109" from the trimmed left edge</td><td>Piece 2 from the 21" end</td></tr>
+<tr><td>Second</td><td>3</td><td>Across the 46 1/2" part, 84" from the trimmed left edge</td><td>84" &times; 46 1/2" from the 46" &times; 46 1/2" offcut</td></tr>
+<tr><td>Second</td><td>4</td><td>Along the 84" part, 21 1/2" from the top</td><td>Piece 3 from 84" &times; 21 1/2"</td></tr>
+<tr><td>Second</td><td>5</td><td>Along the 21 1/2" part, 3 1/4" from the top</td><td>The backsplash from the 3 1/4" strip</td></tr>
+</table>
+<p class="note">One piece means no backsplash seams. It is 84" long and thin, so it needs careful handling. Not drawn: its four receptacle cutouts.</p>
+
+<h2 id="leftovers">Leftovers</h2>
+<p class="note">The two slabs are 144.8 square feet. The 1" trim takes 5.8, leaving 139.0 usable. The countertops, backsplash and vanity top use 86.2 (the vanity top 11.6), leaving <b>52.8 square feet</b> on paper (36% of the stone). Without the vanity top it would be 64.4. The planned 126" &times; 63" slabs leave 35.7, with no trim. Before kerf and flaws, and not counting the cutouts; the rows add to 52.9 from rounding.</p>
+<table>
+<tr><th>Slab</th><th>Leftover piece</th><th>Square feet</th></tr>
+<tr><td>First</td><td>45" &times; 77"</td><td>24.1</td></tr>
+<tr><td>First</td><td>85" &times; 10 1/2"</td><td>6.2</td></tr>
+<tr><td>First</td><td>9" &times; 22"</td><td>1.4</td></tr>
+<tr><td>Second</td><td>46" &times; 46 1/2"</td><td>14.9</td></tr>
+<tr><td>Second</td><td>21" &times; 30 1/2"</td><td>4.4</td></tr>
+<tr><td>Second</td><td>84" &times; 3 1/4"</td><td>1.9</td></tr>
+<tr class="total"><td>Total</td><td></td><td>52.8</td></tr>
+</table>

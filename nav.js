@@ -3,7 +3,7 @@
 // which the canvas subtracts from the window height.
 const groups = [
   [['index.html', 'Index']],
-  [['drawings/model.html', '3D model']],
+  [['drawings/model.html', '3D Model']],
   [['drawings/sketches.html', 'Sketches']],
   [['docs/cabinets.html', 'Cabinets'], ['docs/selections.html', 'Selections'], ['docs/countertop.html', 'Countertop'], ['docs/countertop-2.html', 'Countertop 2'], ['docs/backsplash.html', 'Backsplash'], ['docs/pick.html', 'Pick'], ['docs/lighting.html', 'Lighting']],
   [['docs/electrical.html', 'Electrical'], ['docs/walls.html', 'Walls'], ['docs/contractors.html', 'Contractors'], ['docs/permits.html', 'Permits'], ['docs/dumpster.html', 'Dumpster'], ['docs/sequence.html', 'Sequence']],

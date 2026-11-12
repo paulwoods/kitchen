@@ -162,8 +162,8 @@ Square corners everywhere. Tables use 1px Hairline borders with collapsed edges.
 ### Status box (index)
 - **Style:** a Clean Sheet panel with a 1px Hairline border, 8px × 12px padding, square corners and no shadow. Holds the open-issue count (bold, linked) and the resolved count.
 
-### View buttons (3D model)
-- **Style:** native browser buttons in a row under the subtitle. No custom styling.
+### View buttons (3D Model)
+- **Style:** native browser buttons in the header's second column. No custom styling.
 
 ## Do's and Don'ts
 

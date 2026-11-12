@@ -4,17 +4,24 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="../nav.js" defer></script>
 <link rel="stylesheet" href="../theme.css" id="theme">
-<title>3D model · Galley Kitchen</title>
+<title>3D Model · Galley Kitchen</title>
 <style>
   body { margin: 0; overflow: hidden; background: var(--paper); color: var(--ink); font-family: system-ui, sans-serif; }
   header { padding: 24px 24px 8px; } h1 { margin: 0; } p { margin: 4px 0; color: var(--muted); } a { color: var(--link); }
+  .cols { display: grid; grid-template-columns: repeat(6, 1fr); align-items: center; gap: 8px 24px; }
+  @media (max-width: 599px) { .cols { grid-template-columns: 1fr; } }
   button { font: inherit; margin-right: 6px; padding: 2px 10px; }
   canvas { display: block; width: 100%; }
 </style>
 <header>
-  <h1>3D model</h1>
-  <p><a href="../index.html">index</a> · drag to orbit, right-drag to pan, scroll to zoom</p>
-  <p><button data-view="end">End</button><button data-view="island">Island</button><button data-view="wall">Wall</button><button data-view="top">Top</button><label><input type="checkbox" id="small"> toaster, air fryer, coffee</label> · <label>slab <select id="slab"><option value="">plain</option></select></label> <button id="toggle-theme">Toggle theme</button></p>
+  <div class="cols">
+    <h1>3D Model</h1>
+    <div><button data-view="end">End</button><button data-view="island">Island</button><button data-view="wall">Wall</button><button data-view="top">Top</button></div>
+    <div><label>slab <select id="slab"><option value="">plain</option></select></label></div>
+    <div><label>cabinets <select id="paint-haze"></select></label> <label>uppers <select id="paint-alabaster"></select></label></div>
+    <div><label><input type="checkbox" id="small"> toaster, air fryer, coffee</label></div>
+    <div><button id="toggle-theme">Toggle theme</button></div>
+  </div>
 </header>
 <script src="../kitchen.js"></script>
 <script type="importmap">
@@ -47,7 +54,7 @@ try { if (localStorage.getItem('model-theme') === 'light') setTheme(true); } cat
 document.getElementById('toggle-theme').onclick = () => setTheme(!theme.href.endsWith('light.css'));
 const mat = (color, extra = {}) => new THREE.MeshStandardMaterial({ color, roughness: 0.8, ...extra });
 const M = {
-  box: mat('#bec6bd'), front: mat('#bec6bd'), base: mat('#bec6bd'), alabaster: mat('#ebeae6'), // Colonial Maple Haze; Alabaster on the tall items and upper cabinets
+  box: mat('#bec6bd'), front: mat('#bec6bd'), base: mat('#bec6bd'), alabaster: mat('#ebeae6'), fixture: mat('#ebeae6'), // Colonial Maple Haze; Alabaster on the tall items and upper cabinets
   toe: mat('#556'), counter: mat('#ecebe6', { roughness: 0.3 }),
   steel: mat('#c9ccd2', { metalness: 0.5, roughness: 0.4 }), black: mat('#1b1b1b', { roughness: 0.3 }), brass: mat('#b08d57', { metalness: 0.6, roughness: 0.35 }),
   glass: mat('#bcd7e8', { transparent: true, opacity: 0.5 }), ring: mat('#8a8f99', { roughness: 0.4 }), drain: mat('#4a4d52', { metalness: 0.5, roughness: 0.4 }), pull: mat('#2b2b2b'), plate: mat('#ffffff'),
@@ -57,6 +64,7 @@ const edges = new THREE.LineBasicMaterial({ color: '#223', transparent: true, op
 const geo = new THREE.BoxGeometry(1, 1, 1), edgeGeo = new THREE.EdgesGeometry(geo);
 let group = scene; // where cube() and rod() put things
 const stone = []; // the counter and backsplash boxes, for the slab photos
+const onSplash = []; // [plate on the wall, plate on the backsplash's face] over the counter
 const cube = (x, y, z, w, h, d, m) => { // min corner, size
   const mesh = new THREE.Mesh(geo, m);
   mesh.scale.set(w, h, d);
@@ -167,8 +175,10 @@ function side(run, flip, zBack, back = 0, walls = false) { // back: counter past
       } else if (c.kind === 'door') fronts(u, w, BOX, [{ h: face, pull: 'top', one: c.one }]);
       else if (c.kind === 'base') fronts(u, w, BOX, [{ h: 6 }, { h: face - 6, pull: 'top' }]);
     }
-    if (c.receptacle) { // vertical duplex plate (assumed) at OUTLET, or `receptacleAt`, on the wall
-      B(u + (w - 2.75) / 2, 0, (c.receptacleAt || OUTLET) - 2.25, 2.75, 0.25, 4.5, M.plate);
+    if (c.receptacle) { // vertical duplex plate (assumed) at OUTLET, or `receptacleAt`, on the wall; over the counter a second one on the backsplash's face, shown when a slab shows the backsplash
+      const r = v => B(u + (w - 2.75) / 2, v, (c.receptacleAt || OUTLET) - 2.25, 2.75, 0.25, 4.5, M.plate);
+      const plate = r(0);
+      if (!c.h) { const face = r(TOP); face.visible = false; onSplash.push([plate, face]); }
     }
     const wb = (c.inside || []).find(b => b.label === 'ice maker');
     if (wb) B(u + wb.dx - wb.w / 2, 0, wb.at - wb.h / 2, wb.w, 0.25, wb.h, M.plate); // recessed ice maker outlet box on the wall (size and spot assumed)
@@ -301,9 +311,9 @@ for (const x of DIMS.stools) { // three counter stools at the seating overhang, 
 }
 for (const [x, s] of island.flatMap(c => (c.upper || []).filter(p => p.spot).map(p => [c.u + p.dx, p]))) { // VANoopee ceiling spotlights at the task light marks on the top view, 18" from the cabinet backs, aimed straight down; canopy and stem sizes assumed
   const z = 18;
-  rod([x, 95, z], [x, CEILING, z], 2.5, M.alabaster); // canopy
-  rod([x, s.at + s.h, z], [x, 95, z], 0.5, M.alabaster); // stem
-  rod([x, s.at, z], [x, s.at + s.h, z], s.w / 2, M.alabaster); // head
+  rod([x, 95, z], [x, CEILING, z], 2.5, M.fixture); // canopy
+  rod([x, s.at + s.h, z], [x, 95, z], 0.5, M.fixture); // stem
+  rod([x, s.at, z], [x, s.at + s.h, z], s.w / 2, M.fixture); // head
   rod([x, s.at - 0.05, z], [x, s.at, z], s.w / 2 - 0.4, M.light); // lens
 }
 group = runs.wall;
@@ -353,6 +363,16 @@ const show = (name) => {
   for (const r in runs) runs[r].visible = r !== hide;
   back.visible = hide !== 'wall';
 };
+// Colonial Maple colors, from the swatches on cabinets.com/kitchen-cabinets (2026-11-11); Fog, Sand and Latte are photo swatches, averaged; Unfinished is a guess at raw maple (its swatch is blank); the glazes use their base color
+const PAINTS = { 'Bright White': '#f1f1f1', Alabaster: '#e8e8e6', 'Antique White': '#ece6cf', 'Soft Beige': '#d1c7b8', Oyster: '#cdccca', 'Willow Gray': '#bbb7b0', Fog: '#909687', Moss: '#6c776f', Haze: '#c3cac2', 'Smoky Blue': '#708d9e', 'Creek Stone': '#7a7269', 'Thunder Gray': '#6d6c62', 'Billiard Green': '#4b5c52', Basil: '#465250', Naval: '#283846', Midnight: '#4e4b50', Raisin: '#50393c', Iron: '#362f27', Truffle: '#4d4840', Ebony: '#222124',
+  Natural: '#f2c998', Toffee: '#c17c44', Sand: '#b49a7d', Latte: '#a68a6c', Storm: '#8c7e79', Slate: '#5d5860', Charcoal: '#3f312e', Java: '#6b2f1e', Pecan: '#271005', Espresso: '#1b1615', Unfinished: '#e8d5b5',
+  'Bright White Brushed Gray Glaze': '#f4f4f4', 'Willow Gray Brushed Gray Glaze': '#c1bcb6' };
+for (const [id, mats] of [['haze', [M.box, M.front, M.base]], ['alabaster', [M.alabaster]]]) { // Haze on the base cabinets, Alabaster on the tall items and uppers
+  const sel = document.getElementById('paint-' + id);
+  sel.innerHTML = Object.keys(PAINTS).map(n => `<option>${n}</option>`).join('');
+  sel.value = id[0].toUpperCase() + id.slice(1);
+  sel.onchange = () => mats.forEach(m => m.color.set(PAINTS[sel.value]));
+}
 document.getElementById('small').onchange = e => small.visible = e.target.checked;
 document.querySelectorAll('[data-view]').forEach(b => b.onclick = () => show(b.dataset.view));
 const start = location.hash.slice(1); // index.html links straight to a view: model.html#island
@@ -397,6 +417,7 @@ const setSlab = async key => {
   if (s) await photos(s.img);
   if (key !== slab.value) return; // picked another while loading
   splash.visible = !!s;
+  for (const [plate, face] of onSplash) { plate.visible = !s; face.visible = !!s; }
   for (const m of stone) {
     if (!s) { m.material = M.counter; continue; }
     const k = piece(m), [px, py] = s[k], [lo, hi] = ext[k];

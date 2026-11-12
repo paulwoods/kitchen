@@ -17,14 +17,21 @@ for (const run of [island, wall]) { let u = 0; for (const c of run) { c.u = u; u
 const I = Object.fromEntries(island.map(c => [c.name, c])), Wl = Object.fromEntries(wall.filter(c => c.name).map(c => [c.name, c]));
 const mid = (a, b = a) => (a.u + b.u + b.w) / 2; // middle of a, or of a through b
 const wallLen = wall.reduce((s, c) => s + c.w, 0);
-// A lights down the middle of the aisle, between each pair of opposite centers (the wall run faces the island, so its u runs the other way).
-const A = [['cooktop', 'Air Fryer'], ['trash', 'Oven'], ['dishwasher', 'Fridge']].map(([a, b]) => (mid(I[a]) + wallLen - mid(Wl[b])) / 2);
+// A: four lights down the middle of the aisle, evenly spaced along the island (2026-11-11): 24", 72", 120", 168" (the wall run faces the island, so its u runs the other way).
+const A = [1, 3, 5, 7].map(k => DIMS.islandLen * k / 8);
 const AISLE_MID = COUNTER + AISLE / 2;
+// Lights in island [u, v]: T over the island counter, A down the middle of the aisle.
+const T = [mid(I.spices), I.trash.u, mid(I.sink), I['cabinet a'].u].map(u => [u, 18]);
+const AL = A.map(u => [u, AISLE_MID]);
+// The fixtures, dotted (on the ceiling) and always shown: the Halo trim 7 1/2" across (assumed), the VANoopee's 5" canopy (as in model.html).
+const HALO = 3.75, SPOT = 2.5;
+const fixtures = (lights, r, px, py) => lights.map(([u, v]) => `<circle class="upper" cx="${px(u)}" cy="${py(v)}" r="${r}"/>`);
 const legend = (svg, people) => svg.insertAdjacentHTML('beforebegin', `<p class="lights"><label><input type="checkbox" data-light="T"> <b class="legend">task</b> light (ceiling spot; shadows figured from the ceiling)</label><label><input type="checkbox" data-light="A"> <b class="legend">ambient</b> light</label>
   <label><input type="checkbox" data-light="X"> <b class="legend">accent</b> light (toe kick, inside the glass cabinets)</label><label><input type="checkbox" data-light="UC"> <b class="legend">under-cabinet</b> light</label>${people ? '<label><input type="checkbox" data-light="people"> 74" people</label>' : ''}</p>`);
 
 sketch('Wall front', wall, { toggles: true, walls: true }); // stud wall at the right end
-const wallTop = plan('Wall top', wall, { extra: ({ text, x, y }) => {
+const wallTop = plan('Wall top', wall, { extra: ({ out, text, x, y }) => {
+  out.push(...fixtures(AL.map(([u, v]) => [wallLen - u, v]), HALO, x, y));
   const wal = (u, v, s, cls) => text(x(u), y(v) + 1, s, cls);
   wal(mid(Wl.Coffee), COUNTER + 6, 'coffee', 'zone');
   wal((mid(Wl.Toaster) + mid(Wl['Air Fryer'])) / 2, COUNTER + 6, 'oven landing', 'zone');
@@ -53,9 +60,7 @@ const islandTop = plan('Island top', island, { island: true, extra: ({ out, text
     out.push(`<circle class="hidden" cx="${ix(u)}" cy="${iy(-16)}" r="8"/>`);
     isl(u, -16, 'stool', 'code on');
   }
-  // Lights in island [u, v]: T over the island counter, A down the middle of the aisle.
-  const T = [mid(I.spices), I.trash.u, mid(I.sink), I['cabinet a'].u].map(u => [u, 18]);
-  const AL = A.map(u => [u, AISLE_MID]);
+  out.push(...fixtures(T, SPOT, ix, iy), ...fixtures(AL, HALO, ix, iy));
   // People 74" tall facing the island, belly 3" off the counter front, seen from above. Each light (at the 96" ceiling, assumed)
   // throws the body's slices (waist at the counter, shoulders, head) onto the counter; the shadow is their hull, clipped to the counter.
   const people = [mid(I.plates, I.trash), mid(I.sink)];
@@ -82,7 +87,7 @@ const islandTop = plan('Island top', island, { island: true, extra: ({ out, text
   // Refinement sheet (2026-10-31): arrows from the two lights each working position relies on (the T over its counter, the A behind) to the head.
   out.push('<marker id="arrow" viewBox="0 0 6 6" refX="5" refY="3" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#e07000"/></marker>');
   const ray = ([u0, v0], [u1, v1], cls) => out.push(`<line class="ray ${cls}" x1="${ix(u0)}" y1="${iy(v0)}" x2="${ix(u1)}" y2="${iy(v1)}" marker-end="url(#arrow)"/>`);
-  for (const [u, t, a] of [[people[0], T[1], AL[1]], [people[1], T[2], AL[1]]]) { ray([t[0], t[1] + 2], [u, COUNTER + 4], 'l-T'); ray([a[0], a[1] - 2], [u, COUNTER + 11], 'l-A'); }
+  for (const [u, t, a] of [[people[0], T[1], AL[1]], [people[1], T[2], AL[2]]]) { ray([t[0], t[1] + 2], [u, COUNTER + 4], 'l-T'); ray([a[0], a[1] - 2], [u, COUNTER + 11], 'l-A'); }
   out.push(`<line class="ray guest" x1="${ix(168)}" y1="8" x2="${ix(168)}" y2="${iy(-12)}" marker-end="url(#arrow)"/>`);
   text(ix(150), 6, 'guest view: exposed LEDs, hood glare, fixture in the sightline?', 'code');
   for (const [u, v] of T) isl(u, v, 'task', 'lamp l-T');
@@ -177,6 +182,8 @@ for (const box of document.querySelectorAll('[data-light]')) {
     for (const [x, y] of [[x1, y1], [x2, y2]]) seg(x - tx, y - ty, x + tx, y + ty);
     label((x1 + x2) / 2 + (x1 === x2 ? 8 : 0), (y1 + y2) / 2 + (x1 === x2 ? 1.5 : -1.5), s); // beside the line
   };
+  const same = u => u;
+  notes.push(...fixtures(T, SPOT, same, same), ...fixtures(AL, HALO, same, same)); // task and ambient lights
   for (const c of island) if (c.name) label(c.u + c.w / 2, COUNTER + 5, c.name);
   for (const c of wall) if (c.name) label(n - c.u - c.w / 2, ZWALL - 32.5, c.name);
   dim(-SPICES, 12, 0, 12, `${inch(SPICES)}"`);

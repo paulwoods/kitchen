@@ -3,7 +3,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="../nav.js" defer></script>
-<link rel="stylesheet" href="../theme.css">
+<link rel="stylesheet" href="../theme.css" id="theme">
 <title>3D model · Galley Kitchen</title>
 <style>
   body { margin: 0; overflow: hidden; background: var(--paper); color: var(--ink); font-family: system-ui, sans-serif; }
@@ -14,7 +14,7 @@
 <header>
   <h1>3D model</h1>
   <p><a href="../index.html">index</a> · drag to orbit, right-drag to pan, scroll to zoom</p>
-  <p><button data-view="end">End</button><button data-view="island">Island</button><button data-view="wall">Wall</button><button data-view="top">Top</button><label><input type="checkbox" id="small"> toaster, air fryer, coffee</label></p>
+  <p><button data-view="end">End</button><button data-view="island">Island</button><button data-view="wall">Wall</button><button data-view="top">Top</button><label><input type="checkbox" id="small"> toaster, air fryer, coffee</label> <button id="toggle-theme">Toggle theme</button></p>
 </header>
 <script src="../kitchen.js"></script>
 <script type="importmap">
@@ -37,6 +37,14 @@ const ZWALL = 2 * COUNTER + AISLE; // the island's back is at z = 0, the room wa
 
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(getComputedStyle(document.documentElement).getPropertyValue('--paper').trim());
+const theme = document.getElementById('theme'), paper = () => scene.background.set(getComputedStyle(document.documentElement).getPropertyValue('--paper').trim());
+const setTheme = light => { // dark by default; light swaps in the light stylesheet, remembered per browser
+  theme.onload = paper;
+  theme.href = light ? '../theme-light.css' : '../theme.css';
+  try { localStorage.setItem('model-theme', light ? 'light' : 'dark'); } catch {}
+};
+try { if (localStorage.getItem('model-theme') === 'light') setTheme(true); } catch {}
+document.getElementById('toggle-theme').onclick = () => setTheme(!theme.href.endsWith('light.css'));
 const mat = (color, extra = {}) => new THREE.MeshStandardMaterial({ color, roughness: 0.8, ...extra });
 const M = {
   box: mat('#bec6bd'), front: mat('#bec6bd'), base: mat('#bec6bd'), alabaster: mat('#ebeae6'), // Colonial Maple Haze; Alabaster on the tall items and upper cabinets

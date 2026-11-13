@@ -1,4 +1,4 @@
-// Row of links across the top of every page: Model, Sketches, Documentation, Pricing (as in index.html).
+// Row of links across the top of every page: Model, Sketches, Documentation, Activity, Pricing (as in index.html).
 // Loaded with defer, so it runs after sketch.js has added the drawings. On model.html it goes inside the header,
 // which the canvas subtracts from the window height.
 const groups = [
@@ -6,7 +6,8 @@ const groups = [
   [['drawings/model.html', '3D Model']],
   [['drawings/sketches.html', 'Sketches']],
   [['docs/cabinets.html', 'Cabinets'], ['docs/selections.html', 'Selections'], ['docs/countertop.html', 'Countertop'], ['docs/countertop-2.html', 'Countertop 2'], ['docs/backsplash.html', 'Backsplash'], ['docs/pick.html', 'Pick'], ['docs/lighting.html', 'Lighting']],
-  [['docs/electrical.html', 'Electrical'], ['docs/walls.html', 'Walls'], ['docs/contractors.html', 'Contractors'], ['docs/permits.html', 'Permits'], ['docs/dumpster.html', 'Dumpster'], ['docs/sequence.html', 'Sequence']],
+  [['docs/decisions.html', 'Decisions'], ['docs/next.html', 'Next Decisions'], ['docs/electrical.html', 'Electrical'], ['docs/walls.html', 'Walls'], ['docs/contractors.html', 'Contractors'], ['docs/permits.html', 'Permits'], ['docs/sequence.html', 'Sequence']],
+  [['docs/demolition.html', 'Demolition']],
   [['pricing/price.html', 'Price']],
 ];
 // Links are relative to this script's folder (the site root), so pages in subfolders load it as ../nav.js.

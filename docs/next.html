@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="../nav.js" defer></script>
+<link rel="stylesheet" href="../theme.css">
+<title>Next Decisions · Galley Kitchen</title>
+<style>
+  body { margin: 24px; background: var(--paper); color: var(--ink); font-family: system-ui, sans-serif; line-height: 1.5; }
+  h1 { margin: 0 0 4px; } h2 { margin: 28px 0 4px; font-size: 1.25em; } li { margin: 4px 0; } p { margin: 8px 0; } p.sub { margin: 0; color: var(--muted); } a { color: var(--link); }
+  .note { color: var(--muted); }
+  table { border-collapse: collapse; margin-top: 12px; background: var(--sheet); width: 100%; }
+  th, td { border: 1px solid var(--rule); padding: 8px 10px; text-align: left; vertical-align: top; }
+  th { background: var(--head); } td ul { margin: 0; padding-left: 18px; }
+  @media (max-width: 600px) { /* phones: each row stacks */
+    table, tbody, tr, td { display: block; } tr:first-child { display: none; }
+    tr { border: 1px solid var(--rule); border-top: 0; padding: 8px 10px; } tr:nth-child(2) { border-top: 1px solid var(--rule); }
+    td { border: 0; padding: 0; } td:first-child { font-weight: 600; } td + td { margin-top: 6px; }
+    td[data-h]::before { content: attr(data-h) ": "; font-weight: 600; }
+  }
+</style>
+<h1>Next Decisions</h1>
+<p class="sub">Who has to answer what before work starts, organized 2026-11-12 from the inquiry and design notes · <a href="../index.html">index</a></p>
+
+<p class="note"><b>Planning only, not authorization to begin construction.</b> The four rows are coordination categories, not a statement that Plano requires a particular permit or inspection. A sent date appears only where it is known. Wherever the aisle comes up, it is <span data-k="aisle">56</span>" clear between the opposing finished countertop edges. If nothing has arrived by a review date, follow up through the department contact named in the row; silence is not approval. The item-by-item list stays on <a href="decisions.html#open">Decisions</a>.</p>
+
+<h2 id="tracker">Tracker</h2>
+<table>
+<tr><th>Issue</th><th>Current status</th><th>Person or department to confirm</th><th>Evidence needed</th><th>Affected drawing or document</th><th>Action that must wait</th><th>Next action and review date</th></tr>
+
+<tr id="plano">
+  <td>1. Plano permit classification, owner-GC eligibility and trade responsibilities</td>
+  <td data-h="Status"><b>Sent, awaiting reply.</b> Emailed 2026-11-11 (<a href="permits.html#status">Permits, Status</a>). No answers yet.</td>
+  <td data-h="Confirm">City of Plano Building Inspections, 972-941-7140, <a href="mailto:buildingpermits@plano.gov">buildingpermits@plano.gov</a></td>
+  <td data-h="Evidence">Written direction naming the applicable submissions (Addition / Alteration or the remodel scope permit; trade permits; demolition), the responsible applicant for each (owner, wall company, electrician, plumber, HVAC), whether the owner may act as GC and register, and the inspection checkpoints and who schedules each.</td>
+  <td data-h="Affects"><a href="permits.html#needed">Permits needed</a>, <a href="permits.html#questions">Questions</a>, <a href="sequence.html#before">Sequence, step 4</a>, <a href="demolition.html#wall-pick">Demolition, wall pick</a> (who pulls the permit)</td>
+  <td data-h="Waits">Applying in eTRAKiT, choosing the wall company, bidding the trades on who pulls what, any construction.</td>
+  <td data-h="Next">Check for a reply <b>2026-11-18</b>. None by then: call 972-941-7140 or reply on the same email thread. Record each answer, dated and with who gave it, on <a href="permits.html#status">Permits</a>.</td>
+</tr>
+
+<tr id="structure">
+  <td>2. Structural wall removal, beam and footing documentation</td>
+  <td data-h="Status"><b>Not started.</b> Wall contractors ranked 2026-11-09; no quote requested, no engineer engaged. Beam not designed, drawn or bid.</td>
+  <td data-h="Confirm">A Texas licensed structural engineer (the wall company's, as offered by <a href="demolition.html#wall">Load Bearing Wall Pros and DFW Wall Removal</a>, or an independent one) sets the design and the documents. The city says whether a seal is required (row 1).</td>
+  <td data-h="Evidence">Sealed drawings and calculations for the beam, posts, footings and temporary shoring; flush or dropped below the <span data-k="ceiling">96</span>" ceiling; whether the slab is post-tensioned, with the scan of the post and anchor lines; the island wall's slab anchoring for the 15" overhang.</td>
+  <td data-h="Affects"><a href="walls.html">Walls</a>, <a href="../drawings/sketches.html#house">House</a> and <a href="../drawings/sketches.html#island-top">Island top</a> sketches, <a href="lighting.html">Lighting</a> (ceiling lights over the island), <a href="selections.html">Selections</a> (hood), <a href="sequence.html#slab">Sequence, steps 2 and 11 to 13</a>, <a href="../pricing/price.html">Price</a></td>
+  <td data-h="Waits">Removing or shoring the wall, cutting or anchoring into the slab, framing the island wall, fixing the hood duct and ceiling light positions, the permit submission.</td>
+  <td data-h="Next">Request quotes from the top two wall companies with the <a href="demolition.html#wall-ask">ask-for list</a>. Review <b>2026-11-19</b>.</td>
+</tr>
+
+<tr id="trades">
+  <td>3. Slab trenching, plumbing or AAV, electrical work, hood ducting and inspection sequencing</td>
+  <td data-h="Status"><b>Partly sent, awaiting reply:</b> the AAV and inspection questions went with the 2026-11-11 inquiry. <b>Not started</b> with the trades: no plumber, electrician or HVAC contractor contacted.</td>
+  <td data-h="Confirm">City of Plano Building Inspections (AAV, inspection order); a licensed plumber (drain at 170" stays or moves, AAV in the SB42); a licensed electrician (circuits, dimmer loads, cooktop and oven junction box access); an HVAC contractor (6" duct path); the slab scanner.</td>
+  <td data-h="Evidence">The city's written answer on the AAV and which inspections come before covering (underground, rough, framing); each trade's route and circuit plan against the drawings; the duct path to the outside, clear of the beam.</td>
+  <td data-h="Affects"><a href="electrical.html">Electrical</a>, <a href="selections.html">Selections</a> (appliance specs, hood), <a href="lighting.html">Lighting</a>, <a href="walls.html">Walls</a> (existing plumbing), <a href="../drawings/sketches.html#island-front">Island front</a> and <a href="../drawings/sketches.html#island-top">Island top</a>, <a href="sequence.html#rough">Sequence, rough-ins</a></td>
+  <td data-h="Waits">The trench, every rough-in, closing walls and ceiling, the hood order.</td>
+  <td data-h="Next">City part: with row 1, <b>2026-11-18</b>. Trades: send each one its page (index, For the trades) for a bid once row 1 says who pulls which permit. Review <b>2026-11-25</b>.</td>
+</tr>
+
+<tr id="counter">
+  <td>4. Countertop support: seven brackets, no subtop, seam placement</td>
+  <td data-h="Status"><b>Drafted, not sent:</b> the <a href="countertop.html#request">coordinated check</a> and the <a href="countertop.html#questions">fabricator questions</a>. Fabricator tentative (The Stumble Stone), not contacted.</td>
+  <td data-h="Confirm">The fabricator, for the actual stone, spans, cutouts and installation; the cabinet supplier, for the 3 cm stone set straight on the boxes; the engineer (row 2), for the island wall carrying the brackets.</td>
+  <td data-h="Evidence">Written approval of the seven 16" brackets about 13" apart for 3 cm Luce di Luna on the 15" seating overhang, including beside the cooktop cutout; no subtop; the seam between plates and trash; the <span data-k="aisle">56</span>" clear between the finished edges kept.</td>
+  <td data-h="Affects"><a href="countertop.html#map">Fabrication map</a>, <a href="countertop.html#spec">Proposed specification</a>, <a href="countertop.html#protect">Protect the working kitchen</a>, <a href="cabinets.html#island">Cabinets, island</a>, <a href="walls.html">Walls</a>, <a href="../drawings/sketches.html#island-top">Island top</a></td>
+  <td data-h="Waits">Framing the island wall (the channels are cut in its top plate), the cabinet order, buying the slabs, templating and cutting.</td>
+  <td data-h="Next">Contact the fabricator and send the coordinated check to it and the cabinet supplier. Review <b>2026-11-19</b>.</td>
+</tr>
+</table>

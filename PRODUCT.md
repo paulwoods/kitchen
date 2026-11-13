@@ -39,7 +39,7 @@ It is the plan for this one kitchen, not a general kitchen-design tool: real mod
 - Model numbers and spec-sheet dimensions of the appliances, lights and devices in `selections.html`.
 - Electrical requirements in `electrical.html`.
 - Cabinet list and order summary in `cabinets.html`.
-- Dated decisions and open items on the page they concern: its Open list (`#open`) and Decision log (`#log`).
+- Open items in `decisions.html` (`#open`), each under the page it concerns; dated decisions in that page's Decision log (`#log`).
 - No photos of the existing room, contractor quotes or final cabinet-maker drawings are in the repo; do not invent them.
 
 ## Product Principles

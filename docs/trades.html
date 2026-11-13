@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="../nav.js" defer></script>
+<link rel="stylesheet" href="../theme.css">
+<title>Trades · Galley Kitchen</title>
+<style>
+  body { margin: 24px; background: var(--paper); color: var(--ink); font-family: system-ui, sans-serif; line-height: 1.5; }
+  h1 { margin: 0 0 4px; } h2 { margin: 28px 0 4px; font-size: 1.25em; } h3 { margin: 20px 0 0; font-size: 1em; } p { margin: 8px 0; } p.sub { margin: 0; color: var(--muted); } a { color: var(--link); }
+  li { margin: 6px 0; }
+  table { border-collapse: collapse; margin-top: 12px; background: var(--sheet); width: 100%; }
+  th, td { border: 1px solid var(--rule); padding: 8px 10px; text-align: left; vertical-align: top; }
+  th { background: var(--head); }
+  @media (max-width: 600px) { /* phones: each row stacks */
+    table, tbody, tr, td { display: block; } tr:first-child { display: none; }
+    tr { border: 1px solid var(--rule); border-top: 0; padding: 8px 10px; } tr:nth-child(2) { border-top: 1px solid var(--rule); }
+    td { border: 0; padding: 0; } td:first-child { font-weight: 600; } td + td { margin-top: 4px; } td:empty { display: none; }
+    td[data-h]::before { content: attr(data-h) ": "; font-weight: 600; }
+  }
+</style>
+<h1>Trades</h1>
+<p class="sub">Everyone the job hires: the work, what to send them, what to ask, who is being considered and where the bid stands, gathered 2026-11-12 · <a href="../index.html">index</a></p>
+
+<p>The owner is the general contractor (<a href="sequence.html#log">Sequence</a>, 2026-11-04) and does the framing, drywall, paint and scribing. No trade has been contacted; only the city has been written to. The steps are the <a href="sequence.html">Sequence</a>'s, the price lines the <a href="../pricing/price.html">Price</a> page's (all TBD until there's a bid). A question list stays on the page it was written for and is linked here. Get each trade's license and insurance certificate with its bid (step 4).</p>
+
+<table id="trades">
+<tr><th>Trade</th><th>Work</th><th>Send them</th><th>Ask</th><th>Who, and where the bid stands</th><th>Permit</th><th>Price line</th></tr>
+<tr id="engineer"><td>Structural engineer</td><td data-h="Work">Step 2: design the beam that replaces the load bearing wall, its posts, any footings and the temporary shoring, flush or dropped; set the island wall's anchoring and approve it for the 15" overhang.</td><td data-h="Send"><a href="walls.html">Walls</a>, <a href="existing.html">Existing conditions</a>, the <a href="../drawings/sketches.html#house">House</a> and <a href="../drawings/sketches.html#island-top">Island top</a> sketches</td><td data-h="Ask"><a href="decisions.html#structure">Next actions, row 2</a>; <a href="decisions.html#permit">Decisions</a>, the load bearing wall and the old 106" wall; <a href="decisions.html#framing">the island wall and its brackets</a></td><td data-h="Who">The wall company's own engineer (both top picks <a href="#wall">below</a> have one) or an independent one. Not engaged.</td><td data-h="Permit">Seals the drawings for the building permit, if the city requires a seal</td><td data-h="Price line">In Load bearing wall beam replacement (the engineer's design)</td></tr>
+<tr id="scanner"><td>Slab scanner</td><td data-h="Work">Step 2: find out whether the slab is post-tensioned; scan the trench line, the island wall's anchor lines and the beam's post locations, and mark cables and pipes on the slab.</td><td data-h="Send"><a href="../drawings/sketches.html#house">House</a> and <a href="../drawings/sketches.html#island-top">Island top</a> sketches</td><td data-h="Ask"></td><td data-h="Who">None found yet.</td><td data-h="Permit"></td><td data-h="Price line">Slab scan</td></tr>
+<tr id="lab"><td>Asbestos test lab</td><td data-h="Work">Step 3: test the flooring, mastic, ceiling texture and drywall joint compound (the house was built in 1985). The results can change who does the demolition.</td><td data-h="Send"></td><td data-h="Ask"></td><td data-h="Who">None found yet.</td><td data-h="Permit"></td><td data-h="Price line">Asbestos testing</td></tr>
+<tr id="wall-company"><td>Load bearing wall company</td><td data-h="Work">Steps 2 and 11 to 13: inspect the old 65" wall and the others, shore, remove the wall, set the beam and posts, pour any footings.</td><td data-h="Send"><a href="walls.html">Walls</a>, <a href="existing.html">Existing conditions</a>, the <a href="../drawings/sketches.html#house">House</a> sketch</td><td data-h="Ask"><a href="#wall-ask">Ask for with each quote</a>, below</td><td data-h="Who"><a href="#wall">Four ranked below</a>; quotes from the top two, not requested yet.</td><td data-h="Permit">Building. DFW Wall Removal pulls it; Load Bearing Wall Pros leaves it to the owner (<a href="permits.html#needed">Permits</a>)</td><td data-h="Price line">Load bearing wall beam replacement</td></tr>
+<tr id="demolition"><td>Demolition crew</td><td data-h="Work">Step 9: remove the appliances, counters, backsplash, cabinets, old hood and duct, light fixtures and any flooring being replaced; haul it off. The load bearing wall stays until it is shored.</td><td data-h="Send"><a href="existing.html">Existing conditions</a></td><td data-h="Ask"></td><td data-h="Who">None found yet.</td><td data-h="Permit">Part of the building permit, probably (<a href="permits.html#needed">Permits</a>)</td><td data-h="Price line">Demolition and haul-off</td></tr>
+<tr id="hauler"><td>Dumpster hauler</td><td data-h="Work">Step 9: a 20-yard roll-off for the tear-out.</td><td data-h="Send"></td><td data-h="Ask"><a href="demolition.html#dumpster">Demolition</a>, what to ask with a quote</td><td data-h="Who">Republic Services, the only hauler Plano permits that takes a mixed load. Quote not requested.</td><td data-h="Permit">Named on the permit application; must hold Plano's hauler permit</td><td data-h="Price line">Dumpster, 20-yard roll-off</td></tr>
+<tr id="concrete"><td>Concrete cutter</td><td data-h="Work">Steps 12, 14 and 16: cut the slab for any footings, saw-cut and dig the roughly 60" trench on the scanned line, then backfill, patch and level it.</td><td data-h="Send"><a href="../drawings/sketches.html#island-top">Island top</a></td><td data-h="Ask"></td><td data-h="Who">None found yet.</td><td data-h="Permit">Part of the building permit</td><td data-h="Price line">Slab trench</td></tr>
+<tr id="electrician"><td>Electrician</td><td data-h="Work">Steps 8, 11, 15, 20 and 39: make the old circuits safe, lay the conduit to the island, pull the circuits and set the boxes, then install the devices, lights, drivers and the cooktop and oven connections.</td><td data-h="Send"><a href="electrical.html">Electrical</a>, <a href="selections.html">Selections</a>, <a href="lighting.html">Lighting</a>, <a href="walls.html">Walls</a> (box positions), the <a href="../drawings/sketches.html#wall-front">Wall front</a>, <a href="../drawings/sketches.html#island-front">Island front</a> and both top sketches</td><td data-h="Ask"><a href="lighting.html#questions">Electrician questions</a> and <a href="lighting.html#coordination">To the electrician</a> on Lighting; <a href="decisions.html#rough">Decisions</a>, circuits and box positions; the <a href="decisions.html#order">oven and cooktop junction box access</a></td><td data-h="Who">None found yet.</td><td data-h="Permit">Electrical; must be licensed and registered with Plano</td><td data-h="Price line">Electrical</td></tr>
+<tr id="plumber"><td>Plumber</td><td data-h="Work">Steps 8, 10, 19 and 38: cap the water and drains, check the existing plumbing once it is exposed, run the island drain, the AAV, the supplies and the ice maker line, then hook up the faucet, sink, disposal and dishwasher.</td><td data-h="Send"><a href="selections.html">Selections</a> (sink, disposal, dishwasher drain, fridge and ice maker water), <a href="walls.html">Walls</a> (existing plumbing), the <a href="../drawings/sketches.html#island-front">Island front</a></td><td data-h="Ask"><a href="decisions.html#framing">Decisions</a>: whether the drain and supplies at 170" stay or move; the AAV in the SB42, once the city answers</td><td data-h="Who">None found yet.</td><td data-h="Permit">Plumbing; must be licensed</td><td data-h="Price line">Plumbing</td></tr>
+<tr id="hvac"><td>HVAC or duct installer</td><td data-h="Work">Step 18: run the 6" round hood duct through the ceiling and outside, centered on the hood's chimney and clear of the beam.</td><td data-h="Send"><a href="selections.html">Selections</a> (hood), <a href="existing.html">Existing conditions</a> (duct path), the <a href="../drawings/sketches.html#island-top">Island top</a></td><td data-h="Ask">The duct path to the outside, clear of the beam; <a href="lighting.html#coordination">To the hood supplier</a> on Lighting goes to Proline</td><td data-h="Who">None found yet.</td><td data-h="Permit">Mechanical; a licensed air conditioning and refrigeration contractor</td><td data-h="Price line">Hood duct</td></tr>
+<tr id="floor"><td>Floor installer</td><td data-h="Work">Step 25: lay the floor, before the cabinets if it is tile or nailed down, after them if it floats.</td><td data-h="Send"></td><td data-h="Ask"></td><td data-h="Who">The floor isn't chosen.</td><td data-h="Permit">None listed</td><td data-h="Price line">Flooring</td></tr>
+<tr id="cabinets"><td>Cabinet supplier</td><td data-h="Work">Step 5: the order. Step 26: delivery, checked against the order summary.</td><td data-h="Send"><a href="cabinets.html#order-summary">Order summary</a>, the <a href="cabinets.html#island">island</a> and <a href="cabinets.html#wall">wall</a> tables, both front sketches</td><td data-h="Ask"><a href="decisions.html#order">Decisions</a>, before the cabinets are ordered; the <a href="countertop.html#request">coordinated check</a> (3 cm stone straight on the boxes)</td><td data-h="Who">cabinets.com, Colonial, ahead of two other quotes (<a href="cabinets.html#quotes">Quotes</a>). Not ordered.</td><td data-h="Permit">None listed</td><td data-h="Price line">Colonial Maple Haze and Alabaster</td></tr>
+<tr id="installer"><td>Cabinet installer</td><td data-h="Work">Steps 27 to 32: cut the cooktop and trash cabinet backs, set the tall cabinets, hang the uppers, set and level both runs. The owner scribes.</td><td data-h="Send"><a href="cabinets.html">Cabinets</a>, both front sketches, <a href="sequence.html#cabinets">Sequence</a>, part 6</td><td data-h="Ask"></td><td data-h="Who">None found yet.</td><td data-h="Permit">None listed</td><td data-h="Price line">Cabinet installation</td></tr>
+<tr id="fabricator"><td>Countertop fabricator</td><td data-h="Work">Steps 34 to 37: template, lay out on the actual slabs, cut, install the three counter pieces and the four backsplash pieces, mount the sink.</td><td data-h="Send"><a href="countertop.html">Countertop</a>, the <a href="../drawings/sketches.html#island-top">Island top</a> and <a href="../drawings/sketches.html#wall-top">Wall top</a> for depths, <a href="selections.html">Selections</a> for cutouts, <a href="cabinets.html#island">Cabinets</a> for brackets</td><td data-h="Ask"><a href="#countertop-ask">Ask for with each quote</a>, below; on Countertop, the <a href="countertop.html#focused">three focused questions</a>, the <a href="countertop.html#questions">unanswered questions</a>, the <a href="countertop.html#request">coordinated check</a> and the <a href="countertop.html#remnants">remnant request</a>; <a href="backsplash.html#requests">Backsplash, three requests</a>; <a href="pick.html#schedule">Pick</a>; <a href="decisions.html#stone">Decisions</a>, seams</td><td data-h="Who"><a href="#countertop">Four ranked below</a>; The Stumble Stone is the tentative pick. None contacted.</td><td data-h="Permit">None listed</td><td data-h="Price line">Countertop fabrication and installation; Backsplash, wall run</td></tr>
+<tr id="appliances"><td>Appliance installer</td><td data-h="Work">Steps 40 and 43: drop in the cooktop, hang the hood, mount the dishwasher and its panel, lift in the 274 lb combination oven, roll in the fridge last.</td><td data-h="Send"><a href="selections.html">Selections</a></td><td data-h="Ask"></td><td data-h="Who">None found yet.</td><td data-h="Permit">None listed</td><td data-h="Price line">Appliance installation</td></tr>
+<tr id="finish"><td>Insulator, carpenter, glazier</td><td data-h="Work">Step 22: insulation, if a wall is opened. Step 41: toe-kick covers, riser molding, pulls, and the glass in the four W2112s.</td><td data-h="Send"><a href="cabinets.html">Cabinets</a></td><td data-h="Ask"></td><td data-h="Who">None found yet.</td><td data-h="Permit">None listed</td><td data-h="Price line">Glass for the glass-door cabinets</td></tr>
+<tr id="city"><td>City of Plano</td><td data-h="Work">Step 4: the permits. Steps 21 and 44: the rough and final inspections.</td><td data-h="Send"><a href="permits.html#work">Permits, proposed work</a></td><td data-h="Ask"><a href="permits.html#questions">Permits, questions</a></td><td data-h="Who">Inquiry emailed 2026-11-11; no answer yet (<a href="decisions.html#plano">Next actions, row 1</a>).</td><td data-h="Permit"></td><td data-h="Price line">Permits</td></tr>
+</table>
+
+<p>Review counts and warranty terms in the rankings below come from the companies' own sites and from directory listings. Check them on Google and BBB before signing.</p>
+
+<h2 id="wall">Load bearing wall contractors</h2>
+<p>Researched 2026-11-09; moved here from Demolition 2026-11-12.</p>
+
+<table>
+<tr><th>Rank</th><th>Company</th><th>Strengths</th><th>Watch for</th></tr>
+<tr><td>1</td><td><a href="https://www.loadbearingwall.com/dallas-load-bearing-wall-removal/">Load Bearing Wall Pros</a> (Plano)</td><td>In business since 2015, with the most reviews (Google about 4.9 from roughly 410, per one listing). An in-house engineer stamps the drawings. Lifetime structural warranty you can pass to a buyer, $2M liability policy. Published price range of $3,500–$10,000.</td><td><b>You pull the permit yourself.</b> Its listings give different addresses and review counts.</td></tr>
+<tr><td>2</td><td><a href="https://dfwwallremoval.com/">DFW Wall Removal</a> (Carrollton)</td><td>4.9★ from 196 Google reviews. A licensed engineer signs off on every beam, and they pull the permit and schedule the inspection. 12-year transferable warranty, $1M insurance.</td><td>Only in business since 2022. No address on its website.</td></tr>
+<tr><td>3</td><td><a href="https://loadbearingwallexperts.com/">Load Bearing Wall Experts</a> (11550 Plano Rd #124, Dallas)</td><td>4.7★ from 44+ Google reviews. They handle the permit and the engineering.</td><td>The workmanship guarantee doesn't say how long it lasts. The site doesn't mention its years in business.</td></tr>
+<tr><td>Alternate</td><td><a href="https://www.homeadvisor.com/rated.LoadBearingBeamMasters.142931868.html">Load Bearing Beam Masters</a> (McKinney)</td><td>5.0★ on HomeAdvisor, which also screens its contractors. One review describes a kitchen-to-living-room wall removal.</td><td>Only about 6 reviews, and no Google or BBB pages found.</td></tr>
+</table>
+
+<h3 id="wall-pick">Pick</h3>
+<p>Get quotes from #1 and #2. DFW Wall Removal does the most work for you, since it pulls the permit. Load Bearing Wall Pros has the longer history and the better warranty.</p>
+
+<h3 id="wall-ask">Ask for with each quote</h3>
+<ul>
+  <li>The stamped engineer's drawing (beam size, posts, footings)</li>
+  <li>Who pulls the permit</li>
+  <li>A certificate of insurance with your name on it</li>
+  <li>The warranty in writing</li>
+</ul>
+
+<h3 id="wall-sources">Sources</h3>
+<ul>
+  <li><a href="https://www.loadbearingwall.com/dallas-load-bearing-wall-removal/">Load Bearing Wall Pros – Dallas page</a></li>
+  <li><a href="https://www.loadbearingwall.com/dallas-wall-removal/">Load Bearing Wall Pros – DFW page</a></li>
+  <li><a href="https://dfwwallremoval.com/">DFW Wall Removal</a></li>
+  <li><a href="https://loadbearingwallexperts.com/">Load Bearing Wall Experts</a></li>
+  <li><a href="https://loadbearingwallexperts.com/load-bearing-wall-removal-fort-worth-tx/">Load Bearing Wall Experts – Fort Worth</a></li>
+  <li><a href="https://www.homeadvisor.com/rated.LoadBearingBeamMasters.142931868.html">Load Bearing Beam Masters – HomeAdvisor</a></li>
+  <li><a href="https://angi.com/companylist/us/tx/mckinney/load-bearing-beam-masters-reviews-1.htm">Load Bearing Beam Masters – Angi</a></li>
+  <li><a href="https://www.yelp.com/search?find_desc=load+bearing+wall+removal&amp;find_loc=Dallas,+TX">Yelp – Load Bearing Wall Removal, Dallas</a></li>
+  <li><a href="https://homeguide.com/tx/dallas/wall-removal/">HomeGuide – Dallas wall removal</a></li>
+  <li><a href="https://www.angi.com/companylist/us/tx/plano/structural-engineering.htm">Angi – Plano structural engineering</a></li>
+</ul>
+
+<h2 id="countertop">Countertop fabricators</h2>
+<p>Researched 2026-11-09. For the <a href="countertop.html">countertop</a>: template, fabricate and install our own Luce di Luna quartzite slabs from Go-Granite. None of these shops says on its site that it takes customer-supplied slabs or does a full turnkey job (sink mount, cutouts, backsplash), so ask each one.</p>
+
+<table>
+<tr><th>Rank</th><th>Company</th><th>Strengths</th><th>Watch for</th></tr>
+<tr><td>1</td><td><a href="https://countertopscontractors.com/contractor/granite-republic">Granite Republic</a> (Dallas)</td><td>The most reviews (Birdeye 5★ from 178). Fabricates and installs granite, quartz, marble, porcelain and quartzite. Reviewers praise communication, installation and prices; Houzz lists typical jobs at $2,700–$7,000.</td><td>Listings disagree on the founding year (2005 or 2016) and the address. No published warranty, and in-house fabrication isn't confirmed.</td></tr>
+<tr><td>2</td><td><a href="https://www.thestumblestone.us/">The Stumble Stone</a> (Dallas / Arlington)</td><td>Already the tentative pick on the <a href="countertop.html">Countertop</a> page. 5.0★ from 74 Thumbtack reviews; the owner is praised for responsiveness. Lists quartzite.</td><td>Founded in 2022. Most reviews are on Thumbtack. Addresses differ between listings.</td></tr>
+<tr><td>3</td><td><a href="https://countertopscontractors.com/contractor/dfw-granite">DFW Granite</a> (10230 Bickham Rd #300, Dallas)</td><td>In business since 1994. Google 5, Yelp 4.9 (47 reviews). Its own install crews; a reviewer had a Taj Mahal quartzite kitchen done.</td><td>A mystery shopper found staff unfriendly and calls unanswered. 70% deposit, and a 1-year workmanship warranty.</td></tr>
+<tr><td>Alternate</td><td><a href="https://www.houzz.com/professionals/tile-and-stone/stonemode-granite-pfvwus-pf~1736613920">Stonemode</a> (2840 Reward Ln, Dallas)</td><td>Family owned, works for designers and builders. A reviewer had Taj Mahal quartzite installed and the remnants used for two bathrooms.</td><td>Only 6 Yelp reviews (4.2), and the quartzite review is from 2017.</td></tr>
+</table>
+
+<h3 id="countertop-pick">Pick</h3>
+<p>Get quotes from #1 and #2. Granite Republic has the longest review record; The Stumble Stone is already on the plan.</p>
+
+<h3 id="countertop-ask">Ask for with each quote</h3>
+<ul>
+  <li>Whether they fabricate customer-supplied slabs, and who takes the risk if a slab cracks</li>
+  <li>That the price covers template, fabrication, delivery, install, sink mounting, the cooktop and sink cutouts and the faucet and air button holes</li>
+  <li>Whether they follow the <a href="countertop.html#map">fabrication map</a> (seams, grain direction) and who keeps the remnants</li>
+  <li>Experience with quartzite, and a recent quartzite job to see</li>
+  <li>The warranty and the deposit in writing</li>
+</ul>
+
+<h2 id="sources">Sources</h2>
+<ul>
+  <li><a href="https://countertopscontractors.com/contractor/granite-republic">Granite Republic – CountertopsContractors</a></li>
+  <li><a href="https://reviews.birdeye.com/granite-republic-166684236715405">Granite Republic – Birdeye</a></li>
+  <li><a href="https://homeguide.com/tx/mesquite/countertop-installation/granite-republic-countertops-zWrq4lQ3g">Granite Republic – HomeGuide</a></li>
+  <li><a href="https://thumbtack.com/tx/dallas/countertop-installation/stumble-stone-llc/service/488337876345520131">The Stumble Stone – Thumbtack</a></li>
+  <li><a href="https://homeguide.com/tx/arlington/countertop-installation/the-stumble-stone-llc-gFOuW1PFm">The Stumble Stone – HomeGuide</a></li>
+  <li><a href="https://countertopscontractors.com/contractor/dfw-granite">DFW Granite – CountertopsContractors</a></li>
+  <li><a href="https://www.houzz.com/professionals/tile-and-stone/stonemode-granite-pfvwus-pf~1736613920">Stonemode – Houzz</a></li>
+  <li><a href="https://phoenix.aws.mapquest.com/us/texas/stonemode-633403173">Stonemode – MapQuest/Yelp</a></li>
+  <li><a href="https://www.yelp.com/search?find_desc=Countertop+Fabricator&amp;find_loc=Dallas%2C+TX">Yelp – Countertop Fabricator, Dallas</a></li>
+</ul>

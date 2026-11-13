@@ -1,14 +1,13 @@
-// Row of links across the top of every page: Model, Sketches, Documentation, Activity, Pricing (as in index.html).
+// Row of links across the top of every page, in index.html's order: before work starts, the work, drawings, design, stone.
 // Loaded with defer, so it runs after sketch.js has added the drawings. On model.html it goes inside the header,
 // which the canvas subtracts from the window height.
 const groups = [
   [['index.html', 'Index']],
-  [['drawings/model.html', '3D Model']],
-  [['drawings/sketches.html', 'Sketches']],
-  [['docs/cabinets.html', 'Cabinets'], ['docs/selections.html', 'Selections'], ['docs/countertop.html', 'Countertop'], ['docs/countertop-2.html', 'Countertop 2'], ['docs/backsplash.html', 'Backsplash'], ['docs/pick.html', 'Pick'], ['docs/lighting.html', 'Lighting']],
-  [['docs/decisions.html', 'Decisions'], ['docs/next.html', 'Next Decisions'], ['docs/electrical.html', 'Electrical'], ['docs/walls.html', 'Walls'], ['docs/contractors.html', 'Contractors'], ['docs/permits.html', 'Permits'], ['docs/sequence.html', 'Sequence']],
-  [['docs/demolition.html', 'Demolition']],
-  [['pricing/price.html', 'Price']],
+  [['docs/decisions.html', 'Decisions'], ['docs/existing.html', 'Existing'], ['docs/permits.html', 'Permits'], ['docs/trades.html', 'Trades'], ['pricing/price.html', 'Price']],
+  [['docs/sequence.html', 'Sequence'], ['docs/demolition.html', 'Demolition']],
+  [['drawings/model.html', '3D Model'], ['drawings/sketches.html', 'Sketches']],
+  [['docs/cabinets.html', 'Cabinets'], ['docs/selections.html', 'Selections'], ['docs/electrical.html', 'Electrical'], ['docs/lighting.html', 'Lighting'], ['docs/walls.html', 'Walls']],
+  [['docs/countertop.html', 'Countertop'], ['docs/countertop-2.html', 'Countertop 2'], ['docs/backsplash.html', 'Backsplash'], ['docs/pick.html', 'Pick']],
 ];
 // Links are relative to this script's folder (the site root), so pages in subfolders load it as ../nav.js.
 const root = document.currentScript.src;
@@ -22,9 +21,9 @@ nav.innerHTML = `<style>
 </style>` + groups.map(g => g.map(([href, label]) => url(href) === here ? `<b>${label}</b>` : `<a href="${url(href)}">${label}</a>`).join('')).join('<span>|</span>');
 nav.className = 'links';
 (document.querySelector('header') ?? document.body).prepend(nav);
-// A pill after each label counting the open items on that page (the <ol> right after h2#open).
+// A pill after each label counting the open items on that page (every <ol> after h2#open).
 // The current page counts its own list; others are fetched, or read from open.js when opened from the folder (file:).
-const count = doc => { const l = doc.getElementById('open')?.nextElementSibling; return l?.tagName === 'OL' ? l.children.length : 0; };
+const count = doc => doc.querySelectorAll('#open ~ ol > li').length;
 const pill = (e, n) => n && e.insertAdjacentHTML('beforeend', `<i title="${n} open item${n === 1 ? '' : 's'}">${n}</i>`);
 const fromFile = new Promise(ok => { const s = document.createElement('script'); s.src = url('open.js'); s.onload = () => ok(OPEN); s.onerror = () => ok({}); document.head.append(s); });
 groups.flat().forEach(([href], k) => {

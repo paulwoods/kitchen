@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="../nav.js" defer></script>
+<link rel="stylesheet" href="../theme.css">
+<title>Existing Conditions · Galley Kitchen</title>
+<style>
+  body { margin: 24px; background: var(--paper); color: var(--ink); font-family: system-ui, sans-serif; line-height: 1.5; }
+  h1 { margin: 0 0 4px; } h2 { margin: 28px 0 4px; font-size: 1.25em; } h3 { margin: 20px 0 0; font-size: 1em; } li { margin: 4px 0; } p { margin: 8px 0; } p.sub { margin: 0; color: var(--muted); } a { color: var(--link); }
+  .note { color: var(--muted); }
+  table { border-collapse: collapse; margin-top: 12px; background: var(--sheet); width: 100%; }
+  th, td { border: 1px solid var(--rule); padding: 8px 10px; text-align: left; vertical-align: top; }
+  th { background: var(--head); } td.n { white-space: nowrap; }
+  @media (max-width: 600px) { /* phones: each row stacks */
+    table, tbody, tr, td { display: block; } tr:first-child { display: none; }
+    tr { border: 1px solid var(--rule); border-top: 0; padding: 8px 10px; } tr:nth-child(2) { border-top: 1px solid var(--rule); }
+    td { border: 0; padding: 0; } td:first-child { font-weight: 600; } td + td { margin-top: 4px; } td:empty { display: none; }
+    td[data-h]::before { content: attr(data-h) ": "; font-weight: 600; }
+  }
+</style>
+<h1>Existing Conditions</h1>
+<p class="sub">The room as it stands, measured on site: step 1 of the <a href="sequence.html#before">Sequence</a>. Sheet made 2026-11-12; nothing is measured yet · <a href="../index.html">index</a></p>
+
+<p>Everything else in the plan is drawn from a floor plan drawing and spec sheets. Fill in the Found column on site, with the date, then correct <code>kitchen.js</code> and the <a href="../drawings/sketches.html#house">House</a> sketch from it. The open items that wait on this are under <a href="decisions.html#permit">Decisions, before the permit application</a>. The engineer, the wall company and every trade bidding get this page.</p>
+
+<table>
+<tr><th>Record</th><th>Why</th><th>The plan assumes</th><th>Found</th><th>Date</th></tr>
+<tr><td>Photos of the room as it is</td><td data-h="Why">Nothing in the folder shows it; every trade bidding will ask.</td><td data-h="The plan assumes">None</td><td data-h="Found"></td><td data-h="Date"></td></tr>
+<tr><td>The room: length along the wall run, width, and each wall on the <a href="../drawings/sketches.html#house">House</a> sketch</td><td data-h="Why">The sketch is traced from a floor plan drawing, to the nearest 1/2". The wall run and the side wall take <span data-k="wallLen + wall">197 3/4</span>".</td><td data-h="The plan assumes">Scaled from the drawing</td><td data-h="Found"></td><td data-h="Date"></td></tr>
+<tr><td>Ceiling height, in several spots</td><td data-h="Why">Sets the panel and riser cuts and whether the 93" pantry and OVD3393 fit.</td><td data-h="The plan assumes"><span data-k="ceiling">96</span>"</td><td data-h="Found"></td><td data-h="Date"></td></tr>
+<tr><td>The room wall behind the wall run: what it is built of, how thick, how plumb</td><td data-h="Why">It takes the boxes, the backing and the tall cabinets (<a href="walls.html#room">Walls</a>).</td><td data-h="The plan assumes">Existing, drawn 4 1/2" thick</td><td data-h="Found"></td><td data-h="Date"></td></tr>
+<tr><td>The load bearing wall: length, what it carries, what runs through it</td><td data-h="Why">The engineer needs it to design the beam; the electrician and plumber clear it (<a href="sequence.html#slab">Sequence</a>, step 11).</td><td data-h="The plan assumes">Not recorded</td><td data-h="Found"></td><td data-h="Date"></td></tr>
+<tr><td>The old 106" wall: where it stands, whether it bears, whether it comes out</td><td data-h="Why">The island and the wall run both run into it; it comes out or the kitchen moves (<a href="decisions.html#permit">Decisions</a>).</td><td data-h="The plan assumes">About 242" to 247 1/2" from the wall of the house, scaled</td><td data-h="Found"></td><td data-h="Date"></td></tr>
+<tr><td>Doors, windows and vents in or beside the kitchen</td><td data-h="Why">The 41" doorway is framed in and a new opening cut (<a href="walls.html#room">Walls</a>).</td><td data-h="The plan assumes">From the floor plan only</td><td data-h="Found"></td><td data-h="Date"></td></tr>
+<tr><td>The way from the living room to the kitchen</td><td data-h="Why">The 93" pantry and OVD3393 are stood up in the living room and slid in upright.</td><td data-h="The plan assumes">Clear (assumed)</td><td data-h="Found"></td><td data-h="Date"></td></tr>
+<tr><td>The slab: post-tensioned or not</td><td data-h="Why">Nothing cuts or anchors into it until this is known; the scanner marks the cables (<a href="trades.html#scanner">Trades</a>).</td><td data-h="The plan assumes">Not known</td><td data-h="Found"></td><td data-h="Date"></td></tr>
+<tr><td>The electrical panel: where it is, its size, the spare spaces</td><td data-h="Why">The cooktop and oven need new 240 V circuits (<a href="electrical.html">Electrical</a>).</td><td data-h="The plan assumes">Not recorded</td><td data-h="Found"></td><td data-h="Date"></td></tr>
+<tr><td>The existing drain and supplies</td><td data-h="Why">The plumber decides whether they stay or move.</td><td data-h="The plan assumes">At 170" from the wall of the house</td><td data-h="Found"></td><td data-h="Date"></td></tr>
+<tr><td>The duct path from the hood to the outside</td><td data-h="Why">A 6" round duct through the ceiling, clear of the beam.</td><td data-h="The plan assumes">Not recorded</td><td data-h="Found"></td><td data-h="Date"></td></tr>
+<tr><td>What is above the kitchen ceiling: joist direction, attic access</td><td data-h="Why">Hood blocking, the duct, the ceiling lights and the ice maker line from the attic.</td><td data-h="The plan assumes">Not recorded</td><td data-h="Found"></td><td data-h="Date"></td></tr>
+<tr><td>The existing floor: what it is, and whether it runs under the old cabinets</td><td data-h="Why">The new floor isn't chosen; its thickness comes off the ceiling height.</td><td data-h="The plan assumes">Not recorded</td><td data-h="Found"></td><td data-h="Date"></td></tr>
+<tr><td>Asbestos test: flooring, mastic, ceiling texture, joint compound</td><td data-h="Why">The house was built in 1985. The results can change who does the demolition (<a href="trades.html#lab">Trades</a>).</td><td data-h="The plan assumes">Not tested</td><td data-h="Found"></td><td data-h="Date"></td></tr>
+</table>

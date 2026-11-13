@@ -14,7 +14,7 @@ web
 
 ## Product Purpose
 
-A single source of truth for one kitchen remodel. Every measurement, cabinet, appliance and decision lives here, and the sketches, documentation and 3D model must agree with each other. Success means nothing is ordered or cut until the pages agree, and every open inconsistency is listed on the issues page.
+A single source of truth for one kitchen remodel. Every measurement, cabinet, appliance and decision lives here, and the sketches, documentation and 3D model must agree with each other. Success means the pages agree, every open item is listed on the Decisions page under the step that waits on it, and that step doesn't start until its items are settled.
 
 ## Positioning
 
@@ -24,14 +24,14 @@ It is the plan for this one kitchen, not a general kitchen-design tool: real mod
 
 - Opened locally from the project folder or `python3 -m http.server`; not published.
 - Read on a computer while planning, and handed to trades as a reference for quoting and building.
-- Pages: `index.html`; in `drawings/`, sketches (`sketches.html`: wall front, wall top, island front, island top); 3D model (`model.html`); in `docs/`, documentation (`selections.html`, `cabinets.html`, `electrical.html`); in `pricing/`, the price, comparison and quote pages.
+- Pages: `index.html`; in `drawings/`, sketches (`sketches.html`: wall front, wall top, island front, island top); 3D model (`model.html`); in `docs/`, the design pages (`cabinets.html`, `selections.html`, `electrical.html`, `lighting.html`, `walls.html`, the stone pages) and the job pages (`decisions.html`, `existing.html`, `permits.html`, `trades.html`, `sequence.html`, `demolition.html`); in `pricing/`, the price page and the quotes' data files.
 - Sketches are drawn on graph paper by `sketch.js` (1 square = 6", bold line every 30").
 
 ## Capabilities and Constraints
 
 - Plain static HTML, CSS and JavaScript; no build step. The 3D model loads three.js from a CDN, so it needs a network connection.
 - All dimensions in inches only, never feet.
-- Each page that lists cabinets holds its own copy of the runs; they must be kept in sync when the layout changes.
+- The runs and sizes live only in `kitchen.js`; the drawings and the cabinet tables read them from there.
 - Assumed values (riser thickness, hood depth, appliance depths, counter overhangs) are marked as assumed until confirmed.
 
 ## Evidence on Hand
@@ -39,8 +39,8 @@ It is the plan for this one kitchen, not a general kitchen-design tool: real mod
 - Model numbers and spec-sheet dimensions of the appliances, lights and devices in `selections.html`.
 - Electrical requirements in `electrical.html`.
 - Cabinet list and order summary in `cabinets.html`.
-- Open items in `decisions.html` (`#open`), each under the page it concerns; dated decisions in that page's Decision log (`#log`).
-- No photos of the existing room, contractor quotes or final cabinet-maker drawings are in the repo; do not invent them.
+- Open items in `decisions.html` (`#open`), grouped by the step that waits on them; dated decisions in that page's Decision log (`#log`).
+- No photos or field measurements of the existing room (`existing.html` is the empty sheet for them), contractor quotes or final cabinet-maker drawings are in the repo; do not invent them.
 
 ## Product Principles
 

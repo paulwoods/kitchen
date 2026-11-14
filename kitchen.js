@@ -1,4 +1,4 @@
-// Revision A · 2026-11-13 (raise both when a size or a run changes)
+// Revision B · 2026-11-13 (raise both when a size or a run changes)
 // The kitchen, one source for the drawings and the docs. Inches. A plain script (not a module) so the pages still work when opened from the folder.
 // Text pages show these values with <span data-k="name or expression">fallback</span> (nav.js fills them in, e.g. data-k="counter + seat").
 const DIMS = {
@@ -38,8 +38,8 @@ const RUNS = {
       name: 'plates',    code: 'DB24-3',  w: 24, kind: 'drawers', n: 3, back: DIMS.seat, backReceptacle: true,
       inside: [{ label: '120v', w: 2.75, h: 4.5, at: 29, dx: 12 }] }, // GFCI on the island's back wall, behind the cabinet (height assumed)
     { url: 'https://www.cabinets.com/b18-trash-bda304-frameless-colonial-maple-haze-base-trash-cabinet-2-container-frameless-assembled-kitchen-cabinet.html',
-      note: `Base trash cabinet (B18-BDA304, changed from the TRB18FH 2026-11-13): two bins, 35 quarts in all, fixed to the door, which pulls out on soft-close undermount slides. Drawn with a full-height door; the vendor's page doesn't say whether it has a drawer above. Across the aisle from the oven door. A 120 V receptacle goes in the back wall behind the cabinet, centered 21" off the floor, through a cutout in the cabinet back (2026-11-02).`,
-      name: 'trash',     code: 'B18-Trash', w: 18, kind: 'door', backReceptacle: true,
+      note: `Base trash cabinet (B18-BDA304, changed from the TRB18FH 2026-11-13): a 6" drawer over a pull-out: two bins, 35 quarts in all, front to back on a tray fixed to the door, which pulls out on soft-close undermount slides (drawing of the cabinet, 2026-11-13). Across the aisle from the oven door. A 120 V receptacle goes in the back wall behind the cabinet, centered 21" off the floor, through a cutout in the cabinet back (2026-11-02).`,
+      name: 'trash',     code: 'B18-Trash', w: 18, kind: 'base', trash: true, backReceptacle: true,
       inside: [{ label: '120v', w: 2.75, h: 4.5, at: 21, dx: 9 },
                 { label: '120v', w: 2.75, h: 4.5, at: 29, dx: 9 }], // both in the island's back wall: the first opens into the cabinet, the second faces away from the aisle
       upper: [ { spot: true, w: 3, h: 5.625, at: 87.875, dx: 0 } ] },

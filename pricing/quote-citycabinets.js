@@ -6,7 +6,7 @@ const lines = [
   ['DB24-3', 'B3DR', 2, 1477.95, 873.95, 0, 'island: spices, plates'],
   ['DB24-3 end panel', 'BFE', 1, 89.95, 49.95, 0, 'island: spices, left side, 34.50" × 24 5/8"'],
   ['DB36-3', 'B2DR1FFCOOKTOP', 1, 1401.95, 822.95, 0, 'island: cooktop, false front over 2 drawers, 21" drawer boxes'],
-  ['TRB18FH', 'B0DPULLOUTTRASH', 1, 1291.95, 730.95, 0, 'island: trash, full-height pull-out for 2 cans'],
+  ['B18-Trash', 'B0DPULLOUTTRASH', 1, 1291.95, 730.95, 0, 'island: trash, full-height pull-out for 2 cans'],
   ['SB42', 'B2D1FFSINK', 1, 876.95, 544.95, 0, 'island: sink, 2 doors, 1 false front'],
   ['DW panel', 'APPLIANCEPANEL', 1, 162.95, 114.95, 0, 'island: dishwasher front, custom size, 24" × 30" priced, 3/4" slab plywood, paint grade, raw'],
   ['B24-2', 'B1D1DR', 1, 941.95, 569.95, 0, 'island: cabinet a, 1 drawer over 1 door'],

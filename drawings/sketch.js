@@ -387,6 +387,7 @@ function plan(title, run, opts = {}) {
 
 // Adds a drawing to the page as a <section> (id: the title, e.g. #wall-front), on graph paper with bold lines every BOLD" from (MARGIN, oy).
 // axes: how to say x (from MARGIN, or from axes[3]) and y (up from oy) in the tape measure's readout. Returns the svg.
+const REV = 'A · 2026-11-13'; // revision and date printed on every sheet; bump both when a sheet changes
 function page(title, view, W, H, oy, out, axes) {
   const n = document.querySelectorAll('section.sketch').length; // keeps the pattern ids apart when a page has several drawings
   const section = document.createElement('section');
@@ -428,7 +429,7 @@ function page(title, view, W, H, oy, out, axes) {
       .snap-pt { fill: none; stroke: var(--ink); stroke-width: 1.5px; vector-effect: non-scaling-stroke; }
     </style>`) + `
     <h2>${title}</h2>
-    <p>${view} · 1 square = 6" · bold line = ${BOLD}"</p>
+    <p>${view} · 1 square = 6" · bold line = ${BOLD}" · <b>Revision ${REV}</b></p>
     <p class="readout"><span class="readout-text">Drag on the drawing to measure. It snaps to edges; Shift keeps it level or plumb.</span><button class="clear" hidden>Clear tapes</button></p>
     <svg viewBox="0 0 ${W} ${H}" width="${W * PX}" height="${H * PX}">
       <defs>

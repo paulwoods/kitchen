@@ -58,7 +58,7 @@ const M = {
   box: mat('#bec6bd'), front: mat('#bec6bd'), base: mat('#bec6bd'), alabaster: mat('#ebeae6'), fixture: mat('#ebeae6'), // Colonial Maple Haze; Alabaster on the tall items and upper cabinets
   toe: mat('#556'), counter: mat('#ecebe6', { roughness: 0.3 }),
   steel: mat('#c9ccd2', { metalness: 0.5, roughness: 0.4 }), black: mat('#1b1b1b', { roughness: 0.3 }), brass: mat('#b08d57', { metalness: 0.6, roughness: 0.35 }),
-  glass: mat('#bcd7e8', { transparent: true, opacity: 0.5 }), ring: mat('#8a8f99', { roughness: 0.4 }), drain: mat('#4a4d52', { metalness: 0.5, roughness: 0.4 }), pull: mat('#2b2b2b'), rack: mat('#d6d8dc', { metalness: 0.3 }), tray: mat('#6e7177'), plate: mat('#ffffff'), drawer: mat('#dcc6a0'), // drawer boxes: natural wood (assumed)
+  glass: mat('#bcd7e8', { transparent: true, opacity: 0.5 }), ring: mat('#8a8f99', { roughness: 0.4 }), drain: mat('#4a4d52', { metalness: 0.5, roughness: 0.4 }), pull: mat('#2b2b2b'), rack: mat('#d6d8dc', { metalness: 0.3 }), tray: mat('#6e7177'), disposal: mat('#55595f', { roughness: 0.6 }), purple: mat('#7a5bbf'), plate: mat('#ffffff'), drawer: mat('#dcc6a0'), // drawer boxes: natural wood (assumed)
   hoodGlass: mat('#bcd7e8', { transparent: true, opacity: 0.4, side: THREE.DoubleSide, roughness: 0.1 }), light: mat('#fff6d8', { emissive: '#fff1c0' }), wall: mat('#e9e4d8'), floor: mat('#c8b48f'),
 };
 const edges = new THREE.LineBasicMaterial({ color: '#223', transparent: true, opacity: 0.35 });
@@ -78,9 +78,9 @@ const cube = (x, y, z, w, h, d, m) => { // min corner, size
   if (m === M.counter) stone.push(mesh);
   return mesh;
 };
-const rod = (a, b, r, m) => { // cylinder from point a to point b
+const rod = (a, b, r, m, r2 = r) => { // cylinder from point a (radius r) to point b (radius r2)
   const A = new THREE.Vector3(...a), B = new THREE.Vector3(...b);
-  const mesh = new THREE.Mesh(new THREE.CylinderGeometry(r, r, A.distanceTo(B), 16), m);
+  const mesh = new THREE.Mesh(new THREE.CylinderGeometry(r2, r, A.distanceTo(B), 16), m);
   mesh.position.copy(A).add(B).multiplyScalar(0.5);
   mesh.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), B.clone().sub(A).normalize());
   group.add(mesh);
@@ -291,14 +291,19 @@ function side(run, flip, zBack, back = 0, walls = false) { // back: counter past
       for (const lv of [sv, sv + s.d - s.ledge]) B(su, lv, y - 1, s.w, s.ledge, 0.1, M.steel); // ledges the accessories ride on
       rod(P(u + s.drain, sv + s.d / 2, y - s.left + 0.1), P(u + s.drain, sv + s.d / 2, y - s.left + 0.2), 1.75, M.drain);
       const g = c.inside.find(b => b.label === 'disposal'), gv = sv + s.d / 2, gu = u + g.dx, gt = g.at + g.h / 2, gb = g.at - g.h / 2; // InSinkErator under the drain, from the `inside` list
-      rod(P(gu, gv, gt - 1.5), P(gu, gv, gt), 3.25, M.steel); // sink mount
-      rod(P(gu, gv, gb), P(gu, gv, gt - 1.5), g.w / 2, M.black); // motor housing
-      const dy = gt - 6, tu = gu + 9; // discharge 6" below the top (assumed), over to a 1 1/2" P-trap, then back into the island's wall
-      rod(P(gu, gv, dy), P(tu, gv, dy), 0.8, M.plate);
-      rod(P(tu, gv, dy), P(tu, gv, dy - 4), 0.8, M.plate);
-      rod(P(tu, gv, dy - 4), P(tu, gv - 3, dy - 4), 0.8, M.plate);
-      rod(P(tu, gv - 3, dy - 4), P(tu, gv - 3, dy + 1), 0.8, M.plate);
-      rod(P(tu, gv - 3, dy + 1), P(tu, 0, dy + 1), 0.8, M.plate);
+      // as in the product photo (proportions assumed): steel sink mount, gray body tapering to the top with black grips each side, a purple band, ribbed light gray base
+      rod(P(gu, gv, gt - 2), P(gu, gv, gt), 3.25, M.steel); // sink mount
+      rod(P(gu, gv, gt - 2.75), P(gu, gv, gt - 2), 2.75, M.steel);
+      rod(P(gu, gv, gb + 3.4), P(gu, gv, gt - 2.75), g.w / 2, M.disposal, 3.4); // body
+      rod(P(gu, gv, gb + 3), P(gu, gv, gb + 3.4), g.w / 2 + 0.03, M.purple);
+      rod(P(gu, gv, gb), P(gu, gv, gb + 3), g.w / 2 - 0.4, M.ring, g.w / 2 - 0.1); // base
+      for (const s of [-1, 1]) B(gu + s * (g.w / 2 - 0.1) - 0.3, gv - 1.75, gb + 4.5, 0.6, 3.5, 4.5, M.black); // grips
+      const dy = gt - 6, tv = gv - 5, tu = gu + 3; // outlet 6" below the sink bottom, out the back (clear of the grips), trap 5" over and 4" down (InSinkErator spec sheet), 1 1/2" pipe into the island's wall
+      rod(P(gu, gv, dy), P(gu, tv, dy), 0.8, M.plate);
+      rod(P(gu, tv, dy), P(gu, tv, dy - 4), 0.8, M.plate);
+      rod(P(gu, tv, dy - 4), P(tu, tv, dy - 4), 0.8, M.plate);
+      rod(P(tu, tv, dy - 4), P(tu, tv, dy + 1), 0.8, M.plate);
+      rod(P(tu, tv, dy + 1), P(tu, 0, dy + 1), 0.8, M.plate);
     });
     if (c.faucet) into(() => { // Kohler spec sheet: a 13" column (from the drawing), the exposed spring arching up to h and over to the sprayhead
       // (9 1/2" clear under it) on a brass dock arm; side lever on a hub off the right side. Brass trim per the product photo

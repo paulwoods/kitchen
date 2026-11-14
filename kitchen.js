@@ -47,7 +47,7 @@ const RUNS = {
       name: 'sink',      code: 'SB42',    w: 42, kind: 'sink', falseTop: true, backReceptacle: true, airSwitch: { dx: 12.625, back: 2 },
       inside: [{ label: '120v', w: 2.75, h: 4.5, at: 9, dx: 3 },
                 { label: 'air sw', w: 4.375, h: 4.375, at: 9, dx: 8, within: true }, // STS-OO power module, plugged into the 120v, the disposal plugs into it
-                { label: 'disposal', w: 8.5, h: 12.25, at: 18.5, dx: 11.3125, within: true }, // InSinkErator 81138K: 12 1/4" tall under the drain (width assumed)
+                { label: 'disposal', w: 8.25, h: 12.25, at: 18.5, dx: 11.3125, within: true }, // InSinkErator 81138K: 12 1/4" tall, 8 1/4" across, under the drain (spec sheet in manuals/)
                 { label: '120v', w: 2.75, h: 4.5, at: 29, dx: 21 }], // GFCI on the island's back wall, behind the cabinet (height assumed)
       // Ruvati RVH6222ST bowl opening: w wide, left/right deep below the counter at each end (sloped bottom), d front to back, v from the cabinet backs
       // (centered in its 33.5" x 19" outline, 2" from the counter front), ledge: workstation ledges, drain: from the item's left end, 6 1/4" in from the bowl's left wall

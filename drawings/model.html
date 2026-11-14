@@ -283,7 +283,7 @@ function side(run, flip, zBack, back = 0, walls = false) { // back: counter past
     });
     if (c.bowl) into(() => { // Ruvati RVH6222ST undermount, under a cutout in the counter (see below): open steel bowl, workstation ledges front and back, drain on the left
       const s = c.bowl, su = u + (w - s.w) / 2, sv = s.v, y = BOX;
-      B(su, sv, y - s.left, s.w, s.d, 0.1, M.steel); // bottom (flat; really slopes 9 7/8" to 9 1/4")
+      B(su, sv, y - s.left, s.w, s.d, 0.1, M.steel); // bottom (flat; really slopes 10" to 9 1/5")
       B(su, sv, y - s.left, 0.1, s.d, s.left, M.steel);
       B(su + s.w - 0.1, sv, y - s.left, 0.1, s.d, s.left, M.steel);
       B(su, sv, y - s.left, s.w, 0.1, s.left, M.steel);

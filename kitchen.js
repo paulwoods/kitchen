@@ -1,4 +1,4 @@
-// Revision B · 2026-11-13 (raise both when a size or a run changes)
+// Revision C · 2026-11-13 (raise both when a size or a run changes)
 // The kitchen, one source for the drawings and the docs. Inches. A plain script (not a module) so the pages still work when opened from the folder.
 // Text pages show these values with <span data-k="name or expression">fallback</span> (nav.js fills them in, e.g. data-k="counter + seat").
 const DIMS = {
@@ -50,8 +50,8 @@ const RUNS = {
                 { label: 'disposal', w: 8.25, h: 12.25, at: 18.5, dx: 11.3125, within: true }, // InSinkErator 81138K: 12 1/4" tall, 8 1/4" across, under the drain (spec sheet in manuals/)
                 { label: '120v', w: 2.75, h: 4.5, at: 29, dx: 21 }], // GFCI on the island's back wall, behind the cabinet (height assumed)
       // Ruvati RVH6222ST bowl opening: w wide, left/right deep below the counter at each end (sloped bottom), d front to back, v from the cabinet backs
-      // (centered in its 33.5" x 19" outline, 2" from the counter front), ledge: workstation ledges, drain: from the item's left end, 6 1/4" in from the bowl's left wall
-      bowl: { w: 31.875, left: 9.875, right: 9.25, d: 17.375, v: 4.8125, ledge: 0.6875, drain: 11.3125 },
+      // (spec sheet, manuals/RVH6222ST.pdf: 10" at the drain end, 9 1/5" at the other; centered in its 33.5" x 19" outline, 2" from the counter front), ledge: workstation ledges, drain: from the item's left end, 6 1/4" in from the bowl's left wall
+      bowl: { w: 31.875, left: 10, right: 9.2, d: 17.375, v: 4.8125, ledge: 0.6875, drain: 11.3125 },
       faucet: { h: 22.4375, reach: 9.5, back: 2 }, // Kohler K-R30937-BMB, 2" from the cabinet backs, centered between them and the sink's back edge at 4"; InSinkErator STS-OO button 8 3/8" left of it, centered between the sink's left edge and the faucet
       upper: [ { spot: true, w: 3, h: 5.625, at: 87.875, dx: 21 } ] },
     { orders: 'DW panel', role: 'dishwasher front (Bosch SHV78CM3N, panel-ready)', note: `Opening for the Bosch SHV78CM3N panel-ready dishwasher (cutout 24 × 33 7/8 × 24). Not a cabinet, but the cabinet maker supplies its door panel; its pull is the Berenson 9020-4055-P.`,

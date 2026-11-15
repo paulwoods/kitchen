@@ -12,7 +12,7 @@
   table { border-collapse: collapse; margin-top: 12px; background: var(--sheet); width: 100%; }
   th, td { border: 1px solid var(--rule); padding: 8px 10px; text-align: left; vertical-align: top; }
   th { background: var(--head); white-space: nowrap; } td.n { text-align: right; white-space: nowrap; } span.tbd { color: var(--red); } span.est { color: var(--yellow); }
-  tr.group td { font-weight: 600; background: var(--band); } tr.total td { font-weight: 600; background: var(--head); }
+  tr.group td { font-weight: 600; background: var(--band); } tr.sub td { font-weight: 600; } tr.total td { font-weight: 600; background: var(--head); }
   @media (max-width: 600px) {
     table, tbody, tr, td { display: block; } tr:first-child { display: none; }
     tr { border: 1px solid var(--rule); border-top: 0; padding: 8px 10px; } tr:nth-child(2) { border-top: 1px solid var(--rule); }
@@ -21,7 +21,7 @@
   }
 </style>
 <h1>Price</h1>
-<p><b>Revision A</b> · 2026-11-13</p>
+<p><b>Revision B</b> · 2026-11-14</p>
 <p class="sub">The whole kitchen, as planned · prices read 2026-10-31 · <a href="../index.html">index</a></p>
 
 <p class="total">Priced so far <b data-known></b> · <span data-tbd></span></p>
@@ -91,14 +91,25 @@ const rows = [
 ];
 const $ = n => '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 const tbd = '<span class="tbd">TBD</span>';
-let known = 0, open = 0, guess = 0, html = '';
-for (const r of rows) {
-  if (typeof r === 'string') { html += `<tr class="group"><td colspan="5">${r}</td></tr>`; continue; }
+let known = 0, open = 0, guess = 0, html = '', g;
+// Ends a group with its subtotal row and adds it to the page totals.
+const subtotal = () => {
+  if (!g) return;
+  html += `<tr class="sub"><td>${g.name} subtotal</td><td></td><td></td><td class="n">${$(g.known)}</td><td>${g.open ? `${g.open} line${g.open == 1 ? '' : 's'} TBD, <span class="est">~${$(g.guess)} estimated, ~${$(g.known + g.guess)} in all</span>` : ''}</td></tr>`;
+  known += g.known; open += g.open; guess += g.guess;
+};
+// Within each group, the highest total first (a TBD line by its estimate); the group's heading stays on top.
+const amount = r => typeof r === 'string' ? Infinity : (r[2] ?? r[4]) * r[1];
+let gi = 0;
+const sorted = rows.map(r => [typeof r === 'string' ? ++gi : gi, r]).sort((a, b) => a[0] - b[0] || amount(b[1]) - amount(a[1])).map(([, r]) => r);
+for (const r of sorted) {
+  if (typeof r === 'string') { subtotal(); g = { name: r, known: 0, open: 0, guess: 0 }; html += `<tr class="group"><td colspan="5">${r}</td></tr>`; continue; }
   const [item, qty, each, notes, est] = r;
-  if (each == null) { open++; guess += est * qty; } else known += each * qty;
+  if (each == null) { g.open++; g.guess += est * qty; } else g.known += each * qty;
   const cell = n => each == null ? `${tbd} <span class="est">~${$(n)}</span>` : $(n);
   html += `<tr><td>${item}</td><td class="n">${qty}</td><td class="n">${cell(each ?? est)}</td><td class="n">${cell((each ?? est) * qty)}</td><td>${notes}</td></tr>`;
 }
+subtotal();
 html += `<tr class="total"><td>priced so far</td><td></td><td></td><td class="n">${$(known)}</td><td>${open} lines TBD, <span class="est">~${$(guess)} estimated, ~${$(known + guess)} in all</span></td></tr>`;
 document.querySelector('#price tbody').insertAdjacentHTML('beforeend', html);
 document.querySelector('[data-known]').textContent = $(known);

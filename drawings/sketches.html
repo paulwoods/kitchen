@@ -9,7 +9,7 @@
 <script src="sketch.js"></script>
 <body>
 <h1>Sketches</h1>
-<p><b>Revision B</b> · 2026-11-13</p>
+<p><b>Revision C</b> · 2026-11-15</p>
 <p><a href="../index.html">index</a> · <a href="#wall-front">Wall front</a> · <a href="#wall-top">Wall top</a> · <a href="#island-front">Island front</a> · <a href="#island-top">Island top</a> · <a href="#house">House</a></p>
 <script>
 // The runs are in ../kitchen.js. Each run's front, then its plan under it; the plans mark the work areas and the lights.
@@ -61,6 +61,14 @@ const islandTop = plan('Island top', island, { island: true, extra: ({ out, text
     out.push(`<circle class="hidden" cx="${ix(u)}" cy="${iy(-16)}" r="8"/>`);
     isl(u, -16, 'stool', 'code on');
   }
+  // The seating overhang: the stone's length (its 1" end overhang through plates) just behind its back edge, its depth past the back wall at its right end.
+  const seatEnd = I.plates.u + I.plates.w, seg = (u0, v0, u1, v1, cls) => out.push(`<line class="${cls}" x1="${ix(u0)}" y1="${iy(v0)}" x2="${ix(u1)}" y2="${iy(v1)}"/>`);
+  seg(-1, -DIMS.seat - 2, seatEnd, -DIMS.seat - 2, 'dimline');
+  for (const u of [-1, seatEnd]) seg(u, -DIMS.seat - 3, u, -DIMS.seat - 1, 'tick');
+  isl(28, -DIMS.seat - 3.5, `${inch(seatEnd + 1)}" seating length`, 'dim'); // between the first two stools
+  seg(seatEnd + 3, -DIMS.seat, seatEnd + 3, -WALL, 'dimline');
+  for (const v of [-DIMS.seat, -WALL]) seg(seatEnd + 2, v, seatEnd + 4, v, 'tick');
+  isl(seatEnd + 4.5, -(DIMS.seat + WALL) / 2 - 0.3, `${inch(DIMS.seat - WALL)}" seating depth, past the back wall (${inch(DIMS.seat)}" from the cabinet backs)`, 'dim start');
   out.push(...fixtures(T, SPOT, ix, iy), ...fixtures(AL, HALO, ix, iy));
   // People 74" tall facing the island, belly 3" off the counter front, seen from above. Each light (at the 96" ceiling, assumed)
   // throws the body's slices (waist at the counter, shoulders, head) onto the counter; the shadow is their hull, clipped to the counter.

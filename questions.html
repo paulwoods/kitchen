@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="nav.js" defer></script>
+<link rel="stylesheet" href="theme.css">
+<title>Questions · Galley Kitchen</title>
+<style>
+  body { margin: 24px; background: var(--paper); color: var(--ink); font-family: system-ui, sans-serif; line-height: 1.5; }
+  h1 { margin: 0 0 4px; } p { margin: 8px 0; }
+  table { border-collapse: collapse; margin-top: 12px; background: var(--sheet); width: 100%; }
+  th, td { border: 1px solid var(--rule); padding: 8px 10px; text-align: left; vertical-align: top; }
+  th { background: var(--head); }
+  @media (max-width: 600px) { /* phones: each row stacks */
+    table, tbody, tr, td { display: block; } tr:first-child { display: none; }
+    tr { border: 1px solid var(--rule); border-top: 0; padding: 8px 10px; } tr:nth-child(2) { border-top: 1px solid var(--rule); }
+    td { border: 0; padding: 0; } td:first-child { font-weight: 600; } td + td { margin-top: 4px; }
+    td[data-h]::before { content: attr(data-h) ": "; font-weight: 600; }
+  }
+</style>
+<h1>Questions</h1>
+<p><b>Revision A</b> · 2026-11-15</p>
+
+<table>
+<tr><th>Question</th><th>Company</th><th>Decision needed</th><th>Drawings</th><th>Suitability</th><th>Status</th></tr>
+<tr><td>Cabinet Supplier</td><td data-h="Company">Cabinets.com</td><td data-h="Decision needed">Before ordering: does the OVD3393's fixed shelf carry the 274 lb oven, does the trash pull-out clear a plug in the receptacle behind it, and are the assumed values right (3/4" fronts, 1/4" skin, pantry doors split at 54", the 35% sale price on six lines).</td><td data-h="Drawings">Sketches, Wall front and Island front: Revision C, 2026-11-15. Model: Revision B, 2026-11-13.</td><td data-h="Suitability">Cabinets with 3/4" sides will support the countertop seams.</td><td data-h="Status">Undecided</td></tr>
+<tr><td>Fabricator</td><td data-h="Company">Stumble Stone</td><td data-h="Decision needed">Whether to use them: tentative, not contacted or quoted. Do they work with slabs bought from Go-Granite? Then the island seam between plates and trash, and the backsplash thickness (3 cm assumed).</td><td data-h="Drawings">Countertop, Fabrication map: Revision B, 2026-11-15. Sketches, Wall top and Island top: Revision C, 2026-11-15.</td><td data-h="Suitability">TBD</td><td data-h="Status">TBD</td></tr>
+<tr><td>brackets</td><td data-h="Company">Iron Supports</td><td data-h="Decision needed">None from Iron Supports: seven 16" flat brackets by its guide (decided 2026-11-15). Still open elsewhere: the third and fourth brackets land on the cooktop junction box and its back receptacle, so move the studs or the boxes (owner, with the electrician), and the engineer approves the wall's anchoring.</td><td data-h="Drawings">Countertop, Fabrication map: Revision B, 2026-11-15. Sketches, Island top: Revision C, 2026-11-15.</td><td data-h="Suitability">Bracket quantity and size will support the countertop.</td><td data-h="Status">Decided</td></tr>
+<tr><td>Subtop</td><td data-h="Company">Stumble Stone</td><td data-h="Decision needed">No subtop (decided 2026-11-15). The fabricator still has to say what support the 3 cm stone needs at the dishwasher gap, the 42" sink base and the sink and cooktop cutouts.</td><td data-h="Drawings">Countertop, Fabrication map: Revision B, 2026-11-15. Sketches, Island front and Island top: Revision C, 2026-11-15.</td><td data-h="Suitability">3 cm quartzite does not need a subtop.</td><td data-h="Status">Decided</td></tr>
+</table>

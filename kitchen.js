@@ -57,8 +57,8 @@ const RUNS = {
     { orders: 'DW panel', role: 'dishwasher front (Bosch SHV78CM3N, panel-ready)', note: `Opening for the Bosch SHV78CM3N panel-ready dishwasher (cutout 24 × 33 7/8 × 24). Not a cabinet, but the cabinet maker supplies its door panel; its pull is the Berenson 9020-4055-P.`,
       name: 'dishwasher', code: '24" gap', w: 24, kind: 'gap', tag: 'DW', dishwasher: true, backReceptacle: true,
       inside: [{ label: '120v', w: 2.75, h: 4.5, at: 29, dx: 12 }] }, // on the island's back wall, behind the dishwasher
-    { note: `Base cabinet at the right end of the island; the only Cabinet A (decided 2026-10-24). One drawer over one door (confirmed 2026-10-24). 1" counter overhang at the right end.`,
-      name: 'cabinet a', code: 'B24-2',   w: 24, kind: 'base', backReceptacle: true,
+    { note: `Base cabinet at the right end of the island; the only Cabinet A (decided 2026-10-24). One drawer over one door with two roll-out trays behind it (the B24-ROT/2-SINGLE, 2026-11-16; was the B24-2; drawer over door confirmed 2026-10-24). 1" counter overhang at the right end.`,
+      name: 'cabinet a', code: 'B24-ROT/2-SINGLE',   w: 24, kind: 'base', trays: 2, backReceptacle: true,
       inside: [{ label: '120v', w: 2.75, h: 4.5, at: 29, dx: 12 }], // on the island's back wall
       upper: [ { spot: true, w: 3, h: 5.625, at: 87.875, dx: 0 } ] },
   ],

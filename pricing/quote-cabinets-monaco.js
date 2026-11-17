@@ -10,8 +10,8 @@ const lines = [
   ['B18-Trash', 'B18-FH Trash', 1, 1466.85, 953.45, 0, 'island: trash, full height, 2 containers'],
   ['SB42', 'SB42', 1, 744.77, 484.10, 0, 'island: sink, 2 doors, 2 false drawers'],
   ['DW panel', 'BEPD', 1, 252.34, 164.02, 0, 'island: dishwasher front, base decorative door (no dishwasher panel sold; size not listed, ask for one to fit the Bosch, read 2026-10-31)'],
-  ['B24-2', 'B24-SINGLE', 1, 737.29, 479.24, 0, 'island: cabinet a, 1 door, 1 drawer'],
-  ['B24-2 finished sides', 'Matching Finished Sides', 1, 73.73, 47.92, 0, 'island: cabinet a, the right side shows (10% of the B24-SINGLE)'],
+  ['B24-ROT/2-SINGLE', 'B24-SINGLE', 1, 737.29, 479.24, 0, 'island: cabinet a, 1 door, 1 drawer'],
+  ['B24-ROT/2-SINGLE finished sides', 'Matching Finished Sides', 1, 73.73, 47.92, 0, 'island: cabinet a, the right side shows (10% of the B24-SINGLE)'],
   ['FP2496', 'missing', 0, 0, 0, 0, "wall: skin on the left REP's exposed side, 1/4\" × 96\" × 24\"; missing from this quote, not priced"],
   ['REP2496-1.5', 'REP2496-1.5', 2, 340.50, 221.33, 0, 'wall: each side of the Fridge, refrigerator return panel, 1.5" × 96" × 24" (read 2026-10-28, no sale; sale 35% off assumed)'],
   ['RW3721', 'RW3721', 1, 701.04, 455.68, 0, 'wall: over the Fridge, panel to panel, 37" × 20 11/16" × 24" (read 2026-11-03)'],
@@ -24,6 +24,6 @@ const lines = [
   ['W2112 glass', 'W2112', 4, 342.89, 222.88, 171.45, 'wall: over the W2127s, 1 door, + glass prep $171.45 (read 2026-11-04, no sale; sale 35% off assumed)'],
 ];
 // 'planned / code' lines whose size (W × H × D, as supplied) differs from the plan's in cabinets.html
-const resized = ['B21-FH-ROT/2 / B21-FH'];
+const resized = ['B21-FH-ROT/2 / B21-FH', 'B24-ROT/2-SINGLE / B24-SINGLE'];
 quotes.push({ id: 'monaco', label: 'Monaco', rank: 2, lines, resized });
 }

@@ -9,8 +9,8 @@ const lines = [
   ['B18-Trash', 'B0DPULLOUTTRASH', 1, 1291.95, 730.95, 0, 'island: trash, full-height pull-out for 2 cans'],
   ['SB42', 'B2D1FFSINK', 1, 876.95, 544.95, 0, 'island: sink, 2 doors, 1 false front'],
   ['DW panel', 'APPLIANCEPANEL', 1, 162.95, 114.95, 0, 'island: dishwasher front, custom size, 24" × 30" priced, 3/4" slab plywood, paint grade, raw'],
-  ['B24-2', 'B1D1DR', 1, 941.95, 569.95, 0, 'island: cabinet a, 1 drawer over 1 door'],
-  ['B24-2 end panel', 'BFE', 1, 89.95, 49.95, 0, 'island: cabinet a, right side, 34.50" × 24 5/8"'],
+  ['B24-ROT/2-SINGLE', 'B1D1DR', 1, 941.95, 569.95, 0, 'island: cabinet a, 1 drawer over 1 door'],
+  ['B24-ROT/2-SINGLE end panel', 'BFE', 1, 89.95, 49.95, 0, 'island: cabinet a, right side, 34.50" × 24 5/8"'],
   ['REP2496-1.5', 'TFETHICK', 2, 1149.95, 749.95, 0, 'wall: each side of the Fridge, 1 1/2" × 96" × 24"'],
   ['RW3721', 'W2D', 1, 971.95, 639.95, 0, 'wall: over the Fridge, panel to panel, 37" × 20 3/4" × 24" (figured from the option prices, read 2026-11-03)'],
   ['UT362493ROT4 lower', 'T2D', 1, 2537.95, 1640.95, 0, 'wall: Pantry, 36" × 54" × 24", 2 doors over 4 roll-outs'],
@@ -24,6 +24,6 @@ const lines = [
 ];
 // 'planned / code' lines whose size (W × H × D, as supplied) differs from the plan's in cabinets.html
 // The pantry is split in two but adds up to the planned size, so it is not listed.
-const resized = ['OVD3393 / TAPPLIANCECASE', 'B21-FH-ROT/2 / B1D'];
+const resized = ['OVD3393 / TAPPLIANCECASE', 'B21-FH-ROT/2 / B1D', 'B24-ROT/2-SINGLE / B1D1DR'];
 quotes.push({ id: 'city', label: 'City', rank: 3, lines, resized });
 }

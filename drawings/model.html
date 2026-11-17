@@ -16,7 +16,7 @@
 <header>
   <div class="cols">
     <h1>3D Model</h1>
-    <div><b>Revision B</b> · 2026-11-13</div>
+    <div><b>Revision C</b> · 2026-11-16</div>
     <div><button data-view="end">End</button><button data-view="island">Island</button><button data-view="wall">Wall</button><button data-view="top">Top</button></div>
     <div><label>slab <select id="slab"><option value="">plain</option></select></label></div>
     <div><label>cabinets <select id="paint-haze"></select></label> <label>uppers <select id="paint-alabaster"></select></label></div>
@@ -182,6 +182,15 @@ function side(run, flip, zBack, back = 0, walls = false) { // back: counter past
     for (const x of [u + w / 3, u + 2 * w / 3]) for (let z = v + 1; z < v + d; z += 1.5) wire([x, z, y], [x, z, y + tine]);
   };
   const cabinet = (u, w, h, open) => { hollow(u, TOE, w, DEPTH, h - TOE, alabaster ? M.alabaster : base ? M.base : M.box, open); B(u, 0, 0, w, DEPTH - 3, TOE, M.toe); };
+  const trays = (u, w, top, n) => { // n roll-out trays evenly spaced from the cabinet floor up to `top`, 3 1/2" sides, set in 1" each side to clear the hinges (sizes assumed)
+    const lo = TOE + 0.75, tu = u + 1.75, tw = w - 3.5, td = DEPTH - 2.5;
+    for (let i = 0; i < n; i++) {
+      const ty = lo + 1 + i * (top - lo) / n;
+      B(tu, 1.5, ty, tw, td, 0.5, M.drawer);
+      for (const x of [tu, tu + tw - 0.5]) B(x, 1.5, ty, 0.5, td, 3.5, M.drawer);
+      for (const v of [1.5, 1.5 + td - 0.5]) B(tu + 0.5, v, ty, tw - 1, 0.5, 3.5, M.drawer);
+    }
+  };
 
   const appl = new THREE.Group(); // this run's appliances, shown by the appliances checkbox
   group.add(appl); appliances.push(appl);
@@ -229,6 +238,10 @@ function side(run, flip, zBack, back = 0, walls = false) { // back: counter past
       B(u, 0, 0, w, DEPTH + 0.75, c.h, M.alabaster);
     } else if (c.kind === 'pantry') {
       cabinet(u, w, c.h);
+      // inside (from the vendor's picture; spacing assumed): a fixed shelf at the door split with three shelves above it, four roll-out trays below
+      const split = c.h - 39;
+      for (let i = 0; i < 4; i++) B(u + 0.75, 0.75, split - 0.75 + i * 39 / 4, w - 1.5, DEPTH - 1.5, 0.75, M.alabaster);
+      trays(u, w, split - 0.75, 4);
       fronts(u, w, c.h, [{ h: 39, pair: true, pull: 'bottom' }, { h: c.h - TOE - 39, pair: true, pull: 'top' }]); // top doors match a 39" wall cabinet
     } else if (c.kind === 'oven') { // OVD3393 (cabinets.com cut-out sheet): 22 3/8" door pair at the top, 7 1/16" drawer over the toe kick
       cabinet(u, w, c.h);
@@ -253,6 +266,7 @@ function side(run, flip, zBack, back = 0, walls = false) { // back: counter past
       fronts(u, w, BOX, [{ h: 6, fixed: c.falseTop }, { h: face - 6, pair: true }]);
     } else {
       cabinet(u, w, BOX);
+      if (c.trays) trays(u, w, BOX - 0.75, c.trays);
       if (c.kind === 'drawers') {
         const rest = (face - 6) / (c.n - 1);
         fronts(u, w, BOX, [{ h: 6, fixed: c.falseTop }, ...Array(c.n - 2).fill({ h: rest }), { h: rest, pull: 'top' }]);
@@ -357,6 +371,11 @@ function side(run, flip, zBack, back = 0, walls = false) { // back: counter past
         const d = x.d || UPPER, cu = u + (x.dx || 0), cw = x.w || w;
         alabaster = true;
         hollow(cu, x.at, cw, d, x.h, M.alabaster);
+        if (x.code === 'W2127') B(cu + 0.75, 0.75, x.at + (x.h - 0.75) / 2, cw - 1.5, d - 1.5, 0.75, M.alabaster); // one shelf, centered (vendor's picture; height assumed)
+        if (x.code === 'RW3721') { // a center stile at the front between the doors and one shelf halfway up (vendor's picture; stile width and shelf height assumed)
+          B(cu + (cw - 1.5) / 2, d - 0.75, x.at + 0.75, 1.5, 0.75, x.h - 1.5, M.alabaster);
+          B(cu + 0.75, 0.75, x.at + (x.h - 0.75) / 2, cw - 1.5, d - 1.5, 0.75, M.alabaster);
+        }
         fronts(cu, cw, x.at + x.h, [{ h: x.h, pair: !x.one, one: x.one, left: x.left, pull: 'bottom', glass: x.glass }], d);
       }
     }

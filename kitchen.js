@@ -1,4 +1,4 @@
-// Revision C · 2026-11-13 (raise both when a size or a run changes)
+// Revision D · 2026-11-16 (raise both when a size or a run changes)
 // The kitchen, one source for the drawings and the docs. Inches. A plain script (not a module) so the pages still work when opened from the folder.
 // Text pages show these values with <span data-k="name or expression">fallback</span> (nav.js fills them in, e.g. data-k="counter + seat").
 const DIMS = {
@@ -82,8 +82,8 @@ const RUNS = {
     { url: 'https://www.cabinets.com/ovd3393-colonial-maple-alabaster-double-oven-cabinet-2-butt-door-1-drawer-cordova-frameless-kitchen-cabinet.html', role: 'Oven column, combination oven', note: `Double oven cabinet in Alabaster, 93" tall, in line with the pantry (decided 2026-11-04; replaced the B33, W3327, W3312 and their lights). A pair of butt doors at the top, 22 3/8" tall (70 5/8"–93"), one large opening below them, and a 7 1/16" drawer over the 4 1/2" toe kick. The Bosch HBL87M53UC combination oven fills the opening, its face 12"–61" (position assumed). The opening is 26 3/8"–30 5/8" wide and 45 5/16"–55" tall on the vendor's sheet and is modified on site; the unit takes 28 1/2" wide and 48 5/8" tall, and a loose shelf is supplied. That leaves a 9 5/8" panel from the unit up to the doors. The junction box goes on the back wall above the unit, at 64". Its right side is finished to match (Matching Finished Sides, both sides only): the W2127 and W2112 beside it are 12" deep, so the side shows from the counter up. See <a href="#open">Open</a>.`,
       name: 'Oven',      code: 'OVD3393', w: 33,  kind: 'oven', h: 93, inside: [{ label: 'oven j box', w: 4, h: 4, at: 64, dx: 11 }],
       upper: [{ riser: true, h: 3, at: 93, d: 24, side: true }] },
-    { url: 'https://www.cabinets.com/b21-fh-frameless-colonial-maple-haze-base-full-height-cabinet-1-door-frameless-assembled-kitchen-cabinet.html', note: `Full-height base in Haze, one door, one shelf, hinged on the left with its pull at the top right (2026-11-04). The counter butts the OVD3393 at its left end.`,
-      name: 'Garage',    code: 'B21-FH',  w: 21,  kind: 'door', one: true, receptacle: true,
+    { url: 'https://www.cabinets.com/ccmh0647g-b21fhrot2-full-height-rollout-base-cabinet.html', note: `Full-height base in Haze, one door over two roll-out trays (the B21-FH with the ROT/2 option, 2026-11-16; was one shelf), hinged on the left with its pull at the top right (2026-11-04). The counter butts the OVD3393 at its left end.`,
+      name: 'Garage',    code: 'B21-FH-ROT/2',  w: 21,  kind: 'door', one: true, trays: 2, receptacle: true,
       upper: [{ light: 'UCB118SNWH', w: 18, h: 1.1, at: 52.9 }, { note: `Wall cabinet, one door, 54"–81". 18.25" clear above the counter.`, code: 'W2127', one: true, h: 27, at: 54 }, { note: `Glass-door wall cabinet, one door, 81"–93".`, code: 'W2112 glass', one: true, h: 12, at: 81, glass: true }, { riser: true, h: 3, at: 93 }, { light: 'UCB118SNWH', w: 18, h: 1.1, at: 91.275, inside: true }] },
     { note: `Three-drawer base. The 21.5" wide toaster oven sits on the counter above it, 1/4" past the cabinet on each side.`,
       name: 'Toaster',   code: 'DB21-3',  w: 21,  kind: 'drawers', n: 3, receptacle: true,

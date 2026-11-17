@@ -17,12 +17,12 @@ const lines = [
   ['UT362493ROT4', 'UT362493-ROT/4', 1, 3003.21, 1952.09, 0, 'wall: Pantry, 36" × 93" × 24", 4 doors, 4 roll-out trays below, 3 shelves above (read 2026-11-03)'],
   ['OVD3393', 'OVD3393', 1, 1746.48, 1135.21, 0, 'wall: Oven column, 33" × 93" × 24", 2 butt doors, 1 drawer, combination oven (read 2026-11-04, no sale; sale 35% off assumed)'],
   ['OVD3393 finished sides', 'Matching Finished Sides', 1, 349.30, 227.05, 0, 'wall: Oven column, the right side shows above the counter (20% of the price, both sides only, read 2026-11-04; sale 35% off assumed)'],
-  ['B21-FH', 'B21-FH', 1, 526.92, 342.50, 0, 'wall: Garage, Haze, 1 door, 1 shelf (read 2026-11-04, no sale; sale 35% off assumed)'],
+  ['B21-FH-ROT/2', 'B21-FH', 1, 526.92, 342.50, 0, 'wall: Garage, Haze, 1 door, 1 shelf (read 2026-11-04, no sale; sale 35% off assumed)'],
   ['DB21-3', 'DB21-3', 3, 1195.85, 777.30, 0, 'wall: Toaster, Air Fryer, Coffee (read 2026-11-04, no sale; sale 35% off assumed)'],
   ['W2127', 'W2127', 4, 519.25, 337.51, 0, 'wall: over the Garage, Toaster, Air Fryer and Coffee, 1 door (read 2026-11-04, no sale; sale 35% off assumed)'],
   ['W2112 glass', 'W2112', 4, 514.34, 334.32, 0, 'wall: over the W2127s, 1 door, $342.89 + $171.45 glass prep; sale $222.88 + $111.44 (read 2026-11-04, no sale; sale 35% off assumed)'],
 ];
 // 'planned / code' lines whose size (W × H × D, as supplied) differs from the plan's in cabinets.html
-const resized = [];
+const resized = ['B21-FH-ROT/2 / B21-FH'];
 quotes.push({ id: 'colonial', label: 'Colonial', rank: 1, lines, resized });
 }

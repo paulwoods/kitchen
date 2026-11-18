@@ -16,7 +16,7 @@
 <header>
   <div class="cols">
     <h1>3D Model</h1>
-    <div><b>Revision D</b> · 2026-11-16</div>
+    <div><b>Revision E</b> · 2026-11-17</div>
     <div><button data-view="end">End</button><button data-view="island">Island</button><button data-view="wall">Wall</button><button data-view="top">Top</button></div>
     <div><label>slab <select id="slab"><option value="">plain</option></select></label></div>
     <div><label>cabinets <select id="paint-haze"></select></label> <label>uppers <select id="paint-alabaster"></select></label></div>
@@ -523,6 +523,11 @@ const SLABS = {
   azulatto: { name: 'Bianco Azulatto', img: 'azulatto', w: 125.5, h: 77, cooktop: [38.5, 30.5], sink: [0, 44.5], wall: [0, 19.5], splash: [0, 1.25] },
   explosion: { name: 'Explosion Blue', img: 'explosion-blue', w: 124, h: 78.75, cooktop: [37, 32.25], sink: [0, 46.25], wall: [0, 21.25], splash: [0, 3] },
   taj:      { name: 'Taj Mahal', img: 'taj-mahal', w: 129, h: 77.75, cooktop: [42, 31.25], sink: [0, 45.25], wall: [0, 20.25], splash: [0, 2] },
+  // Go-Granite's nominal 126" x 63": the backsplash is four 21" pieces there, not drawn (no splash)
+  greenMaestro: { name: 'Green Maestro (Go-Granite)', img: 'green-maestro', w: 126, h: 63, cooktop: [39, 16.5], sink: [0, 30.5], wall: [0, 5.5] },
+  blueLava: { name: 'Blue Lava (Go-Granite)', img: 'blue-lava', w: 126, h: 63, cooktop: [39, 16.5], sink: [0, 30.5], wall: [0, 5.5] },
+  botanic:  { name: 'Botanic Maestro (Go-Granite)', img: 'botanic-maestro', w: 126, h: 63, cooktop: [39, 16.5], sink: [0, 30.5], wall: [0, 5.5] },
+  ebanoLeathered: { name: 'Ebano Leathered (Go-Granite)', img: 'ebano-leathered', w: 126, h: 63, cooktop: [39, 16.5], sink: [0, 30.5], wall: [0, 5.5] },
 };
 const seam = island.find((c, k) => k && (c.back ?? DIMS.islandBack) !== (island[k - 1].back ?? DIMS.islandBack)).u;
 const piece = m => m === splash ? 'splash' : m.parent === runs.wall ? 'wall' : m.position.x < seam ? 'cooktop' : 'sink';
@@ -545,11 +550,13 @@ const setSlab = async key => {
   const s = SLABS[key];
   if (s) await photos(s.img);
   if (key !== slab.value) return; // picked another while loading
-  splash.visible = !!s;
-  for (const [plate, face] of onSplash) { plate.visible = !s; face.visible = !!s; }
+  splash.visible = !!s?.splash;
+  for (const [plate, face] of onSplash) { plate.visible = !s?.splash; face.visible = !!s?.splash; }
   for (const m of stone) {
     if (!s) { m.material = M.counter; continue; }
-    const k = piece(m), [px, py] = s[k], [lo, hi] = ext[k];
+    const k = piece(m);
+    if (!s[k]) continue; // no splash on this slab: the mesh stays hidden
+    const [px, py] = s[k], [lo, hi] = ext[k];
     if (m.geometry === geo) m.geometry = geo.clone();
     const p = m.geometry.attributes.position, uv = m.geometry.attributes.uv;
     for (let i = 0; i < p.count; i++) { // inches from the piece's left end (as seen from the aisle) and its back edge (the backsplash: its top); sides take the nearest stone

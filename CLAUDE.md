@@ -6,6 +6,8 @@ Store all project memories in this file (not in ~/.claude memory).
 
 - After every change, reload and check the affected pages in a browser (screenshot). Playwright blocks `file:`, so serve the folder with `python3 -m http.server` and delete `.playwright-mcp/` afterwards. Size the browser to the full monitor first (`browser_resize` to 2560 × 1440, the screen's size).
 
+- Fetch web sites with Playwright (`browser_navigate`), not curl or WebFetch: vendor shops like go-granite.com rate-limit automated requests (429).
+
 - When asking the user questions (grilling, clarifying), ask them one at a time.
 
 - Git: work on the `develop` branch (do not rename to `main`). Remote `origin` is `git@github.com:paulwoods/kitchen.git` (SSH; HTTPS has no credentials).

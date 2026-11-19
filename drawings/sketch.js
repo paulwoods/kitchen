@@ -334,8 +334,9 @@ function plan(title, run, opts = {}) {
       for (const [du, dv] of [[8, 6], [23, 6], [8, 15.25], [23, 15.25]]) circle(P(cu + du, cv + dv), 4, 'burner');
     }
     if (c.receptacle) box(c.u + (c.w - 2.75) / 2, 0, 2.75, 0.25, 'plate'); // on the wall face, over the counter
-    if (c.backReceptacle) box(c.u + (c.w - 2.75) / 2, -WALL - 0.25, 2.75, 0.25, 'plate'); // vertical plate on the island's back wall
+    if (c.backReceptacle) box(c.u + ((c.inside || []).find(b => b.label === '120v' && b.at > 20)?.dx ?? c.w / 2) - 1.375, -WALL - 0.25, 2.75, 0.25, 'plate'); // vertical plate on the island's back wall
     if (c.airSwitch) circle(P(c.u + c.airSwitch.dx, c.airSwitch.back), 0.875, 'button'); // STS-OO disposal button
+    if (c.topOutlet) circle(P(c.u + c.topOutlet.dx, c.topOutlet.back), 1.39, 'chrome'); // Pass & Seymour CP498TR20WT-SS countertop receptacle: stainless lid 2.78" across, 2 1/4" hole
     if (c.kind === 'sink') box(c.u + (c.w - 33.5) / 2, 4, 33.5, 19, 'sinkbowl'); // Ruvati RVH6222ST: 33.5" x 19" outer, 4"–23" from the cabinet backs, 2" from the counter front
     if (c.faucet) { // hole c.faucet.back in front of the cabinet backs, spout reaching c.faucet.reach toward the front
       const [x1, y1] = mid(c.faucet.back), [x2, y2] = mid(c.faucet.back + c.faucet.reach);
@@ -387,7 +388,7 @@ function plan(title, run, opts = {}) {
 
 // Adds a drawing to the page as a <section> (id: the title, e.g. #wall-front), on graph paper with bold lines every BOLD" from (MARGIN, oy).
 // axes: how to say x (from MARGIN, or from axes[3]) and y (up from oy) in the tape measure's readout. Returns the svg.
-const REV = 'D · 2026-11-16'; // revision and date printed on every sheet; bump both when a sheet changes
+const REV = 'E · 2026-11-18'; // revision and date printed on every sheet; bump both when a sheet changes
 function page(title, view, W, H, oy, out, axes) {
   const n = document.querySelectorAll('section.sketch').length; // keeps the pattern ids apart when a page has several drawings
   const section = document.createElement('section');
@@ -451,7 +452,7 @@ function page(title, view, W, H, oy, out, axes) {
 
 // Tape measure: drag on the drawing to measure. Ends snap to the nearest rect or line edge within 8 screen px,
 // else to 1/8"; a drag within ~8° of level or plumb locks to it (Shift always locks). Tap a tape to remove it, Esc clears.
-function tape(svg, oy, [xLabel, yLabel, sy = 1, ox = MARGIN]) { // sy: -1 when y is measured down from oy; ox: where x is measured from
+function tape(svg, oy, [xLabel, yLabel, sy = 1, ox = MARGIN, sx = 1]) { // sy: -1 when y is measured down from oy; ox: where x is measured from; sx: -1 when x is measured leftward
   const g = svg.querySelector('.tapes'), readout = svg.parentNode.querySelector('.readout-text'), clear = svg.parentNode.querySelector('.clear');
   const hint = readout.textContent;
   // Edges: vertical { at: x, from: y1, to: y2 } and horizontal { at: y, from: x1, to: x2 }.
@@ -492,7 +493,7 @@ function tape(svg, oy, [xLabel, yLabel, sy = 1, ox = MARGIN]) { // sy: -1 when y
     const exact = Math.abs(Math.abs(v) - s / 16) < 0.001;
     return `${exact ? '' : '≈ '}${v < 0 && s ? '−' : ''}${whole || !n ? whole : ''}${n ? `${whole ? ' ' : ''}${n}/${d}` : ''}"`;
   };
-  const where = p => `${fmt(p.x - ox)} ${xLabel} · ${fmt(sy * (oy - p.y))} ${yLabel}`;
+  const where = p => `${fmt(sx * (p.x - ox))} ${xLabel} · ${fmt(sy * (oy - p.y))} ${yLabel}`;
   const size = ({ a, b }) => {
     const dx = Math.abs(b.x - a.x), dy = Math.abs(b.y - a.y);
     return [fmt(Math.hypot(dx, dy)), dx && dy ? `${fmt(dx)} across · ${fmt(dy)} ${sy < 0 ? 'deep' : 'up'}` : ''];

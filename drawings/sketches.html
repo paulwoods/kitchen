@@ -9,8 +9,8 @@
 <script src="sketch.js"></script>
 <body>
 <h1>Sketches</h1>
-<p><b>Revision D</b> · 2026-11-16</p>
-<p><a href="../index.html">index</a> · <a href="#wall-front">Wall front</a> · <a href="#wall-top">Wall top</a> · <a href="#island-front">Island front</a> · <a href="#island-top">Island top</a> · <a href="#house">House</a></p>
+<p><b>Revision E</b> · 2026-11-18</p>
+<p><a href="../index.html">index</a> · <a href="#wall-front">Wall front</a> · <a href="#wall-top">Wall top</a> · <a href="#island-front">Island front</a> · <a href="#island-top">Island top</a> · <a href="#island-wall">Island wall</a> · <a href="#house">House</a></p>
 <script>
 // The runs are in ../kitchen.js. Each run's front, then its plan under it; the plans mark the work areas and the lights.
 const { island, wall } = RUNS;
@@ -120,6 +120,55 @@ for (const box of document.querySelectorAll('[data-light]')) {
     document.querySelectorAll(`svg .l-${k}`).forEach(el => el.classList.toggle('off', !box.checked));
   };
   box.onchange();
+}
+
+// Island wall: the back wall's framing seen from the stools (mirrored: the island's left end, spices, is on the right), cabinets off (walls.html). A pressure-treated bottom plate, a double top plate,
+// 1 1/2" plates and studs. Studs: one at each end (inside the 1/2" end drywall), one centered under each bracket, then 16" on center
+// from the last bracket stud to the right end, then one beside each box in the wall (left side, else right, unless a stud is already within 1 1/2").
+{
+  const L = DIMS.islandLen, PL = 1.5, ST = 1.5, DW = 0.5, FLOOR = 50, W = MARGIN * 2 + L + 30, H = FLOOR + 24;
+  const out = [`<style>.lumber { fill: #e8cf9f; stroke: #223; stroke-width: 0.2; } .pt { fill: #b9c79c; } .bracket { fill: #2b2b2b; } .clash { fill: #ff4fa3; }</style>`];
+  const X = u => MARGIN + L - u; // u from the island's left end, drawn right to left
+  const rect = (u, h, w, hh, cls) => out.push(`<rect x="${X(u + w)}" y="${FLOOR - h - hh}" width="${w}" height="${hh}" class="${cls}"/>`);
+  const text = (u, h, s, cls = '') => out.push(`<text x="${X(u)}" y="${FLOOR - h}" class="${cls}">${s}</text>`);
+  // Boxes in the wall: each back-wall receptacle and the cooktop junction box (the sink's 120v at 9" is inside its cabinet, not in the wall).
+  const boxes = [];
+  let u0 = 0;
+  for (const c of RUNS.island) {
+    for (const b of c.inside || []) if (b.label === 'j box' || (b.label === '120v' && b.at > 20)) boxes.push({ ...b, l: u0 + b.dx - b.w / 2, r: u0 + b.dx + b.w / 2 });
+    u0 += c.w;
+  }
+  const studs = [DW, L - DW - ST, ...DIMS.brackets.map(u => u - ST / 2)]; // left edges
+  for (let u = DIMS.brackets.at(-1) + 16; u < L - DW - ST - 8; u += 16) studs.push(u - ST / 2); // ponytail: a 16" stud within 8" of the end stud is dropped
+  const free = (a, gap) => studs.every(s => a + ST + gap <= s || a >= s + ST + gap);
+  for (const b of boxes) { const a = [b.l - ST, b.r].find(a => free(a, ST)); if (a !== undefined && free(b.l - ST, 0) && free(b.r, 0)) studs.push(a); }
+  studs.sort((a, b) => a - b);
+  rect(0, 0, DW, DIMS.box, 'roomwall'); rect(L - DW, 0, DW, DIMS.box, 'roomwall'); // end drywall
+  rect(DW, 0, L - 2 * DW, PL, 'lumber pt');
+  rect(DW, DIMS.box - 2 * PL, L - 2 * DW, PL, 'lumber'); rect(DW, DIMS.box - PL, L - 2 * DW, PL, 'lumber');
+  for (const s of studs) rect(s, PL, ST, DIMS.box - 3 * PL, 'lumber');
+  for (const u of DIMS.brackets) rect(u - 1.25, DIMS.box - 0.5, 2.5, 0.5, 'bracket'); // in a 1/2" channel, flush with the top plate
+  for (const b of boxes) {
+    const clash = studs.some(s => s < b.r && s + ST > b.l);
+    rect(b.l, b.at - b.h / 2, b.w, b.h, clash ? 'plate clash' : 'plate');
+    text(b.l + b.w / 2, b.at - b.h / 2 - 2, b.label, 'volts'); // under the box
+    if (clash) text(b.l + b.w / 2, b.at - b.h / 2 - 4.5, 'on a stud', 'dim');
+  }
+  let u1 = 0; // the countertop outlets' bodies, dashed, in pockets in the top plates
+  for (const c of RUNS.island) { for (const b of c.inside || []) if (b.label === 'outlet') rect(u1 + b.dx - b.w / 2, b.at - b.h / 2, b.w, b.h, 'hidden'); u1 += c.w; }
+  for (const u of DIMS.brackets) text(u, DIMS.box + 2, 'bracket', 'code');
+  text(L / 2, DIMS.box + 7, `double top plate, 2x4 · ${inch(DIMS.box - 3 * PL)}" studs · pressure-treated bottom plate`, 'code');
+  // Stud centers from the left end, under the floor line, in two rows.
+  studs.forEach((s, i) => { out.push(`<line x1="${X(s + ST / 2)}" y1="${FLOOR + 1}" x2="${X(s + ST / 2)}" y2="${FLOOR + 3 + (i % 2) * 3}" class="tick"/>`); text(s + ST / 2, -5.5 - (i % 2) * 3, inch(s + ST / 2), 'dim'); });
+  text(L / 2, -14, `${studs.length} studs · centers from the island's left end, at the right here (the outside of the end drywall)`, 'code');
+  out.push(`<line x1="0" y1="${FLOOR}" x2="${W}" y2="${FLOOR}" class="floor"/>`);
+  const rx = MARGIN + L + 4; // ruler, off the floor
+  out.push(`<line x1="${rx}" y1="${FLOOR}" x2="${rx}" y2="${FLOOR - DIMS.box}" class="dimline"/>`);
+  for (const [m, s] of [[PL, 'bottom plate'], [DIMS.box - 2 * PL, 'studs, top plates'], [29, 'boxes'], [DIMS.box, 'top of wall, brackets']]) {
+    out.push(`<line x1="${rx - 1}" y1="${FLOOR - m}" x2="${rx + 1}" y2="${FLOOR - m}" class="tick"/>`);
+    out.push(`<text x="${rx + 1.5}" y="${FLOOR - m + 0.7}" class="dim ruler">${inch(m)}" ${s}</text>`);
+  }
+  page('Island wall', 'Framing of the island\'s back wall, seen from the stools (mirrored: spices end on the right)', W, H, FLOOR, out, ['from the island\'s left end', 'off the floor', 1, MARGIN + L, -1]);
 }
 
 // House: the floor plan with the kitchen in place. Page x = OX + x, page y = OY + y, inches from the inside faces of the outer wall (left) and the top wall.

@@ -1,4 +1,4 @@
-// Revision D · 2026-11-16 (raise both when a size or a run changes)
+// Revision E · 2026-11-18 (raise both when a size or a run changes)
 // The kitchen, one source for the drawings and the docs. Inches. A plain script (not a module) so the pages still work when opened from the folder.
 // Text pages show these values with <span data-k="name or expression">fallback</span> (nav.js fills them in, e.g. data-k="counter + seat").
 const DIMS = {
@@ -16,6 +16,7 @@ const DIMS = {
   cooktopV: 10.5,  // cooktop and hood centers from the island cabinet backs (2026-11-05)
   outlet: 44,      // center of a wall receptacle off the floor (assumed)
   stools: [14, 42, 70], // counter stool centers from the island's left end, behind spices, cooktop and plates
+  brackets: Array.from({ length: 7 }, (_, i) => 4 + i * 76 / 6), // Iron Supports 16" flat bracket centers from the island's left end: 4" in from each end of the 84" overhang, spaced evenly (walls.html)
 };
 DIMS.counterH = DIMS.box + DIMS.top; // counter height
 DIMS.faces = DIMS.aisle + 2 * (DIMS.counter - DIMS.depth - DIMS.front); // between the door and drawer faces across the aisle
@@ -26,22 +27,25 @@ const RUNS = {
   island: [
     { note: `Three-drawer base: 6" top drawer over two equal deep drawers. 1" counter overhang at the left end of the island.`,
       name: 'spices',    code: 'DB24-3',  w: 24, kind: 'drawers', n: 3, back: DIMS.seat, backReceptacle: true,
-      inside: [{ label: '120v', w: 2.75, h: 4.5, at: 29, dx: 12 }], // GFCI on the island's back wall, behind the cabinet (height assumed)
+      topOutlet: { dx: 22.75, back: -DIMS.wall / 2 }, // Pass & Seymour CP498TR20WT-SS countertop receptacle (white, stainless steel lid), centered over the island's back wall, 3 3/4" from the cooktop's left edge (26 1/2") (moved 10" toward the cooktop 2026-11-18)
+      inside: [{ label: '120v', w: 2.75, h: 4.5, at: 29, dx: 12 }, // GFCI on the island's back wall, behind the cabinet (height assumed)
+                { label: 'outlet', w: 4.74, h: 3.58, at: DIMS.counterH - 1.79, dx: 21.835 }], // below it, in the back wall's top plate: 3.58" below the counter's top, its wiring tail reaching 3.29" to the left of center (drawing CP498TR15 in manuals/)
       upper: [ { spot: true, w: 3, h: 5.625, at: 87.875, dx: 12 } ] }, // VANoopee B0BRMX76K2 at a task light mark on the island top, aimed straight down: head 2.99" x 5.60" per the listing; bottom 87 7/8" off the floor assumes a 1" canopy and 1 1/2" stem
-    { note: `Three-drawer base under the Bosch NIT8061UC induction cooktop (decided 2026-10-24). The cooktop body drops 4 1/8" below the counter and needs a 1" air gap, which takes the top drawer's space: the top drawer is a false front (fixed, no drawer box; decided 2026-10-25). The cooktop's junction box (240 V 30 A, hardwired) goes in the back wall behind the cabinet, 3" from its left side, centered 29.5" off the floor behind the false front, below the cooktop's 4" (to 31.75") and above the middle drawer box (moved up from 25.75" 2026-11-11), through a cutout in the cabinet back (2026-11-02); its cover is reached by taking out the middle drawer and reaching up, or by lifting out the cooktop. A 120 V GFCI goes in the back wall behind the cabinet, facing away from the aisle, centered at 29" (2026-11-11).`,
-      name: 'cooktop',   code: 'DB36-3',  w: 36, kind: 'drawers', n: 3, cooktop: true, falseTop: true, back: DIMS.seat, backReceptacle: true,
-      inside: [{ label: 'j box', w: 4, h: 4, at: 29.5, dx: 3 }, // in the island's back wall, through a cutout in the cabinet back
-                { label: '120v', w: 2.75, h: 4.5, at: 29, dx: 18 }, // GFCI on the island's back wall, behind the cabinet, facing away from the aisle (height assumed)
+    { note: `Three-drawer base under the Bosch NIT8061UC induction cooktop (decided 2026-10-24). The cooktop body drops 4 1/8" below the counter and needs a 1" air gap, which takes the top drawer's space: the top drawer is a false front (fixed, no drawer box; decided 2026-10-25). The cooktop's junction box (240 V 30 A, hardwired) goes in the back wall behind the cabinet, centered 2 9/16" from its left side (beside the bracket stud, 2026-11-18), centered 29.5" off the floor behind the false front, below the cooktop's 4" (to 31.75") and above the middle drawer box (moved up from 25.75" 2026-11-11), through a cutout in the cabinet back (2026-11-02); its cover is reached by taking out the middle drawer and reaching up, or by lifting out the cooktop.`,
+      name: 'cooktop',   code: 'DB36-3',  w: 36, kind: 'drawers', n: 3, cooktop: true, falseTop: true, back: DIMS.seat,
+      inside: [{ label: 'j box', w: 4, h: 4, at: 29.5, dx: DIMS.brackets[2] - 0.75 - 2 - 24 }, // in the island's back wall, through a cutout in the cabinet back; beside the stud under the third bracket, on its spices side (2026-11-18, was 3")
                 { label: '', w: 28.875, h: 4.125, at: 32.4375, dx: 18 }], // NIT8061UC body: cutout width, 4 1/8" below the counter
       upper: [ { hood: true, w: 41.5, h: 2, at: 66.1875, chimney: 13.375, chimneyD: 10.625 } ] }, // Proline PLFI 544-42
     { note: `Three-drawer base, same as spices.`,
       name: 'plates',    code: 'DB24-3',  w: 24, kind: 'drawers', n: 3, back: DIMS.seat, backReceptacle: true,
-      inside: [{ label: '120v', w: 2.75, h: 4.5, at: 29, dx: 12 }] }, // GFCI on the island's back wall, behind the cabinet (height assumed)
+      topOutlet: { dx: 0.75, back: -DIMS.wall / 2 }, // the second countertop receptacle, centered over the back wall, 3 1/4" from the cooktop's right edge (57 1/2") (moved 10" toward the cooktop 2026-11-18)
+      inside: [{ label: '120v', w: 2.75, h: 4.5, at: 29, dx: 12 }, // GFCI on the island's back wall, behind the cabinet (height assumed)
+                { label: 'outlet', w: 4.74, h: 3.58, at: DIMS.counterH - 1.79, dx: 1.665 }] }, // as on spices, its tail to the right
     { url: 'https://www.cabinets.com/b18-trash-bda304-frameless-colonial-maple-haze-base-trash-cabinet-2-container-frameless-assembled-kitchen-cabinet.html',
-      note: `Base trash cabinet (B18-BDA304, changed from the TRB18FH 2026-11-13): a 6" drawer over a pull-out: two bins, 35 quarts in all, front to back on a tray fixed to the door, which pulls out on soft-close undermount slides (drawing of the cabinet, 2026-11-13). Across the aisle from the oven door. A 120 V receptacle goes in the back wall behind the cabinet, centered 21" off the floor, through a cutout in the cabinet back (2026-11-02).`,
+      note: `Base trash cabinet (B18-BDA304, changed from the TRB18FH 2026-11-13): a 6" drawer over a pull-out: two bins, 35 quarts in all, front to back on a tray fixed to the door, which pulls out on soft-close undermount slides (drawing of the cabinet, 2026-11-13). Across the aisle from the oven door. A 120 V receptacle goes in the back wall behind the cabinet, centered 21" off the floor, through a cutout in the cabinet back (2026-11-02), 9 7/8" from the cabinet's left side, against the stud at 96" (2026-11-18).`,
       name: 'trash',     code: 'B18-Trash', w: 18, kind: 'base', trash: true, backReceptacle: true,
-      inside: [{ label: '120v', w: 2.75, h: 4.5, at: 21, dx: 9 },
-                { label: '120v', w: 2.75, h: 4.5, at: 29, dx: 9 }], // both in the island's back wall: the first opens into the cabinet, the second faces away from the aisle
+      inside: [{ label: '120v', w: 2.75, h: 4.5, at: 21, dx: 9.875 },
+                { label: '120v', w: 2.75, h: 4.5, at: 29, dx: 9.875 }], // both in the island's back wall: the first opens into the cabinet, the second faces away from the aisle; 93 7/8" from the island's left end, against the stud at 96" (2026-11-18, were centered)
       upper: [ { spot: true, w: 3, h: 5.625, at: 87.875, dx: 0 } ] },
     { note: `Sink base: false front over two doors. Holds the Ruvati RVH6222ST undermount sink (needs ≥ 36"), the InSinkErator disposal, the trap and the dishwasher drain loop. A 120 V receptacle goes inside at the bottom left, with the disposal air switch's power module plugged into it (2026-10-25). A 120 V GFCI goes in the back wall behind the cabinet, facing away from the aisle, centered at 29" (2026-11-04).`,
       name: 'sink',      code: 'SB42',    w: 42, kind: 'sink', falseTop: true, backReceptacle: true, airSwitch: { dx: 12.625, back: 2 },

@@ -16,7 +16,7 @@
 <header>
   <div class="cols">
     <h1>3D Model</h1>
-    <div><b>Revision F</b> · 2026-11-18</div>
+    <div><b>Revision G</b> · 2026-11-18</div>
     <div><button data-view="end">End</button><button data-view="island">Island</button><button data-view="wall">Wall</button><button data-view="top">Top</button></div>
     <div><label>slab <select id="slab"><option value="">plain</option></select></label></div>
     <div><label>cabinets <select id="paint-haze"></select></label> <label>uppers <select id="paint-alabaster"></select></label></div>
@@ -281,12 +281,16 @@ function side(run, flip, zBack, back = 0, walls = false) { // back: counter past
     const wb = (c.inside || []).find(b => b.label === 'ice maker');
     if (wb) B(u + wb.dx - wb.w / 2, 0, wb.at - wb.h / 2, wb.w, 0.25, wb.h, M.plate); // recessed ice maker outlet box on the wall (size and spot assumed)
     if (c.backReceptacle) { // vertical duplex plate on the island's back wall, centered at 29" (height assumed)
-      B(u + (w - 2.75) / 2, -4.75, 29 - 2.25, 2.75, 0.25, 4.5, M.plate);
+      B(u + ((c.inside || []).find(b => b.label === '120v' && b.at > 20)?.dx ?? w / 2) - 1.375, -4.75, 29 - 2.25, 2.75, 0.25, 4.5, M.plate); // at its 120v's dx
     }
     if (c.airSwitch) { // InSinkErator STS-OO disposal air button: chrome collar and white button (size assumed)
       const p = (y) => P(u + c.airSwitch.dx, c.airSwitch.back, y);
       rod(p(BOX + TOP), p(BOX + TOP + 0.25), 0.875, M.steel);
       rod(p(BOX + TOP + 0.25), p(BOX + TOP + 0.75), 0.6, M.plate);
+    }
+    if (c.topOutlet) { // Pass & Seymour CP498TR20WT-SS countertop receptacle, its stainless steel lid closed: 2.78" across, 0.27" thick (kitchenpowerpopups.com); the white receptacle is under it
+      const p = (y) => P(u + c.topOutlet.dx, c.topOutlet.back, y);
+      rod(p(BOX + TOP), p(BOX + TOP + 0.27), 1.39, M.steel);
     }
     if (c.cooktop) into(() => { // Bosch NIT8061UC: black glass, four zones, touch-control strip at the front (layout as in the top view)
       const cu = u + (w - 31) / 2, cv = CV - 21.25 / 2, // centered 10 1/2" from the cabinet backs: 2" back from centered on the 25" counter (2026-10-27), kept at 25 3/4" (2026-11-05)
@@ -414,7 +418,7 @@ scene.add(runs.island, runs.wall);
 group = runs.island;
 side(island, false, 0, DIMS.islandBack); // counter 5 1/2" past the cabinet backs (the back wall, then 1"), 19 1/2" behind items with back: 19.5
 cube(0, 0, -4.5, island.reduce((s, c) => s + c.w, 0), BOX, 4.5, M.base); // the island's back wall (2x4 studs, 1/2" drywall each side), floor to the counter's underside, painted Haze
-for (let i = 0; i < 7; i++) cube(4 + i * 76 / 6 - 1.25, BOX - 0.5, -16.5, 2.5, 0.5, 16, M.pull); // seven Iron Supports 16" flat brackets, 2.5" x 1/2" steel, in channels flush with the top plate, from the studs' cabinet side to 3" short of the counter edge, 4" in from each end of the 84" overhang and spaced evenly (walls.html)
+for (const x of DIMS.brackets) cube(x - 1.25, BOX - 0.5, -16.5, 2.5, 0.5, 16, M.pull); // seven Iron Supports 16" flat brackets, 2.5" x 1/2" steel, in channels flush with the top plate, from the studs' cabinet side to 3" short of the counter edge, at DIMS.brackets (walls.html)
 for (const x of DIMS.stools) { // three counter stools at the seating overhang, 28" apart, tucked in 3 1/2" from the back wall; 16" round seat 25" high (stools not chosen, size assumed)
   const z = -16;
   rod([x, 24, z], [x, 25.5, z], 8, M.black);

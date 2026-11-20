@@ -196,7 +196,7 @@ function sketch(title, run, opts = {}) {
       text(px + r.w / 2, top - 0.4, '120v', 'dim volts');
     }
     if (c.airSwitch) { // InSinkErator STS-OO disposal air button on the counter: { dx: center from the item's left end, back: from the cabinet backs }
-      // matte black STSButton, ring and button, 1 3/4" across and 3/4" tall (assumed; it needs a 1 1/4" hole) (2026-11-20)
+      // matte black STSButton, ring and button, 1 3/4" across and 3/4" tall (assumed; in a 1 1/2" hole, though it needs only 1 1/4") (2026-11-20)
       const bx = x + c.airSwitch.dx, deck = FLOOR - BOX - TOP;
       rect(bx - 0.875, deck - 0.25, 1.75, 0.25, 'soap');
       rect(bx - 0.6, deck - 0.75, 1.2, 0.5, 'soap');

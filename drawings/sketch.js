@@ -347,7 +347,7 @@ function plan(title, run, opts = {}) {
       line(x1, y1, x2, y2, 'pump');
       circle([x1, y1], 1, 'soap');
     }
-    if (c.topOutlet) circle(P(c.u + c.topOutlet.dx, c.topOutlet.back), 1.39, 'chrome'); // Pass & Seymour CP498TR20WT-SS countertop receptacle: stainless lid 2.78" across, 2 1/4" hole
+    if (c.topOutlet) circle(P(c.u + c.topOutlet.dx, c.topOutlet.back), 1.39, 'soap'); // Pass & Seymour CP498TR20BK-BK countertop receptacle: matte black lid 2.78" across, 2 1/4" hole
     if (c.kind === 'sink') box(c.u + (c.w - 33.5) / 2, 4, 33.5, 19, 'sinkbowl'); // Ruvati RVH6222ST: 33.5" x 19" outer, 4"–23" from the cabinet backs, 2" from the counter front
     if (c.faucet) { // hole c.faucet.back in front of the cabinet backs, spout reaching c.faucet.reach toward the front
       const [x1, y1] = mid(c.faucet.back), [x2, y2] = mid(c.faucet.back + c.faucet.reach);
@@ -399,7 +399,7 @@ function plan(title, run, opts = {}) {
 
 // Adds a drawing to the page as a <section> (id: the title, e.g. #wall-front), on graph paper with bold lines every BOLD" from (MARGIN, oy).
 // axes: how to say x (from MARGIN, or from axes[3]) and y (up from oy) in the tape measure's readout. Returns the svg.
-const REV = 'H · 2026-11-20'; // revision and date printed on every sheet; bump both when a sheet changes
+const REV = 'I · 2026-11-20'; // revision and date printed on every sheet; bump both when a sheet changes
 function page(title, view, W, H, oy, out, axes) {
   const n = document.querySelectorAll('section.sketch').length; // keeps the pattern ids apart when a page has several drawings
   const section = document.createElement('section');

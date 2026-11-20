@@ -1,4 +1,4 @@
-// Revision G · 2026-11-20 (raise both when a size or a run changes)
+// Revision H · 2026-11-20 (raise both when a size or a run changes)
 // The kitchen, one source for the drawings and the docs. Inches. A plain script (not a module) so the pages still work when opened from the folder.
 // Text pages show these values with <span data-k="name or expression">fallback</span> (nav.js fills them in, e.g. data-k="counter + seat").
 const DIMS = {
@@ -27,7 +27,7 @@ const RUNS = {
   island: [
     { note: `Three-drawer base: 6" top drawer over two equal deep drawers. 1" counter overhang at the left end of the island.`,
       name: 'spices',    code: 'DB24-3',  w: 24, kind: 'drawers', n: 3, back: DIMS.seat, backReceptacle: true,
-      topOutlet: { dx: 22.75, back: -DIMS.wall / 2 }, // Pass & Seymour CP498TR20WT-SS countertop receptacle (white, stainless steel lid), centered over the island's back wall, 3 3/4" from the cooktop's left edge (26 1/2") (moved 10" toward the cooktop 2026-11-18)
+      topOutlet: { dx: 22.75, back: -DIMS.wall / 2 }, // Pass & Seymour CP498TR20BK-BK countertop receptacle (black, matte black lid, 2026-11-20), centered over the island's back wall, 3 3/4" from the cooktop's left edge (26 1/2") (moved 10" toward the cooktop 2026-11-18)
       inside: [{ label: '120v', w: 2.75, h: 4.5, at: 29, dx: 12 }, // GFCI on the island's back wall, behind the cabinet (height assumed)
                 { label: 'outlet', w: 4.74, h: 3.58, at: DIMS.counterH - 1.79, dx: 21.835 }], // below it, in the back wall's top plate: 3.58" below the counter's top, its wiring tail reaching 3.29" to the left of center (drawing CP498TR15 in manuals/)
       upper: [ { spot: true, w: 3, h: 5.625, at: 87.875, dx: 12 } ] }, // VANoopee B0BRMX76K2 at a task light mark on the island top, aimed straight down: head 2.99" x 5.60" per the listing; bottom 87 7/8" off the floor assumes a 1" canopy and 1 1/2" stem

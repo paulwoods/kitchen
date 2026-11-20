@@ -16,7 +16,7 @@
 <header>
   <div class="cols">
     <h1>3D Model</h1>
-    <div><b>Revision L</b> · 2026-11-20</div>
+    <div><b>Revision N</b> · 2026-11-20</div>
     <div><button data-view="end">End</button><button data-view="island">Island</button><button data-view="wall">Wall</button><button data-view="top">Top</button></div>
     <div><label>slab <select id="slab"><option value="">plain</option></select></label></div>
     <div><label>cabinets <select id="paint-haze"></select></label> <label>uppers <select id="paint-alabaster"></select></label></div>
@@ -58,7 +58,7 @@ const M = {
   box: mat('#ebeae6'), front: mat('#ebeae6'), base: mat('#ebeae6'), wall: mat('#bec6bd'), alabaster: mat('#ebeae6'), fixture: mat('#ebeae6'), // Colonial Maple Alabaster on every cabinet (2026-11-19); the island's back wall stays painted Haze
   toe: mat('#556'), counter: mat('#ecebe6', { roughness: 0.3 }),
   steel: mat('#c9ccd2', { metalness: 0.5, roughness: 0.4 }), black: mat('#1b1b1b', { roughness: 0.3 }), brass: mat('#b08d57', { metalness: 0.6, roughness: 0.35 }),
-  glass: mat('#bcd7e8', { transparent: true, opacity: 0.5 }), ring: mat('#8a8f99', { roughness: 0.4 }), drain: mat('#4a4d52', { metalness: 0.5, roughness: 0.4 }), pull: mat('#2b2b2b'), rack: mat('#d6d8dc', { metalness: 0.3 }), tray: mat('#6e7177'), disposal: mat('#55595f', { roughness: 0.6 }), purple: mat('#7a5bbf'), plate: mat('#ffffff'), drawer: mat('#dcc6a0'), // drawer boxes: natural wood (assumed)
+  glass: mat('#bcd7e8', { transparent: true, opacity: 0.5 }), ring: mat('#8a8f99', { roughness: 0.4 }), drain: mat('#4a4d52', { metalness: 0.5, roughness: 0.4 }), pull: mat('#2b2b2b'), slot: mat('#000000'), rack: mat('#d6d8dc', { metalness: 0.3 }), tray: mat('#6e7177'), disposal: mat('#55595f', { roughness: 0.6 }), purple: mat('#7a5bbf'), plate: mat('#ffffff'), drawer: mat('#dcc6a0'), // drawer boxes: natural wood (assumed)
   hoodGlass: mat('#bcd7e8', { transparent: true, opacity: 0.4, side: THREE.DoubleSide, roughness: 0.1 }), light: mat('#fff6d8', { emissive: '#fff1c0' }), wall: mat('#e9e4d8'), floor: mat('#dcc8a4'), // Flooret Soho, light oak; its herringbone map is added with the floor
 };
 const edges = new THREE.LineBasicMaterial({ color: '#223', transparent: true, opacity: 0.35 });
@@ -102,16 +102,16 @@ function side(run, flip, zBack, back = 0, walls = false) { // back: counter past
   // A front that opens on click: its meshes go in a pivot at the hinge edge hu (sign -1 hinged on its left as seen from the aisle, +1 its right),
   // or, with no hu, a drawer that slides out OUT. The flip turns the wall run 180°, so the same signs hold there.
   // With hy, a door hinged along its bottom front edge at that height instead (the dishwasher), dropping flat toward the aisle.
-  const opening = (v, build, hu, sign, hy) => {
-    const g = group, pivot = new THREE.Group();
+  const pivoted = (at, axis, move, build) => { // what build() draws turns `move` about `axis` through point `at` (or slides by the vector `move`) on click
+    const g = group, pivot = new THREE.Group(), home = new THREE.Vector3(...at);
     g.add(pivot); group = pivot; build(); group = g;
-    const home = new THREE.Vector3(...P(hu ?? 0, hy == null ? v : v + 0.75, hy ?? 0));
     for (const m of pivot.children) m.position.sub(home);
     pivot.position.copy(home);
-    pivot.userData.front = { home, t: 0, to: 0, axis: hy == null ? 'y' : 'x', // the flip turns a drop-down door's swing around
-      move: hy != null ? (flip ? -1 : 1) * Math.PI / 2 : hu == null ? new THREE.Vector3(0, 0, flip ? -OUT : OUT) : sign * SWING };
+    pivot.userData.front = { home, t: 0, to: 0, axis, move };
     openings.push(pivot);
   };
+  const opening = (v, build, hu, sign, hy) => pivoted(P(hu ?? 0, hy == null ? v : v + 0.75, hy ?? 0), hy == null ? 'y' : 'x', // the flip turns a drop-down door's swing around
+    hy != null ? (flip ? -1 : 1) * Math.PI / 2 : hu == null ? new THREE.Vector3(0, 0, flip ? -OUT : OUT) : sign * SWING, build);
   // Stack of fronts from `top` down, on the face at v; each row is { h, pair, pull: 'mid' | 'top' | 'bottom', glass, one, left, hinge: 'left', fixed, drop }.
   // `drop`: drops down on a hinge along its bottom edge, and is called to draw what's on the door's back.
   // A pair hinges on its outer edges, `one` door opposite its pull, `hinge: 'left'` on its left; a row with none of these is a drawer, unless `fixed` (a false front).
@@ -299,9 +299,15 @@ function side(run, flip, zBack, back = 0, walls = false) { // back: counter past
       rod(p(y0 + 0.25), p(y0 + 3.1875), 0.5, M.pull, 0.45);
       rod(p(y0 + 2.6), p(y0 + 2.4, 3.4375), 0.2, M.pull);
     }
-    if (c.topOutlet) { // Pass & Seymour CP498TR20WT-SS countertop receptacle, its stainless steel lid closed: 2.78" across, 0.27" thick (kitchenpowerpopups.com); the white receptacle is under it
-      const p = (y) => P(u + c.topOutlet.dx, c.topOutlet.back, y);
-      rod(p(BOX + TOP), p(BOX + TOP + 0.27), 1.39, M.steel);
+    if (c.topOutlet) { // Pass & Seymour CP498TR20BK-BK countertop receptacle: matte black lid 2.78" across, 0.27" thick (CP498L drawing), over a black face 2.29" across (CP498TR20 drawing)
+      const y = BOX + TOP, p = (du, dv, h = y) => P(u + c.topOutlet.dx + du, c.topOutlet.back + dv, h);
+      rod(p(0, 0), p(0, 0, y + 0.05), 1.145, M.pull);
+      const slot = (du, dv, w, d) => B(u + c.topOutlet.dx + du - w / 2, c.topOutlet.back + dv - d / 2, y + 0.05, w, d, 0.01, M.slot);
+      slot(0, -0.4, 0.3, 0.08); // the 20 A openings, laid out as in the product photo (approximate): a straight slot toward the hinge,
+      slot(-0.35, 0.15, 0.3, 0.08); slot(-0.35, 0.29, 0.08, 0.2); // the T-slot lower left (as seen from the aisle),
+      rod(p(0.4, 0.25, y + 0.05), p(0.4, 0.25, y + 0.06), 0.1, M.slot); // the ground hole lower right
+      pivoted(p(0, -1.39, y + 0.135), 'x', (flip ? 1 : -1) * Math.PI, // the lid hinges on its stool-side edge, halfway up its thickness, and flips 180° onto the counter on click (owner, 2026-11-20)
+        () => rod(p(0, 0), p(0, 0, y + 0.27), 1.39, M.pull));
     }
     if (c.cooktop) into(() => { // Bosch NIT8061UC: black glass, four zones, touch-control strip at the front (layout as in the top view)
       const cu = u + (w - 31) / 2, cv = CV - 21.25 / 2, // centered 10 1/2" from the cabinet backs: 2" back from centered on the 25" counter (2026-10-27), kept at 25 3/4" (2026-11-05)

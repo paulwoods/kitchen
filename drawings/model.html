@@ -16,7 +16,7 @@
 <header>
   <div class="cols">
     <h1>3D Model</h1>
-    <div><b>Revision K</b> · 2026-11-20</div>
+    <div><b>Revision L</b> · 2026-11-20</div>
     <div><button data-view="end">End</button><button data-view="island">Island</button><button data-view="wall">Wall</button><button data-view="top">Top</button></div>
     <div><label>slab <select id="slab"><option value="">plain</option></select></label></div>
     <div><label>cabinets <select id="paint-haze"></select></label> <label>uppers <select id="paint-alabaster"></select></label></div>
@@ -288,10 +288,10 @@ function side(run, flip, zBack, back = 0, walls = false) { // back: counter past
     if (c.backReceptacle) { // vertical duplex plate on the island's back wall, centered at 29" (height assumed)
       B(u + ((c.inside || []).find(b => b.label === '120v' && b.at > 20)?.dx ?? w / 2) - 1.375, -4.75, 29 - 2.25, 2.75, 0.25, 4.5, M.plate); // at its 120v's dx
     }
-    if (c.airSwitch) { // InSinkErator STS-OO disposal air button: chrome collar and white button (size assumed)
+    if (c.airSwitch) { // InSinkErator STS-OO disposal air button with the matte black STSButton, ring and button (size assumed; 2026-11-20)
       const p = (y) => P(u + c.airSwitch.dx, c.airSwitch.back, y);
-      rod(p(BOX + TOP), p(BOX + TOP + 0.25), 0.875, M.steel);
-      rod(p(BOX + TOP + 0.25), p(BOX + TOP + 0.75), 0.6, M.plate);
+      rod(p(BOX + TOP), p(BOX + TOP + 0.25), 0.875, M.pull);
+      rod(p(BOX + TOP + 0.25), p(BOX + TOP + 0.75), 0.6, M.pull);
     }
     if (c.soap) { // Kohler K-1895-BL soap dispenser, matte black: 2" base, 1" column 3 3/16" tall, spout 3 7/16" toward the front (spec sheet)
       const p = (y, dv = 0) => P(u + c.soap.dx, c.soap.back + dv, y), y0 = BOX + TOP;

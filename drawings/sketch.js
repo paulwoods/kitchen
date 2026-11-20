@@ -196,10 +196,10 @@ function sketch(title, run, opts = {}) {
       text(px + r.w / 2, top - 0.4, '120v', 'dim volts');
     }
     if (c.airSwitch) { // InSinkErator STS-OO disposal air button on the counter: { dx: center from the item's left end, back: from the cabinet backs }
-      // chrome collar and white button, 1 3/4" across and 3/4" tall (assumed; it needs a 1 1/4" hole)
+      // matte black STSButton, ring and button, 1 3/4" across and 3/4" tall (assumed; it needs a 1 1/4" hole) (2026-11-20)
       const bx = x + c.airSwitch.dx, deck = FLOOR - BOX - TOP;
-      rect(bx - 0.875, deck - 0.25, 1.75, 0.25, 'chrome');
-      rect(bx - 0.6, deck - 0.75, 1.2, 0.5, 'button');
+      rect(bx - 0.875, deck - 0.25, 1.75, 0.25, 'soap');
+      rect(bx - 0.6, deck - 0.75, 1.2, 0.5, 'soap');
       text(bx - 1.2, deck - 0.4, 'disposal', 'dim volts end');
     }
     if (c.soap) { // Kohler K-1895-BL soap dispenser, matte black (spec sheet): a 2" base, a 1" column 3 3/16" tall, the spout toward the viewer
@@ -341,7 +341,7 @@ function plan(title, run, opts = {}) {
     }
     if (c.receptacle) box(c.u + (c.w - 2.75) / 2, 0, 2.75, 0.25, 'plate'); // on the wall face, over the counter
     if (c.backReceptacle) box(c.u + ((c.inside || []).find(b => b.label === '120v' && b.at > 20)?.dx ?? c.w / 2) - 1.375, -WALL - 0.25, 2.75, 0.25, 'plate'); // vertical plate on the island's back wall
-    if (c.airSwitch) circle(P(c.u + c.airSwitch.dx, c.airSwitch.back), 0.875, 'button'); // STS-OO disposal button
+    if (c.airSwitch) circle(P(c.u + c.airSwitch.dx, c.airSwitch.back), 0.875, 'soap'); // STS-OO disposal button, matte black STSButton
     if (c.soap) { // Kohler K-1895-BL soap dispenser: 2" base, spout 3 7/16" toward the front
       const [x1, y1] = P(c.u + c.soap.dx, c.soap.back), [x2, y2] = P(c.u + c.soap.dx, c.soap.back + 3.4375);
       line(x1, y1, x2, y2, 'pump');
@@ -399,7 +399,7 @@ function plan(title, run, opts = {}) {
 
 // Adds a drawing to the page as a <section> (id: the title, e.g. #wall-front), on graph paper with bold lines every BOLD" from (MARGIN, oy).
 // axes: how to say x (from MARGIN, or from axes[3]) and y (up from oy) in the tape measure's readout. Returns the svg.
-const REV = 'G · 2026-11-20'; // revision and date printed on every sheet; bump both when a sheet changes
+const REV = 'H · 2026-11-20'; // revision and date printed on every sheet; bump both when a sheet changes
 function page(title, view, W, H, oy, out, axes) {
   const n = document.querySelectorAll('section.sketch').length; // keeps the pattern ids apart when a page has several drawings
   const section = document.createElement('section');
@@ -425,7 +425,7 @@ function page(title, view, W, H, oy, out, axes) {
       .upper { fill: none; stroke: #223; stroke-width: 0.3; stroke-dasharray: 0.01 0.8; stroke-linecap: round; } .pull { stroke: #e07000; stroke-width: 0.4; stroke-linecap: round; } .handle { stroke: #2b2b2b; stroke-width: 0.4; stroke-linecap: round; } /* cabinet pulls orange on the sketches (2026-11-05); the oven's handles stay black */
       .oven { fill: #c9ccd2; stroke: #223; stroke-width: 0.25; } .window { fill: #3a3f4a; }
       .glass { fill: #dbe9f2; stroke: #223; stroke-width: 0.15; }
-      .light { fill: #fff6d8; stroke: #223; stroke-width: 0.15; } .chrome { fill: #c9ccd2; stroke: #223; stroke-width: 0.1; } .button { fill: #fff; stroke: #223; stroke-width: 0.15; } .plate { fill: #fff; stroke: #223; stroke-width: 0.15; } .outlet { fill: #fffdf7; stroke: #223; stroke-width: 0.1; }
+      .light { fill: #fff6d8; stroke: #223; stroke-width: 0.15; } .chrome { fill: #c9ccd2; stroke: #223; stroke-width: 0.1; } .plate { fill: #fff; stroke: #223; stroke-width: 0.15; } .outlet { fill: #fffdf7; stroke: #223; stroke-width: 0.1; }
       .gap { fill: none; stroke: #223; stroke-width: 0.25; stroke-dasharray: 1.5 1; }
       .floor { stroke: var(--ink); stroke-width: 0.4; } .tick, .dimline { stroke: var(--muted); stroke-width: 0.15; }
       text { text-anchor: middle; font-size: 2.4px; fill: var(--ink); paint-order: stroke; stroke: var(--sheet); stroke-width: 0.4; } /* halo: labels cross both the sheet and light cabinets */

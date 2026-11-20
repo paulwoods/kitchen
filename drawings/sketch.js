@@ -202,6 +202,12 @@ function sketch(title, run, opts = {}) {
       rect(bx - 0.6, deck - 0.75, 1.2, 0.5, 'button');
       text(bx - 1.2, deck - 0.4, 'disposal', 'dim volts end');
     }
+    if (c.soap) { // Kohler K-1895-BL soap dispenser, matte black (spec sheet): a 2" base, a 1" column 3 3/16" tall, the spout toward the viewer
+      const sx = x + c.soap.dx, deck = FLOOR - BOX - TOP;
+      rect(sx - 1, deck - 0.25, 2, 0.25, 'soap');
+      rect(sx - 0.5, deck - 3.1875, 1, 2.9375, 'soap');
+      text(sx + 1.2, deck - 0.4, 'soap', 'dim volts start');
+    }
     for (const b of c.inside || []) { // hidden inside the cabinet, dashed: { label, w, h, at: center off the floor, dx: center from the item's left end, within: label inside the box }
       const side = Math.sign(c.w / 2 - b.dx), top = FLOOR - b.at - b.h / 2; // the label runs from the box's outer edge toward the cabinet's middle (centered when it's in the middle)
       rect(x + b.dx - b.w / 2, top, b.w, b.h, 'hidden');
@@ -336,6 +342,11 @@ function plan(title, run, opts = {}) {
     if (c.receptacle) box(c.u + (c.w - 2.75) / 2, 0, 2.75, 0.25, 'plate'); // on the wall face, over the counter
     if (c.backReceptacle) box(c.u + ((c.inside || []).find(b => b.label === '120v' && b.at > 20)?.dx ?? c.w / 2) - 1.375, -WALL - 0.25, 2.75, 0.25, 'plate'); // vertical plate on the island's back wall
     if (c.airSwitch) circle(P(c.u + c.airSwitch.dx, c.airSwitch.back), 0.875, 'button'); // STS-OO disposal button
+    if (c.soap) { // Kohler K-1895-BL soap dispenser: 2" base, spout 3 7/16" toward the front
+      const [x1, y1] = P(c.u + c.soap.dx, c.soap.back), [x2, y2] = P(c.u + c.soap.dx, c.soap.back + 3.4375);
+      line(x1, y1, x2, y2, 'pump');
+      circle([x1, y1], 1, 'soap');
+    }
     if (c.topOutlet) circle(P(c.u + c.topOutlet.dx, c.topOutlet.back), 1.39, 'chrome'); // Pass & Seymour CP498TR20WT-SS countertop receptacle: stainless lid 2.78" across, 2 1/4" hole
     if (c.kind === 'sink') box(c.u + (c.w - 33.5) / 2, 4, 33.5, 19, 'sinkbowl'); // Ruvati RVH6222ST: 33.5" x 19" outer, 4"–23" from the cabinet backs, 2" from the counter front
     if (c.faucet) { // hole c.faucet.back in front of the cabinet backs, spout reaching c.faucet.reach toward the front
@@ -388,7 +399,7 @@ function plan(title, run, opts = {}) {
 
 // Adds a drawing to the page as a <section> (id: the title, e.g. #wall-front), on graph paper with bold lines every BOLD" from (MARGIN, oy).
 // axes: how to say x (from MARGIN, or from axes[3]) and y (up from oy) in the tape measure's readout. Returns the svg.
-const REV = 'F · 2026-11-19'; // revision and date printed on every sheet; bump both when a sheet changes
+const REV = 'G · 2026-11-20'; // revision and date printed on every sheet; bump both when a sheet changes
 function page(title, view, W, H, oy, out, axes) {
   const n = document.querySelectorAll('section.sketch').length; // keeps the pattern ids apart when a page has several drawings
   const section = document.createElement('section');
@@ -409,7 +420,7 @@ function page(title, view, W, H, oy, out, axes) {
       .roomwall { fill: #e4dccb; stroke: #223; stroke-width: 0.25; }
       .cooktop { fill: #111; stroke: var(--muted); stroke-width: 0.1; } .burner { fill: none; stroke: #667; stroke-width: 0.3; }
       .top { fill: #e9eaed; } .hidden { fill: none; stroke: #223; stroke-width: 0.2; stroke-dasharray: 1 0.6; }
-      .faucet { fill: #2b2b2b; stroke: #b08d57; stroke-width: 0.2; } .spout { stroke: #2b2b2b; stroke-width: 1.375; }
+      .faucet { fill: #2b2b2b; stroke: #b08d57; stroke-width: 0.2; } .spout { stroke: #2b2b2b; stroke-width: 1.375; } .soap { fill: #2b2b2b; } .pump { stroke: #2b2b2b; stroke-width: 0.5; }
       .brass { fill: #b08d57; stroke: #223; stroke-width: 0.1; } .coil { stroke: #2b2b2b; stroke-width: 0.2; }      .sinkbowl { fill: #c9ccd2; stroke: #223; stroke-width: 0.3; }
       .upper { fill: none; stroke: #223; stroke-width: 0.3; stroke-dasharray: 0.01 0.8; stroke-linecap: round; } .pull { stroke: #e07000; stroke-width: 0.4; stroke-linecap: round; } .handle { stroke: #2b2b2b; stroke-width: 0.4; stroke-linecap: round; } /* cabinet pulls orange on the sketches (2026-11-05); the oven's handles stay black */
       .oven { fill: #c9ccd2; stroke: #223; stroke-width: 0.25; } .window { fill: #3a3f4a; }

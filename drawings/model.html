@@ -16,7 +16,7 @@
 <header>
   <div class="cols">
     <h1>3D Model</h1>
-    <div><b>Revision J</b> · 2026-11-19</div>
+    <div><b>Revision K</b> · 2026-11-20</div>
     <div><button data-view="end">End</button><button data-view="island">Island</button><button data-view="wall">Wall</button><button data-view="top">Top</button></div>
     <div><label>slab <select id="slab"><option value="">plain</option></select></label></div>
     <div><label>cabinets <select id="paint-haze"></select></label> <label>uppers <select id="paint-alabaster"></select></label></div>
@@ -292,6 +292,12 @@ function side(run, flip, zBack, back = 0, walls = false) { // back: counter past
       const p = (y) => P(u + c.airSwitch.dx, c.airSwitch.back, y);
       rod(p(BOX + TOP), p(BOX + TOP + 0.25), 0.875, M.steel);
       rod(p(BOX + TOP + 0.25), p(BOX + TOP + 0.75), 0.6, M.plate);
+    }
+    if (c.soap) { // Kohler K-1895-BL soap dispenser, matte black: 2" base, 1" column 3 3/16" tall, spout 3 7/16" toward the front (spec sheet)
+      const p = (y, dv = 0) => P(u + c.soap.dx, c.soap.back + dv, y), y0 = BOX + TOP;
+      rod(p(y0), p(y0 + 0.25), 1, M.pull);
+      rod(p(y0 + 0.25), p(y0 + 3.1875), 0.5, M.pull, 0.45);
+      rod(p(y0 + 2.6), p(y0 + 2.4, 3.4375), 0.2, M.pull);
     }
     if (c.topOutlet) { // Pass & Seymour CP498TR20WT-SS countertop receptacle, its stainless steel lid closed: 2.78" across, 0.27" thick (kitchenpowerpopups.com); the white receptacle is under it
       const p = (y) => P(u + c.topOutlet.dx, c.topOutlet.back, y);

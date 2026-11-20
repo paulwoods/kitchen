@@ -1,4 +1,4 @@
-// Revision E · 2026-11-18 (raise both when a size or a run changes)
+// Revision F · 2026-11-20 (raise both when a size or a run changes)
 // The kitchen, one source for the drawings and the docs. Inches. A plain script (not a module) so the pages still work when opened from the folder.
 // Text pages show these values with <span data-k="name or expression">fallback</span> (nav.js fills them in, e.g. data-k="counter + seat").
 const DIMS = {
@@ -48,6 +48,7 @@ const RUNS = {
       upper: [ { spot: true, w: 3, h: 5.625, at: 87.875, dx: 0 } ] },
     { note: `Sink base: false front over two doors. Holds the Ruvati RVH6222ST undermount sink (needs ≥ 36"), the InSinkErator disposal, the trap and the dishwasher drain loop. A 120 V receptacle goes inside at the bottom left, with the disposal air switch's power module plugged into it (2026-10-25). A 120 V GFCI goes in the back wall behind the cabinet, facing away from the aisle, centered at 29" (2026-11-04).`,
       name: 'sink',      code: 'SB42',    w: 42, kind: 'sink', falseTop: true, backReceptacle: true, airSwitch: { dx: 12.625, back: 2 },
+      soap: { dx: 29.375, back: 2 }, // Kohler K-1895-BL soap dispenser, 8 3/8" right of the faucet, mirroring the air button; 1 1/2" hole under its 2" base, 3 3/16" tall, spout 3 7/16" toward the front (spec sheet, manuals/kohler K-1895-BL soap dispenser/, 2026-11-20)
       inside: [{ label: '120v', w: 2.75, h: 4.5, at: 9, dx: 3 },
                 { label: 'air sw', w: 4.375, h: 4.375, at: 9, dx: 8, within: true }, // STS-OO power module, plugged into the 120v, the disposal plugs into it
                 { label: 'disposal', w: 8.25, h: 12.25, at: 18.5, dx: 11.3125, within: true }, // InSinkErator 81138K: 12 1/4" tall, 8 1/4" across, under the drain (spec sheet in manuals/)

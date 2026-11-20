@@ -1,13 +1,14 @@
-// Row of links across the top of every page, in index.html's order: design, then the TODO groups (now and before work starts, the work, old design, stone).
+// Row of links across the top of every page, in index.html's order: design, choices, then the TODO groups (now and before work starts, the work, old design, stone).
 // Loaded with defer, so it runs after sketch.js has added the drawings. On model.html it goes inside the header,
 // which the canvas subtracts from the window height.
 const groups = [
   [['index.html', 'Index']],
   [['drawings/model.html', '3D Model'], ['drawings/sketches.html', 'Sketches'], ['docs/countertop.html', 'Countertop']],
+  [['docs/cabinets.html', 'Cabinets'], ['docs/selections.html', 'Selections'], ['docs/countertop-2.html', 'Countertop 2']],
   [['docs/decisions.html', 'Decisions'], ['docs/existing.html', 'Existing'], ['docs/permits.html', 'Permits'], ['docs/trades.html', 'Trades'], ['pricing/price.html', 'Price']],
   [['docs/sequence.html', 'Sequence'], ['docs/demolition.html', 'Demolition']],
-  [['docs/design-package.html', 'Design Package'], ['docs/cabinets.html', 'Cabinets'], ['docs/selections.html', 'Selections'], ['docs/electrical.html', 'Electrical'], ['docs/lighting.html', 'Lighting'], ['docs/walls.html', 'Walls']],
-  [['docs/countertop-2.html', 'Countertop 2'], ['docs/backsplash.html', 'Backsplash'], ['docs/pick.html', 'Pick']],
+  [['docs/design-package.html', 'Design Package'], ['docs/electrical.html', 'Electrical'], ['docs/lighting.html', 'Lighting'], ['docs/walls.html', 'Walls']],
+  [['docs/backsplash.html', 'Backsplash'], ['docs/pick.html', 'Pick']],
 ];
 // Links are relative to this script's folder (the site root), so pages in subfolders load it as ../nav.js.
 const root = document.currentScript.src;

@@ -388,7 +388,7 @@ function plan(title, run, opts = {}) {
 
 // Adds a drawing to the page as a <section> (id: the title, e.g. #wall-front), on graph paper with bold lines every BOLD" from (MARGIN, oy).
 // axes: how to say x (from MARGIN, or from axes[3]) and y (up from oy) in the tape measure's readout. Returns the svg.
-const REV = 'E · 2026-11-18'; // revision and date printed on every sheet; bump both when a sheet changes
+const REV = 'F · 2026-11-19'; // revision and date printed on every sheet; bump both when a sheet changes
 function page(title, view, W, H, oy, out, axes) {
   const n = document.querySelectorAll('section.sketch').length; // keeps the pattern ids apart when a page has several drawings
   const section = document.createElement('section');
@@ -402,8 +402,8 @@ function page(title, view, W, H, oy, out, axes) {
       .readout { min-height: 1.5em; font-variant-numeric: tabular-nums; } .readout b { color: var(--ink); }
       button { font: inherit; margin-left: 8px; padding: 0 8px; }
       .grid { fill: none; stroke: var(--grid); stroke-width: 0.1; } .ft { stroke: var(--grid-bold); stroke-width: 0.2; }
-      .box { fill: #bec6bd; stroke: #223; stroke-width: 0.3; }
-      .front { fill: #bec6bd; stroke: #223; stroke-width: 0.2; } /* Colonial Maple Haze */
+      .box { fill: #ebeae6; stroke: #223; stroke-width: 0.3; }
+      .front { fill: #ebeae6; stroke: #223; stroke-width: 0.2; } /* Colonial Maple Alabaster, every cabinet (2026-11-19) */
       .alabaster { fill: #ebeae6; } /* Colonial Maple Alabaster: the tall items and upper cabinets */
       .toe { fill: #556; } .counter { fill: #8a8f99; stroke: #223; stroke-width: 0.2; }
       .roomwall { fill: #e4dccb; stroke: #223; stroke-width: 0.25; }

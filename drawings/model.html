@@ -16,7 +16,7 @@
 <header>
   <div class="cols">
     <h1>3D Model</h1>
-    <div><b>Revision I</b> · 2026-11-19</div>
+    <div><b>Revision J</b> · 2026-11-19</div>
     <div><button data-view="end">End</button><button data-view="island">Island</button><button data-view="wall">Wall</button><button data-view="top">Top</button></div>
     <div><label>slab <select id="slab"><option value="">plain</option></select></label></div>
     <div><label>cabinets <select id="paint-haze"></select></label> <label>uppers <select id="paint-alabaster"></select></label></div>
@@ -55,7 +55,7 @@ try { if (localStorage.getItem('model-theme') === 'light') setTheme(true); } cat
 document.getElementById('toggle-theme').onclick = () => setTheme(!theme.href.endsWith('light.css'));
 const mat = (color, extra = {}) => new THREE.MeshStandardMaterial({ color, roughness: 0.8, ...extra });
 const M = {
-  box: mat('#bec6bd'), front: mat('#bec6bd'), base: mat('#bec6bd'), alabaster: mat('#ebeae6'), fixture: mat('#ebeae6'), // Colonial Maple Haze; Alabaster on the tall items and upper cabinets
+  box: mat('#ebeae6'), front: mat('#ebeae6'), base: mat('#ebeae6'), wall: mat('#bec6bd'), alabaster: mat('#ebeae6'), fixture: mat('#ebeae6'), // Colonial Maple Alabaster on every cabinet (2026-11-19); the island's back wall stays painted Haze
   toe: mat('#556'), counter: mat('#ecebe6', { roughness: 0.3 }),
   steel: mat('#c9ccd2', { metalness: 0.5, roughness: 0.4 }), black: mat('#1b1b1b', { roughness: 0.3 }), brass: mat('#b08d57', { metalness: 0.6, roughness: 0.35 }),
   glass: mat('#bcd7e8', { transparent: true, opacity: 0.5 }), ring: mat('#8a8f99', { roughness: 0.4 }), drain: mat('#4a4d52', { metalness: 0.5, roughness: 0.4 }), pull: mat('#2b2b2b'), rack: mat('#d6d8dc', { metalness: 0.3 }), tray: mat('#6e7177'), disposal: mat('#55595f', { roughness: 0.6 }), purple: mat('#7a5bbf'), plate: mat('#ffffff'), drawer: mat('#dcc6a0'), // drawer boxes: natural wood (assumed)
@@ -425,7 +425,7 @@ const runs = { island: new THREE.Group(), wall: new THREE.Group() };
 scene.add(runs.island, runs.wall);
 group = runs.island;
 side(island, false, 0, DIMS.islandBack); // counter 5 1/2" past the cabinet backs (the back wall, then 1"), 19 1/2" behind items with back: 19.5
-cube(0, 0, -4.5, island.reduce((s, c) => s + c.w, 0), BOX, 4.5, M.base); // the island's back wall (2x4 studs, 1/2" drywall each side), floor to the counter's underside, painted Haze
+cube(0, 0, -4.5, island.reduce((s, c) => s + c.w, 0), BOX, 4.5, M.wall); // the island's back wall (2x4 studs, 1/2" drywall each side), floor to the counter's underside, painted Haze
 for (const x of DIMS.brackets) cube(x - 1.25, BOX - 0.5, -16.5, 2.5, 0.5, 16, M.pull); // seven Iron Supports 16" flat brackets, 2.5" x 1/2" steel, in channels flush with the top plate, from the studs' cabinet side to 3" short of the counter edge, at DIMS.brackets (walls.html)
 for (const x of DIMS.stools) { // three counter stools at the seating overhang, 28" apart, tucked in 3 1/2" from the back wall; 16" round seat 25" high (stools not chosen, size assumed)
   const z = -16;
@@ -509,10 +509,10 @@ const show = (name) => {
 const PAINTS = { 'Bright White': '#f1f1f1', Alabaster: '#e8e8e6', 'Antique White': '#ece6cf', 'Soft Beige': '#d1c7b8', Oyster: '#cdccca', 'Willow Gray': '#bbb7b0', Fog: '#909687', Moss: '#6c776f', Haze: '#c3cac2', 'Smoky Blue': '#708d9e', 'Creek Stone': '#7a7269', 'Thunder Gray': '#6d6c62', 'Billiard Green': '#4b5c52', Basil: '#465250', Naval: '#283846', Midnight: '#4e4b50', Raisin: '#50393c', Iron: '#362f27', Truffle: '#4d4840', Ebony: '#222124',
   Natural: '#f2c998', Toffee: '#c17c44', Sand: '#b49a7d', Latte: '#a68a6c', Storm: '#8c7e79', Slate: '#5d5860', Charcoal: '#3f312e', Java: '#6b2f1e', Pecan: '#271005', Espresso: '#1b1615', Unfinished: '#e8d5b5',
   'Bright White Brushed Gray Glaze': '#f4f4f4', 'Willow Gray Brushed Gray Glaze': '#c1bcb6' };
-for (const [id, mats] of [['haze', [M.box, M.front, M.base]], ['alabaster', [M.alabaster]]]) { // Haze on the base cabinets, Alabaster on the tall items and uppers
+for (const [id, mats] of [['haze', [M.box, M.front, M.base]], ['alabaster', [M.alabaster]]]) { // both default to Alabaster (2026-11-19)
   const sel = document.getElementById('paint-' + id);
   sel.innerHTML = Object.keys(PAINTS).map(n => `<option>${n}</option>`).join('');
-  sel.value = id[0].toUpperCase() + id.slice(1);
+  sel.value = 'Alabaster';
   sel.onchange = () => mats.forEach(m => m.color.set(PAINTS[sel.value]));
 }
 document.getElementById('appliances').onchange = e => appliances.forEach(g => g.visible = e.target.checked);

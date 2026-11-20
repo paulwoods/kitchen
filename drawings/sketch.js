@@ -159,6 +159,7 @@ function sketch(title, run, opts = {}) {
       // Side lever: a black hub off the right side, a 3 5/16" brass lever up from its end at rest. Brass trim per the product photo:
       // the collar at the column top (the dock arm there is hidden behind the sprayhead), the sprayhead's top ring and button strip.
       const fx = x + c.w / 2, deck = FLOOR - BOX - TOP, top = deck - c.faucet.h;
+      if (c.faucet.plate) rect(fx - c.faucet.plate.w / 2, deck - c.faucet.plate.t, c.faucet.plate.w, c.faucet.plate.t, 'faucet'); // escutcheon plate
       rect(fx - 1.25, deck - 0.5, 2.5, 0.5, 'faucet');
       rect(fx - 0.65, deck - 13, 1.3, 12.5, 'faucet');
       rect(fx - 0.5, top, 1, c.faucet.h - 13, 'faucet'); // hose inside the spring
@@ -351,6 +352,8 @@ function plan(title, run, opts = {}) {
     if (c.kind === 'sink') box(c.u + (c.w - 33.5) / 2, 4, 33.5, 19, 'sinkbowl'); // Ruvati RVH6222ST: 33.5" x 19" outer, 4"–23" from the cabinet backs, 2" from the counter front
     if (c.faucet) { // hole c.faucet.back in front of the cabinet backs, spout reaching c.faucet.reach toward the front
       const [x1, y1] = mid(c.faucet.back), [x2, y2] = mid(c.faucet.back + c.faucet.reach);
+      const pl = c.faucet.plate; // escutcheon plate, rounded ends, long side along the run
+      if (pl) out.push(`<rect x="${x1 - pl.w / 2}" y="${y1 - pl.d / 2}" width="${pl.w}" height="${pl.d}" rx="${pl.d / 2}" class="faucet"/>`);
       line(x1, y1, x2, y2, 'spout');
       circle([x1, y1], 1.25, 'faucet');
       circle([x2, y2], 0.65, 'brass');
@@ -399,7 +402,7 @@ function plan(title, run, opts = {}) {
 
 // Adds a drawing to the page as a <section> (id: the title, e.g. #wall-front), on graph paper with bold lines every BOLD" from (MARGIN, oy).
 // axes: how to say x (from MARGIN, or from axes[3]) and y (up from oy) in the tape measure's readout. Returns the svg.
-const REV = 'I · 2026-11-20'; // revision and date printed on every sheet; bump both when a sheet changes
+const REV = 'J · 2026-11-20'; // revision and date printed on every sheet; bump both when a sheet changes
 function page(title, view, W, H, oy, out, axes) {
   const n = document.querySelectorAll('section.sketch').length; // keeps the pattern ids apart when a page has several drawings
   const section = document.createElement('section');

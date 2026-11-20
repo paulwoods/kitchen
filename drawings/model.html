@@ -16,7 +16,7 @@
 <header>
   <div class="cols">
     <h1>3D Model</h1>
-    <div><b>Revision N</b> · 2026-11-20</div>
+    <div><b>Revision O</b> · 2026-11-20</div>
     <div><button data-view="end">End</button><button data-view="island">Island</button><button data-view="wall">Wall</button><button data-view="top">Top</button></div>
     <div><label>slab <select id="slab"><option value="">plain</option></select></label></div>
     <div><label>cabinets <select id="paint-haze"></select></label> <label>uppers <select id="paint-alabaster"></select></label></div>
@@ -343,6 +343,7 @@ function side(run, flip, zBack, back = 0, walls = false) { // back: counter past
     if (c.faucet) into(() => { // Kohler spec sheet: a 13" column (from the drawing), the exposed spring arching up to h and over to the sprayhead
       // (9 1/2" clear under it) on a brass dock arm; side lever on a hub off the right side. Brass trim per the product photo
       const f = c.faucet, y0 = BOX + TOP, cu = u + w / 2, fv = f.back + f.reach, R = f.reach / 2, cy = y0 + f.h - 0.6 - R;
+      if (f.plate) B(cu - f.plate.w / 2, f.back - f.plate.d / 2, y0, f.plate.w, f.plate.d, f.plate.t, M.black); // escutcheon plate
       rod(P(cu, f.back, y0), P(cu, f.back, y0 + 0.5), 1.25, M.black); // base
       rod(P(cu, f.back, y0), P(cu, f.back, y0 + 13), 0.65, M.black);
       const path = new THREE.CurvePath(); // spring centerline: up from the column, a half circle over, down to the sprayhead

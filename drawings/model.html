@@ -16,7 +16,7 @@
 <header>
   <div class="cols">
     <h1>3D Model</h1>
-    <div><b>Revision G</b> · 2026-11-18</div>
+    <div><b>Revision I</b> · 2026-11-19</div>
     <div><button data-view="end">End</button><button data-view="island">Island</button><button data-view="wall">Wall</button><button data-view="top">Top</button></div>
     <div><label>slab <select id="slab"><option value="">plain</option></select></label></div>
     <div><label>cabinets <select id="paint-haze"></select></label> <label>uppers <select id="paint-alabaster"></select></label></div>
@@ -245,7 +245,11 @@ function side(run, flip, zBack, back = 0, walls = false) { // back: counter past
       fronts(u, w, c.h, [{ h: 39, pair: true, pull: 'bottom' }, { h: c.h - TOE - 39, pair: true, pull: 'top' }]); // top doors match a 39" wall cabinet
     } else if (c.kind === 'oven') { // OVD3393 (cabinets.com cut-out sheet): 22 3/8" door pair at the top, 7 1/16" drawer over the toe kick
       cabinet(u, w, c.h);
-      B(u + 0.75, 0.75, 11.5625, w - 1.5, DEPTH - 0.75, c.h - 22.375 - 11.5625, M.alabaster); // the oven's opening, filled between the drawer and the doors
+      const ot = c.h - 22.375; // the opening, hollow (vendor picture): from the drawer up to the doors, a shelf under the doors and the fixed shelf the unit sits on at 12"
+      for (const y of [12 - 0.75, ot - 0.75]) B(u + 0.75, 0.75, y, w - 1.5, DEPTH - 0.75, 0.75, M.alabaster);
+      for (const x of [u + 0.125, u + w - 1.625]) B(x, DEPTH, 11.5625, 1.5, 0.75, ot - 11.5625 - 0.125, M.alabaster); // owner-made trim around the unit (2026-11-08), stiles clear of its 29 3/4" face
+      B(u + 1.625, DEPTH, 11.5625, w - 3.25, 0.75, 0.4375, M.alabaster); // rail under the unit
+      B(u + 1.625, DEPTH, 61, w - 3.25, 0.75, ot - 61 - 0.125, M.alabaster); // the 9 5/8" panel from the unit up to the doors
       fronts(u, w, c.h, [{ h: 22.375, pair: true, pull: 'bottom' }]);
       fronts(u, w, 11.5625, [{ h: 7.0625 }]);
       into(() => {
@@ -265,7 +269,8 @@ function side(run, flip, zBack, back = 0, walls = false) { // back: counter past
       B(u, 0, y, w, 0.75, BOX - y, M.base);
       fronts(u, w, BOX, [{ h: 6, fixed: c.falseTop }, { h: face - 6, pair: true }]);
     } else {
-      cabinet(u, w, BOX);
+      cabinet(u, w, BOX, c.cooktop);
+      if (c.cooktop) for (const v of [0.75, DEPTH - 4]) B(u + 0.75, v, BOX - 0.75, w - 1.5, 4, 0.75, M.base); // DB36-3 (vendor picture): open top, a rail at the front and the back, 4" deep (assumed)
       if (c.trays) trays(u, w, BOX - (c.kind === 'base' ? 6.75 : 0.75), c.trays); // under the 6" drawer on a `base`
       if (c.kind === 'drawers') {
         const rest = (face - 6) / (c.n - 1);
@@ -402,13 +407,16 @@ function side(run, flip, zBack, back = 0, walls = false) { // back: counter past
     const cuts = []; // stone seams: where the depth behind the backs changes (the island's, between plates and trash)
     for (let k = i + 1; k <= j; k++) if ((run[k].back ?? back) !== (run[k - 1].back ?? back)) cuts.push(run[k].u);
     const C = (a, b, v, d) => { for (const s of [...cuts.filter(s => s > a && s < b), b]) { B(a, v, BOX, s - a, d, TOP, M.counter); a = s; } };
-    const h = run.slice(i, j + 1).find(c => c.bowl); // counter in four pieces around the sink cutout
-    if (!h) return C(l, r, 0, COUNTER);
-    const s = h.bowl, a = h.u + (h.w - s.w) / 2, b = a + s.w;
-    C(l, a, 0, COUNTER);
-    C(b, r, 0, COUNTER);
-    C(a, b, 0, s.v);
-    C(a, b, s.v + s.d, COUNTER - s.v - s.d);
+    const holes = run.slice(i, j + 1).flatMap(c => // [left, width, v, depth] of each cutout: the sink, and the cooktop's 28 7/8" x 20" centered under it (countertop.html's map)
+      c.bowl ? [[c.u + (c.w - c.bowl.w) / 2, c.bowl.w, c.bowl.v, c.bowl.d]] : c.cooktop ? [[c.u + (c.w - 28.875) / 2, 28.875, CV - 10, 20]] : []);
+    let a = l; // counter in pieces around each cutout
+    for (const [hu, hw, hv, hd] of holes) {
+      C(a, hu, 0, COUNTER);
+      C(hu, hu + hw, 0, hv);
+      C(hu, hu + hw, hv + hd, COUNTER - hv - hd);
+      a = hu + hw;
+    }
+    C(a, r, 0, COUNTER);
   });
   return B;
 }

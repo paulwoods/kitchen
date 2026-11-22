@@ -24,7 +24,7 @@ It is the plan for this one kitchen, not a general kitchen-design tool: real mod
 
 - Opened locally from the project folder or `python3 -m http.server`; not published.
 - Read on a computer while planning, and handed to trades as a reference for quoting and building.
-- Pages: `index.html`; in `drawings/`, sketches (`sketches.html`: wall front, wall top, island front, island top); 3D model (`model.html`); in `docs/`, the design pages (`cabinets.html`, `selections.html`, `electrical.html`, `lighting.html`, `walls.html`, the stone pages) and the job pages (`decisions.html`, `existing.html`, `permits.html`, `trades.html`, `sequence.html`, `demolition.html`); in `pricing/`, the price page and the quotes' data files.
+- Pages: `index.html`; in `drawings/`, sketches (`sketches.html`: wall front, wall top, island front, island top); 3D model (`model.html`); in `docs/`, the design pages (`cabinets.html`, `electrical.html`, `lighting.html`, `walls.html`, the stone pages) and the job pages (`decisions.html`, `existing.html`, `permits.html`, `trades.html`, `sequence.html`, `demolition.html`); in `pricing/`, the price page and the quotes' data files.
 - Sketches are drawn on graph paper by `sketch.js` (1 square = 6", bold line every 30").
 
 ## Capabilities and Constraints
@@ -36,7 +36,7 @@ It is the plan for this one kitchen, not a general kitchen-design tool: real mod
 
 ## Evidence on Hand
 
-- Model numbers and spec-sheet dimensions of the appliances, lights and devices in `selections.html`.
+- Model numbers and spec-sheet dimensions of the appliances, lights and devices in `design/options.html`, under each component's heading.
 - Electrical requirements in `electrical.html`.
 - Cabinet list and order summary in `cabinets.html`.
 - Open items in `decisions.html` (`#open`), grouped by the step that waits on them; dated decisions in that page's Decision log (`#log`).

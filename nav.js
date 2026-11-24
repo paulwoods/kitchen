@@ -5,7 +5,7 @@ const groups = [
   [['index.html', 'Index']],
   [['drawings/model.html', '3D Model'], ['drawings/sketches.html', 'Sketches'], ['docs/countertop.html', 'Countertop']],
   [['docs/cabinets.html', 'Cabinets'], ['design/options.html', 'Options'], ['docs/countertop-2.html', 'Countertop 2']],
-  [['docs/decisions.html', 'Decisions'], ['docs/existing.html', 'Existing'], ['docs/permits.html', 'Permits'], ['docs/trades.html', 'Trades'], ['pricing/price.html', 'Price']],
+  [['docs/decisions.html', 'Decisions'], ['docs/existing.html', 'Existing'], ['docs/permits.html', 'Permits'], ['docs/trades.html', 'Trades'], ['docs/clarification.html', 'Clarifications'], ['pricing/price.html', 'Price']],
   [['docs/sequence.html', 'Sequence'], ['docs/demolition.html', 'Demolition']],
   [['docs/design-package.html', 'Design Package'], ['docs/electrical.html', 'Electrical'], ['docs/lighting.html', 'Lighting'], ['docs/walls.html', 'Walls']],
   [['docs/backsplash.html', 'Backsplash'], ['docs/pick.html', 'Pick']],

@@ -9,7 +9,7 @@
 <script src="sketch.js"></script>
 <body>
 <h1>Sketches</h1>
-<p><b>Revision E</b> · 2026-11-18</p>
+<p><b>Revision F</b> · 2026-11-23</p>
 <p><a href="../index.html">index</a> · <a href="#wall-front">Wall front</a> · <a href="#wall-top">Wall top</a> · <a href="#island-front">Island front</a> · <a href="#island-top">Island top</a> · <a href="#island-wall">Island wall</a> · <a href="#house">House</a></p>
 <script>
 // The runs are in ../kitchen.js. Each run's front, then its plan under it; the plans mark the work areas and the lights.
@@ -172,6 +172,7 @@ for (const box of document.querySelectorAll('[data-light]')) {
 }
 
 // House: the floor plan with the kitchen in place. Page x = OX + x, page y = OY + y, inches from the inside faces of the outer wall (left) and the top wall.
+// The flooring is shaded blue.
 {
   const OX = 55, OY = 17;
   // Traced from the floor plan drawing (since deleted), to the nearest 1/2". [x1, y1, x2, y2, marks across the wall along its length]
@@ -213,6 +214,7 @@ for (const box of document.querySelectorAll('[data-light]')) {
     .old-wall { fill: none; stroke: #ff4fa3; stroke-width: 0.75; stroke-dasharray: 3 2; }
     .kit text, .kit .dimline, .kit .tick { display: none; }
     .house-notes text { font-size: 4.4px; } .house-notes line { stroke: var(--ink); stroke-width: 0.4; }
+    .floor-area { fill: #2f7de1; fill-opacity: 0.3; } /* no outline: the pieces touch */
   </style>`];
   for (const [x1, y1, x2, y2, marks = []] of WALLS) {
     out.push(`<rect x="${OX + x1}" y="${OY + y1}" width="${x2 - x1}" height="${y2 - y1}" class="house-wall"/>`);
@@ -240,6 +242,16 @@ for (const box of document.querySelectorAll('[data-light]')) {
     for (const [x, y] of [[x1, y1], [x2, y2]]) seg(x - tx, y - ty, x + tx, y + ty);
     label((x1 + x2) / 2 + (x1 === x2 ? 8 : 0), (y1 + y2) / 2 + (x1 === x2 ? 1.5 : -1.5), s); // beside the line
   };
+  // Flooring [x, y, w, h]: the aisle from the left house wall to the wall run's end, box front to box front (under the toe kicks);
+  // the nook between the side wall at Coffee and the left house wall, out to the room wall's line; under the fridge and the dishwasher;
+  // and left of the island and its seating overhang, to the left house wall.
+  {
+    const y0 = DEPTH, y1 = ZWALL - DEPTH, F = wall.find(c => c.fridge), D = island.find(c => c.dishwasher);
+    const areas = [[-SPICES, y0, SPICES + n, y1 - y0], [-SPICES, y1, SPICES - WALL, DEPTH],
+      [n - F.u - F.w, y1, F.w, DEPTH], [D.u, 0, D.w, DEPTH], [-SPICES, -DIMS.seat, SPICES, DIMS.seat + DEPTH]];
+    for (const [x, y, w, h] of areas) notes.push(`<rect x="${x}" y="${y}" width="${w}" height="${h}" class="floor-area"/>`);
+    label(DIMS.islandLen / 2, y0 + 16, `flooring ${(areas.reduce((s, [, , w, h]) => s + w * h, 0) / 144).toFixed(1)} sq ft`);
+  }
   const same = u => u;
   notes.push(...fixtures(T, SPOT, same, same), ...fixtures(AL, HALO, same, same)); // task and ambient lights
   for (const c of island) if (c.name) label(c.u + c.w / 2, COUNTER + 5, c.name);
@@ -249,12 +261,13 @@ for (const box of document.querySelectorAll('[data-light]')) {
   dim(0, ZWALL + WALL + 8, n, ZWALL + WALL + 8, `${inch(n)}"`);
   dim(-SPICES, ZWALL + WALL + 8, -WALL, ZWALL + WALL + 8, `${inch(SPICES - WALL)}" opening`); // the 65" wall, opened from the outer wall to the side wall
   label(85.5 - SPICES, ZWALL + WALL + 14, '41" doorway closed'); // 65" to 106" from the outer wall
+  dim(-WALL, ZWALL + WALL, -WALL, 447 - BACKS, `${inch(447 - BACKS - ZWALL - WALL)}"`); // the room wall's lower left corner to the bottom wall
   dim(205, COUNTER, 205, ZWALL - COUNTER, `${inch(AISLE)}"`); // counter edge to counter edge
   const DX = -SPICES - 43; // the 447" dimension, left of the bay
   for (const y of [-BACKS, 447 - BACKS]) seg(DX - 2, y, -SPICES - 5, y); // extension lines to the outer wall
   dim(DX, -BACKS, DX, 447 - BACKS, '447"');
   out.push(`<g class="house-notes" transform="${place}">${notes.join('')}</g>`);
 
-  page('House', 'Floor plan with the kitchen in place; existing kitchen walls dashed pink', OX + 583.5 + 12, OY + 454.5 + 12, OY, out, ['from the outer wall', 'from the top wall', -1, OX]);
+  page('House', 'Floor plan with the kitchen in place; existing kitchen walls dashed pink; flooring shaded blue', OX + 583.5 + 12, OY + 454.5 + 12, OY, out, ['from the outer wall', 'from the top wall', -1, OX]);
 }
 </script>

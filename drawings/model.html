@@ -8,19 +8,21 @@
 <style>
   body { margin: 0; overflow: hidden; background: var(--paper); color: var(--ink); font-family: system-ui, sans-serif; }
   header { padding: 24px 24px 8px; } h1 { margin: 0; } p { margin: 4px 0; color: var(--muted); } a { color: var(--link); }
-  .cols { display: grid; grid-template-columns: repeat(6, 1fr); align-items: center; gap: 8px 24px; }
+  .cols { display: grid; grid-template-columns: repeat(7, auto); align-items: center; gap: 8px 24px; }
   @media (max-width: 599px) { .cols { grid-template-columns: 1fr; } }
   button { font: inherit; margin-right: 6px; padding: 2px 10px; }
   canvas { display: block; width: 100%; }
+  #cam input { width: 4em; } .stack { display: grid; grid-template-columns: repeat(3, auto); justify-content: start; align-items: center; }
+  .stack label { display: grid; grid-column: 1 / -1; grid-template-columns: subgrid; align-items: center; } .stack :is(input, select) { margin-left: 1em; } /* labels left, the boxes lined up in the next column */ .checks label { display: block; }
 </style>
 <header>
   <div class="cols">
     <h1>3D Model</h1>
-    <div><b>Revision O</b> · 2026-11-20</div>
+    <div><b>Revision Q</b> · 2026-11-24</div>
     <div><button data-view="end">End</button><button data-view="island">Island</button><button data-view="wall">Wall</button><button data-view="top">Top</button></div>
-    <div><label>slab <select id="slab"><option value="">plain</option></select></label></div>
-    <div><label>cabinets <select id="paint-haze"></select></label> <label>uppers <select id="paint-alabaster"></select></label></div>
-    <div><label><input type="checkbox" id="appliances" checked> appliances</label></div>
+    <div id="cam" class="stack"><label>facing <input type="number" id="cam-facing">°</label> <label>down <input type="number" id="cam-down">°</label> <label>away <input type="number" id="cam-away">"</label></div>
+    <div class="stack"><label>slab <select id="slab"><option value="">plain</option></select></label> <label>cabinets <select id="paint-haze"></select></label> <label>uppers <select id="paint-alabaster"></select></label></div>
+    <div class="checks"><label><input type="checkbox" id="appliances" checked> appliances</label> <label><input type="checkbox" id="lights" checked> lights</label></div>
     <div><button id="toggle-theme">Toggle theme</button></div>
   </div>
 </header>
@@ -66,6 +68,7 @@ const geo = new THREE.BoxGeometry(1, 1, 1), edgeGeo = new THREE.EdgesGeometry(ge
 let group = scene; // where cube() and rod() put things
 const stone = []; // the counter and backsplash boxes, for the slab photos
 const appliances = []; // each run's appliance group
+const lights = []; // the ceiling light fixtures (task spotlights with the island, ambient downlights in the scene), shown by the lights checkbox
 const openings = []; // pivots of the doors and drawers that open on click
 const SWING = 95 * Math.PI / 180, OUT = 21, SECONDS = 1; // door swing, drawer travel (full extension), time to open or close
 const onSplash = []; // [plate on the wall, plate on the backsplash's face] over the counter
@@ -445,6 +448,7 @@ for (const x of DIMS.stools) { // three counter stools at the seating overhang, 
   rod([x, 24, z], [x, 25.5, z], 8, M.black);
   for (const [dx, dz] of [[1, 1], [1, -1], [-1, 1], [-1, -1]]) rod([x + 6 * dx, 0, z + 6 * dz], [x + 4 * dx, 24, z + 4 * dz], 0.5, M.pull);
 }
+group = new THREE.Group(); runs.island.add(group); lights.push(group);
 for (const [x, s] of island.flatMap(c => (c.upper || []).filter(p => p.spot).map(p => [c.u + p.dx, p]))) { // VANoopee ceiling spotlights at the task light marks on the top view, 18" from the cabinet backs, aimed straight down; canopy and stem sizes assumed
   const z = 18;
   rod([x, 95, z], [x, CEILING, z], 2.5, M.fixture); // canopy
@@ -455,12 +459,13 @@ for (const [x, s] of island.flatMap(c => (c.upper || []).filter(p => p.spot).map
 group = runs.wall;
 const g = wall.find(c => !c.h), splash = side(wall, true, ZWALL, 0, true)(g.u, 0, DIMS.counterH, len(wall.filter(c => !c.h)), TOP, 54 - DIMS.counterH, M.counter); // one-piece stone backsplash, Garage to Coffee, counter to the W2127s at 54"; shown with a slab, receptacle cutouts not drawn
 cube(-4.5, 0, ZWALL - DEPTH, 4.5, CEILING, DEPTH + 4.5, M.wall); // stud wall at the Coffee end of the wall run (2x4 studs, 1/2" drywall each side), as deep as the cabinets
-group = scene;
+group = new THREE.Group(); scene.add(group); lights.push(group);
 for (const k of [1, 3, 5, 7]) { // four Halo HLBC6 ambient downlights down the middle of the aisle, evenly spaced along the island (as in sketches.html); trim 7 1/2" across (assumed)
   const x = DIMS.islandLen * k / 8, z = ZWALL / 2;
   rod([x, CEILING - 0.25, z], [x, CEILING, z], 3.75, M.plate); // trim
   rod([x, CEILING - 0.3, z], [x, CEILING - 0.25, z], 3, M.light); // lens
 }
+group = scene;
 
 // Room: floor, and the wall behind the wall run, only as wide as the run (one-sided, so it hides itself when viewed from behind).
 // The floor's herringbone (Flooret Soho, 4.2" × 23.3" planks), drawn on a canvas at PPI px per inch, one row per inch of z,
@@ -529,8 +534,23 @@ for (const [id, mats] of [['haze', [M.box, M.front, M.base]], ['alabaster', [M.a
   sel.onchange = () => mats.forEach(m => m.color.set(PAINTS[sel.value]));
 }
 document.getElementById('appliances').onchange = e => appliances.forEach(g => g.visible = e.target.checked);
+document.getElementById('lights').onchange = e => lights.forEach(g => g.visible = e.target.checked);
 document.querySelectorAll('[data-view]').forEach(b => b.onclick = () => show(b.dataset.view));
 const start = location.hash.slice(1); // index.html links straight to a view: model.html#island
+// The camera's angle in the header, live and editable (2026-11-24): facing 0° looks at the wall run from the island side, clockwise from above
+// (90° from the cabinet a end, 180° at the island, 270° from the spices end); down 0° is level, 90° straight down; away is inches to the target.
+const cam = { facing: document.getElementById('cam-facing'), down: document.getElementById('cam-down'), away: document.getElementById('cam-away') };
+const sph = new THREE.Spherical();
+controls.addEventListener('change', () => {
+  sph.setFromVector3(camera.position.clone().sub(controls.target));
+  const v = { facing: (540 - THREE.MathUtils.radToDeg(sph.theta)) % 360 % 359.5, down: 90 - THREE.MathUtils.radToDeg(sph.phi), away: sph.radius };
+  for (const k in cam) if (document.activeElement !== cam[k]) cam[k].value = Math.round(v[k]);
+});
+for (const k in cam) cam[k].onchange = () => {
+  const r = +cam.away.value || 1, phi = THREE.MathUtils.degToRad(90 - THREE.MathUtils.clamp(+cam.down.value, -89.9, 90)), theta = THREE.MathUtils.degToRad(180 - +cam.facing.value);
+  camera.position.setFromSpherical(new THREE.Spherical(r, phi, theta)).add(controls.target);
+  controls.update();
+};
 show(Object.hasOwn(views, start) ? start : 'end');
 
 const resize = () => {

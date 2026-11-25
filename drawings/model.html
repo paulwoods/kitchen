@@ -18,7 +18,7 @@
 <header>
   <div class="cols">
     <h1>3D Model</h1>
-    <div><b>Revision R</b> · 2026-11-24</div>
+    <div><b>Revision S</b> · 2026-11-24</div>
     <div><button data-view="end">End</button><button data-view="island">Island</button><button data-view="wall">Wall</button><button data-view="top">Top</button></div>
     <div id="cam" class="stack"><label>facing <input type="number" id="cam-facing">°</label> <label>down <input type="number" id="cam-down">°</label> <label>away <input type="number" id="cam-away">"</label></div>
     <div class="stack"><label>countertop <select id="slab"><option value="">plain</option></select></label> <label>cabinets <select id="paint-haze"></select></label> <label>uppers <select id="paint-alabaster"></select></label></div>
@@ -40,7 +40,7 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 const { island, wall } = RUNS; // the runs, from ../kitchen.js
 
 const { toe: TOE, box: BOX, top: TOP, ceiling: CEILING, outlet: OUTLET, depth: DEPTH, front: FRONT, counter: COUNTER, aisle: AISLE, cooktopV: CV } = DIMS; // from ../kitchen.js
-const UPPER = 12, APPLIANCE = 14, HOOD = 23.625; // wall cabinet depth; appliance depth assumed; hood depth per the Proline sheet
+const UPPER = 12, APPLIANCE = 14, HOOD = 27; // wall cabinet depth; appliance depth assumed; hood depth per the Bosch HIB82651UC sheet
 const len = run => run.reduce((s, c) => s + c.w, 0);
 const total = Math.max(len(island), len(wall));
 const ZWALL = 2 * COUNTER + AISLE; // the island's back is at z = 0, the room wall at ZWALL
@@ -61,7 +61,7 @@ const M = {
   toe: mat('#556'), counter: mat('#ecebe6', { roughness: 0.3 }),
   steel: mat('#c9ccd2', { metalness: 0.5, roughness: 0.4 }), black: mat('#1b1b1b', { roughness: 0.3 }), brass: mat('#b08d57', { metalness: 0.6, roughness: 0.35 }),
   glass: mat('#bcd7e8', { transparent: true, opacity: 0.5 }), ring: mat('#8a8f99', { roughness: 0.4 }), drain: mat('#4a4d52', { metalness: 0.5, roughness: 0.4 }), pull: mat('#2b2b2b'), slot: mat('#000000'), rack: mat('#d6d8dc', { metalness: 0.3 }), tray: mat('#6e7177'), disposal: mat('#55595f', { roughness: 0.6 }), purple: mat('#7a5bbf'), plate: mat('#ffffff'), drawer: mat('#dcc6a0'), // drawer boxes: natural wood (assumed)
-  hoodGlass: mat('#bcd7e8', { transparent: true, opacity: 0.4, side: THREE.DoubleSide, roughness: 0.1 }), light: mat('#fff6d8', { emissive: '#fff1c0' }), wall: mat('#e9e4d8'), floor: mat('#dcc8a4'), // Flooret Soho, light oak; its herringbone map is added with the floor
+  light: mat('#fff6d8', { emissive: '#fff1c0' }), wall: mat('#e9e4d8'), floor: mat('#dcc8a4'), // Flooret Soho, light oak; its herringbone map is added with the floor
 };
 const edges = new THREE.LineBasicMaterial({ color: '#223', transparent: true, opacity: 0.35 });
 const geo = new THREE.BoxGeometry(1, 1, 1), edgeGeo = new THREE.EdgesGeometry(geo);
@@ -372,19 +372,12 @@ function side(run, flip, zBack, back = 0, walls = false) { // back: counter past
     base = false;
     for (const x of c.upper || []) {
       if (x.spot) continue; // drawn with the island, below
-      if (x.hood) into(() => { // curved glass canopy over a steel body (filter, 4 lights, touch panel in front), chimney to the ceiling
-        const top = x.at + x.h, bw = 21, bd = 17, bu = u + (w - bw) / 2, bv = CV - bd / 2; // body size assumed; centered over the cooktop, 10 1/2" from the cabinet backs (2026-11-05)
-        B(bu, bv, x.at, bw, bd, x.h, M.steel);
-        B(bu + 3, bv + 3, x.at - 0.05, bw - 6, bd - 6, 0.05, M.drain); // mesh filter
-        for (const [lu, lv] of [[1.5, 1.5], [bw - 1.5, 1.5], [1.5, bd - 1.5], [bw - 1.5, bd - 1.5]]) rod(P(bu + lu, bv + lv, x.at - 0.1), P(bu + lu, bv + lv, x.at), 0.75, M.light);
-        B(bu + bw / 2 - 3, bv + bd, x.at + 0.5, 6, 0.05, 1, M.black); // touch panel
-        const glass = new THREE.PlaneGeometry(x.w, HOOD, 32, 1), pos = glass.attributes.position;
-        for (let i = 0; i < pos.count; i++) pos.setZ(i, -x.h * (2 * pos.getX(i) / x.w) ** 2); // ends droop to the canopy bottom
-        const pane = new THREE.Mesh(glass, M.hoodGlass);
-        pane.add(new THREE.LineSegments(new THREE.EdgesGeometry(glass), edges));
-        pane.rotation.x = -Math.PI / 2;
-        pane.position.set(...P(u + w / 2, CV, top));
-        group.add(pane);
+      if (x.hood) into(() => { // flat steel box canopy (cassette filters, 4 lights, touch panel on the front edge), chimney to the ceiling; centered over the cooktop, 10 1/2" from the cabinet backs (2026-11-05)
+        const top = x.at + x.h, cu = u + (w - x.w) / 2, cv = CV - HOOD / 2;
+        B(cu, cv, x.at, x.w, HOOD, x.h, M.steel);
+        for (const f of [0, 1]) B(cu + 3 + f * (x.w - 6) / 2, cv + 3, x.at - 0.05, (x.w - 6) / 2 - 1, HOOD - 6, 0.05, M.drain); // two filters (layout assumed)
+        for (const [lu, lv] of [[1.5, 1.5], [x.w - 1.5, 1.5], [1.5, HOOD - 1.5], [x.w - 1.5, HOOD - 1.5]]) rod(P(cu + lu, cv + lv, x.at - 0.1), P(cu + lu, cv + lv, x.at), 0.75, M.light);
+        B(u + w / 2 - 3, cv + HOOD, x.at + 0.5, 6, 0.05, 1, M.black); // touch panel
         B(u + (w - x.chimney) / 2, CV - x.chimneyD / 2, top, x.chimney, x.chimneyD, CEILING - top, M.steel);
       }); else if (x.coffee || x.appliance) into(() => B(u + (w - x.w) / 2, 2, x.at, x.w, APPLIANCE, x.h, M.black));
       else if (x.riser) { // riser molding to the ceiling, 3/4" thick, on the front of a cabinet x.d deep; side: a return past the 12" uppers on the right

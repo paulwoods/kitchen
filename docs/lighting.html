@@ -14,7 +14,7 @@
   @media (max-width: 600px) { table, tbody, tr, td, th { display: block; } tr:first-child { display: none; } tr { margin-bottom: 12px; } td { border-top: 0; } td:first-child { border-top: 1px solid var(--rule); font-weight: bold; } }
 </style>
 <h1>Lighting</h1>
-<p><b>Revision B</b> · 2026-11-19</p>
+<p><b>Revision C</b> · 2026-11-24</p>
 <p><a href="../index.html">index</a></p>
 <p class="note">Refinement sheet, 2026-10-31. A planning exercise: nothing here is installed, wired or tested. Light groups as on the <a href="../drawings/sketches.html#island-top">Island top</a> and <a href="../drawings/sketches.html#wall-top">Wall top</a>: task, ambient, accent (toe kick and inside the glass cabinets) and under-cabinet, plus the hood's own lights.</p>
 
@@ -24,7 +24,7 @@
 <h2>Scenes</h2>
 <table>
 <tr><th>Scene</th><th>Active light groups</th><th>Starting color settings</th><th>Brightness intent</th><th>Check needed</th></tr>
-<tr><td>Cooking</td><td>Hood lights, task, ambient, under-cabinet</td><td>Hood at its 2800–3500K setting nearest 3000K; task, ambient and under-cabinet 3000K</td><td>Hood high, task high, ambient medium, under-cabinet medium</td><td>Hood and task color match on the cooktop; hood glare from the guest side</td></tr>
+<tr><td>Cooking</td><td>Hood lights, task, ambient, under-cabinet</td><td>Hood 3000K (fixed); task, ambient and under-cabinet 3000K</td><td>Hood high, task high, ambient medium, under-cabinet medium</td><td>Hood and task color match on the cooktop; hood glare from the guest side</td></tr>
 <tr><td>Prep and cleanup</td><td>Task, ambient, under-cabinet</td><td>Task 3000K vs 4000K; ambient and under-cabinet 3000K</td><td>Task high, ambient medium, under-cabinet medium</td><td>Clear coverage at prep and the sink, including leaning in; shadow in the sink bowl</td></tr>
 <tr><td>Coffee and breakfast</td><td>Under-cabinet (Coffee and Toaster), ambient</td><td>Under-cabinet 3000K; ambient 3000K</td><td>Under-cabinet medium, ambient low</td><td>Enough light on the coffee maker and Coffee counter with the task lights off</td></tr>
 <tr><td>Evening entertaining</td><td>Ambient, accent, under-cabinet; task over the island only where food is still handled</td><td>All 3000K</td><td>Ambient low, accent low, under-cabinet low; task medium where food is handled</td><td>No exposed LEDs or glare from the guest side; the task lights can be switched apart from the rest</td></tr>
@@ -34,7 +34,7 @@
 <ul>
   <li>Compare 3000K and 3500K where the products support them (the task lights have no 3500K); keep 4000K as an option for the task lights over the island counter. Status: <b>planned, not physically tested</b> (no fixtures yet; the Haze and Alabaster samples are in hand, 2026-11-13, the stone samples awaited).</li>
   <li>Nicor UCB bars: selectable 2700K–5000K, so 3000K, 3500K and 4000K are all available. Set them all the same.</li>
-  <li>Hood (Proline PLFI 544-42): 2800–3500K reported, and Proline says this of all its hoods, not this model. Whether it is adjustable, and how (touch panel, fixed, switch), is <b>to be verified</b> with Proline.</li>
+  <li>Hood (Bosch HIB82651UC): 4 halogen lights, fixed at 3000K (spec sheet). Its Light button gives two brightness levels and off (use and care manual); no other control is described.</li>
   <li>Task: VANoopee ceiling spotlights, selectable 3000K, 4000K or 5000K. Ambient: Halo HLBC6 downlights, selectable 2700K–5000K.</li>
   <li>Later: look at the Colonial Maple Alabaster and quartzite samples together under the chosen settings.</li>
 </ul>
@@ -44,7 +44,8 @@
 <tr><th>Question</th><th>Affected groups and fixtures</th></tr>
 <tr><td>Which exact dimmer and driver combinations support smooth dimming for these fixtures?</td><td>Under-cabinet: Nicor UCB118SNWH ×4 (TRIAC or ELV, to 5%; Nicor lists the Lutron PD-5NE-WH-C and TGCL-153P)<br>Accent: Nicor UCB118SNWH ×4 inside the glass cabinets; toe-kick LED tape (24 V, product TBD) on dimmable drivers to be checked against the PD-5NE<br>Ambient: Halo HLBC6LS9FSD2W1EMWR ×4 (phase-cut LE or TE, to 5%) on the PD-5NE, to be confirmed<br>Task: VANoopee B0BRMX76K2 ×4 (TRIAC, 10%–100% per the listing) to be checked against the PD-5NE</td></tr>
 <tr><td>What supported multi-location arrangement gives control at both ends of the galley?</td><td>Ambient, task, accent (toe kick and glass upper cabinets) and under-cabinet: a Lutron Caséta PD-5NE dimmer each on the side wall by Coffee, and a Pico remote each on the FP2496 skin by the fridge (2026-11-01, see <a href="electrical.html">Electrical</a>)</td></tr>
-<tr><td>Which hood-light controls and dimming functions does the manufacturer permit?</td><td>Hood: Proline PLFI 544-42 (120 V hardwired; lights on its touch panel)</td></tr>
+<tr><td>Which hood-light controls and dimming functions does the manufacturer permit?</td><td>Hood: Bosch HIB82651UC (120 V hardwired; lights on its touch panel, two levels)</td></tr>
+<tr><td>Bosch asks for an all-pole disconnect for the hood that stays accessible after installation. Is its 15 A breaker at the panel, with a breaker lock, acceptable (NEC 422.31(B))?</td><td>Hood: Bosch HIB82651UC (451 W, hardwired; <a href="electrical.html">Electrical</a>)</td></tr>
 </table>
 <h2 id="coordination">Coordination table</h2>
 <p class="note">Handoff sheet, 2026-11-01. "Drafted" means the questions below are written; nothing has been sent or answered. Status is one of not requested, drafted, sent or answered.</p>
@@ -54,7 +55,7 @@
 <tr><td>Ambient</td><td>General light in the aisle</td><td>Halo HLBC6LS9FSD2W1EMWR ×4 (2026-11-06; four since 2026-11-11); canless, 900 or 1100 lm selectable</td><td>3000K starting point; selectable 2700K–5000K</td><td>Dim on its own, to 5% per Halo; both ends desired (proposed as for task)</td><td>Stable low end and no flicker on the PD-5NE with a Pico; beam and output</td><td>Electrician</td><td>drafted</td></tr>
 <tr><td>Accent (toe kick)</td><td>Low glow at the floor (the same dimmer also runs the glass cabinet bars)</td><td>Toe-kick tape: 24 V, product TBD; two drivers TBD. Glass cabinets: Nicor UCB118SNWH ×4</td><td>3000K tape; bars selectable, set to match</td><td>Dim as one group; both ends desired (proposed as for task)</td><td>Tape driver and bars on one dimmer; total load; stable low end and no flicker; reachable driver locations</td><td>Electrician</td><td>drafted</td></tr>
 <tr><td>Under-cabinet</td><td>Light on the wall-side counter</td><td>Nicor UCB118SNWH ×4 (direct-wire 120 V; no separate driver listed)</td><td>Selectable 2700K–5000K; 3000K starting point, final choice pending comparison</td><td>Dim on its own, to 5% per Nicor; both ends desired (proposed as for task)</td><td>Electrician confirms the bars on the PD-5NE (on Nicor's dimmer list) with a Pico; stable low end and no flicker</td><td>Electrician</td><td>drafted</td></tr>
-<tr><td>Hood lights</td><td>Light on the cooktop</td><td>Proline PLFI 544-42, 4 LED lights; lamp and driver not published</td><td>2800–3500K <b>as reported</b> (Proline says this of all its hoods; the spec sheet says only "LED"). If adjustable, the setting nearest 3000K</td><td>Unknown: whether they dim and how they are controlled. Not assumed to share an external dimmer</td><td>Written reply from Proline, or documentation for this model</td><td>Proline (hood supplier)</td><td>drafted</td></tr>
+<tr><td>Hood lights</td><td>Light on the cooktop</td><td>Bosch HIB82651UC, 4 halogen lights, 80 W, 360 lumens</td><td>3000K, fixed (spec sheet)</td><td>Two brightness levels from the hood's Light button; assumed not to share an external dimmer</td><td>Written reply from Bosch, if anything other than the touch panel is to control them</td><td>Bosch (hood supplier)</td><td>drafted</td></tr>
 </table>
 
 <h3>To the electrician</h3>
@@ -69,11 +70,9 @@
 <p class="note">Circuit design and electrical installation stay with the electrician.</p>
 
 <h3>To the hood supplier</h3>
-<p>For the Proline PLFI 544-42:</p>
+<p>For the Bosch HIB82651UC:</p>
 <ul>
-  <li>What color settings does the PLFI 544-42 have? We have 2800–3500K only as a general Proline statement.</li>
-  <li>Do its lights dim?</li>
-  <li>How are color and dimming controlled? Can anything other than the hood's touch panel control them?</li>
+  <li>Can anything other than the hood's touch panel switch or dim its lights? The manual describes only the Light button (two levels and off); the plan assumes not.</li>
 </ul>
 
 <p class="note">No wiring or changes to any light for this exercise.</p>
@@ -81,6 +80,7 @@
 <h2 id="log">Decision log</h2>
 <p>Decisions that changed this page, newest first, moved from Issues (2026-11-07). Older entries may name parts since replaced; the tables above are current.</p>
 <ul>
+  <li>Hood lights (decided 2026-11-24): with the Bosch HIB82651UC replacing the Proline (<a href="../design/options.html#log">Options</a>), the hood has 4 halogen lights, 80 W, fixed at 3000K, kept as supplied (owner). Its Light button gives two levels and off. The Proline color questions are dropped; one question for Bosch stays: whether anything but the touch panel can control the lights (assumed not).</li>
   <li>Four ambient lights (decided 2026-11-11): four Halo HLBC6 downlights instead of three, evenly spaced down the middle of the aisle at 24", 72", 120" and 168" along the island (owner; spacing assumed). The sink position's ambient arrow now comes from the 120" light.</li>
   <li>Task lights replaced (decided 2026-11-08): four <a href="https://www.amazon.com/dp/B0BRMX76K2">VANoopee B0BRMX76K2</a> 20 W ceiling spotlights replace the Effimero pendants and their bulbs, at the same task light marks (one per mark, assumed). Per the listing: 2000 lm, CRI 90+, selectable 3000K, 4000K or 5000K, beam 15°–60°, TRIAC dimming 10%–100%, on a 3" or 4" junction box. This ends the questions about the pendants' height, someone leaning into a shade and the sightline across the island. TJOY ZF-42H3-5HVX and Hizashi bulbs were picked for the pendants first the same day and dropped. The task dimmer carries 80 W, within the PD-5NE's 200 W; the fixture still gets checked on the PD-5NE with the electrician (Electrician questions, above). The head is drawn with its bottom at 87 7/8", aimed straight down (canopy and stem assumed). The task light shadows on the Top view still figure a light at the ceiling, so they stay rough. $54.99 each. <code>selections.html</code>, <code>electrical.html</code>, Lighting scenes, Pick, Countertop, the Sequence, the sketches, the <a href="../drawings/model.html">3D model</a> and the <a href="../pricing/price.html">Price</a> page updated.</li>
   <li>Ambient lights replaced (decided 2026-11-06): the discontinued Halo HLB6099FS1EMWR is replaced by three <a href="https://www.cooperlighting.com/global/brands/halo/10124457/hlbc-slim-regressed-canless-downlight/hlbc6ls9fsd2w1emwr">Halo HLBC6LS9FSD2W1EMWR</a> (HLBC6) 6" slim regressed canless downlights: same 6" size, the same five selectable color temperatures (2700K–5000K, plus dim-to-warm) and 90 CRI, still sold. 16 W and 900 or 1100 lm selectable, phase-cut dimming to 5%. The ambient dimmer load goes from about 41 W to 48 W, within the PD-5NE's 200 W. <code>appliances.html</code>, <code>electrical.html</code>, Lighting scenes and the <a href="../pricing/price.html">Price</a> page updated.</li>

@@ -1,4 +1,4 @@
-// Revision I · 2026-11-20 (raise both when a size or a run changes)
+// Revision J · 2026-11-24 (raise both when a size or a run changes)
 // The kitchen, one source for the drawings and the docs. Inches. A plain script (not a module) so the pages still work when opened from the folder.
 // Text pages show these values with <span data-k="name or expression">fallback</span> (nav.js fills them in, e.g. data-k="counter + seat").
 const DIMS = {
@@ -35,7 +35,7 @@ const RUNS = {
       name: 'cooktop',   code: 'DB36-3',  w: 36, kind: 'drawers', n: 3, cooktop: true, falseTop: true, back: DIMS.seat,
       inside: [{ label: 'j box', w: 4, h: 4, at: 29.5, dx: DIMS.brackets[2] - 0.75 - 2 - 24 }, // in the island's back wall, through a cutout in the cabinet back; beside the stud under the third bracket, on its spices side (2026-11-18, was 3")
                 { label: '', w: 28.875, h: 4.125, at: 32.4375, dx: 18 }], // NIT8061UC body: cutout width, 4 1/8" below the counter
-      upper: [ { hood: true, w: 41.5, h: 2, at: 66.1875, chimney: 13.375, chimneyD: 10.625 } ] }, // Proline PLFI 544-42
+      upper: [ { hood: true, w: 42.0625, h: 2.375, at: 66.1875, chimney: 12.125, chimneyD: 13.1875 } ] }, // Bosch HIB82651UC (2026-11-24); chimney 12 1/8" across the run, 13 3/16" deep (assumed from the manual's perspective drawing)
     { note: `Three-drawer base, same as spices.`,
       name: 'plates',    code: 'DB24-3',  w: 24, kind: 'drawers', n: 3, back: DIMS.seat, backReceptacle: true,
       topOutlet: { dx: 0.75, back: -DIMS.wall / 2 }, // the second countertop receptacle, centered over the back wall, 3 1/4" from the cooktop's right edge (57 1/2") (moved 10" toward the cooktop 2026-11-18)

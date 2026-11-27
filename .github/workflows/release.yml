@@ -31,6 +31,12 @@ jobs:
           git push origin "v$version"
           echo "version=$version" >> "$GITHUB_OUTPUT"
 
+      - name: Stamp version on the home page
+        # Image only: the repo copy keeps "dev".
+        run: |
+          sed -i 's|<span data-version>dev</span>|<span data-version>${{ steps.version.outputs.version }}</span>|' index.html
+          grep -q 'data-version>${{ steps.version.outputs.version }}<' index.html
+
       - uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}

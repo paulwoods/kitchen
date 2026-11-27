@@ -35,12 +35,8 @@ The kitchen plan, served at https://kitchen.mrpaulwoods.com behind a password.
 
 ## Redeploy (after changing the site)
 
-1. Pick the next version (`1.0.1`, ...), then build and push it:
-   ```
-   docker build -t paulwoods/kitchen:1.0.1 .
-   docker push paulwoods/kitchen:1.0.1
-   ```
-2. Change `image: paulwoods/kitchen:1.0.1` in `~/Projects/caddy/docker-compose.yml` and copy that file to the server.
+1. Push to `develop`. The Release action (`.github/workflows/release.yml`) tags the next patch version (`v1.0.5`, ...) and pushes `paulwoods/kitchen:<version>` and `:latest` to Docker Hub. Read the version from the run or `git fetch --tags`. It needs the repo secrets `DOCKERHUB_USERNAME` and `DOCKERHUB_TOKEN`.
+2. Change `image: paulwoods/kitchen:1.0.5` in `~/Projects/caddy/docker-compose.yml` and copy that file to the server.
 3. On the server:
    ```
    docker compose pull kitchen

@@ -1,0 +1,45 @@
+# Every push to develop tags the next patch version (v1.0.5, ...) and pushes
+# paulwoods/kitchen:<version> and :latest to Docker Hub. Needs repo secrets
+# DOCKERHUB_USERNAME and DOCKERHUB_TOKEN (a Docker Hub access token, read/write).
+name: Release
+
+on:
+  push:
+    branches: [develop]
+
+concurrency: release
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Bump version
+        id: version
+        run: |
+          # 1.0.4 was the last version pushed by hand, before tags were kept.
+          last=$(git tag -l 'v*' --sort=-v:refname | head -n1)
+          IFS=. read -r major minor patch <<< "${last:-v1.0.4}"
+          version="${major#v}.$minor.$((patch + 1))"
+          git tag "v$version"
+          git push origin "v$version"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+
+      - uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: |
+            paulwoods/kitchen:${{ steps.version.outputs.version }}
+            paulwoods/kitchen:latest

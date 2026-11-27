@@ -13,4 +13,4 @@ description: Deploy the latest version of the kitchen site to the ocean server. 
    2. Find the `kitchen` service.
    3. Update its image version (`paulwoods/kitchen:<version>`) to the latest.
    4. Save.
-5. **Restart**: run `./restart.sh`.
+5. **Restart**: run `./restart.sh`, with a timeout (about 60 s): it ends with `docker compose logs -f`, which never returns. It runs `docker compose down` first, so the whole stack restarts (Caddy, Postgres and the other apps), not just the kitchen site. The equipment and promptvault backends can show "health: starting" for about two minutes.

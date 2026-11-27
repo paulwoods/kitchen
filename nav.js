@@ -18,9 +18,28 @@ const nav = document.createElement('nav');
 nav.innerHTML = `<style>
   nav.links { display: flex; flex-wrap: wrap; gap: 4px 16px; margin: 0 0 16px; padding-bottom: 8px; border-bottom: 1px solid var(--rule); font: 15px/1.5 system-ui, sans-serif; }
   nav.links a { color: var(--link); } nav.links b { color: var(--ink); } nav.links > span { color: var(--rule); }
+  nav.links button.theme { margin-left: auto; font: inherit; padding: 0 8px; background: none; border: 1px solid var(--rule); border-radius: 6px; color: var(--ink); cursor: pointer; }
   nav.links i { display: inline-block; font: 600 11px/1 system-ui, sans-serif; font-style: normal; margin-left: 4px; padding: 1px 6px; border-radius: 8px; vertical-align: 2px; background: var(--yellow); color: var(--paper); }
 </style>` + groups.map(g => g.map(([href, label]) => url(href) === here ? `<b>${label}</b>` : `<a href="${url(href)}">${label}</a>`).join('')).join('<span>|</span>');
 nav.className = 'links';
+// Light/dark button at the right end: swaps the page's theme stylesheet, remembered for the whole site (dark by default).
+// Fires 'themechange' on document once the new sheet has loaded (model.html repaints its scene).
+const sheet = document.querySelector('link[href$="theme.css"], link[href$="theme-light.css"]');
+const btn = document.createElement('button');
+btn.className = 'theme';
+const setTheme = light => {
+  sheet.onload = () => document.dispatchEvent(new Event('themechange'));
+  sheet.href = url(light ? 'theme-light.css' : 'theme.css');
+  btn.textContent = light ? '☾' : '☀';
+  btn.title = btn.ariaLabel = `Switch to ${light ? 'dark' : 'light'} theme`;
+};
+let light = false;
+try { light = localStorage.getItem('theme') === 'light'; } catch {}
+if (sheet) {
+  setTheme(light);
+  btn.onclick = () => { setTheme(light = !light); try { localStorage.setItem('theme', light ? 'light' : 'dark'); } catch {} };
+  nav.append(btn);
+}
 (document.querySelector('header') ?? document.body).prepend(nav);
 // A pill after each label counting the open items on that page (every <ol> after h2#open).
 // The current page counts its own list; others are fetched, or read from open.js when opened from the folder (file:).

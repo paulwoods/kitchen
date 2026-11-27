@@ -18,7 +18,7 @@
 <header>
   <div class="cols">
     <h1>3D Model</h1>
-    <div><b>Revision T</b> · 2026-11-26</div>
+    <div><b>Revision U</b> · 2026-11-27</div>
     <div><button data-view="end">End</button><button data-view="island">Island</button><button data-view="wall">Wall</button><button data-view="top">Top</button></div>
     <div id="cam" class="stack"><label>facing <input type="number" id="cam-facing">°</label> <label>down <input type="number" id="cam-down">°</label> <label>away <input type="number" id="cam-away">"</label></div>
     <div class="stack"><label>countertop <select id="slab"><option value="">plain</option></select></label> <label>cabinets <select id="paint-haze"></select></label> <label>uppers <select id="paint-alabaster"></select></label></div>
@@ -537,6 +537,10 @@ for (const k in cam) cam[k].onchange = () => {
   controls.update();
 };
 show(Object.hasOwn(views, start) ? start : 'end');
+if (!Object.hasOwn(views, start)) { // default camera (2026-11-27): facing 45°, down 45°, 275" away, at the End view's target
+  cam.facing.value = 45; cam.down.value = 45; cam.away.value = 275;
+  cam.away.onchange();
+}
 
 const resize = () => {
   const w = document.documentElement.clientWidth, h = document.documentElement.clientHeight - document.querySelector('header').offsetHeight;

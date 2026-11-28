@@ -1,4 +1,4 @@
-// Revision M · 2026-11-27 (raise both when a size or a run changes)
+// Revision O · 2026-11-27 (raise both when a size or a run changes)
 // The kitchen, one source for the drawings and the docs. Inches. A plain script (not a module) so the pages still work when opened from the folder.
 // Text pages show these values with <span data-k="name or expression">fallback</span> (nav.js fills them in, e.g. data-k="counter + seat").
 const DIMS = {
@@ -15,8 +15,8 @@ const DIMS = {
   islandBack: 5.5, // island counter past the cabinet backs elsewhere: the back wall, then 1"
   cooktopV: 10.5,  // cooktop and hood centers from the island cabinet backs (2026-11-05)
   outlet: 44,      // center of a wall receptacle off the floor (assumed)
-  stools: [14.75, 42.75, 70.75], // counter stool centers from the island's left end, behind spices, cooktop and plates (3/4" more since the BEP2434 end panel, 2026-11-27)
-  brackets: Array.from({ length: 7 }, (_, i) => 0.75 + 4 + i * 76 / 6), // Iron Supports 16" flat bracket centers from the island's left end: 4" in from each end of the 84" overhang, which starts past the 3/4" BEP2434, spaced evenly (walls.html)
+  stools: [14.75, 42.75, 70.75], // counter stool centers from the island's left end, behind spices, cooktop and plates (3/4" more since the BEPD end door, 2026-11-27)
+  brackets: Array.from({ length: 7 }, (_, i) => 0.75 + 4 + i * 76 / 6), // Iron Supports 16" flat bracket centers from the island's left end: 4" in from each end of the 84" overhang, which starts past the 3/4" BEPD, spaced evenly (walls.html)
 };
 DIMS.counterH = DIMS.box + DIMS.top; // counter height
 DIMS.faces = DIMS.aisle + 2 * (DIMS.counter - DIMS.depth - DIMS.front); // between the door and drawer faces across the aisle
@@ -25,8 +25,8 @@ DIMS.faces = DIMS.aisle + 2 * (DIMS.counter - DIMS.depth - DIMS.front); // betwe
 // Left to right as seen from the aisle. Each view draws the fields it needs and ignores the rest; fields are listed in CLAUDE.md.
 const RUNS = {
   island: [
-    { role: 'island left end', note: `Base end panel on the island's left end, covering the spices cabinet's left side (2026-11-27): 3/4" veneer plywood, finished to match, edge banded on the two long edges (cabinets.com, read 2026-11-27).`,
-      code: 'BEP2434', w: 0.75, kind: 'panel', drop: 1, url: 'https://www.cabinets.com/bep2434-colonial-maple-alabaster-base-end-panel.html', back: DIMS.seat },
+    { role: 'island left end door', note: `Decorative door on the island's left end, screwed to the spices cabinet's finished left side (decided 2026-11-27; the BEP2434 end panel under it was dropped the same day): one shaker panel in Alabaster, 24" wide, flush with the cabinet backs and the box front, 30" tall from the top of the toe kick to the counter's underside, the cabinet's side showing below it; size not listed, <a href="decisions.html#order">open</a> (3/4" thick assumed).`,
+      code: 'BEPD', w: 0.75, kind: 'panel', at: DIMS.toe, drop: 1, url: 'https://www.cabinets.com/bepd-colonial-maple-alabaster-decorative-door-1-door.html', back: DIMS.seat }, // `at`: its bottom off the floor; drawn shaker in the model
     { note: `Three-drawer base: 6" top drawer over two equal deep drawers. 1" counter overhang at the left end of the island.`,
       name: 'spices',    code: 'DB24-3',  w: 24, kind: 'drawers', n: 3, back: DIMS.seat, backReceptacle: true,
       topOutlet: { dx: 22.75, back: -DIMS.wall / 2 }, // Pass & Seymour CP498TR20BK-BK countertop receptacle (black, matte black lid, 2026-11-20), centered over the island's back wall, 3 3/4" from the cooktop's left edge (27 1/4") (moved 10" toward the cooktop 2026-11-18)
@@ -67,8 +67,8 @@ const RUNS = {
       name: 'cabinet a', code: 'B24-ROT/2-SINGLE',   w: 24, kind: 'base', trays: 2, backReceptacle: true,
       inside: [{ label: '120v', w: 2.75, h: 4.5, at: 29, dx: 12 }], // on the island's back wall
       upper: [ { spot: true, w: 3, h: 5.625, at: 87.875, dx: 0 } ] },
-    { role: 'island right end', note: `Base end panel on the island's right end, covering cabinet a's right side (2026-11-27): 3/4" veneer plywood, finished to match, edge banded on the two long edges (cabinets.com, read 2026-11-27).`,
-      code: 'BEP2434', w: 0.75, kind: 'panel', drop: 1, url: 'https://www.cabinets.com/bep2434-colonial-maple-alabaster-base-end-panel.html' },
+    { role: 'island right end door', note: `Decorative door on the island's right end, screwed to cabinet a's finished right side (decided 2026-11-27; the BEP2434 end panel under it was dropped the same day): one shaker panel in Alabaster, 24" wide, flush with the cabinet backs and the box front, 30" tall from the top of the toe kick to the counter's underside, the cabinet's side showing below it; size not listed, <a href="decisions.html#order">open</a> (3/4" thick assumed).`,
+      code: 'BEPD', w: 0.75, kind: 'panel', at: DIMS.toe, drop: 1, url: 'https://www.cabinets.com/bepd-colonial-maple-alabaster-decorative-door-1-door.html' }, // `at`: its bottom off the floor; drawn shaker in the model
   ],
   wall: [ // `h` marks a tall item (no countertop)
     { role: "decorative door on the left REP's exposed side", url: 'https://www.cabinets.com/tepd2493-colonial-maple-alabaster-decorative-door-4-door.html',

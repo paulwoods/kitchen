@@ -78,7 +78,7 @@ function sketch(title, run, opts = {}) {
       }
       ap = '';
     } else if (c.kind === 'panel') {
-      rect(x, FLOOR - (c.h || BOX), c.w, c.h || BOX, 'box' + paint); // no `h`: a base end panel, under the counter
+      rect(x, FLOOR - (c.h || BOX), c.w, (c.h || BOX) - (c.at || 0), 'box' + paint); // no `h`: a base end panel, under the counter; `at`: its bottom off the floor
       if (c.h >= CEILING) line(x, FLOOR - CEILING + 0.5, x + c.w, FLOOR - CEILING + 0.5, 'tick'); // the crown runs on across the panels at the fridge (2026-11-27)
     } else if (c.kind === 'pantry') {
       cabinet(x, c.w, c.h);
@@ -410,7 +410,7 @@ function plan(title, run, opts = {}) {
 
 // Adds a drawing to the page as a <section> (id: the title, e.g. #wall-front), on graph paper with bold lines every BOLD" from (MARGIN, oy).
 // axes: how to say x (from MARGIN, or from axes[3]) and y (up from oy) in the tape measure's readout. Returns the svg.
-const REV = 'O · 2026-11-27'; // revision and date printed on every sheet; bump both when a sheet changes
+const REV = 'Q · 2026-11-27'; // revision and date printed on every sheet; bump both when a sheet changes
 function page(title, view, W, H, oy, out, axes) {
   const n = document.querySelectorAll('section.sketch').length; // keeps the pattern ids apart when a page has several drawings
   const section = document.createElement('section');

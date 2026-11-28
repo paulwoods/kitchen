@@ -18,7 +18,7 @@
 <header>
   <div class="cols">
     <h1>3D Model</h1>
-    <div><b>Revision AA</b> · 2026-11-27</div>
+    <div><b>Revision AD</b> · 2026-11-27</div>
     <div><button data-view="end">End</button><button data-view="island">Island</button><button data-view="wall">Wall</button><button data-view="top">Top</button></div>
     <div id="cam" class="stack"><label>facing <input type="number" id="cam-facing">°</label> <label>down <input type="number" id="cam-down">°</label> <label>away <input type="number" id="cam-away">"</label></div>
     <div class="stack"><label>countertop <select id="slab"><option value="">plain</option></select></label> <label>cabinets <select id="paint-haze"></select></label> <label>uppers <select id="paint-alabaster"></select></label></div>
@@ -249,6 +249,11 @@ function side(run, flip, zBack, back = 0, walls = false) { // back: counter past
         for (const v of [v0, v0 + D / 2 - f / 2, v0 + D - f]) B(u, v, 0, w, f, c.h, m);
         for (const y of [0, c.split - f / 2, c.h - f]) B(u, v0 + f, y, w, D - 2 * f, f, m);
         B(u + 0.25, v0, 0, w - 0.25, D, c.h, m); // the panels, 1/4" behind the frame's face
+      } else if (c.at) { // BEPD decorative door on an island end cabinet's finished side (2026-11-27): one panel, from `at` to the counter, 24" from the cabinet backs; 2 1/4" stiles and rails, the panel recessed 1/4" on the outer face
+        const f = 2.25, m = M.alabaster, h = BOX - c.at, out = u ? 0 : 0.25; // the outer face: the left end's at u, the right end's at u + w
+        for (const v of [0, DEPTH - f]) B(u, v, c.at, w, f, h, m);
+        for (const y of [c.at, BOX - f]) B(u, f, y, w, DEPTH - 2 * f, f, m);
+        B(u + out, f, c.at + f, w - 0.25, DEPTH - 2 * f, h - 2 * f, m);
       } else B(u, 0, 0, w, DEPTH + 0.75, c.h || BOX, M.alabaster); // no `h`: a base end panel, under the counter
       if (c.h >= CEILING) { // the crown runs on across the faces of the panels at the fridge (2026-11-27); at the run's open end it returns to the wall along the first tall panel's side, mitered
         const end = c === run.find(x => x.h >= CEILING);
@@ -592,17 +597,17 @@ const resize = () => {
 // Slab photos on the stone, as on docs/countertop-2.html's cutting maps: photo, slab size, and each piece's corner (x, y inside the 1" trim);
 // the cooktop piece on the first slab, the rest on the second; front edges toward the slab's bottom, the backsplash above the wall piece.
 const SLABS = {
-  ebano:    { name: 'Ebano', img: 'ebano', w: 132, h: 79, cooktop: [45, 32.5], sink: [0, 46.5], wall: [0, 21.5], splash: [0, 3.25] },
-  maestro:  { name: 'Maestro', img: 'maestro', w: 122, h: 77, cooktop: [35, 30.5], sink: [0, 44.5], wall: [0, 19.5], splash: [0, 1.25] },
-  aurora:   { name: 'Aurora Borealis', img: 'aurora', w: 124, h: 78.75, cooktop: [37, 32.25], sink: [0, 46.25], wall: [0, 21.25], splash: [0, 3] },
-  azulatto: { name: 'Bianco Azulatto', img: 'azulatto', w: 125.5, h: 77, cooktop: [38.5, 30.5], sink: [0, 44.5], wall: [0, 19.5], splash: [0, 1.25] },
-  explosion: { name: 'Explosion Blue', img: 'explosion-blue', w: 124, h: 78.75, cooktop: [37, 32.25], sink: [0, 46.25], wall: [0, 21.25], splash: [0, 3] },
-  taj:      { name: 'Taj Mahal', img: 'taj-mahal', w: 129, h: 77.75, cooktop: [42, 31.25], sink: [0, 45.25], wall: [0, 20.25], splash: [0, 2] },
+  ebano:    { name: 'Ebano', img: 'ebano', w: 132, h: 79, cooktop: [44.25, 32.5], sink: [0, 46.5], wall: [0, 21.5], splash: [0, 3.25] },
+  maestro:  { name: 'Maestro', img: 'maestro', w: 122, h: 77, cooktop: [34.25, 30.5], sink: [0, 44.5], wall: [0, 19.5], splash: [0, 1.25] },
+  aurora:   { name: 'Aurora Borealis', img: 'aurora', w: 124, h: 78.75, cooktop: [36.25, 32.25], sink: [0, 46.25], wall: [0, 21.25], splash: [0, 3] },
+  azulatto: { name: 'Bianco Azulatto', img: 'azulatto', w: 125.5, h: 77, cooktop: [37.75, 30.5], sink: [0, 44.5], wall: [0, 19.5], splash: [0, 1.25] },
+  explosion: { name: 'Explosion Blue', img: 'explosion-blue', w: 124, h: 78.75, cooktop: [36.25, 32.25], sink: [0, 46.25], wall: [0, 21.25], splash: [0, 3] },
+  taj:      { name: 'Taj Mahal', img: 'taj-mahal', w: 129, h: 77.75, cooktop: [41.25, 31.25], sink: [0, 45.25], wall: [0, 20.25], splash: [0, 2] },
   // Go-Granite's nominal 126" x 63": the backsplash is four 21" pieces there, not drawn (no splash)
-  greenMaestro: { name: 'Green Maestro (Go-Granite)', img: 'green-maestro', w: 126, h: 63, cooktop: [39, 16.5], sink: [0, 30.5], wall: [0, 5.5] },
-  blueLava: { name: 'Blue Lava (Go-Granite)', img: 'blue-lava', w: 126, h: 63, cooktop: [39, 16.5], sink: [0, 30.5], wall: [0, 5.5] },
-  botanic:  { name: 'Botanic Maestro (Go-Granite)', img: 'botanic-maestro', w: 126, h: 63, cooktop: [39, 16.5], sink: [0, 30.5], wall: [0, 5.5] },
-  ebanoLeathered: { name: 'Ebano Leathered (Go-Granite)', img: 'ebano-leathered', w: 126, h: 63, cooktop: [39, 16.5], sink: [0, 30.5], wall: [0, 5.5] },
+  greenMaestro: { name: 'Green Maestro (Go-Granite)', img: 'green-maestro', w: 126, h: 63, cooktop: [38.25, 16.5], sink: [0, 30.5], wall: [0, 5.5] },
+  blueLava: { name: 'Blue Lava (Go-Granite)', img: 'blue-lava', w: 126, h: 63, cooktop: [38.25, 16.5], sink: [0, 30.5], wall: [0, 5.5] },
+  botanic:  { name: 'Botanic Maestro (Go-Granite)', img: 'botanic-maestro', w: 126, h: 63, cooktop: [38.25, 16.5], sink: [0, 30.5], wall: [0, 5.5] },
+  ebanoLeathered: { name: 'Ebano Leathered (Go-Granite)', img: 'ebano-leathered', w: 126, h: 63, cooktop: [38.25, 16.5], sink: [0, 30.5], wall: [0, 5.5] },
 };
 const seam = island.find((c, k) => k && (c.back ?? DIMS.islandBack) !== (island[k - 1].back ?? DIMS.islandBack)).u;
 const piece = m => m === splash ? 'splash' : m.parent === runs.wall ? 'wall' : m.position.x < seam ? 'cooktop' : 'sink';

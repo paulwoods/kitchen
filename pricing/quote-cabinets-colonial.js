@@ -3,13 +3,13 @@ var quotes = quotes || [];
 {
 // [planned, cabinets.com code, qty, regular, sale, glass add-on, notes]
 const lines = [
-  ['BEP2434', 'BEP2434', 2, 101.09, 60.65, 0, 'island: island left end, island right end, base end panel, 3/4" × 34 1/2" × 24" (read 2026-11-27)'],
   ['DB24-3', 'DB24-3', 2, 1282.45, 833.59, 0, 'island: spices, plates'],
   ['DB24-3 finished sides', 'Matching Finished Sides', 1, 128.25, 83.36, 0, 'island: spices, the left side shows'],
   ['DB36-3', 'DB36-3', 1, 1663.23, 1081.10, 0, 'island: cooktop'],
   ['B18-Trash', 'B18-Trash', 1, 1633.50, 1061.78, 0, 'island: trash, B18-BDA304, 2 containers, 35 qt, on the door (read 2026-11-13)'],
   ['SB42', 'SB42', 1, 744.77, 484.10, 0, 'island: sink, 2 doors, 2 false drawers'],
-  ['DW panel', 'BEPD', 1, 252.34, 164.02, 0, 'island: dishwasher front, base decorative door (no dishwasher panel sold; size not listed, ask for one to fit the Bosch)'],
+  ['BEPD', 'BEPD', 2, 252.34, 151.40, 0, 'island: island left end door, island right end door, base decorative door on each end cabinet\'s finished side, 30" × 24" (size not listed, ask; read 2026-11-27)'],
+  ['DW panel', 'BEPD', 1, 252.34, 151.40, 0, 'island: dishwasher front, base decorative door (no dishwasher panel sold; size not listed, ask for one to fit the Bosch; read 2026-11-27)'],
   ['B24-ROT/2-SINGLE', 'B24-SINGLE', 1, 737.29, 479.24, 0, 'island: cabinet a, 1 door, 1 drawer'],
   ['B24-ROT/2-SINGLE finished sides', 'Matching Finished Sides', 1, 73.73, 47.92, 0, 'island: cabinet a, the right side shows (10% of the B24-SINGLE)'],
   ['TEPD2493', 'TEPD2493', 1, 828.48, 497.09, 0, "wall: decorative door on the left REP's exposed side, 4 panels, for a 93\" × 24\" frameless tall cabinet (read 2026-11-27)"],

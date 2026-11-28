@@ -1,4 +1,4 @@
-// Revision K · 2026-11-27 (raise both when a size or a run changes)
+// Revision M · 2026-11-27 (raise both when a size or a run changes)
 // The kitchen, one source for the drawings and the docs. Inches. A plain script (not a module) so the pages still work when opened from the folder.
 // Text pages show these values with <span data-k="name or expression">fallback</span> (nav.js fills them in, e.g. data-k="counter + seat").
 const DIMS = {
@@ -15,8 +15,8 @@ const DIMS = {
   islandBack: 5.5, // island counter past the cabinet backs elsewhere: the back wall, then 1"
   cooktopV: 10.5,  // cooktop and hood centers from the island cabinet backs (2026-11-05)
   outlet: 44,      // center of a wall receptacle off the floor (assumed)
-  stools: [14, 42, 70], // counter stool centers from the island's left end, behind spices, cooktop and plates
-  brackets: Array.from({ length: 7 }, (_, i) => 4 + i * 76 / 6), // Iron Supports 16" flat bracket centers from the island's left end: 4" in from each end of the 84" overhang, spaced evenly (walls.html)
+  stools: [14.75, 42.75, 70.75], // counter stool centers from the island's left end, behind spices, cooktop and plates (3/4" more since the BEP2434 end panel, 2026-11-27)
+  brackets: Array.from({ length: 7 }, (_, i) => 0.75 + 4 + i * 76 / 6), // Iron Supports 16" flat bracket centers from the island's left end: 4" in from each end of the 84" overhang, which starts past the 3/4" BEP2434, spaced evenly (walls.html)
 };
 DIMS.counterH = DIMS.box + DIMS.top; // counter height
 DIMS.faces = DIMS.aisle + 2 * (DIMS.counter - DIMS.depth - DIMS.front); // between the door and drawer faces across the aisle
@@ -25,26 +25,28 @@ DIMS.faces = DIMS.aisle + 2 * (DIMS.counter - DIMS.depth - DIMS.front); // betwe
 // Left to right as seen from the aisle. Each view draws the fields it needs and ignores the rest; fields are listed in CLAUDE.md.
 const RUNS = {
   island: [
+    { role: 'island left end', note: `Base end panel on the island's left end, covering the spices cabinet's left side (2026-11-27): 3/4" veneer plywood, finished to match, edge banded on the two long edges (cabinets.com, read 2026-11-27).`,
+      code: 'BEP2434', w: 0.75, kind: 'panel', drop: 1, url: 'https://www.cabinets.com/bep2434-colonial-maple-alabaster-base-end-panel.html', back: DIMS.seat },
     { note: `Three-drawer base: 6" top drawer over two equal deep drawers. 1" counter overhang at the left end of the island.`,
       name: 'spices',    code: 'DB24-3',  w: 24, kind: 'drawers', n: 3, back: DIMS.seat, backReceptacle: true,
-      topOutlet: { dx: 22.75, back: -DIMS.wall / 2 }, // Pass & Seymour CP498TR20BK-BK countertop receptacle (black, matte black lid, 2026-11-20), centered over the island's back wall, 3 3/4" from the cooktop's left edge (26 1/2") (moved 10" toward the cooktop 2026-11-18)
+      topOutlet: { dx: 22.75, back: -DIMS.wall / 2 }, // Pass & Seymour CP498TR20BK-BK countertop receptacle (black, matte black lid, 2026-11-20), centered over the island's back wall, 3 3/4" from the cooktop's left edge (27 1/4") (moved 10" toward the cooktop 2026-11-18)
       inside: [{ label: '120v', w: 2.75, h: 4.5, at: 29, dx: 12 }, // GFCI on the island's back wall, behind the cabinet (height assumed)
                 { label: 'outlet', w: 4.74, h: 3.58, at: DIMS.counterH - 1.79, dx: 21.835 }], // below it, in the back wall's top plate: 3.58" below the counter's top, its wiring tail reaching 3.29" to the left of center (drawing CP498TR15 in manuals/countertop outlets - legrand - cp498tr20bk-bk/)
       upper: [ { spot: true, w: 3, h: 5.625, at: 87.875, dx: 12 } ] }, // VANoopee B0BRMX76K2 at a task light mark on the island top, aimed straight down: head 2.99" x 5.60" per the listing; bottom 87 7/8" off the floor assumes a 1" canopy and 1 1/2" stem
     { note: `Three-drawer base under the Bosch NIT8061UC induction cooktop (decided 2026-10-24). The cooktop body drops 4 1/8" below the counter and needs a 1" air gap, which takes the top drawer's space: the top drawer is a false front (fixed, no drawer box; decided 2026-10-25). The cooktop's junction box (240 V 30 A, hardwired) goes in the back wall behind the cabinet, centered 2 9/16" from its left side (beside the bracket stud, 2026-11-18), centered 29.5" off the floor behind the false front, below the cooktop's 4" (to 31.75") and above the middle drawer box (moved up from 25.75" 2026-11-11), through a cutout in the cabinet back (2026-11-02); its cover is reached by taking out the middle drawer and reaching up, or by lifting out the cooktop.`,
       name: 'cooktop',   code: 'DB36-3',  w: 36, kind: 'drawers', n: 3, cooktop: true, falseTop: true, back: DIMS.seat,
-      inside: [{ label: 'j box', w: 4, h: 4, at: 29.5, dx: DIMS.brackets[2] - 0.75 - 2 - 24 }, // in the island's back wall, through a cutout in the cabinet back; beside the stud under the third bracket, on its spices side (2026-11-18, was 3")
+      inside: [{ label: 'j box', w: 4, h: 4, at: 29.5, dx: DIMS.brackets[2] - 0.75 - 2 - 24.75 }, // in the island's back wall, through a cutout in the cabinet back; beside the stud under the third bracket, on its spices side (2026-11-18, was 3")
                 { label: '', w: 28.875, h: 4.125, at: 32.4375, dx: 18 }], // NIT8061UC body: cutout width, 4 1/8" below the counter
       upper: [ { hood: true, w: 42.0625, h: 2.375, at: 66.1875, chimney: 12.125, chimneyD: 13.1875 } ] }, // Bosch HIB82651UC (2026-11-24); chimney 12 1/8" across the run, 13 3/16" deep (assumed from the manual's perspective drawing)
     { note: `Three-drawer base, same as spices.`,
       name: 'plates',    code: 'DB24-3',  w: 24, kind: 'drawers', n: 3, back: DIMS.seat, backReceptacle: true,
-      topOutlet: { dx: 0.75, back: -DIMS.wall / 2 }, // the second countertop receptacle, centered over the back wall, 3 1/4" from the cooktop's right edge (57 1/2") (moved 10" toward the cooktop 2026-11-18)
+      topOutlet: { dx: 0.75, back: -DIMS.wall / 2 }, // the second countertop receptacle, centered over the back wall, 3 1/4" from the cooktop's right edge (58 1/4") (moved 10" toward the cooktop 2026-11-18)
       inside: [{ label: '120v', w: 2.75, h: 4.5, at: 29, dx: 12 }, // GFCI on the island's back wall, behind the cabinet (height assumed)
                 { label: 'outlet', w: 4.74, h: 3.58, at: DIMS.counterH - 1.79, dx: 1.665 }] }, // as on spices, its tail to the right
-    { note: `Base trash cabinet (B18-BDA304, changed from the TRB18FH 2026-11-13): a 6" drawer over a pull-out: two bins, 35 quarts in all, front to back on a tray fixed to the door, which pulls out on soft-close undermount slides (drawing of the cabinet, 2026-11-13). Across the aisle from the oven door. A 120 V receptacle goes in the back wall behind the cabinet, centered 21" off the floor, through a cutout in the cabinet back (2026-11-02), 9 7/8" from the cabinet's left side, against the stud at 96" (2026-11-18).`,
+    { note: `Base trash cabinet (B18-BDA304, changed from the TRB18FH 2026-11-13): a 6" drawer over a pull-out: two bins, 35 quarts in all, front to back on a tray fixed to the door, which pulls out on soft-close undermount slides (drawing of the cabinet, 2026-11-13). Across the aisle from the oven door. A 120 V receptacle goes in the back wall behind the cabinet, centered 21" off the floor, through a cutout in the cabinet back (2026-11-02), 9 7/8" from the cabinet's left side, against the stud at 96 3/4" (2026-11-18).`,
       name: 'trash',     code: 'B18-Trash', w: 18, kind: 'base', trash: true, backReceptacle: true,
       inside: [{ label: '120v', w: 2.75, h: 4.5, at: 21, dx: 9.875 },
-                { label: '120v', w: 2.75, h: 4.5, at: 29, dx: 9.875 }], // both in the island's back wall: the first opens into the cabinet, the second faces away from the aisle; 93 7/8" from the island's left end, against the stud at 96" (2026-11-18, were centered)
+                { label: '120v', w: 2.75, h: 4.5, at: 29, dx: 9.875 }], // both in the island's back wall: the first opens into the cabinet, the second faces away from the aisle; 94 5/8" from the island's left end, against the stud at 96 3/4" (2026-11-18, were centered)
       upper: [ { spot: true, w: 3, h: 5.625, at: 87.875, dx: 0 } ] },
     { note: `Sink base: false front over two doors. Holds the Ruvati RVH6222ST undermount sink (needs ≥ 36"), the InSinkErator disposal, the trap and the dishwasher drain loop. A 120 V receptacle goes inside at the bottom left, with the disposal air switch's power module plugged into it (2026-10-25). A 120 V GFCI goes in the back wall behind the cabinet, facing away from the aisle, centered at 29" (2026-11-04).`,
       name: 'sink',      code: 'SB42',    w: 42, kind: 'sink', falseTop: true, backReceptacle: true, airSwitch: { dx: 12.625, back: 2 },
@@ -65,10 +67,13 @@ const RUNS = {
       name: 'cabinet a', code: 'B24-ROT/2-SINGLE',   w: 24, kind: 'base', trays: 2, backReceptacle: true,
       inside: [{ label: '120v', w: 2.75, h: 4.5, at: 29, dx: 12 }], // on the island's back wall
       upper: [ { spot: true, w: 3, h: 5.625, at: 87.875, dx: 0 } ] },
+    { role: 'island right end', note: `Base end panel on the island's right end, covering cabinet a's right side (2026-11-27): 3/4" veneer plywood, finished to match, edge banded on the two long edges (cabinets.com, read 2026-11-27).`,
+      code: 'BEP2434', w: 0.75, kind: 'panel', drop: 1, url: 'https://www.cabinets.com/bep2434-colonial-maple-alabaster-base-end-panel.html' },
   ],
   wall: [ // `h` marks a tall item (no countertop)
-    { role: "skin on the left REP's exposed side", note: `Skin panel on the left side of the REP2496-1.5, the run's exposed end (2026-10-28; 1/4" thick, assumed).`,
-                         code: 'FP2496',  w: 0.25, kind: 'panel', h: 96, drop: 1 }, // skin on the REP's exposed left side, 1/4" thick (assumed)
+    { role: "decorative door on the left REP's exposed side", url: 'https://www.cabinets.com/tepd2493-colonial-maple-alabaster-decorative-door-4-door.html',
+      note: `Decorative door (four panels, two across and two high) on the left side of the REP2496-1.5, the run's exposed end, floor to 93"; the crown's return covers the REP above it, 93"–96" (decided 2026-11-27; replaced the FP2496 skin). Made for a 93" × 24" frameless tall cabinet with finished sides: whether it mounts on the REP, its thickness (3/4", assumed) and its panel split (54", assumed, in line with the pantry's) are <a href="decisions.html#order">open</a>. The four Pico remotes are on it at 48", on a backer block.`,
+                         code: 'TEPD2493', w: 0.75, kind: 'panel', h: 93, split: 54, drop: 1 }, // 3/4" thick and the 54" split assumed; `split` draws it shaker in the model
     { role: 'each side of the Fridge', note: `Refrigerator end panel, floor to ceiling, left of the fridge (replaced the TEP 2026-10-28).`,
                          code: 'REP2496-1.5', w: 1.5, kind: 'panel', h: 96 },
     { note: `Clear space between the panel and the fridge, up to the RW3721 (2026-11-02).`,
@@ -108,7 +113,7 @@ const TRIM = {
     { code: 'SSM-4.50', qty: 3, w: 96, h: 4.5, d: 0.75, url: 'https://www.cabinets.com/riser-molding-4-12-colonial-maple-alabaster.html', role: 'riser molding',
       note: `Riser (scribe) molding, 96" sticks, ripped to 3" and scribed to the ceiling, 93"–96": across the RW3721, the pantry and the OVD3393, back along the OVD3393's right side above the 12" uppers, and across the uppers to the side wall, about 203" in all (decided 2026-11-03). Hidden behind the crown, as its nailer (2026-11-27). Three sticks, so no run has a seam.` },
     { code: 'CROWN_MC7', qty: 3, w: 96, h: 3, d: 3, url: 'https://www.cabinets.com/cove-crown-molding-3-colonial-maple-alabaster.html', role: 'crown molding',
-      note: `Cove crown molding, 3" high and 3" deep, solid wood, 96" sticks (decided 2026-11-27). On the riser's route, from the cabinet fronts at 93" to the 96" ceiling, nailed to the riser, and on across the faces of the REP panels and the skin at the fridge, returning 24 3/4" to the wall at the run's open end (2026-11-27): about 231" in all. Mitered 45° at the OVD3393's return and at the open end; it ends square at the side wall. Trim or tilt it on site where the ceiling isn't 96". Three sticks.` },
+      note: `Cove crown molding, 3" high and 3" deep, solid wood, 96" sticks (decided 2026-11-27). On the riser's route, from the cabinet fronts at 93" to the 96" ceiling, nailed to the riser, and on across the faces of the REP panels at the fridge, returning 24 3/4" to the wall along the left REP's side, above the 93" TEPD2493, whose 3/4" it covers (2026-11-27): about 231" in all. Mitered 45° at the OVD3393's return and at the open end; it ends square at the side wall. Trim or tilt it on site where the ceiling isn't 96". Three sticks.` },
   ],
 };
 

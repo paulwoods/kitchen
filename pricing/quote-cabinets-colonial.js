@@ -3,6 +3,7 @@ var quotes = quotes || [];
 {
 // [planned, cabinets.com code, qty, regular, sale, glass add-on, notes]
 const lines = [
+  ['BEP2434', 'BEP2434', 2, 101.09, 60.65, 0, 'island: island left end, island right end, base end panel, 3/4" × 34 1/2" × 24" (read 2026-11-27)'],
   ['DB24-3', 'DB24-3', 2, 1282.45, 833.59, 0, 'island: spices, plates'],
   ['DB24-3 finished sides', 'Matching Finished Sides', 1, 128.25, 83.36, 0, 'island: spices, the left side shows'],
   ['DB36-3', 'DB36-3', 1, 1663.23, 1081.10, 0, 'island: cooktop'],
@@ -11,7 +12,7 @@ const lines = [
   ['DW panel', 'BEPD', 1, 252.34, 164.02, 0, 'island: dishwasher front, base decorative door (no dishwasher panel sold; size not listed, ask for one to fit the Bosch)'],
   ['B24-ROT/2-SINGLE', 'B24-SINGLE', 1, 737.29, 479.24, 0, 'island: cabinet a, 1 door, 1 drawer'],
   ['B24-ROT/2-SINGLE finished sides', 'Matching Finished Sides', 1, 73.73, 47.92, 0, 'island: cabinet a, the right side shows (10% of the B24-SINGLE)'],
-  ['FP2496', 'FP2496', 1, 167.58, 108.93, 0, "wall: skin on the left REP's exposed side, 1/4\" × 96\" × 24\""],
+  ['TEPD2493', 'TEPD2493', 1, 828.48, 497.09, 0, "wall: decorative door on the left REP's exposed side, 4 panels, for a 93\" × 24\" frameless tall cabinet (read 2026-11-27)"],
   ['REP2496-1.5', 'REP2496-1.5', 2, 340.50, 221.33, 0, 'wall: each side of the Fridge, refrigerator return panel, 1.5" × 96" × 24"'],
   ['RW3721', 'RW3721', 1, 701.04, 455.68, 0, 'wall: over the Fridge, panel to panel, 37" × 20 11/16" × 24" (read 2026-11-03)'],
   ['UT362493ROT4', 'UT362493-ROT/4', 1, 3003.21, 1952.09, 0, 'wall: Pantry, 36" × 93" × 24", 4 doors, 4 roll-out trays below, 3 shelves above (read 2026-11-03)'],

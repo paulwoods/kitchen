@@ -57,5 +57,5 @@ Store all project memories in this file (not in ~/.claude memory).
 
 ### The runs
 
-- The island (spices to cabinet a) and the wall run (FP2496 skin to Coffee, then the side wall) are `RUNS` in `kitchen.js`; their sizes, codes and notes are there and in `cabinets.html`. Read them there rather than keeping a copy here.
+- The island (spices to cabinet a) and the wall run (TEPD2493 decorative door to Coffee, then the side wall) are `RUNS` in `kitchen.js`; their sizes, codes and notes are there and in `cabinets.html`. Read them there rather than keeping a copy here.
 - Not in the runs: the island's 4 1/2" back wall (2x4 studs, 1/2" drywall both sides, cabinet height) runs the full length with six receptacles facing away from the aisle, and the cooktop junction box and trash cabinet receptacle open into those cabinets; no riser. Three counter stools (`DIMS.stools`) sit behind spices, cooktop and plates.

@@ -78,7 +78,7 @@ function sketch(title, run, opts = {}) {
       }
       ap = '';
     } else if (c.kind === 'panel') {
-      rect(x, FLOOR - c.h, c.w, c.h, 'box' + paint);
+      rect(x, FLOOR - (c.h || BOX), c.w, c.h || BOX, 'box' + paint); // no `h`: a base end panel, under the counter
       if (c.h >= CEILING) line(x, FLOOR - CEILING + 0.5, x + c.w, FLOOR - CEILING + 0.5, 'tick'); // the crown runs on across the panels at the fridge (2026-11-27)
     } else if (c.kind === 'pantry') {
       cabinet(x, c.w, c.h);
@@ -383,8 +383,10 @@ function plan(title, run, opts = {}) {
   else {
     rect(MARGIN, BACKY - WALL, n + WALL, WALL, 'roomwall'); // the room wall behind the wall run
     rect(MARGIN + n, BACKY, WALL, DEPTH, 'roomwall'); // stud wall at the Coffee end, as deep as the cabinets
-    // Lighting controls, 4-gang plates (8.19" wide, assumed) centered on the 24" depth at 48": Caseta dimmers on the side wall's outside face by Coffee, Picos on the FP2496 skin by the fridge.
-    for (const [x, label] of [[MARGIN + n + WALL, '4 dimmers'], [MARGIN - 0.25, '4 Picos']]) {
+    // Lighting controls, 4-gang plates (8.19" wide, assumed) centered on the 24" depth at 48": Caseta dimmers on the side wall's outside face by Coffee,
+    // Picos on a 3/4" backer block (9" across, assumed) on the TEPD2493 decorative door by the fridge (2026-11-27).
+    rect(MARGIN - 0.75, BACKY + DEPTH / 2 - 4.5, 0.75, 9, 'box alabaster');
+    for (const [x, label] of [[MARGIN + n + WALL, '4 dimmers'], [MARGIN - 1, '4 Picos']]) {
       rect(x, BACKY + DEPTH / 2 - 4.1, 0.25, 8.19, 'plate');
       const tx = x < MARGIN ? x - 1 : x + 3; // label runs along the wall, outside it (rotated glyphs sit left of tx)
       out.push(`<text x="${tx}" y="${BACKY + DEPTH / 2}" class="dim" transform="rotate(-90 ${tx} ${BACKY + DEPTH / 2})">${label}</text>`);
@@ -408,7 +410,7 @@ function plan(title, run, opts = {}) {
 
 // Adds a drawing to the page as a <section> (id: the title, e.g. #wall-front), on graph paper with bold lines every BOLD" from (MARGIN, oy).
 // axes: how to say x (from MARGIN, or from axes[3]) and y (up from oy) in the tape measure's readout. Returns the svg.
-const REV = 'M · 2026-11-27'; // revision and date printed on every sheet; bump both when a sheet changes
+const REV = 'O · 2026-11-27'; // revision and date printed on every sheet; bump both when a sheet changes
 function page(title, view, W, H, oy, out, axes) {
   const n = document.querySelectorAll('section.sketch').length; // keeps the pattern ids apart when a page has several drawings
   const section = document.createElement('section');

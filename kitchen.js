@@ -1,4 +1,4 @@
-// Revision J · 2026-11-24 (raise both when a size or a run changes)
+// Revision K · 2026-11-27 (raise both when a size or a run changes)
 // The kitchen, one source for the drawings and the docs. Inches. A plain script (not a module) so the pages still work when opened from the folder.
 // Text pages show these values with <span data-k="name or expression">fallback</span> (nav.js fills them in, e.g. data-k="counter + seat").
 const DIMS = {
@@ -101,6 +101,17 @@ const RUNS = {
   ],
 };
 
+// Molding bought by the stick, not part of any one item: rows at the foot of a run's table in docs/cabinets.html and in the order summary, `qty` sticks.
+// It follows the `riser` items: the riser closes 93" to the 96" ceiling and the crown covers it (2026-11-27). The drawings draw both from the riser items.
+const TRIM = {
+  wall: [
+    { code: 'SSM-4.50', qty: 3, w: 96, h: 4.5, d: 0.75, url: 'https://www.cabinets.com/riser-molding-4-12-colonial-maple-alabaster.html', role: 'riser molding',
+      note: `Riser (scribe) molding, 96" sticks, ripped to 3" and scribed to the ceiling, 93"–96": across the RW3721, the pantry and the OVD3393, back along the OVD3393's right side above the 12" uppers, and across the uppers to the side wall, about 203" in all (decided 2026-11-03). Hidden behind the crown, as its nailer (2026-11-27). Three sticks, so no run has a seam.` },
+    { code: 'CROWN_MC7', qty: 3, w: 96, h: 3, d: 3, url: 'https://www.cabinets.com/cove-crown-molding-3-colonial-maple-alabaster.html', role: 'crown molding',
+      note: `Cove crown molding, 3" high and 3" deep, solid wood, 96" sticks (decided 2026-11-27). On the riser's route, from the cabinet fronts at 93" to the 96" ceiling, nailed to the riser, and on across the faces of the REP panels and the skin at the fridge, returning 24 3/4" to the wall at the run's open end (2026-11-27): about 231" in all. Mitered 45° at the OVD3393's return and at the open end; it ends square at the side wall. Trim or tilt it on site where the ceiling isn't 96". Three sticks.` },
+  ],
+};
+
 // Inches to the nearest 1/16, as fractions: 34.5 -> "34 1/2", 0.25 -> "1/4".
 const inch = x => {
   const n = Math.round(x * 16), w = Math.floor(n / 16);
@@ -111,7 +122,7 @@ const inch = x => {
 };
 
 // What to order, [code, qty, where], shown by docs/cabinets.html, whose run tables price each item from the quotes.
-// Every coded item and wall cabinet; a gap is ordered only when it says what (`orders`). `role` replaces the name in "where".
+// Every coded item, wall cabinet and TRIM stick; a gap is ordered only when it says what (`orders`). `role` replaces the name in "where".
 const orderSummary = (() => {
   const rows = new Map();
   const add = (code, run, label) => {
@@ -123,6 +134,7 @@ const orderSummary = (() => {
     if (code) add(code, run, c.role || c.name);
     for (const u of c.upper || []) if (u.code) add(u.code, run, 'over the ' + c.name);
   }
+  for (const run of ['island', 'wall']) for (const t of TRIM[run] || []) for (let i = 0; i < t.qty; i++) add(t.code, run, t.role);
   return [...rows].map(([code, { run, labels }]) => {
     const uniq = [...new Set(labels)], over = uniq.every(l => l.startsWith('over the '));
     const list = over ? 'over the ' + uniq.map(l => l.slice(9)).join(', ') : uniq.join(', ');

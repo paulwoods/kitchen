@@ -21,6 +21,8 @@ const lines = [
   ['DB21-3', 'DB21-3', 3, 1195.85, 777.30, 0, 'wall: Toaster, Air Fryer, Coffee (read 2026-11-04, no sale; sale 35% off assumed)'],
   ['W2127', 'W2127', 4, 519.25, 337.51, 0, 'wall: over the Garage, Toaster, Air Fryer and Coffee, 1 door (read 2026-11-04, no sale; sale 35% off assumed)'],
   ['W2112 glass', 'W2112', 4, 514.34, 334.32, 0, 'wall: over the W2127s, 1 door, $342.89 + $171.45 glass prep; sale $222.88 + $111.44 (read 2026-11-04, no sale; sale 35% off assumed)'],
+  ['SSM-4.50', 'SSM-4.50', 3, 94.19, 56.51, 0, 'wall: riser molding, 96" × 4 1/2" × 3/4" sticks, ripped to 3" (read 2026-11-27; was $61.22 sale 2026-11-03)'],
+  ['CROWN_MC7', 'CROWN_MC7', 3, 311.51, 186.91, 0, 'wall: crown molding, cove, 96" × 3" × 3" sticks (read 2026-11-27)'],
 ];
 // 'planned / code' lines whose size (W × H × D, as supplied) differs from the plan's in cabinets.html
 const resized = ['B21-FH-ROT/2 / B21-FH', 'B24-ROT/2-SINGLE / B24-SINGLE'];

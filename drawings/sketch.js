@@ -79,6 +79,7 @@ function sketch(title, run, opts = {}) {
       ap = '';
     } else if (c.kind === 'panel') {
       rect(x, FLOOR - c.h, c.w, c.h, 'box' + paint);
+      if (c.h >= CEILING) line(x, FLOOR - CEILING + 0.5, x + c.w, FLOOR - CEILING + 0.5, 'tick'); // the crown runs on across the panels at the fridge (2026-11-27)
     } else if (c.kind === 'pantry') {
       cabinet(x, c.w, c.h);
       const upper = 39, lower = c.h - TOE - upper; // top doors match a 39" wall cabinet
@@ -140,7 +141,12 @@ function sketch(title, run, opts = {}) {
         text(px, FLOOR - u.at + 2.5, 'spot', 'code');
         continue;
       }
-      if (u.riser) { rect(x + (u.dx || 0), FLOOR - u.at - u.h, u.w || c.w, u.h, 'front alabaster'); continue; } // riser molding to the ceiling: { riser: true, h, at, w, dx }
+      if (u.riser) { // riser molding to the ceiling: { riser: true, h, at, w, dx }, behind the CROWN_MC7 cove crown that covers it (2026-11-27): a line at its 1/2" top flat
+        const rx = x + (u.dx || 0), rw = u.w || c.w, top = FLOOR - u.at - u.h;
+        rect(rx, top, rw, u.h, 'front alabaster');
+        line(rx, top + 0.5, rx + rw, top + 0.5, 'tick');
+        continue;
+      }
       if (u.light) { rect(x + (c.w - u.w) / 2, FLOOR - u.at - u.h, u.w, u.h, u.inside ? 'hidden' : 'light'); continue; } // light bar, centered: { light: model, w, h, at: bottom off the floor, inside: in a cabinet, behind its door (dashed) }
       const top = FLOOR - u.at - u.h;
       paint = ' alabaster';
@@ -402,7 +408,7 @@ function plan(title, run, opts = {}) {
 
 // Adds a drawing to the page as a <section> (id: the title, e.g. #wall-front), on graph paper with bold lines every BOLD" from (MARGIN, oy).
 // axes: how to say x (from MARGIN, or from axes[3]) and y (up from oy) in the tape measure's readout. Returns the svg.
-const REV = 'L · 2026-11-24'; // revision and date printed on every sheet; bump both when a sheet changes
+const REV = 'M · 2026-11-27'; // revision and date printed on every sheet; bump both when a sheet changes
 function page(title, view, W, H, oy, out, axes) {
   const n = document.querySelectorAll('section.sketch').length; // keeps the pattern ids apart when a page has several drawings
   const section = document.createElement('section');
